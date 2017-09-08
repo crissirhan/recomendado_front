@@ -16,7 +16,6 @@
     "reactjs"
   ],
   "author": "Samir Saleh",
-  "main": "index.js",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Samirovich/recomendado_frontend/issues"
@@ -35,7 +34,9 @@
   },
   "dependencies": {
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-latest": "^6.24.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.5.6"
   }
 }
