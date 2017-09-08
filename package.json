@@ -16,6 +16,7 @@
     "reactjs"
   ],
   "author": "Samir Saleh",
+  "main": "index.js",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Samirovich/recomendado_frontend/issues"
