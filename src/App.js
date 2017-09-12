@@ -11,16 +11,23 @@ import {
   Row,
   Col,
   Jumbotron,
-  Button
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
+import LoginForm from './Navbar/LoginForm';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.loginToggle = this.loginToggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      loginModal: false
     };
   }
   toggle() {
@@ -28,8 +35,16 @@ class App extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  loginToggle(){
+    this.setState({
+      loginModal: !this.state.loginModal
+    });
+  }
+
   render() {
     return (
+
       <div>
         <Navbar color="inverse" inverse toggleable>
           <NavbarToggler right onClick={this.toggle} />
@@ -41,6 +56,17 @@ class App extends Component {
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
+              </NavItem>
+              <NavItem>
+                <div>
+                  <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
+                  <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className={this.props.className}>
+                    <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
+                    <ModalBody>
+                      <LoginForm/>
+                    </ModalBody>
+                  </Modal>
+                </div>
               </NavItem>
             </Nav>
           </Collapse>
