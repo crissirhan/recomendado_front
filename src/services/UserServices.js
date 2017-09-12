@@ -1,5 +1,7 @@
 import axios from 'axios';
-var baseUrl = 'http://localhost:8000';
+
+var baseUrl = 'http://35.196.31.174/';//'http://localhost:8000';
+
 export function login(username,password){
   return axios.post(baseUrl+'/rest-auth/login/', {
     username: username,

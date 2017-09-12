@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { login } from '../services/LoginService';
+import { login } from '../services/UserServices';
 
 class LoginForm extends Component{
 
