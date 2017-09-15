@@ -14,6 +14,7 @@ import {
   ModalBody,
 } from 'reactstrap';
 import LoginForm from './Navbar/LoginForm';
+import SignUpForm from './components/signup/SignUpForm';
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +39,11 @@ class App extends Component {
     });
   }
 
+  submit = (values) => {
+    // print the form values to the console
+    console.log(values)
+  }
+
   render() {
     return (
 
@@ -53,6 +59,9 @@ class App extends Component {
                   <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
                   <ModalBody>
                     <LoginForm/>
+                  </ModalBody>
+                  <ModalBody>
+                    <SignUpForm onSubmit={this.submit} />
                   </ModalBody>
                 </Modal>
               </NavItem>
