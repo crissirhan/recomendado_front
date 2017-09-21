@@ -17,7 +17,14 @@ import LoginForm from './Navbar/LoginForm';
 import SignUpForm from './components/signup/SignUpForm';
 import { signUp } from './services/UserServices';
 
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import getAnnouncements from './actions/get_announcements';
+
 class App extends Component {
+  componentDidMount() {
+    this.props.getAnnouncements();
+  }
   constructor(props) {
     super(props);
 
@@ -52,6 +59,7 @@ class App extends Component {
     // print the form values to the console
     console.log(values.username);
     signUp(values.username, values.password1, values.password2, values.email);
+    console.log(this.props);
   }
 
   render() {
@@ -75,7 +83,7 @@ class App extends Component {
               <NavItem>
                 <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>{' '}
                 <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className={this.props.className}>
-                  <ModalHeader toggle={this.signUpToggle}>Login</ModalHeader>
+                  <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
                   <ModalBody>
                     <SignUpForm onSubmit={this.submit} />
                   </ModalBody>
@@ -93,4 +101,18 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {
+    announcements: state.announcements
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getAnnouncements: getAnnouncements
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+//export default App;

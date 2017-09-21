@@ -4,18 +4,20 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import { createStore, combineReducers } from 'redux'
-import { reducer as formReducer } from 'redux-form'
-import { Provider } from 'react-redux'
+import reducers from './reducers';
 
-const rootReducer = combineReducers({
-  form: formReducer
-});
+import { createStore, applyMiddleware } from 'redux';
 
-const store = createStore(rootReducer);
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>, document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root'));
+
 registerServiceWorker();
