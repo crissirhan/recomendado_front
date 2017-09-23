@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { login } from '../services/UserServices';
+//import { login } from '../services/UserServices';
+import login from '../actions/user';
+
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 class LoginForm extends Component{
 
@@ -25,7 +29,9 @@ class LoginForm extends Component{
   }
 
   loginRequest(){
-    login(this.state.username, this.state.password);
+    this.props.login(this.state.username, this.state.password);
+    console.log(this.props);
+    console.log(this.props.token);
   }
 
   render(){
@@ -46,5 +52,16 @@ class LoginForm extends Component{
      )
   }
 }
+function mapStateToProps(state){
+  return {
+    token: state.token
+  }
+}
 
-export default LoginForm;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    login: login
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

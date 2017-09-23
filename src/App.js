@@ -15,15 +15,14 @@ import {
 } from 'reactstrap';
 import LoginForm from './Navbar/LoginForm';
 import SignUpForm from './components/signup/SignUpForm';
+import SearchAnnouncements from './components/SearchAnnouncements';
 import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import getAnnouncements from './actions/get_announcements';
 
 class App extends Component {
   componentDidMount() {
-    this.props.getAnnouncements();
   }
   constructor(props) {
     super(props);
@@ -56,8 +55,6 @@ class App extends Component {
   }
 
   submit = (values) => {
-    // print the form values to the console
-    console.log(values.username);
     signUp(values.username, values.password1, values.password2, values.email);
     console.log(this.props);
   }
@@ -94,6 +91,7 @@ class App extends Component {
         </Navbar>
         <Jumbotron>
           <Container>
+            <SearchAnnouncements/>
           </Container>
         </Jumbotron>
       </div>
@@ -103,13 +101,11 @@ class App extends Component {
 
 function mapStateToProps(state){
   return {
-    announcements: state.announcements
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getAnnouncements: getAnnouncements
   }, dispatch);
 }
 

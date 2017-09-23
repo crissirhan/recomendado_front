@@ -7,9 +7,7 @@ export default function getAnnouncements() {
   return dispatch => {
     axios.get(baseUrl+'/announcements/')
       .then(res => {
-        console.log('Announcements ::', res.data);
         const announcements = res.data.map(announcement => {
-          console.log(announcement);
           return announcement;
         });
         dispatch(getAnnouncementsAsync(announcements));
@@ -18,6 +16,13 @@ export default function getAnnouncements() {
 }
 
 function getAnnouncementsAsync(announcements){
+  function get(id){
+    var result = this.filter(function( obj ) {
+      return obj.id === id;
+    });
+    return result[0];
+  }
+  announcements.get = get;
   return {
     type: GET_ANNOUNCEMENTS,
     payload: announcements
