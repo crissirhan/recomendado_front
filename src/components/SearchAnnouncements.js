@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import getAnnouncements from '../actions/get_announcements';
 import { bindActionCreators } from 'redux';
 import SearchInput, {createFilter} from 'react-search-input';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+
 
 const KEYS_TO_FILTERS = ['professional', 'job']
 
@@ -29,18 +32,34 @@ class SearchAnnouncements extends Component {
   }
 
   render(){
-    const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const columns = [{
+      Header: 'Professional',
+      accessor: 'professional' // String-based value accessors!
+    },{
+      Header: 'Job',
+      accessor: 'job' // String-based value accessors!
+    },{
+      Header: 'Publish date',
+      accessor: 'publish_date' // String-based value accessors!
+    },{
+      Header: 'Expire date',
+      accessor: 'expire_date' // String-based value accessors!
+    },{
+      Header: 'Availability',
+      accessor: 'availability' // String-based value accessors!
+    },{
+      Header: 'Movility',
+      accessor: 'movility' // String-based value accessors!
+    }];
+
     return (
       <div>
         <SearchInput className="search-input" onChange={this.searchUpdated} />
-        {filteredAnnouncements.map(announcement => {
-          return (
-            <div className="announcement" key={announcement.id}>
-              <div className="professional">{announcement.professional}</div>
-              <div className="job">{announcement.job}</div>
-            </div>
-          )
-        })}
+        <ReactTable
+          data={filteredAnnouncements}
+          columns={columns}
+        />
       </div>
      )
   }
