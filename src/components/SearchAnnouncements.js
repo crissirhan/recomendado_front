@@ -31,6 +31,9 @@ class SearchAnnouncements extends Component {
     }
   }
 
+  dayRenderer(props){
+    return (props.value.map(day => <span key={day.toString()}>{day} </span>));
+  }
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
     const length = filteredAnnouncements.length;
@@ -48,7 +51,8 @@ class SearchAnnouncements extends Component {
       accessor: 'expire_date' // String-based value accessors!
     },{
       Header: 'Availability',
-      accessor: 'availability' // String-based value accessors!
+      accessor: 'availability', // String-based value accessors!
+      Cell: props => this.dayRenderer(props)
     },{
       Header: 'Movility',
       accessor: 'movility' // String-based value accessors!
