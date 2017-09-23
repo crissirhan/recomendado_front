@@ -33,6 +33,7 @@ class SearchAnnouncements extends Component {
 
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const length = filteredAnnouncements.length;
     const columns = [{
       Header: 'Professional',
       accessor: 'professional' // String-based value accessors!
@@ -59,6 +60,11 @@ class SearchAnnouncements extends Component {
         <ReactTable
           data={filteredAnnouncements}
           columns={columns}
+          showPagination={false}
+          showPaginationTop={false}
+          showPaginationBottom={true}
+          showPageSizeOptions={true}
+          minRows={0}
         />
       </div>
      )
