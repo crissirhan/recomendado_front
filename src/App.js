@@ -13,13 +13,15 @@ import {
   ModalHeader,
   ModalBody,
 } from 'reactstrap';
-import LoginForm from './Navbar/LoginForm';
-import SignUpForm from './components/signup/SignUpForm';
-import SearchAnnouncements from './components/SearchAnnouncements';
 import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
+import LoginForm from './Navbar/LoginForm';
+import SignUpForm from './components/signup/SignUpForm';
+import SearchAnnouncements from './components/SearchAnnouncements';
+import JobCategories from './components/JobCategories';
+
 
 class App extends Component {
   componentDidMount() {
@@ -92,6 +94,7 @@ class App extends Component {
         <Jumbotron>
           <Container>
             <SearchAnnouncements/>
+            <JobCategories/>
           </Container>
         </Jumbotron>
       </div>

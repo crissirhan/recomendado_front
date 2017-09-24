@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import getAnnouncements from '../actions/get_announcements';
 import { bindActionCreators } from 'redux';
 import SearchInput, {createFilter} from 'react-search-input';
@@ -32,11 +32,14 @@ class SearchAnnouncements extends Component {
   }
 
   dayRenderer(props){
-    return (props.value.map(day => <span key={day.toString()}>{day} </span>));
+    if(!props.value){
+      return '';
+    }
+    var days=props.value.split(',');
+    return (days.map(day => <span key={day.toString()}>{day} </span>));
   }
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
-    const length = filteredAnnouncements.length;
     const columns = [{
       Header: 'Professional',
       accessor: 'professional' // String-based value accessors!

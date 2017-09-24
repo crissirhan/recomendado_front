@@ -1,4 +1,4 @@
-import { GET_ANNOUNCEMENTS } from '../actions/types';
+import { GET_ANNOUNCEMENTS, GET_JOB_CATEGORIES } from '../actions/types';
 
 export default function(state=[], action) {
 
