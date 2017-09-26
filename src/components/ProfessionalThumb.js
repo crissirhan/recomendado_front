@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import getUserReviews from '../actions/get_user_reviews';
 import getProfessional from '../actions/get_professional';
 import { bindActionCreators } from 'redux';
+import Rating from 'react-rating';
+import './css/font-awesome/css/font-awesome.min.css'
 
 class ProfessionalThumb extends Component {
 
@@ -22,6 +24,12 @@ class ProfessionalThumb extends Component {
     console.log(this.props.professional);
     return (
       <div>
+        <Rating
+          empty="fa fa-star-o fa-2x"
+          full="fa fa-star fa-2x"
+          initialRate={this.props.user_reviews.average}
+          readonly
+        />
         promedio = {this.props.user_reviews.average} , cantidad = {this.props.user_reviews.count}
       </div>
     );
