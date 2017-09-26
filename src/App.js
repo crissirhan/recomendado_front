@@ -91,13 +91,15 @@ class App extends Component {
             </Nav>
           </Collapse>
         </Navbar>
-        <Jumbotron>
-          <Container>
-            <SearchAnnouncements/>
-            <JobCategories/>
-            <ProfessionalThumb professional_id={15} />
-          </Container>
-        </Jumbotron>
+        <Container>
+          <Jumbotron>
+            <Container>
+              <SearchAnnouncements/>
+              <JobCategories/>
+            </Container>
+          </Jumbotron>
+          <p><ProfessionalThumb professional_id={15} /></p> 
+        </Container>
       </div>
     );
   }
