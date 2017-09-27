@@ -17,9 +17,9 @@ class ClientName extends Component {
   render() {
     console.log(this.props.client);
     return (
-      <p>
+      <div>
         {this.props.client.first_name} {this.props.client.last_name}
-      </p>
+      </div>
     );
   }
 }

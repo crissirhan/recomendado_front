@@ -100,7 +100,7 @@ class App extends Component {
 
           <JobCategories/>
 
-          <ProfessionalThumb professional_id={15} />
+          <ProfessionalThumb professional_id={1} />
         </Container>
       </div>
     );

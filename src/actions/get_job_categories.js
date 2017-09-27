@@ -7,7 +7,8 @@ export default function getJobCategories() {
   return dispatch => {
     axios.get(baseUrl+'/job-categories/')
       .then(res => {
-        const categories = res.data.map(category => category[1]);
+        console.log(res);
+        const categories = res.data.map(category => category.job_type);
         dispatch(getJobCategoriesAsync(categories));
       });
   }

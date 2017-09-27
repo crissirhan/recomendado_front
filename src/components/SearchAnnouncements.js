@@ -40,12 +40,13 @@ class SearchAnnouncements extends Component {
   }
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    console.log(filteredAnnouncements);
     const columns = [{
       Header: 'Professional',
-      accessor: 'professional' // String-based value accessors!
+      accessor: 'professional.id' // String-based value accessors!
     },{
       Header: 'Job',
-      accessor: 'job' // String-based value accessors!
+      accessor: 'job.job_type' // String-based value accessors!
     },{
       Header: 'Publish date',
       accessor: 'publish_date' // String-based value accessors!

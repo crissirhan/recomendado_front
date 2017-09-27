@@ -30,9 +30,11 @@ class ProfessionalThumb extends Component {
     if(this.props.user_reviews.reviews){
       if(!this.state.review){
         this.state.review = this.props.user_reviews.reviews[Math.floor(Math.random()*this.props.user_reviews.reviews.length)]
-        this.state.client_id = this.state.review.client;
+        if(this.state.review){
+            this.state.client_id = this.state.review.client.id;
+        }
       }
-      comment = <div>{'"'+this.state.review.comment}" - <ClientName client_id={this.state.client_id}/> </div>;
+      comment = <div>"{this.state.review.comment}" - <ClientName client_id={this.state.client_id}/> </div>;
     } else{
       comment = <div></div>;
     }
