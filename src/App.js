@@ -95,10 +95,12 @@ class App extends Component {
           <Jumbotron>
             <Container>
               <SearchAnnouncements/>
-              <JobCategories/>
             </Container>
           </Jumbotron>
-          <p><ProfessionalThumb professional_id={15} /></p> 
+
+          <JobCategories/>
+
+          <ProfessionalThumb professional_id={15} />
         </Container>
       </div>
     );

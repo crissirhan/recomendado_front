@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import JobCategory from './JobCategory';
 import getJobCategories from '../actions/get_job_categories';
 import { bindActionCreators } from 'redux';
+import { CardGroup } from 'reactstrap';
 
 class JobCategories extends Component {
 
@@ -19,11 +20,11 @@ class JobCategories extends Component {
   render() {
     console.log(this.props.announcement_categories);
     return (
-      <div>
+      <CardGroup>
         {this.props.announcement_categories.map(category =>
           <JobCategory category={category} key={category}/>
         )}
-      </div>
+      </CardGroup>
     );
   }
 }

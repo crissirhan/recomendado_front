@@ -32,13 +32,13 @@ class ProfessionalThumb extends Component {
         this.state.review = this.props.user_reviews.reviews[Math.floor(Math.random()*this.props.user_reviews.reviews.length)]
         this.state.client_id = this.state.review.client;
       }
-      comment = <div>{'"'+this.state.review.comment}'"' - <ClientName client_id={this.state.client_id}/> </div>;
+      comment = <div>{'"'+this.state.review.comment}" - <ClientName client_id={this.state.client_id}/> </div>;
     } else{
       comment = <div></div>;
     }
     return (
       <Col sm="4">
-        <Card>
+        <Card block className="text-center">
           <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
           <CardTitle>{this.props.professional.first_name} {this.props.professional.last_name}</CardTitle>
           <Rating
