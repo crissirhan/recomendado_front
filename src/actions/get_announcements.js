@@ -1,11 +1,11 @@
 import { GET_ANNOUNCEMENTS } from './types';
 import axios from 'axios';
 
-var baseUrl = 'http://35.196.31.174';
 
+var baseUri = 'http://api.recomendado-dev.samir.cl/';
 export default function getAnnouncements() {
   return dispatch => {
-    axios.get(baseUrl+'/announcements/')
+    axios.get(baseUri+'/announcements/')
       .then(res => {
         const announcements = res.data.map(announcement => {
           return announcement;

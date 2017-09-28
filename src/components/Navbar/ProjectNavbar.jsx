@@ -30,7 +30,7 @@ class ProjectNavbar extends Component {
   render() {
     console.log(this.props.className);
     return (
-      <Navbar color="inverse" inverse horizontal>
+      <Navbar color="inverse" inverse>
         <NavbarBrand href="/">Recomendado</NavbarBrand>
         <Nav className="ml-auto" navbar>
           <NavItem>

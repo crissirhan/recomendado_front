@@ -1,11 +1,11 @@
 import { GET_CLIENT } from './types';
 import axios from 'axios';
 
-var baseUrl = 'http://35.196.31.174';
 
+var baseUri = 'http://api.recomendado-dev.samir.cl/';
 export default function getClient(client_id) {
   return dispatch => {
-    axios.get(baseUrl+'/clients/'+client_id+'/')
+    axios.get(baseUri+'/clients/'+client_id+'/')
       .then(res => {
         console.log(res.data);
         dispatch(getClientAsync(res.data));

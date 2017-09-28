@@ -10,6 +10,7 @@ class LoginModal extends Component {
       child: "LoginForm"
     };
     this.toggle = this.toggle.bind(this);
+    
   }
 
   toggle() {
