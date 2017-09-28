@@ -16,4 +16,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'));
 
-registerServiceWorker();
+//registerServiceWorker(); //TODO: descomentar cuando tenga certificado SSL!
