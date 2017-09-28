@@ -7,7 +7,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
 
-const KEYS_TO_FILTERS = ['professional', 'job']
+const KEYS_TO_FILTERS = ['professional.id', 'job.job_type']
 
 class SearchAnnouncements extends Component {
 

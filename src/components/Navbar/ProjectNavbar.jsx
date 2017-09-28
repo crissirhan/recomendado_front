@@ -38,7 +38,7 @@ class ProjectNavbar extends Component {
             <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className="navbar">
               <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
               <ModalBody>
-                <LoginForm/>
+                <LoginForm toggle={this.loginToggle}/>
               </ModalBody>
             </Modal>
           </NavItem>
@@ -47,7 +47,7 @@ class ProjectNavbar extends Component {
             <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className="navbar">
               <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
               <ModalBody>
-                <SignUpForm/>
+                <SignUpForm toggle={this.signUpToggle}/>
               </ModalBody>
             </Modal>
           </NavItem>

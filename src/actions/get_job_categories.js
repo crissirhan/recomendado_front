@@ -2,7 +2,7 @@ import { GET_JOB_CATEGORIES } from './types';
 import axios from 'axios';
 
 
-var baseUri = 'http://api.recomendado-dev.samir.cl/';
+var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function getJobCategories() {
   return dispatch => {
     axios.get(baseUri+'/job-categories/')

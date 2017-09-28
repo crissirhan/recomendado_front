@@ -30,9 +30,7 @@ class LoginForm extends Component{
 
   loginRequest(){
     this.props.login(this.state.username, this.state.password);
-    console.log(this.state.username);
-    console.log(this.props);
-    console.log(this.props.token);
+    this.props.toggle();
   }
 
   render(){

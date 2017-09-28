@@ -31,6 +31,7 @@ class SignUpForm extends Component{
 
   handleSubmit(){
       this.props.signUp(this.state.email, this.state.password1, this.state.password2, this.state.email);
+      this.props.toggle();
   }
 
   render(){

@@ -2,7 +2,7 @@ import { GET_ANNOUNCEMENTS } from './types';
 import axios from 'axios';
 
 
-var baseUri = 'http://api.recomendado-dev.samir.cl/';
+var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function getAnnouncements() {
   return dispatch => {
     axios.get(baseUri+'/announcements/')

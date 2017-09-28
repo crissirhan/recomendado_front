@@ -2,7 +2,7 @@ import { SIGNUP_USER } from './types';
 import axios from 'axios';
 
 
-var baseUri = 'http://api.recomendado-dev.samir.cl/';
+var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function signUp(username,password1, password2, email) {
   return dispatch => {
     axios.post(baseUri+'/rest-auth/registration/',{
