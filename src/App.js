@@ -68,28 +68,26 @@ class App extends Component {
         <Navbar color="inverse" inverse toggleable>
           <NavbarToggler right onClick={this.toggle} />
           <NavbarBrand href="/">Recomendado</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
-                <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className={this.props.className}>
-                  <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
-                  <ModalBody>
-                    <LoginForm/>
-                  </ModalBody>
-                </Modal>
-              </NavItem>
-              <NavItem>
-                <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>{' '}
-                <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className={this.props.className}>
-                  <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
-                  <ModalBody>
-                    <SignUpForm onSubmit={this.submit} />
-                  </ModalBody>
-                </Modal>
-              </NavItem>
-            </Nav>
-          </Collapse>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
+              <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className={this.props.className}>
+                <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
+                <ModalBody>
+                  <LoginForm/>
+                </ModalBody>
+              </Modal>
+            </NavItem>
+            <NavItem>
+              <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>{' '}
+              <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className={this.props.className}>
+                <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
+                <ModalBody>
+                  <SignUpForm onSubmit={this.submit} />
+                </ModalBody>
+              </Modal>
+            </NavItem>
+          </Nav>
         </Navbar>
         <Container>
           <Jumbotron>
