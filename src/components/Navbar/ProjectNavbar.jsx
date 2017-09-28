@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavbarBrand, Nav, NavItem, Navbar } from 'reactstrap';
 import LoginForm from './LoginForm';
-import SignUpForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 import '../css/navbar/navbar.css'
 
 class ProjectNavbar extends Component {

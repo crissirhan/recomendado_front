@@ -16,6 +16,7 @@ import SearchAnnouncements from './components/SearchAnnouncements';
 import JobCategories from './components/JobCategories';
 import ProfessionalThumb from './components/ProfessionalThumb';
 import ProjectNavbar from './components/Navbar/ProjectNavbar';
+import login from './actions/login_user';
 
 class App extends Component {
   componentDidMount() {
@@ -27,16 +28,16 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div>
         <ProjectNavbar/>
         <Container>
           <Jumbotron>
-
             <Container>
               <SearchAnnouncements/>
             </Container>
-            
+
           </Jumbotron>
 
           <JobCategories/>
@@ -51,11 +52,13 @@ class App extends Component {
 
 function mapStateToProps(state){
   return {
+    token:state.token
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    login:login
   }, dispatch);
 }
 

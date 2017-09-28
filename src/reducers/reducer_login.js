@@ -4,7 +4,8 @@ export default function(state=[], action) {
 
   switch (action.type) {
     case LOGIN_USER:
-      return action.payload;
+      let token={'token': action.payload.data.key}
+      return state + token;
     default:
       return state;
   }

@@ -1,23 +1,37 @@
-import { LOGIN_USER } from './types';
+import { USER_LOGIN } from './types';
 import axios from 'axios';
 
 var baseUrl = 'http://35.196.31.174';
 
 export default function login(username,password){
   return dispatch => {
-    axios.post(baseUrl+'/rest-auth/login/', {
+      axios.post(baseUrl+'/rest-auth/login/', {
       username: username,
       password: password
-    }).then(response => {
-          dispatch(loginAsync(response));
-        });
-    }
+    })
+    .then(function (response) {
+      dispatch(loginSuccessAsync(response));
+    })
+    .catch(function (error) {
+      dispatch(loginFailureAsync(error));
+    });
+  }
 }
 
-function loginAsync(response){
-  console.log(response);
+function loginSuccessAsync(login){
+  console.log("Success, key:: " + login.data.key);
+  const key = login.data.key;
+  console.log(key);
   return {
-    type: LOGIN_USER,
-    payload: response
+    type: USER_LOGIN,
+    payload: key
+  };
+}
+
+function loginFailureAsync(login){
+  console.log("Login error!");
+  return {
+    type: USER_LOGIN,
+    payload: null
   };
 }

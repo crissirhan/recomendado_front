@@ -1,41 +1,61 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Input, Button } from 'reactstrap';
-import getClient from '../../actions/get_client';
+import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
+import signUp from '../../actions/signup_user';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 
 
-let SignUpForm = props => {
-  const { handleSubmit } = (values) => {
-      this.props.signUp(values.email, values.password1, values.password2, values.email);
+class SignUpForm extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password1: '',
+      password2:''
     };
 
-  const renderInput = ({ input, meta, ...rest }) => <Input {...input} {...rest}/>;
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
 
-  return (
-    <form onSubmit={ handleSubmit }>
-      <div>
-        <label htmlFor="email">Correo electrónico</label>
-        <Field name="email" component={renderInput} type="email" />
-      </div>
-      <div>
-        <label htmlFor="password1">Contraseña</label>
-        <Field name="password1" component={renderInput} type="password" />
-      </div>
-      <div>
-        <label htmlFor="password2">Repita contraseña</label>
-        <Field name="password2" component={renderInput} type="password" />
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-      </div>
-      <Button type="submit">Enviar</Button>
-    </form>
-  )
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(){
+      this.props.signUp(this.state.email, this.state.password1, this.state.password2, this.state.email);
+  }
+
+  render(){
+    return (
+      <Form>
+        <FormGroup>
+          <Label for="exampleEmail">Correo electrónico</Label>
+          <Input type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
+          value={this.state.email} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="examplePassword1">Contraseña</Label>
+          <Input type="password" name="password1" id="examplePassword1" placeholder="Ingrese su contraseña"
+          value={this.state.password1} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="examplePassword1">Repita su contraseña</Label>
+          <Input type="password" name="password2" id="examplePassword2" placeholder="Ingrese su contraseña nuevamente"
+          value={this.state.password2} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
+      </Form>
+    )
+  }
 }
-
-SignUpForm = reduxForm({
-  // a unique name for the form
-  form: 'signup'
-})(SignUpForm);
 
 function mapStateToProps(state){
   return {

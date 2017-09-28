@@ -3,7 +3,7 @@ import axios from 'axios';
 
 var baseUrl = 'http://35.196.31.174';
 
-export default function signUp((username,password1, password2, email)) {
+export default function signUp(username,password1, password2, email) {
   return dispatch => {
     axios.post(baseUrl+'/rest-auth/registration/',{
       username: username,
