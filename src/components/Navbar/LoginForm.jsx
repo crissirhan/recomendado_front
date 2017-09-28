@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 //import { login } from '../services/UserServices';
-import login from '../actions/user';
-
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
+import login from '../../actions/login_user';
+
 
 class LoginForm extends Component{
 

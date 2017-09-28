@@ -6,6 +6,8 @@ import UserReducer from './reducer_user';
 import UserReviewsReducer from './reducer_user_reviews';
 import ProfessionalReducer from './reducer_professional';
 import ClientReducer from './reducer_client';
+import SignUpReducer from './reducer_sign_up';
+import LoginReducer from './reducer_login';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   announcement_categories: JobCategoriesReducer,
   user_reviews: UserReviewsReducer,
   professional: ProfessionalReducer,
-  client: ClientReducer
+  client: ClientReducer,
+  sign_up: SignUpReducer,
+  login: LoginReducer
 });
 export default rootReducer;

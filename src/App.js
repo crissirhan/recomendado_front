@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import {
   Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
   Container,
   Jumbotron,
   Button,
@@ -17,88 +12,37 @@ import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import LoginForm from './Navbar/LoginForm';
-import SignUpForm from './components/signup/SignUpForm';
 import SearchAnnouncements from './components/SearchAnnouncements';
 import JobCategories from './components/JobCategories';
 import ProfessionalThumb from './components/ProfessionalThumb';
+import ProjectNavbar from './components/Navbar/ProjectNavbar';
 
 class App extends Component {
   componentDidMount() {
   }
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.loginToggle = this.loginToggle.bind(this);
-    this.signUpToggle = this.signUpToggle.bind(this);
     this.state = {
-      isOpen: false,
-      loginModal: false,
-      signUpModal: false
     };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
-  loginToggle(){
-    this.setState({
-      loginModal: !this.state.loginModal
-    });
-  }
-
-  signUpToggle(){
-    this.setState({
-      signUpModal: !this.state.signUpModal
-    });
-  }
-
-  submit = (values) => {
-    signUp(values.username, values.password1, values.password2, values.email);
-    console.log(this.props);
   }
 
   render() {
     return (
-
       <div>
-        <Navbar color="inverse" inverse toggleable>
-          <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">Recomendado</NavbarBrand>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
-              <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className={this.props.className}>
-                <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
-                <ModalBody>
-                  <LoginForm/>
-                </ModalBody>
-              </Modal>
-            </NavItem>
-            <NavItem>
-              <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>{' '}
-              <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className={this.props.className}>
-                <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
-                <ModalBody>
-                  <SignUpForm onSubmit={this.submit} />
-                </ModalBody>
-              </Modal>
-            </NavItem>
-          </Nav>
-        </Navbar>
+        <ProjectNavbar/>
         <Container>
           <Jumbotron>
+
             <Container>
               <SearchAnnouncements/>
             </Container>
+            
           </Jumbotron>
 
           <JobCategories/>
 
           <ProfessionalThumb professional_id={1} />
+
         </Container>
       </div>
     );
