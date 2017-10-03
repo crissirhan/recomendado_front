@@ -4,6 +4,7 @@ import AnnouncementsReducer from './reducer_announcements';
 import JobCategoriesReducer from './reducer_job_categories';
 import UserReducer from './reducer_user';
 import UserReviewsReducer from './reducer_user_reviews';
+import UserAnnouncementsReducer from './reducer_user_announcements';
 import ProfessionalReducer from './reducer_professional';
 import ClientReducer from './reducer_client';
 import SignUpReducer from './reducer_sign_up';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   professional: ProfessionalReducer,
   client: ClientReducer,
   sign_up: SignUpReducer,
-  login: LoginReducer
+  login: LoginReducer,
+  user_announcements: UserAnnouncementsReducer
 });
 export default rootReducer;

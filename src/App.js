@@ -17,6 +17,7 @@ import JobCategories from './components/JobCategories';
 import ProfessionalThumb from './components/ProfessionalThumb';
 import ProjectNavbar from './components/Navbar/ProjectNavbar';
 import login from './actions/login_user';
+import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList'
 
 class App extends Component {
   componentDidMount() {
@@ -28,7 +29,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(process.env); 
+    console.log(process.env);
     return (
       <div>
         <ProjectNavbar/>
@@ -44,6 +45,7 @@ class App extends Component {
 
           <ProfessionalThumb professional_id={1} />
 
+          <AnnouncementsList professional_id={1} />
         </Container>
       </div>
     );
