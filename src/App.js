@@ -17,6 +17,7 @@ import login from './actions/login_user';
 import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
+import ProfessionalPage from './components/ProfessionalPage';
 import {
   Route,
   Link,
@@ -42,6 +43,9 @@ class App extends Component {
           <Route exact path='/' component={Home}/>
           <Route path="/categorias/:id/:categoria" render={({ match }) => (
             <CategoryPage category={match.params.categoria} category_id={match.params.id}/>
+          )} />
+          <Route path="/profesionales/:id/" render={({ match }) => (
+            <ProfessionalPage professional_id={match.params.id}/>
           )} />
         </Switch>
       </div>

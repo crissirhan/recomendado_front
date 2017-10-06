@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavbarBrand, Nav, NavItem, Navbar } from 'reactstrap';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import '../css/navbar/navbar.css'
+import '../css/navbar/navbar.css';
+import {
+  Link,
+} from 'react-router-dom';
 
 class ProjectNavbar extends Component {
   constructor(props) {
@@ -31,7 +34,9 @@ class ProjectNavbar extends Component {
     console.log(this.props.className);
     return (
       <Navbar color="inverse" inverse>
-        <NavbarBrand href="/">Recomendado</NavbarBrand>
+        <Link to='/'>
+          <NavbarBrand>Recomendado</NavbarBrand>
+        </Link>
         <Nav className="ml-auto" navbar>
           <NavItem>
             <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
