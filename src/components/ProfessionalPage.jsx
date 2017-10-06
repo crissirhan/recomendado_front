@@ -15,19 +15,40 @@ class ProfessionalPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps) {
-      this.setState({
-        username: nextProps.professional.username
-      });
+      this.syncPropToState(nextProps);
     }
   }
 
+  syncPropToState(nextProps){
+    console.log('ASD');
+    console.log(nextProps.professional);
+    for(var key in nextProps.professional) {
+       if (nextProps.professional.hasOwnProperty(key)) {
+         console.log(nextProps.professional[key]);
+          this.setState({
+            [key]: nextProps.professional[key]
+          });
+       }
+    }
+    console.log(this.state);
+  }
 
   constructor(props) {
     super(props);
     this.state = {
       editMode:false,
       username:'',
-      professional:props.professional
+      id: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      rut: '',
+      region: '',
+      city: '',
+      street: '',
+      house_number: '',
+      phone_number: '',
+      identification: ''
     };
      this.handleInputChange = this.handleInputChange.bind(this);
   }
