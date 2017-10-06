@@ -5,6 +5,7 @@ export const GET_JOB_CATEGORIES = 'gets_list_categories';
 export const GET_USER_REVIEWS = 'gets_reviews_from_user';
 export const GET_USER_ANNOUNCEMENTS = 'gets_announcements_from_user';
 export const GET_PROFESSIONAL = 'gets_professional';
+export const GET_PROFESSIONALS = 'gets_professionals';
 export const GET_CLIENT = 'gets_client';
 export const SIGNUP_USER = 'signsups_user';
 export const LOGIN_USER = 'logins_user';

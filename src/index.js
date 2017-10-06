@@ -6,13 +6,16 @@ import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux';
 import createAppStore from './createAppStore';
+import { BrowserRouter } from 'react-router-dom';
 
 
 const store = createAppStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'));
 

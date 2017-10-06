@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import getAnnouncements from '../actions/get_announcements';
+import getUserAnnouncements from '../../actions/get_user_announcements';
 import { bindActionCreators } from 'redux';
-import SearchInput, {createFilter} from 'react-search-input';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { withRouter } from 'react-router-dom';
 
-
-const KEYS_TO_FILTERS = ['professional.id', 'job.job_type']
-
-class SearchAnnouncements extends Component {
+class AnnouncementsEdit extends Component {
 
   componentDidMount() {
-    this.props.getAnnouncements();
+    this.props.getUserAnnouncements(this.props.professional_id);
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ''
     };
-    this.searchUpdated = this.searchUpdated.bind(this)
   }
 
   toAnnouncements(){
@@ -39,62 +32,68 @@ class SearchAnnouncements extends Component {
     var days=props.value.split(',');
     return (days.map(day => <span key={day.toString()}>{day} </span>));
   }
+
+  editRenderer(props){
+    console.log(props);
+    if(!props.value){
+      return '';
+    }
+    var url = '/profesional/'+props.value.professional.id+'/announcement/'+props.value.id+'/';
+    console.log(url);
+    return <a href={url}>Editar</a>;
+  }
   render(){
-    const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
-    console.log(filteredAnnouncements);
     const columns = [{
       Header: 'Professional',
       accessor: 'professional.id' // String-based value accessors!
     },{
-      Header: 'Job',
+      Header: 'Trabajo',
       accessor: 'job.job_type' // String-based value accessors!
     },{
-      Header: 'Publish date',
+      Header: 'Fecha publicación',
       accessor: 'publish_date' // String-based value accessors!
     },{
-      Header: 'Expire date',
+      Header: 'Fecha expiración',
       accessor: 'expire_date' // String-based value accessors!
     },{
-      Header: 'Availability',
+      Header: 'Días disponibles',
       accessor: 'availability', // String-based value accessors!
       Cell: props => this.dayRenderer(props)
     },{
-      Header: 'Movility',
+      Header: 'Movilidad',
       accessor: 'movility' // String-based value accessors!
+    },{
+      id: 'id',
+      Header: 'Editar',
+      accessor: d => d,
+      Cell: props => this.editRenderer(props)
     }];
 
     return (
-      <div>
-        <SearchInput className="search-input" onChange={this.searchUpdated} />
-        <ReactTable
-          data={filteredAnnouncements}
-          columns={columns}
-          showPagination={false}
-          showPaginationTop={false}
-          showPaginationBottom={true}
-          showPageSizeOptions={true}
-          minRows={0}
-        />
-      </div>
+      <ReactTable
+        data={this.props.user_announcements}
+        columns={columns}
+        showPagination={false}
+        showPaginationTop={false}
+        showPaginationBottom={true}
+        showPageSizeOptions={true}
+        minRows={0}
+      />
      )
-  }
-
-  searchUpdated (term) {
-    this.setState({searchTerm: term})
   }
 
 }
 
 function mapStateToProps(state){
   return {
-    announcements: state.announcements
+    user_announcements: state.user_announcements
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getAnnouncements: getAnnouncements
+    getUserAnnouncements: getUserAnnouncements
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchAnnouncements);
+export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementsEdit);

@@ -12,12 +12,17 @@ import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import SearchAnnouncements from './components/SearchAnnouncements';
-import JobCategories from './components/JobCategories';
-import ProfessionalThumb from './components/ProfessionalThumb';
 import ProjectNavbar from './components/Navbar/ProjectNavbar';
 import login from './actions/login_user';
-import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList'
+import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
+import Home from './components/Home';
+import CategoryPage from './components/CategoryPage';
+import {
+  Route,
+  Link,
+  withRouter,
+  Switch
+} from 'react-router-dom';
 
 class App extends Component {
   componentDidMount() {
@@ -33,20 +38,12 @@ class App extends Component {
     return (
       <div>
         <ProjectNavbar/>
-        <Container>
-          <Jumbotron>
-            <Container>
-              <SearchAnnouncements/>
-            </Container>
-
-          </Jumbotron>
-
-          <JobCategories/>
-
-          <ProfessionalThumb professional_id={1} />
-
-          <AnnouncementsList professional_id={1} />
-        </Container>
+        <Switch>
+          <Route exact path='/' component={Home}/>
+          <Route path="/categorias/:id/:categoria" render={({ match }) => (
+            <CategoryPage category={match.params.categoria} category_id={match.params.id}/>
+          )} />
+        </Switch>
       </div>
     );
   }
@@ -64,6 +61,6 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 //export default App;

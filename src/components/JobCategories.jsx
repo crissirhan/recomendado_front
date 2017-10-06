@@ -18,11 +18,11 @@ class JobCategories extends Component {
   }
 
   render() {
-    console.log(this.props.announcement_categories);
+    console.log(this.props.job_categories);
     return (
       <CardGroup>
-        {this.props.announcement_categories.map(category =>
-          <JobCategory category={category} key={category}/>
+        {this.props.job_categories.map(category =>
+          <JobCategory category={category.job_type} key={category.id} category_id={category.id}/>
         )}
       </CardGroup>
     );
@@ -30,7 +30,7 @@ class JobCategories extends Component {
 }
 function mapStateToProps(state){
   return {
-    announcement_categories: state.announcement_categories
+    job_categories: state.job_categories
   }
 }
 

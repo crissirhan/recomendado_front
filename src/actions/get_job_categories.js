@@ -9,7 +9,7 @@ export default function getJobCategories() {
       .then(res => {
         console.log(res);
         const categories = res.data.map(category => category.job_type);
-        dispatch(getJobCategoriesAsync(categories));
+        dispatch(getJobCategoriesAsync(res.data));
       });
   }
 }
