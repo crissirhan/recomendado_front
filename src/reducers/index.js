@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import AnnouncementsReducer from './reducer_announcements';
+import AnnouncementsByJobReducer from './reducer_announcements_by_job';
 import JobCategoriesReducer from './reducer_job_categories';
 import UserReducer from './reducer_user';
 import UserReviewsReducer from './reducer_user_reviews';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   sign_up: SignUpReducer,
   login: LoginReducer,
   user_announcements: UserAnnouncementsReducer,
-  professionals:ProfessionalsReducer
+  professionals: ProfessionalsReducer,
+  announcements_by_job: AnnouncementsByJobReducer
 });
 export default rootReducer;
