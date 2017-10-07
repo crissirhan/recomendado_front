@@ -11,6 +11,7 @@ import ProfessionalsReducer from './reducer_professionals';
 import ClientReducer from './reducer_client';
 import SignUpReducer from './reducer_sign_up';
 import LoginReducer from './reducer_login';
+import UpdateProfessionalReducer from './reducer_update_professional';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   login: LoginReducer,
   user_announcements: UserAnnouncementsReducer,
   professionals: ProfessionalsReducer,
-  announcements_by_job: AnnouncementsByJobReducer
+  announcements_by_job: AnnouncementsByJobReducer,
+  update_professional: UpdateProfessionalReducer
 });
 export default rootReducer;
