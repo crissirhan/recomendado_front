@@ -6,6 +6,10 @@ import SearchInput, {createFilter} from 'react-search-input';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { withRouter } from 'react-router-dom';
+import {
+  Link,
+} from 'react-router-dom';
+
 
 
 const KEYS_TO_FILTERS = ['professional.id', 'job.job_type']
@@ -41,25 +45,25 @@ class SearchAnnouncements extends Component {
   }
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
-    console.log(filteredAnnouncements);
     const columns = [{
-      Header: 'Professional',
-      accessor: 'professional.id' // String-based value accessors!
+      Header: 'Profesional',
+      accessor: 'professional', // String-based value accessors!
+      Cell: props => <Link to={'/profesionales/'+props.value.id}> {props.value.user.first_name} {props.value.user.last_name}</Link>
     },{
-      Header: 'Job',
+      Header: 'Trabajo',
       accessor: 'job.job_type' // String-based value accessors!
     },{
-      Header: 'Publish date',
+      Header: 'Fecha publicación',
       accessor: 'publish_date' // String-based value accessors!
     },{
-      Header: 'Expire date',
+      Header: 'Fecha expiración',
       accessor: 'expire_date' // String-based value accessors!
     },{
-      Header: 'Availability',
+      Header: 'Disponibilidad',
       accessor: 'availability', // String-based value accessors!
       Cell: props => this.dayRenderer(props)
     },{
-      Header: 'Movility',
+      Header: 'Movilidad',
       accessor: 'movility' // String-based value accessors!
     }];
 

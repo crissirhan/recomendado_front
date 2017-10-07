@@ -3,6 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import getAnnouncementsByJob from '../actions/get_announcements_by_job';
 import ReactTable from 'react-table';
+import {
+  Link,
+} from 'react-router-dom';
+
 
 class CategoryPage extends Component {
 
@@ -25,23 +29,24 @@ class CategoryPage extends Component {
   }
   render(){
     const columns = [{
-      Header: 'Professional',
-      accessor: 'professional.id' // String-based value accessors!
+      Header: 'Profesional',
+      accessor: 'professional', // String-based value accessors!
+      Cell: props => <Link to={'/profesionales/'+props.value.id}> {props.value.user.first_name} {props.value.user.last_name}</Link>
     },{
-      Header: 'Job',
+      Header: 'Trabajo',
       accessor: 'job.job_type' // String-based value accessors!
     },{
-      Header: 'Publish date',
+      Header: 'Fecha publicación',
       accessor: 'publish_date' // String-based value accessors!
     },{
-      Header: 'Expire date',
+      Header: 'Fecha expiración',
       accessor: 'expire_date' // String-based value accessors!
     },{
-      Header: 'Availability',
+      Header: 'Disponibilidad',
       accessor: 'availability', // String-based value accessors!
       Cell: props => this.dayRenderer(props)
     },{
-      Header: 'Movility',
+      Header: 'Movilidad',
       accessor: 'movility' // String-based value accessors!
     }];
 
