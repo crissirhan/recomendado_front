@@ -4,6 +4,9 @@ import getUserAnnouncements from '../../actions/get_user_announcements';
 import { bindActionCreators } from 'redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import {
+  Link
+} from 'react-router-dom';
 
 class AnnouncementsList extends Component {
 
@@ -38,9 +41,9 @@ class AnnouncementsList extends Component {
     if(!props.value){
       return '';
     }
-    var url = '/profesional/'+props.value.professional.id+'/announcement/'+props.value.id+'/';
+    var url = '/anuncios/'+props.value.id+'/';
     console.log(url);
-    return <a href={url}>Editar</a>;
+    return <Link to={url}>Editar</Link>;
   }
   render(){
     const columns = [{

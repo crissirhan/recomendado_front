@@ -4,6 +4,9 @@ import getUserAnnouncements from '../../actions/get_user_announcements';
 import { bindActionCreators } from 'redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import {
+  Link
+} from 'react-router-dom';
 
 class AnnouncementsEdit extends Component {
 
@@ -40,7 +43,7 @@ class AnnouncementsEdit extends Component {
     }
     var url = '/profesional/'+props.value.professional.id+'/announcement/'+props.value.id+'/';
     console.log(url);
-    return <a href={url}>Editar</a>;
+    return <Link to={url}>Editar</Link>;
   }
   render(){
     const columns = [{
@@ -62,11 +65,6 @@ class AnnouncementsEdit extends Component {
     },{
       Header: 'Movilidad',
       accessor: 'movility' // String-based value accessors!
-    },{
-      id: 'id',
-      Header: 'Editar',
-      accessor: d => d,
-      Cell: props => this.editRenderer(props)
     }];
 
     return (

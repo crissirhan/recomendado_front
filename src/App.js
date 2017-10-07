@@ -24,6 +24,7 @@ import {
   withRouter,
   Switch
 } from 'react-router-dom';
+import AnnouncementsEdit from './components/AnnouncementEdition/AnnouncementsEdit';
 
 class App extends Component {
   componentDidMount() {
@@ -46,6 +47,9 @@ class App extends Component {
           )} />
           <Route path="/profesionales/:id/" render={({ match }) => (
             <ProfessionalPage professional_id={match.params.id}/>
+          )} />
+          <Route path="/anuncios/:id/" render={({ match }) => (
+            <AnnouncementsEdit professional_id={match.params.id}/>
           )} />
         </Switch>
       </div>
