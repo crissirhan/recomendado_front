@@ -14,9 +14,31 @@ class AnnouncementsList extends Component {
     this.props.getUserAnnouncements(this.props.professional_id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(this.props != nextProps) {
+      this.syncPropToState(nextProps);
+    }
+  }
+
+  syncPropToState(nextProps){
+    if(this.state.lazyInitialization){
+      for(var key in nextProps.professional) {
+         if (nextProps.professional.hasOwnProperty(key)) {
+            this.setState({
+              [key]: nextProps.professional[key]
+            });
+         }
+      }
+      this.setState({
+        lazyInitialization: false
+      });
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
+      announcements:{}
     };
   }
 
@@ -47,9 +69,6 @@ class AnnouncementsList extends Component {
   }
   render(){
     const columns = [{
-      Header: 'Professional',
-      accessor: 'professional.id' // String-based value accessors!
-    },{
       Header: 'Trabajo',
       accessor: 'job.job_type' // String-based value accessors!
     },{
@@ -60,7 +79,7 @@ class AnnouncementsList extends Component {
       accessor: 'expire_date' // String-based value accessors!
     },{
       Header: 'Días disponibles',
-      accessor: 'availability', // String-based value accessors!
+      accessor: 'availability_display', // String-based value accessors!
       Cell: props => this.dayRenderer(props)
     },{
       Header: 'Movilidad',

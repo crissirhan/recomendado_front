@@ -43,7 +43,7 @@ class CategoryPage extends Component {
       accessor: 'expire_date' // String-based value accessors!
     },{
       Header: 'Disponibilidad',
-      accessor: 'availability', // String-based value accessors!
+      accessor: 'availability_display', // String-based value accessors!
       Cell: props => this.dayRenderer(props)
     },{
       Header: 'Movilidad',

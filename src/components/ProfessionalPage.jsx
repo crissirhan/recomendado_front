@@ -60,7 +60,8 @@ class ProfessionalPage extends Component {
       street: '',
       house_number: '',
       phone_number: '',
-      identification: ''
+      identification: '',
+      activeTab: '1'
     };
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
@@ -101,8 +102,7 @@ class ProfessionalPage extends Component {
       house_number: this.state.house_number,
       phone_number: this.state.phone_number,
       username: this.state.username,
-      email: this.state.username,
-      activeTab: '1'
+      email: this.state.username
     }
     console.log(data);
     this.props.updateProfessional(this.props.professional_id, data);
