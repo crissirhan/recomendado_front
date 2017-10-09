@@ -7,17 +7,37 @@ import 'react-table/react-table.css';
 import {
   Link
 } from 'react-router-dom';
+import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
+import {
+  Container,
+  Collapse,
+  TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col
+} from 'reactstrap';
+import updateAnnouncements from '../../actions/update_announcement';
 
 class AnnouncementsEdit extends Component {
 
   componentDidMount() {
-    this.props.getUserAnnouncements(this.props.professional_id);
   }
 
   constructor(props) {
     super(props);
+    let days = {
+      'lun':false,
+      'mar':false,
+      'mier':false,
+      'jue':false,
+      'vier':false,
+      'sab':false,
+      'dom':false
+    }
+    this.props.availability.map((day) => days[day] = true);
     this.state = {
+      availability:days,
+      movility:this.props.movility
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
   }
 
   toAnnouncements(){
@@ -45,38 +65,94 @@ class AnnouncementsEdit extends Component {
     console.log(url);
     return <Link to={url}>Editar</Link>;
   }
-  render(){
-    const columns = [{
-      Header: 'Professional',
-      accessor: 'professional.id' // String-based value accessors!
-    },{
-      Header: 'Trabajo',
-      accessor: 'job.job_type' // String-based value accessors!
-    },{
-      Header: 'Fecha publicación',
-      accessor: 'publish_date' // String-based value accessors!
-    },{
-      Header: 'Fecha expiración',
-      accessor: 'expire_date' // String-based value accessors!
-    },{
-      Header: 'Días disponibles',
-      accessor: 'availability', // String-based value accessors!
-      Cell: props => this.dayRenderer(props)
-    },{
-      Header: 'Movilidad',
-      accessor: 'movility' // String-based value accessors!
-    }];
+  handleSubmit(){
+    let days = [];
+    for (var property in this.state.availability) {
+        if (this.state.availability.hasOwnProperty(property)) {
+            if(this.state.availability[property]){
+              days.push(property);
+            }
+        }
+    }
+    console.log(days);
+    let data = {'availability': days, 'movility': this.state.movility};
+    this.props.updateAnnouncements(this.props.announcement_id,data);
+    console.log(this.props);
+  }
 
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleCheckBoxChange(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    console.log(name);
+    let availability = {...this.state.availability};
+    availability[name] = value;
+    this.setState({availability:availability});
+
+  }
+
+  render(){
     return (
-      <ReactTable
-        data={this.props.user_announcements}
-        columns={columns}
-        showPagination={false}
-        showPaginationTop={false}
-        showPaginationBottom={true}
-        showPageSizeOptions={true}
-        minRows={0}
-      />
+      <Form>
+        <FormGroup>
+          <Label for="movility">Movilidad</Label>
+          <Input  name="movility" id="movility"
+          value={this.state.movility} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
+            Lunes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
+            Martes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
+            Miércoles
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
+            Jueves
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
+            Viernes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
+            Sábado
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
+            Domingo
+          </Label>
+        </FormGroup>
+        <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
+      </Form>
      )
   }
 
@@ -84,13 +160,13 @@ class AnnouncementsEdit extends Component {
 
 function mapStateToProps(state){
   return {
-    user_announcements: state.user_announcements
+    update_announcement: state.update_announcement
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserAnnouncements: getUserAnnouncements
+    updateAnnouncements: updateAnnouncements
   }, dispatch);
 }
 

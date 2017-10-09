@@ -7,6 +7,7 @@ import 'react-table/react-table.css';
 import {
   Link
 } from 'react-router-dom';
+import AnnouncementsEdit from './AnnouncementsEdit'
 
 class AnnouncementsList extends Component {
 
@@ -59,13 +60,10 @@ class AnnouncementsList extends Component {
   }
 
   editRenderer(props){
-    console.log(props);
     if(!props.value){
       return '';
     }
-    var url = '/anuncios/'+props.value.id+'/';
-    console.log(url);
-    return <Link to={url}>Editar</Link>;
+    return <AnnouncementsEdit announcement_id={props.value.id} availability={props.value.availability} movility={props.value.movility} />;
   }
   render(){
     const columns = [{
