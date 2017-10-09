@@ -12,6 +12,7 @@ import ClientReducer from './reducer_client';
 import SignUpReducer from './reducer_sign_up';
 import LoginReducer from './reducer_login';
 import UpdateProfessionalReducer from './reducer_update_professional';
+import UpdateClientReducer from './reducer_update_client';
 import UpdateAnnouncementReducer from './reducer_update_announcement';
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   professionals: ProfessionalsReducer,
   announcements_by_job: AnnouncementsByJobReducer,
   update_professional: UpdateProfessionalReducer,
-  update_announcement: UpdateAnnouncementReducer
+  update_announcement: UpdateAnnouncementReducer,
+  update_client: UpdateClientReducer
 });
 export default rootReducer;

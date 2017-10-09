@@ -9,6 +9,9 @@ import './css/font-awesome/css/font-awesome.min.css';
 import './css/rating/rating.css';
 import { Card, CardBlock, Button, CardTitle, CardText, CardImg, Col } from 'reactstrap';
 import ClientName from './ClientName';
+import {
+  Link,
+} from 'react-router-dom';
 
 class ProfessionalThumb extends Component {
 
@@ -34,7 +37,8 @@ class ProfessionalThumb extends Component {
             this.state.client_id = this.state.review.service.client.id;
         }
       }
-      comment = <div>"{this.state.review.comment}" - <ClientName client_id={this.state.client_id}/> </div>;
+      let url = '/clientes/' + this.state.client_id + '/';
+      comment = <div>"{this.state.review.comment}" - <Link to={url}><ClientName client_id={this.state.client_id}/> </Link></div>;
     } else{
       comment = <div></div>;
     }

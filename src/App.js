@@ -18,6 +18,7 @@ import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsLis
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
 import ProfessionalPage from './components/ProfessionalPage';
+import ClientPage from './components/ClientPage';
 import {
   Route,
   Link,
@@ -47,6 +48,9 @@ class App extends Component {
           )} />
           <Route path="/profesionales/:id/" render={({ match }) => (
             <ProfessionalPage professional_id={match.params.id}/>
+          )} />
+          <Route path="/clientes/:id/" render={({ match }) => (
+            <ClientPage client_id={match.params.id}/>
           )} />
           <Route path="/anuncios/:id/" render={({ match }) => (
             <AnnouncementsEdit professional_id={match.params.id}/>

@@ -11,4 +11,5 @@ export const GET_CLIENT = 'gets_client';
 export const SIGNUP_USER = 'signsups_user';
 export const LOGIN_USER = 'logins_user';
 export const UPDATE_PROFESSIONAL = 'updates_professional_instance';
-export const UPDATE_ANNOUNCEMENTS = 'updates_announcement_instance'
+export const UPDATE_ANNOUNCEMENTS = 'updates_announcement_instance';
+export const UPDATE_CLIENT = 'updates_client_instance';
