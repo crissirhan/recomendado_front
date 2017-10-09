@@ -7,7 +7,8 @@ import 'react-table/react-table.css';
 import {
   Link
 } from 'react-router-dom';
-import AnnouncementsEdit from './AnnouncementsEdit'
+import AnnouncementsEdit from './AnnouncementsEdit';
+import { Collapse,Button } from 'reactstrap';
 
 class AnnouncementsList extends Component {
 
@@ -39,8 +40,10 @@ class AnnouncementsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      announcements:{}
+      announcements:{},
+      collapse: false
     };
+    this.toggle = this.toggle.bind(this);
   }
 
   toAnnouncements(){
@@ -63,8 +66,13 @@ class AnnouncementsList extends Component {
     if(!props.value){
       return '';
     }
-    return <AnnouncementsEdit announcement_id={props.value.id} availability={props.value.availability} movility={props.value.movility} />;
+    return  <div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Editar</Button><Collapse isOpen={this.state.collapse}><AnnouncementsEdit announcement_id={props.value.id} availability={props.value.availability} movility={props.value.movility} /></Collapse></div>;
   }
+
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
+  }
+
   render(){
     const columns = [{
       Header: 'Trabajo',
