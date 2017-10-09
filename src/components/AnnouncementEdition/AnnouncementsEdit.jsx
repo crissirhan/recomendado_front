@@ -109,6 +109,7 @@ class AnnouncementsEdit extends Component {
           <Input  name="movility" id="movility"
           value={this.state.movility} onChange={this.handleInputChange}/>
         </FormGroup>
+        <Label>Disponibilidad</Label>
         <FormGroup check>
           <Label check>
             <Input type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
