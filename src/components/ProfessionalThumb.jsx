@@ -46,7 +46,9 @@ class ProfessionalThumb extends Component {
       <Col sm="4">
         <Card block className="text-center">
           <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
-          <CardTitle>{this.props.professional.first_name} {this.props.professional.last_name}</CardTitle>
+          <Link to={'/profesionales/'+this.props.professional_id+'/'}>
+            <CardTitle>{this.props.professional.user ? this.props.professional.user.first_name + ' ' +this.props.professional.user.last_name : ''}</CardTitle>
+          </Link>
           <Rating
             empty="fa fa-star-o fa-2x orange-star"
             full="fa fa-star fa-2x orange-star"

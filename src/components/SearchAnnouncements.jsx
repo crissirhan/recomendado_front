@@ -51,7 +51,8 @@ class SearchAnnouncements extends Component {
       Cell: props => <Link to={'/profesionales/'+props.value.id}> {props.value.user.first_name} {props.value.user.last_name}</Link>
     },{
       Header: 'Trabajo',
-      accessor: 'job.job_type' // String-based value accessors!
+      accessor: 'job', // String-based value accessors!
+      Cell: props => <Link to={'/categorias/'+props.value.id+'/'+props.value.job_type+'/'}>{props.value.job_type}</Link>
     },{
       Header: 'Fecha publicación',
       accessor: 'publish_date' // String-based value accessors!

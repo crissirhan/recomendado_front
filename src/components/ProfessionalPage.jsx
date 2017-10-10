@@ -39,6 +39,10 @@ class ProfessionalPage extends Component {
          }
       }
       this.setState({
+        first_name:nextProps.professional.user.first_name,
+        last_name:nextProps.professional.user.last_name,
+        email:nextProps.professional.user.email,
+        username:nextProps.professional.user.username,
         lazyInitialization: false
       });
     }

@@ -16,9 +16,13 @@ class ClientName extends Component {
 
   render() {
     console.log(this.props.client);
+    console.log(this.props.client.user);
+    if(!this.props.client.user){
+      return null;
+    }
     return (
       <div>
-        {this.props.client.first_name} {this.props.client.last_name}
+        {this.props.client.user.first_name} {this.props.client.user.last_name}
       </div>
     );
   }

@@ -53,6 +53,7 @@ class ClientPage extends Component {
       id: '',
       first_name: '',
       last_name: '',
+      user:{},
       activeTab: '1'
     };
      this.handleInputChange = this.handleInputChange.bind(this);
@@ -96,7 +97,7 @@ class ClientPage extends Component {
   }
 
   handleCancel(){
-    this.props.getProfessional(this.props.professional_id);
+    this.props.getClient(this.props.client_id);
     this.editMode();
   }
   render() {
