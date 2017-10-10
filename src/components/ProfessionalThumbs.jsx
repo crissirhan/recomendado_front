@@ -21,11 +21,15 @@ class ProfessionalThumbs extends Component {
   }
 
   render() {
+    let random_professionals = this.props.professionals.sort(() => .5 - Math.random()).slice(0,3);
+    console.log(random_professionals);
+    let professionals_cards = random_professionals.map(professional =>
+      <ProfessionalThumb professional={professional} professional_id={professional.id} key={professional.id.toString()}/>
+    );
+    console.log(professionals_cards);
     return (
       <CardGroup>
-        {this.props.professionals.sort(() => .5 - Math.random()).slice(0,3).map(professional =>
-          <ProfessionalThumb professional_id={professional.id} key={professional.id}/>
-        )}
+        {professionals_cards}
       </CardGroup>
     );
   }

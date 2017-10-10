@@ -13,3 +13,5 @@ export const LOGIN_USER = 'logins_user';
 export const UPDATE_PROFESSIONAL = 'updates_professional_instance';
 export const UPDATE_ANNOUNCEMENTS = 'updates_announcement_instance';
 export const UPDATE_CLIENT = 'updates_client_instance';
+export const SIGNUP_CLIENT = 'signups_client_instance';
+export const SIGNUP_PROFESSIONAL = 'signups_professional_instance';

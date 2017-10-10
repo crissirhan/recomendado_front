@@ -29,18 +29,49 @@ class ProfessionalThumb extends Component {
   }
 
   render() {
+    if(this.props.user_reviews.count === 0){
+      return <div/>;
+    }
+    if(this.props.user_reviews.length === 0){
+      return null;
+    }
+    if(!this.props.user_reviews.reviews || this.props.user_reviews.reviews.length === 0){
+      return null;
+    }
     let comment = null;
     if(this.props.user_reviews.reviews){
       if(!this.state.review){
-        this.state.review = this.props.user_reviews.reviews[Math.floor(Math.random()*this.props.user_reviews.reviews.length)]
-        if(this.state.review.service.client){
-            this.state.client_id = this.state.review.service.client.id;
+        if(this.props.user_reviews.reviews){
+          this.setState({
+            review : this.props.user_reviews.reviews[Math.floor(Math.random()*this.props.user_reviews.reviews.length)]
+          });
+          if(this.state.review){
+            if(this.state.review.service.client){
+              this.setState({
+                client_id : this.state.review.service.client.id
+              });
+            }
+          }
         }
       }
       let url = '/clientes/' + this.state.client_id + '/';
-      comment = <div>"{this.state.review.comment}" - <Link to={url}><ClientName client_id={this.state.client_id}/> </Link></div>;
+      if(this.state.review){
+        comment = <div>"{this.state.review.comment}" - <Link to={url}><ClientName client_id={this.state.client_id}/> </Link></div>;
+      }
     } else{
       comment = <div></div>;
+    }
+    if(!this.state.review){
+      return null;
+    }
+    if(!this.state.review.service){
+      return null;
+    }
+    if(!this.state.review.service.announcement){
+      return null;
+    }
+    if(this.props.professional_id != this.state.review.service.announcement.professional.id){
+      return null;
     }
     return (
       <Col sm="4">

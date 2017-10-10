@@ -48,13 +48,9 @@ class ProjectNavbar extends Component {
             </Modal>
           </NavItem>
           <NavItem>
-            <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>{' '}
-            <Modal isOpen={this.state.signUpModal} toggle={this.signUpToggle} className="navbar">
-              <ModalHeader toggle={this.signUpToggle}>Registro</ModalHeader>
-              <ModalBody>
-                <SignUpForm toggle={this.signUpToggle}/>
-              </ModalBody>
-            </Modal>
+            <Link to="/registro/">
+              <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>
+            </Link>
           </NavItem>
         </Nav>
       </Navbar>

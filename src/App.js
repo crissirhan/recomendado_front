@@ -13,6 +13,7 @@ import { signUp } from './services/UserServices';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ProjectNavbar from './components/Navbar/ProjectNavbar';
+import SignUpForm from './components/Navbar/SignUpForm';
 import login from './actions/login_user';
 import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
 import Home from './components/Home';
@@ -54,6 +55,9 @@ class App extends Component {
           )} />
           <Route path="/anuncios/:id/" render={({ match }) => (
             <AnnouncementsEdit professional_id={match.params.id}/>
+          )} />
+          <Route path="/registro/" render={({ match }) => (
+            <SignUpForm />
           )} />
         </Switch>
       </div>
