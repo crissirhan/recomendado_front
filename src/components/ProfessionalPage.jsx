@@ -96,17 +96,18 @@ class ProfessionalPage extends Component {
   }
 
   handleSave(){
-    let data = {
+    let user = {
       first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      last_name: this.state.last_name
+    }
+    let data = {
+      user: user,
       rut: this.state.rut,
       region: this.state.region,
       city: this.state.city,
       street: this.state.street,
       house_number: this.state.house_number,
-      phone_number: this.state.phone_number,
-      username: this.state.username,
-      email: this.state.username
+      phone_number: this.state.phone_number
     }
     console.log(data);
     this.props.updateProfessional(this.props.professional_id, data);

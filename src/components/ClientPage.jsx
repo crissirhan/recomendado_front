@@ -38,6 +38,10 @@ class ClientPage extends Component {
          }
       }
       this.setState({
+        first_name:nextProps.client.user.first_name,
+        last_name:nextProps.client.user.last_name,
+        email:nextProps.client.user.email,
+        username:nextProps.client.user.username,
         lazyInitialization: false
       });
       console.log(this.state);
@@ -85,9 +89,12 @@ class ClientPage extends Component {
   }
 
   handleSave(){
-    let data = {
+    let user = {
       first_name: this.state.first_name,
       last_name: this.state.last_name
+    }
+    let data = {
+      user:user
     }
     console.log(this.state);
     console.log(this.props);

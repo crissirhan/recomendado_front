@@ -54,9 +54,14 @@ class ProfessionalThumb extends Component {
           }
         }
       }
-      let url = '/clientes/' + this.state.client_id + '/';
+
       if(this.state.review){
-        comment = <div>"{this.state.review.comment}" - <Link to={url}><ClientName client_id={this.state.client_id}/> </Link></div>;
+        let url = '/clientes/' + this.state.review.service.client.id + '/';
+        console.log("ASD");
+        console.log(this.state.review);
+        console.log(this.state.review.service.client.id);
+        console.log("ASD");
+        comment = <div>"{this.state.review.client_comment}" - <Link to={url}><ClientName client_id={this.state.review.service.client.id}/> </Link></div>;
       }
     } else{
       comment = <div></div>;
