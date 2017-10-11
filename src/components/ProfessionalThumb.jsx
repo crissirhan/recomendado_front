@@ -78,12 +78,14 @@ class ProfessionalThumb extends Component {
     if(this.props.professional_id != this.state.review.service.announcement.professional.id){
       return null;
     }
+    console.log(this.state);
+    console.log(this.state.review.service.announcement.professional);
     return (
       <Col sm="4">
         <Card block className="text-center">
           <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
           <Link to={'/profesionales/'+this.props.professional_id+'/'}>
-            <CardTitle>{this.props.professional.user ? this.props.professional.user.first_name + ' ' +this.props.professional.user.last_name : ''}</CardTitle>
+            <CardTitle>{this.state.review.service.announcement.professional.user ? this.state.review.service.announcement.professional.user.first_name + ' ' +this.state.review.service.announcement.professional.user.last_name : ''}</CardTitle>
           </Link>
           <Rating
             empty="fa fa-star-o fa-2x orange-star"
