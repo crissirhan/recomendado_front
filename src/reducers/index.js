@@ -18,6 +18,8 @@ import SignUpProfessionalReducer from './reducer_sign_up_professional';
 import SignUpClientReducer from './reducer_sign_up_client';
 import ProfessionalByUsernameReducer from './reducer_professional_by_username';
 import ClientByUsernameReducer from './reducer_client_by_username';
+import PutServiceReducer from './reducer_put_service';
+import PutReviewReducer from './reducer_put_review';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -38,7 +40,9 @@ const rootReducer = combineReducers({
   sign_up_client:SignUpClientReducer,
   sign_up_professional:SignUpProfessionalReducer,
   logged_in_professional:ProfessionalByUsernameReducer,
-  logged_in_client:ClientByUsernameReducer
+  logged_in_client:ClientByUsernameReducer,
+  put_service:PutServiceReducer,
+  put_review:PutReviewReducer
 
 });
 export default rootReducer;

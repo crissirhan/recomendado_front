@@ -28,8 +28,8 @@ class ProjectNavbar extends Component {
         console.log(nextProps.logged_in_professional[0]);
         console.log(this.state.user);
         cookie.save('user', this.state.user, { path: '/' });
-        cookie.save('isProfessional', false, { path: '/' });
-        cookie.save('isClient', true, { path: '/' });
+        cookie.save('isProfessional', true, { path: '/' });
+        cookie.save('isClient', false, { path: '/' });
         this.setState({
           cookie_setted:true
         });
@@ -112,13 +112,13 @@ class ProjectNavbar extends Component {
     console.log(cookie.load('user') != "undefined");
     console.log(this.state.isProfessional);
     if(cookie.load('user') != "undefined"){
-      if(cookie.load('isProfessional') && cookie.load('user').user){
-        console.log(this.state.user);
+      if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
+        console.log(cookie.load('isProfessional'));
         console.log(cookie.load('user'));
-        return '/profesionales/' + cookie.load('user').user.id;
+        return '/profesionales/' + cookie.load('user').id;
       }
-      if(cookie.load('isClient') && cookie.load('user').user){
-        return '/clientes/' + cookie.load('user').user.id;
+      if(cookie.load('isClient') === "true" && cookie.load('user').user){
+        return '/clientes/' + cookie.load('user').id;
       }
     } else{
       if(this.state.isClient){
@@ -139,7 +139,8 @@ class ProjectNavbar extends Component {
     let buttons = null;
     console.log(this.getLoggedInUserUrl());
 
-    if(cookie.load('user').user && (cookie.load('token') != undefined )){
+    let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quita esto y hazlo bien
+    if(aux_exists && (cookie.load('token') != undefined )){
       console.log(this.state.user);
       console.log(cookie.load('token'));
       console.log(this.state.user || (cookie.load('token') != undefined ));

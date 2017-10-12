@@ -63,7 +63,7 @@ class AnnouncementsList extends Component {
   }
 
   editRenderer(props){
-    if(!props.value){
+    if(!props.value || this.props.professional_id != props.value.professional.id){
       return '';
     }
     return  <div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Editar</Button><Collapse isOpen={this.state.collapse}><AnnouncementsEdit announcement_id={props.value.id} availability={props.value.availability} movility={props.value.movility} /></Collapse></div>;
@@ -94,7 +94,7 @@ class AnnouncementsList extends Component {
       id: 'id',
       Header: 'Editar',
       accessor: d => d,
-      Cell: props => this.editRenderer(props)
+      Cell: props => this.editRenderer(props) 
     }];
 
     return (

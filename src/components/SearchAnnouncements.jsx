@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import getAnnouncements from '../actions/get_announcements';
+import putService from '../actions/put_review';
 import { bindActionCreators } from 'redux';
 import SearchInput, {createFilter} from 'react-search-input';
 import ReactTable from 'react-table';
@@ -9,6 +10,8 @@ import { withRouter } from 'react-router-dom';
 import {
   Link,
 } from 'react-router-dom';
+import cookie from 'react-cookies';
+import { Button } from 'reactstrap';
 
 
 
@@ -43,6 +46,27 @@ class SearchAnnouncements extends Component {
     var days=props.value.split(',');
     return (days.map(day => <span key={day.toString()}>{day} </span>));
   }
+
+  handleService(announcement){
+    if(cookie.load('user').user){
+      let data = {
+        client:cookie.load('user'),
+        announcement:announcement
+      }
+      console.log(data);
+      this.props.putService(data);
+    }else{
+      console.log("Error putService");
+    }
+  }
+
+  actionRenderer(props){
+    if(cookie.load('isClient')){
+      return <Button key={props.value.id} onClick={() => this.handleService(props.value)}>Contratar</Button>
+    }
+    return '';
+  }
+
   render(){
     const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
     const columns = [{
@@ -66,6 +90,11 @@ class SearchAnnouncements extends Component {
     },{
       Header: 'Movilidad',
       accessor: 'movility' // String-based value accessors!
+    },{
+      id: 'id',
+      Header: 'Acción',
+      accessor: d => d,
+      Cell: props => this.actionRenderer(props)
     }];
 
     return (
@@ -98,7 +127,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getAnnouncements: getAnnouncements
+    getAnnouncements: getAnnouncements,
+    putService:putService
   }, dispatch);
 }
 

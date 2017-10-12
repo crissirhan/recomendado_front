@@ -53,9 +53,6 @@ class App extends Component {
           <Route path="/clientes/:id/" render={({ match }) => (
             <ClientPage client_id={match.params.id}/>
           )} />
-          <Route path="/anuncios/:id/" render={({ match }) => (
-            <AnnouncementsEdit professional_id={match.params.id}/>
-          )} />
           <Route path="/registro/" render={({ match }) => (
             <SignUpForm />
           )} />
