@@ -10,9 +10,11 @@ export default function login(username,password){
       password: password
     })
     .then(function (response) {
+      console.log(response);
       dispatch(loginSuccessAsync(response,username));
     })
     .catch(function (error) {
+      console.log(error);
       dispatch(loginFailureAsync(error));
     });
   }
