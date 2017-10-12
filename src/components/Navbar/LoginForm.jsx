@@ -38,7 +38,7 @@ class LoginForm extends Component{
       <Form>
          <FormGroup>
            <Label for="exampleEmail">Correo electrónico</Label>
-           <Input type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
+           <Input type="email" name="username" id="exampleEmail" placeholder="Ingrese su correo electrónico"
            value={this.state.username} onChange={this.handleInputChange}/>
          </FormGroup>
          <FormGroup>

@@ -10,12 +10,14 @@ import ProfessionalReducer from './reducer_professional';
 import ProfessionalsReducer from './reducer_professionals';
 import ClientReducer from './reducer_client';
 import SignUpReducer from './reducer_sign_up';
-import LoginReducer from './reducer_login';
+//import LoginReducer from './reducer_login';
 import UpdateProfessionalReducer from './reducer_update_professional';
 import UpdateClientReducer from './reducer_update_client';
 import UpdateAnnouncementReducer from './reducer_update_announcement';
 import SignUpProfessionalReducer from './reducer_sign_up_professional';
 import SignUpClientReducer from './reducer_sign_up_client';
+import ProfessionalByUsernameReducer from './reducer_professional_by_username';
+import ClientByUsernameReducer from './reducer_client_by_username';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -26,7 +28,7 @@ const rootReducer = combineReducers({
   professional: ProfessionalReducer,
   client: ClientReducer,
   sign_up: SignUpReducer,
-  login: LoginReducer,
+  //login: LoginReducer,
   user_announcements: UserAnnouncementsReducer,
   professionals: ProfessionalsReducer,
   announcements_by_job: AnnouncementsByJobReducer,
@@ -34,6 +36,9 @@ const rootReducer = combineReducers({
   update_announcement: UpdateAnnouncementReducer,
   update_client: UpdateClientReducer,
   sign_up_client:SignUpClientReducer,
-  sign_up_professional:SignUpProfessionalReducer
+  sign_up_professional:SignUpProfessionalReducer,
+  logged_in_professional:ProfessionalByUsernameReducer,
+  logged_in_client:ClientByUsernameReducer
+
 });
 export default rootReducer;

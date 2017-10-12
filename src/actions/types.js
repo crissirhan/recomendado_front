@@ -15,3 +15,6 @@ export const UPDATE_ANNOUNCEMENTS = 'updates_announcement_instance';
 export const UPDATE_CLIENT = 'updates_client_instance';
 export const SIGNUP_CLIENT = 'signups_client_instance';
 export const SIGNUP_PROFESSIONAL = 'signups_professional_instance';
+export const USER_LOGIN_ERROR = 'login_error';
+export const GET_PROFESSIONAL_BY_USERNAME = 'gets_professional_with_username_as_query';
+export const GET_CLIENT_BY_USERNAME = 'gets_client_with_username_as_query';
