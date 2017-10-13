@@ -36,7 +36,6 @@ class ServiceList extends Component {
   }
 
   editRenderer(props){
-
     return  <div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Review</Button><Collapse isOpen={this.state.collapse}><ReviewForm service_id={props.value}/></Collapse></div>;
   }
 
@@ -56,7 +55,7 @@ class ServiceList extends Component {
       accessor: 'announcement.professional.user.first_name' // String-based value accessors!
     },{
       Header: 'Review',
-      accessor: 'service.id',
+      accessor: 'id',
       Cell: props => this.editRenderer(props)
     }];
     return (

@@ -7,17 +7,21 @@ import {bindActionCreators} from 'redux';
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 import { withRouter } from 'react-router';
+import Rating from 'react-rating';
+import './css/font-awesome/css/font-awesome.min.css';
+import './css/rating/rating.css';
 
 
 class ReviewForm extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      rating:'',
+      rating:1,
       client_comment:''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStarChange = this.handleStarChange.bind(this);
   }
 
   handleInputChange(event) {
@@ -29,8 +33,14 @@ class ReviewForm extends Component{
     });
   }
 
+  handleStarChange(value){
+    this.setState({
+      rating:value
+    });
+  }
+
   handleSubmit(){
-    let date = "2017-10-13T05:13:08Z"; //time now
+    let date = new Date().toJSON(); //time now
     let data = {
       service_id:this.props.service_id,
       rating:this.state.rating,
@@ -40,13 +50,15 @@ class ReviewForm extends Component{
     this.props.postReview(data);
   }
   render(){
-
     return (
       <Form>
         <FormGroup >
-          <Label for="rating">rating</Label>
-          <Input  name="rating" id="rating" placeholder="Ingrese su rating"
-          value={this.state.rating} onChange={this.handleInputChange}/>
+          <Rating
+            empty="fa fa-star-o fa-2x orange-star"
+            full="fa fa-star fa-2x orange-star"
+            initialRate={this.state.rating}
+            onClick={this.handleStarChange}
+          />
         </FormGroup>
         <FormGroup >
           <Label for="client_comment">client_comment</Label>
