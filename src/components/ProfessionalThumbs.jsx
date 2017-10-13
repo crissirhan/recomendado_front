@@ -13,23 +13,33 @@ class ProfessionalThumbs extends Component {
     this.props.getProfessionals();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(this.props != nextProps){
+      this.setState({
+        professionals:nextProps.professionals,
+        random_professionals: nextProps.professionals.sort(() => .5 - Math.random()).slice(0,3)
+      });
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      professionals:[]
+      professionals:[],
+      random_professionals:[]
     };
   }
 
   render() {
-    let random_professionals = this.props.professionals.sort(() => .5 - Math.random()).slice(0,3);
-    console.log(random_professionals);
-    let professionals_cards = random_professionals.map(professional =>
+    let professionals_cards = this.state.random_professionals.map(professional =>
       <ProfessionalThumb professional={professional} professional_id={professional.id} key={professional.id.toString()}/>
     );
     console.log(professionals_cards);
     return (
       <CardGroup>
-        {professionals_cards}
+        {this.state.random_professionals.map(professional =>
+          <ProfessionalThumb professional={professional} professional_id={professional.id} key={professional.id.toString()}/>
+        )}
       </CardGroup>
     );
   }
