@@ -17,89 +17,48 @@ class ProfessionalThumb extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps){
-      if(nextProps.user_reviews){
-        console.log(nextProps);
-        if(nextProps.user_reviews.reviews){
-          if(nextProps.user_reviews.reviews.length > 0){
-            let review = nextProps.user_reviews.reviews[Math.floor(Math.random()*nextProps.user_reviews.reviews.length)];
-            console.log(review);
-            this.setState({
-              user_reviews:nextProps.user_reviews,
-              review : review,
-              client_id : review.service.client.id
-            });
-          }
-        }
-      }
-      if(nextProps.professional){
-        this.setState({
-          professional:nextProps.professional
-        });
-      }
+      console.log(nextProps);
+      this.setState({
+        average:nextProps.user_reviews.average,
+        count:nextProps.user_reviews.count
+      })
     }
   }
 
   componentDidMount() {
-    this.props.getUserReviews(this.props.professional_id);
-    this.props.getProfessional(this.props.professional_id);
+    this.props.getUserReviews(this.props.professional.id);
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      client_id: null,
-      review: null,
-      user_reviews: null,
-      professional: null
+      count:null,
+      average:null
     };
   }
 
   render() {
-    if(!this.state.user_reviews || !this.state.professional){
+    console.log(this.props)
+    if(!this.state.count){
       return null;
     }
-    if(!this.state.user_reviews.reviews){
-      return null;
-    }
-    let comment = null;
-    if(this.state.user_reviews.reviews){
-
-      if(this.state.review){
-        let url = '/clientes/' + this.state.review.service.client.id + '/';
-        comment = <div>"{this.state.review.client_comment}" - <Link to={url}><ClientName client_id={this.state.review.service.client.id}/> </Link></div>;
-      }
-    } else{
-      comment = <div></div>;
-    }
-    if(!this.state.review){
-      return null;
-    }
-    if(!this.state.review.service){
-      return null;
-    }
-    if(!this.state.review.service.announcement){
-      return null;
-    }
-    if(this.props.professional_id != this.state.review.service.announcement.professional.id){
-      return null;
-    }
-    console.log(this.state);
-    console.log(this.state.review.service.announcement.professional);
+    let url = '/clientes/' + this.props.review.service.client.id + '/';
+    let comment = <div>"{this.props.review.client_comment}" - <Link to={url}>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</Link></div>
     return (
       <Col sm="4">
         <Card block className="text-center">
           <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
-          <Link to={'/profesionales/'+this.props.professional_id+'/'}>
-            <CardTitle>{this.state.review.service.announcement.professional.user ? this.state.review.service.announcement.professional.user.first_name + ' ' +this.state.review.service.announcement.professional.user.last_name : ''}</CardTitle>
+          <Link to={'/profesionales/'+this.props.professional.id+'/'}>
+            <CardTitle>{this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}</CardTitle>
           </Link>
           <Rating
             empty="fa fa-star-o fa-2x orange-star"
             full="fa fa-star fa-2x orange-star"
-            initialRate={this.state.user_reviews.average}
+            initialRate={this.state.average}
             readonly
           />
           <CardText>
-            <small className="text-muted">{this.state.user_reviews.count} evaluaciones</small>
+            <small className="text-muted">{this.state.count} evaluaciones</small>
           </CardText>
           <CardText>
             {comment}
@@ -111,15 +70,13 @@ class ProfessionalThumb extends Component {
 }
 function mapStateToProps(state){
   return {
-    user_reviews: state.user_reviews,
-    professional: state.professional
+    user_reviews: state.user_reviews
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserReviews: getUserReviews,
-    getProfessional: getProfessional
   }, dispatch);
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import getAnnouncements from '../actions/get_announcements';
-import putService from '../actions/put_review';
+import putService from '../actions/put_service';
 import { bindActionCreators } from 'redux';
 import SearchInput, {createFilter} from 'react-search-input';
 import ReactTable from 'react-table';
@@ -50,8 +50,8 @@ class SearchAnnouncements extends Component {
   handleService(announcement){
     if(cookie.load('user').user){
       let data = {
-        client:cookie.load('user'),
-        announcement:announcement
+        client_id:cookie.load('user').id,
+        announcement_id:announcement.id
       }
       console.log(data);
       this.props.putService(data);

@@ -20,6 +20,7 @@ import ProfessionalByUsernameReducer from './reducer_professional_by_username';
 import ClientByUsernameReducer from './reducer_client_by_username';
 import PutServiceReducer from './reducer_put_service';
 import PutReviewReducer from './reducer_put_review';
+import GetReviewsReducer from './reducer_get_reviews';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -42,7 +43,8 @@ const rootReducer = combineReducers({
   logged_in_professional:ProfessionalByUsernameReducer,
   logged_in_client:ClientByUsernameReducer,
   put_service:PutServiceReducer,
-  put_review:PutReviewReducer
+  put_review:PutReviewReducer,
+  get_reviews:GetReviewsReducer
 
 });
 export default rootReducer;

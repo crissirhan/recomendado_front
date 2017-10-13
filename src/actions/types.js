@@ -20,3 +20,4 @@ export const GET_PROFESSIONAL_BY_USERNAME = 'gets_professional_with_username_as_
 export const GET_CLIENT_BY_USERNAME = 'gets_client_with_username_as_query';
 export const PUT_SERVICE = 'creates_service_instance';
 export const PUT_REVIEW = 'creates_review_instance';
+export const GET_REVIEWS = 'gets_all_reviews';
