@@ -1,11 +1,11 @@
 import { SIGNUP_CLIENT } from './types';
 import axios from 'axios';
-
+import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function signUpClient(data) {
   return dispatch => {
-    axios.post(baseUri+'/clients/',data).then(response => {
+    axios.post(ENDPOINT_URI+'/clients/',data).then(response => {
         dispatch(signUpClientAsync(response));
       });
   }

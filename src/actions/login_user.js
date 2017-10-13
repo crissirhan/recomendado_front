@@ -1,11 +1,11 @@
 import { USER_LOGIN, USER_LOGIN_ERROR } from './types';
 import axios from 'axios';
-
+import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function login(username,password){
   return dispatch => {
-      axios.post(baseUri+'/rest-auth/login/', {
+      axios.post(ENDPOINT_URI+'/rest-auth/login/', {
       username: username,
       password: password
     })

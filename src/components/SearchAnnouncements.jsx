@@ -61,7 +61,7 @@ class SearchAnnouncements extends Component {
   }
 
   actionRenderer(props){
-    if(cookie.load('isClient')){
+    if(cookie.load('isClient') == "true"){
       return <Button key={props.value.id} onClick={() => this.handleService(props.value)}>Contratar</Button>
     }
     return '';

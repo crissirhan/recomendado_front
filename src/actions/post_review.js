@@ -1,23 +1,23 @@
-import { PUT_SERVICE } from './types';
+import { POST_REVIEW } from './types';
 import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function putService(data) {
+export default function postReview(data) {
   return dispatch => {
-    axios.post(ENDPOINT_URI+'/post-services/', data)
+    axios.post(ENDPOINT_URI+'/post-reviews/', data)
       .then(res => {
         console.log(res.data);
-        dispatch(putServiceAsync(res.data));
+        dispatch(postReviewAsync(res.data));
       }).catch(function (error) {
         console.log(error);
       });
   }
 }
 
-function putServiceAsync(service){
+function postReviewAsync(service){
   return {
-    type: PUT_SERVICE,
+    type: POST_REVIEW,
     payload: service
   };
 }

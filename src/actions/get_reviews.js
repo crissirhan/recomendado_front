@@ -1,11 +1,11 @@
 import { GET_REVIEWS } from './types';
 import axios from 'axios';
-
+import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function getReviews() {
   return dispatch => {
-    axios.get(baseUri+'/reviews/')
+    axios.get(ENDPOINT_URI+'/reviews/')
       .then(res => {
         console.log(res.data);
         dispatch(getReviewsAsync(res.data));

@@ -1,11 +1,11 @@
 import { GET_ANNOUNCEMENTS } from './types';
 import axios from 'axios';
-
+import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function getAnnouncements() {
   return dispatch => {
-    axios.get(baseUri+'/announcements/')
+    axios.get(ENDPOINT_URI+'/announcements/')
       .then(res => {
         const announcements = res.data.map(announcement => {
           return announcement;

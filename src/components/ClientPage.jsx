@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import getClient from '../actions/get_client';
 import updateClient from '../actions/update_client';
 import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
+import getClientServices from '../actions/get_client_services';
 import {
   Container,
   Collapse,
@@ -15,16 +16,30 @@ import {
   Link,
   Switch
 } from 'react-router-dom';
+import ServiceList from './ServiceList';
 
 class ClientPage extends Component {
 
   componentDidMount() {
     this.props.getClient(this.props.client_id);
+    this.props.getClientServices(this.props.client_id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props != nextProps) {
-      this.syncPropToState(nextProps);
+    if(this.props != nextProps && nextProps.client) {
+      //this.syncPropToState(nextProps);
+      this.setState({
+        first_name:nextProps.client.user.first_name,
+        last_name:nextProps.client.user.last_name,
+        email:nextProps.client.user.email,
+        username:nextProps.client.user.username,
+        lazyInitialization: false
+      });
+    }
+    if(nextProps != this.props && nextProps.client_services[0] && !this.state.client_services){
+      this.setState({
+        client_services:nextProps.client_services
+      })
     }
   }
 
@@ -58,7 +73,8 @@ class ClientPage extends Component {
       first_name: '',
       last_name: '',
       user:{},
-      activeTab: '1'
+      activeTab: '1',
+      client_services:null
     };
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
@@ -108,6 +124,7 @@ class ClientPage extends Component {
     this.editMode();
   }
   render() {
+    console.log(this.state.client_services);
     return (
       <div>
         <Nav tabs>
@@ -117,6 +134,14 @@ class ClientPage extends Component {
               onClick={() => { this.toggle('1'); }}
             >
               Datos de usuario
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}
+            >
+              Servicios contratados
             </NavLink>
           </NavItem>
         </Nav>
@@ -137,7 +162,7 @@ class ClientPage extends Component {
             </Container>
           </TabPane>
           <TabPane tabId="2">
-              <div/>
+              <ServiceList services={this.state.client_services}/>
           </TabPane>
         </TabContent>
       </div>
@@ -147,14 +172,16 @@ class ClientPage extends Component {
 function mapStateToProps(state){
   return {
     client: state.client,
-    update_client: state.update_client
+    update_client: state.update_client,
+    client_services:state.client_services
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getClient: getClient,
-    updateClient: updateClient
+    updateClient: updateClient,
+    getClientServices:getClientServices
   }, dispatch);
 }
 

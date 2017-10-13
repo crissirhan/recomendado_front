@@ -15,8 +15,6 @@ import getProfessionalByUsername from '../../actions/get_professional_by_usernam
 class ProjectNavbar extends Component {
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    console.log(this.state.fetched_user);
 
     if(this.props != nextProps){
       if(nextProps.logged_in_professional[0]){
@@ -25,9 +23,7 @@ class ProjectNavbar extends Component {
           isProfessional:true
         });
         cookie.save('token', this.props.token.token_key, { path: '/' });
-        console.log(nextProps.logged_in_professional[0]);
-        console.log(this.state.user);
-        cookie.save('user', this.state.user, { path: '/' });
+        cookie.save('user', nextProps.logged_in_professional[0], { path: '/' });
         cookie.save('isProfessional', true, { path: '/' });
         cookie.save('isClient', false, { path: '/' });
         this.setState({
@@ -40,7 +36,7 @@ class ProjectNavbar extends Component {
           isClient:true
         });
         cookie.save('token', this.props.token.token_key, { path: '/' });
-        cookie.save('user', this.state.user, { path: '/' });
+        cookie.save('user', nextProps.logged_in_client[0], { path: '/' });
         cookie.save('isProfessional', false, { path: '/' });
         cookie.save('isClient', true, { path: '/' });
         this.setState({
@@ -49,7 +45,6 @@ class ProjectNavbar extends Component {
       }
 
       if(this.state.fetched_user){
-        console.log("ceerrando props asd");
         return;
       }
       if(nextProps.token && !this.state.fetch_user){
@@ -61,7 +56,6 @@ class ProjectNavbar extends Component {
       }
     }
     if(this.props != nextProps) {
-      console.log(nextProps);
 
     }
   }
@@ -97,7 +91,6 @@ class ProjectNavbar extends Component {
   }
 
   onLogout(){
-    console.log("LOGOUT");
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });
     cookie.remove('isProfessional', { path: '/' });
@@ -107,14 +100,8 @@ class ProjectNavbar extends Component {
   }
 
   getLoggedInUserUrl(){
-    console.log(cookie.loadAll());
-    console.log(cookie.load('user'));
-    console.log(cookie.load('user') != "undefined");
-    console.log(this.state.isProfessional);
     if(cookie.load('user') != "undefined"){
       if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
-        console.log(cookie.load('isProfessional'));
-        console.log(cookie.load('user'));
         return '/profesionales/' + cookie.load('user').id;
       }
       if(cookie.load('isClient') === "true" && cookie.load('user').user){
@@ -125,25 +112,16 @@ class ProjectNavbar extends Component {
         return '/clientes/'+this.state.user.id+'/';
       }
       if(this.state.isProfessional){
-        console.log("asd");
         return '/profesionales/'+this.state.user.id+'/';
       }
     }
-    console.log(this.state);
-    console.log(cookie.loadAll());
     return '/';
   }
   render() {
-    console.log(this.state.logged_in_user);
-    console.log(this.props);
     let buttons = null;
-    console.log(this.getLoggedInUserUrl());
 
     let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quita esto y hazlo bien
     if(aux_exists && (cookie.load('token') != undefined )){
-      console.log(this.state.user);
-      console.log(cookie.load('token'));
-      console.log(this.state.user || (cookie.load('token') != undefined ));
       /*
       if(!this.state.cookie_setted){
         //TODO: mover esto a algún lugar donde haga más sentido!
@@ -167,7 +145,6 @@ class ProjectNavbar extends Component {
         });
       }
       */
-      console.log(this.getLoggedInUserUrl());
       buttons =
       <Nav className="ml-auto" navbar>
         <NavItem>
@@ -198,7 +175,6 @@ class ProjectNavbar extends Component {
         </NavItem>
       </Nav>
     }
-    console.log(cookie.loadAll());
     return (
       <Navbar color="inverse" inverse>
         <Link to='/'>

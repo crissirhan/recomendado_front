@@ -17,11 +17,12 @@ class ProfessionalThumb extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps){
-      console.log(nextProps);
-      this.setState({
-        average:nextProps.user_reviews.average,
-        count:nextProps.user_reviews.count
-      })
+      if(nextProps.user_reviews.reviews[0].service.announcement.professional.id === this.props.professional.id){
+        this.setState({
+          average:nextProps.user_reviews.average,
+          count:nextProps.user_reviews.count
+        });
+      }
     }
   }
 
@@ -38,7 +39,6 @@ class ProfessionalThumb extends Component {
   }
 
   render() {
-    console.log(this.props)
     if(!this.state.count){
       return null;
     }
