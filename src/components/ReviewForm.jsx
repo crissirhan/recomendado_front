@@ -61,8 +61,8 @@ class ReviewForm extends Component{
           />
         </FormGroup>
         <FormGroup >
-          <Label for="client_comment">client_comment</Label>
-          <Input  name="client_comment" id="client_comment" placeholder="Ingrese su client_comment"
+          <Label for="client_comment">Comentario</Label>
+          <Input  name="client_comment" id="client_comment" 
           value={this.state.client_comment} onChange={this.handleInputChange}/>
         </FormGroup>
         <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
