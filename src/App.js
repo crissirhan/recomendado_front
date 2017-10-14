@@ -20,6 +20,7 @@ import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
 import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
+import AnnouncementForm from './components/AnnouncementForm';
 import {
   Route,
   Link,
@@ -55,6 +56,9 @@ class App extends Component {
           )} />
           <Route path="/registro/" render={({ match }) => (
             <SignUpForm />
+          )} />
+          <Route path="/form/" render={({ match }) => (
+            <AnnouncementForm />
           )} />
         </Switch>
       </div>

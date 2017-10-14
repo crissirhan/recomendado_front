@@ -23,3 +23,4 @@ export const PUT_REVIEW = 'creates_review_instance';
 export const GET_REVIEWS = 'gets_all_reviews';
 export const GET_CLIENT_SERVICES = 'get_client_related_services';
 export const POST_REVIEW = 'posts_review';
+export const POST_ANNOUNCEMENT = 'posts_announcement';

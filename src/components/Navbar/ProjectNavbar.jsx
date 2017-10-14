@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavbarBrand, Nav, NavItem, Navbar } from 'reactstrap';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
+import AnnouncementForm from '../AnnouncementForm';
 import '../css/navbar/navbar.css';
 import {
   Link,
@@ -70,17 +71,25 @@ class ProjectNavbar extends Component {
       cookie_setted:false,
       user:null,
       isClient:false,
-      isProfessional:false
+      isProfessional:false,
+      announcementModal: false
     };
     this.loginToggle = this.loginToggle.bind(this);
     this.signUpToggle = this.signUpToggle.bind(this);
     this.getLoggedInUserUrl = this.getLoggedInUserUrl.bind(this);
     this.onLogout = this.onLogout.bind(this);
+    this.announcementToggle = this.announcementToggle.bind(this);
   }
 
   loginToggle(){
     this.setState({
       loginModal: !this.state.loginModal
+    });
+  }
+
+  announcementToggle(){
+    this.setState({
+      announcementModal: !this.state.announcementModal
     });
   }
 
@@ -145,8 +154,22 @@ class ProjectNavbar extends Component {
         });
       }
       */
+      let annoucement_modal = null;
+      if(cookie.load('isProfessional') === "true"){
+        annoucement_modal =
+        <NavItem>
+          <Button color="primary" onClick={this.announcementToggle}>Crear anuncio</Button>{' '}
+          <Modal isOpen={this.state.announcementModal} toggle={this.announcementToggle} className="navbar">
+            <ModalHeader toggle={this.announcementToggle}>Crear anuncio</ModalHeader>
+            <ModalBody>
+              <AnnouncementForm toggle={this.announcementToggle}/>
+            </ModalBody>
+          </Modal>
+        </NavItem>
+      }
       buttons =
       <Nav className="ml-auto" navbar>
+        {annoucement_modal}
         <NavItem>
           <Link to={this.getLoggedInUserUrl()}>
             <Button color="primary">Perfil</Button>{' '}

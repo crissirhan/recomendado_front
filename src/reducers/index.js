@@ -23,6 +23,7 @@ import PutReviewReducer from './reducer_put_review';
 import GetReviewsReducer from './reducer_get_reviews';
 import ClientServicesReducer from './reducer_client_services';
 import PostReviewReducer from './reducer_post_review';
+import PostAnnouncementnReducer from './reducer_post_announcement';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -48,7 +49,7 @@ const rootReducer = combineReducers({
   put_review:PutReviewReducer,
   get_reviews:GetReviewsReducer,
   client_services:ClientServicesReducer,
-  post_review:PostReviewReducer
-
+  post_review:PostReviewReducer,
+  post_announcement:PostAnnouncementnReducer
 });
 export default rootReducer;
