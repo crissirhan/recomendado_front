@@ -59,7 +59,6 @@ class ClientPage extends Component {
         username:nextProps.client.user.username,
         lazyInitialization: false
       });
-      console.log(this.state);
     }
   }
 
@@ -112,9 +111,6 @@ class ClientPage extends Component {
     let data = {
       user:user
     }
-    console.log(this.state);
-    console.log(this.props);
-    console.log(data);
     this.props.updateClient(this.props.client_id, data);
     this.editMode();
   }
@@ -124,7 +120,6 @@ class ClientPage extends Component {
     this.editMode();
   }
   render() {
-    console.log(this.state.client_services);
     return (
       <div>
         <Nav tabs>

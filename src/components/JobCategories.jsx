@@ -18,7 +18,6 @@ class JobCategories extends Component {
   }
 
   render() {
-    console.log(this.props.job_categories);
     return (
       <CardGroup>
         {this.props.job_categories.map(category =>

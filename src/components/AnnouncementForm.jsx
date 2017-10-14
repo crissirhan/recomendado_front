@@ -18,7 +18,6 @@ class AnnouncementForm extends Component{
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps){
-      console.log(nextProps.job_categories);
       this.setState({
         job_categories:nextProps.job_categories,
         job:nextProps.job_categories[0]
@@ -98,7 +97,6 @@ class AnnouncementForm extends Component{
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    console.log(name);
     let availability = {...this.state.availability};
     availability[name] = value;
     this.setState({availability:availability});
@@ -121,8 +119,6 @@ class AnnouncementForm extends Component{
     if(!this.state.job){
       return null;
     }
-    console.log(this.state);
-    console.log(this.state.job_subtype);
     return (
       <Form>
       <FormGroup>

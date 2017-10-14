@@ -109,7 +109,6 @@ class ProfessionalPage extends Component {
       house_number: this.state.house_number,
       phone_number: this.state.phone_number
     }
-    console.log(data);
     this.props.updateProfessional(this.props.professional_id, data);
     this.editMode();
   }

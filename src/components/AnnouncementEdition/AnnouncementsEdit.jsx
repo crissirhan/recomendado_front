@@ -57,12 +57,10 @@ class AnnouncementsEdit extends Component {
   }
 
   editRenderer(props){
-    console.log(props);
     if(!props.value){
       return '';
     }
     var url = '/profesional/'+props.value.professional.id+'/announcement/'+props.value.id+'/';
-    console.log(url);
     return <Link to={url}>Editar</Link>;
   }
   handleSubmit(){
@@ -74,10 +72,8 @@ class AnnouncementsEdit extends Component {
             }
         }
     }
-    console.log(days);
     let data = {'availability': days, 'movility': this.state.movility};
     this.props.updateAnnouncements(this.props.announcement_id,data);
-    console.log(this.props);
   }
 
   handleInputChange(event) {
@@ -94,7 +90,6 @@ class AnnouncementsEdit extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    console.log(name);
     let availability = {...this.state.availability};
     availability[name] = value;
     this.setState({availability:availability});
