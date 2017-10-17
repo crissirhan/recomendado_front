@@ -21,6 +21,7 @@ import CategoryPage from './components/CategoryPage';
 import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
 import AnnouncementForm from './components/AnnouncementForm';
+import ListAnnouncements from './components/ListAnnouncements';
 import {
   Route,
   Link,
@@ -28,6 +29,7 @@ import {
   Switch
 } from 'react-router-dom';
 import AnnouncementsEdit from './components/AnnouncementEdition/AnnouncementsEdit';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   componentDidMount() {
@@ -41,27 +43,35 @@ class App extends Component {
   render() {
     console.log(process.env);
     return (
-      <div>
-        <ProjectNavbar/>
-        <Switch>
-          <Route exact path='/' component={Home}/>
-          <Route path="/categorias/:id/:categoria" render={({ match }) => (
-            <CategoryPage category={match.params.categoria} category_id={match.params.id}/>
-          )} />
-          <Route path="/profesionales/:id/" render={({ match }) => (
-            <ProfessionalPage professional_id={match.params.id}/>
-          )} />
-          <Route path="/clientes/:id/" render={({ match }) => (
-            <ClientPage client_id={match.params.id}/>
-          )} />
-          <Route path="/registro/" render={({ match }) => (
-            <SignUpForm />
-          )} />
-          <Route path="/form/" render={({ match }) => (
-            <AnnouncementForm />
-          )} />
-        </Switch>
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <ProjectNavbar/>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path="/categorias/:id/:categoria" render={({ match }) => (
+              <CategoryPage category={match.params.categoria} category_id={match.params.id}/>
+            )} />
+            <Route path="/profesionales/:id/" render={({ match }) => (
+              <ProfessionalPage professional_id={match.params.id}/>
+            )} />
+            <Route path="/clientes/:id/" render={({ match }) => (
+              <ClientPage client_id={match.params.id}/>
+            )} />
+            <Route path="/registro/" render={({ match }) => (
+              <SignUpForm />
+            )} />
+            <Route path="/form/" render={({ match }) => (
+              <AnnouncementForm />
+            )} />
+            <Route path="/buscar/anuncios/:query" render={({ match }) => (
+              <ListAnnouncements search={match.params.query}/>
+            )} />
+            <Route path="/buscar/anuncios/" render={({ match }) => (
+              <ListAnnouncements search={''}/>
+            )} />
+          </Switch>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

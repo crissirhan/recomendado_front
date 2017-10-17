@@ -3,9 +3,15 @@ import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function getAnnouncements() {
+export default function getAnnouncements(search_params) {
+  let query = "";
+  if(search_params){
+    query= "?search=" + search_params;
+  }
+  console.log(query);
+  console.log(search_params);
   return dispatch => {
-    axios.get(ENDPOINT_URI+'/announcements/')
+    axios.get(ENDPOINT_URI+'/announcements/' + query)
       .then(res => {
         const announcements = res.data.map(announcement => {
           return announcement;

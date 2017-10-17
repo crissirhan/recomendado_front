@@ -1,5 +1,6 @@
 .navbar {
   text-align: left;
+  flex-direction: row !important;
 }
 
 .navbar-logo {

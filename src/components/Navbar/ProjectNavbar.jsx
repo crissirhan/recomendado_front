@@ -129,36 +129,13 @@ class ProjectNavbar extends Component {
   render() {
     let buttons = null;
 
-    let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quita esto y hazlo bien
+    let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
     if(aux_exists && (cookie.load('token') != undefined )){
-      /*
-      if(!this.state.cookie_setted){
-        //TODO: mover esto a algún lugar donde haga más sentido!
-
-
-        if(this.props.isProfessional){
-          cookie.save('token', this.props.token.token_key, { path: '/' });
-          cookie.save('user', this.state.user, { path: '/' });
-          cookie.save('isProfessional', true, { path: '/' });
-          cookie.save('isClient', false, { path: '/' });
-
-        }
-        if(this.state.isClient){
-          cookie.save('token', this.props.token.token_key, { path: '/' });
-          cookie.save('user', this.state.user, { path: '/' });
-          cookie.save('isProfessional', false, { path: '/' });
-          cookie.save('isClient', true, { path: '/' });
-        }
-        this.setState({
-          cookie_setted:true
-        });
-      }
-      */
       let annoucement_modal = null;
       if(cookie.load('isProfessional') === "true"){
         annoucement_modal =
         <NavItem>
-          <Button color="primary" onClick={this.announcementToggle}>Crear anuncio</Button>{' '}
+          <Button color="link" onClick={this.announcementToggle}>Crear anuncio</Button>{' '}
           <Modal isOpen={this.state.announcementModal} toggle={this.announcementToggle} className="navbar">
             <ModalHeader toggle={this.announcementToggle}>Crear anuncio</ModalHeader>
             <ModalBody>
@@ -168,23 +145,23 @@ class ProjectNavbar extends Component {
         </NavItem>
       }
       buttons =
-      <Nav className="ml-auto" navbar>
+      <Nav>
         {annoucement_modal}
         <NavItem>
           <Link to={this.getLoggedInUserUrl()}>
-            <Button color="primary">Perfil</Button>{' '}
+            <Button color="link">Perfil</Button>{' | '}
           </Link>
         </NavItem>
         <NavItem>
-          <Button color="primary" onClick={() => this.onLogout()}>Logout</Button>{' '}
+          <Button color="link" onClick={() => this.onLogout()}>Logout</Button>{' '}
         </NavItem>
       </Nav>
     } else{
       buttons =
-      <Nav className="ml-auto" navbar>
+      <Nav className="ml-auto" >
         <NavItem>
-          <Button color="primary" onClick={this.loginToggle}>Login</Button>{' '}
-          <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} className="navbar">
+          <Button color="link" onClick={this.loginToggle}>Login</Button>{' | '}
+          <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} >
             <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
             <ModalBody>
               <LoginForm toggle={this.loginToggle}/>
@@ -193,18 +170,20 @@ class ProjectNavbar extends Component {
         </NavItem>
         <NavItem>
           <Link to="/registro/">
-            <Button color="primary" onClick={this.signUpToggle}>Registrarse</Button>
+            <Button color="link" onClick={this.signUpToggle}>Registrarse</Button>
           </Link>
         </NavItem>
       </Nav>
     }
     return (
-      <Navbar color="inverse" inverse>
-        <Link to='/'>
-          <NavbarBrand>Recomendado</NavbarBrand>
-        </Link>
-        {buttons}
-      </Navbar>
+      <span>
+        <Navbar light>
+          <Link to='/'>
+            <NavbarBrand><h3><b>Recomendado</b></h3></NavbarBrand>
+          </Link>
+          {buttons}
+        </Navbar>
+      </span>
     );
   }
 }

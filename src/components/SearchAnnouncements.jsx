@@ -9,13 +9,15 @@ import 'react-table/react-table.css';
 import { withRouter } from 'react-router-dom';
 import {
   Link,
+  Redirect
 } from 'react-router-dom';
 import cookie from 'react-cookies';
 import { Button } from 'reactstrap';
+import SearchBar from 'material-ui-search-bar'
 
 
 
-const KEYS_TO_FILTERS = ['professional.id', 'job.job_type']
+const KEYS_TO_FILTERS = ['professional.id', 'job.job_type'];
 
 class SearchAnnouncements extends Component {
 
@@ -28,7 +30,8 @@ class SearchAnnouncements extends Component {
     this.state = {
       searchTerm: ''
     };
-    this.searchUpdated = this.searchUpdated.bind(this)
+    this.searchUpdated = this.searchUpdated.bind(this);
+    this.requestSearch = this.requestSearch.bind(this);
   }
 
   toAnnouncements(){
@@ -68,46 +71,19 @@ class SearchAnnouncements extends Component {
   }
 
   render(){
-    const filteredAnnouncements = this.props.announcements.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
-    const columns = [{
-      Header: 'Profesional',
-      accessor: 'professional', // String-based value accessors!
-      Cell: props => <Link to={'/profesionales/'+props.value.id}> {props.value.user.first_name} {props.value.user.last_name}</Link>
-    },{
-      Header: 'Trabajo',
-      accessor: 'job', // String-based value accessors!
-      Cell: props => <Link to={'/categorias/'+props.value.id+'/'+props.value.job_type+'/'}>{props.value.job_type}</Link>
-    },{
-      Header: 'Fecha publicación',
-      accessor: 'publish_date' // String-based value accessors!
-    },{
-      Header: 'Fecha expiración',
-      accessor: 'expire_date' // String-based value accessors!
-    },{
-      Header: 'Disponibilidad',
-      accessor: 'availability_display', // String-based value accessors!
-      Cell: props => this.dayRenderer(props)
-    },{
-      Header: 'Movilidad',
-      accessor: 'movility' // String-based value accessors!
-    },{
-      id: 'id',
-      Header: 'Acción',
-      accessor: d => d,
-      Cell: props => this.actionRenderer(props)
-    }];
 
     return (
-      <div>
-        <SearchInput className="search-input" onChange={this.searchUpdated} />
-        <ReactTable
-          data={filteredAnnouncements}
-          columns={columns}
-          showPagination={false}
-          showPaginationTop={false}
-          showPaginationBottom={true}
-          showPageSizeOptions={true}
-          minRows={0}
+      <div style={{textAlign:"center"}}>
+
+        <h5><b>Busca un Recomendado para tu hogar</b></h5>
+
+        <SearchBar
+          onChange={this.searchUpdated}
+          onRequestSearch={this.requestSearch}
+          style={{
+            margin: '0 auto',
+            maxWidth: 800
+          }}
         />
       </div>
      )
@@ -115,6 +91,11 @@ class SearchAnnouncements extends Component {
 
   searchUpdated (term) {
     this.setState({searchTerm: term})
+  }
+
+  requestSearch(){
+    this.props.history.push('/buscar/anuncios/'+this.state.searchTerm);
+    //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
   }
 
 }
@@ -132,4 +113,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchAnnouncements);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchAnnouncements));
