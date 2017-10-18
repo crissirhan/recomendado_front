@@ -48,7 +48,9 @@ class AnnouncementForm extends Component{
       job_subtype:null,
       location:'',
       job:null,
-      job_categories:[]
+      job_categories:[],
+      title:'',
+      description:''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
@@ -84,7 +86,9 @@ class AnnouncementForm extends Component{
       job_id:this.state.job.id,
       professional_id:cookie.load('user').id,
       availability:days,
-      location:this.state.location
+      location:this.state.location,
+      title:this.state.title,
+      description:this.state.description
     }
     if(this.state.job_subtype){
       data.job_subtype_id = this.state.job_subtype.id;
@@ -121,6 +125,16 @@ class AnnouncementForm extends Component{
     }
     return (
       <Form>
+      <FormGroup>
+        <Label for="title">Título</Label>
+        <Input  name="title" id="title"
+        value={this.state.title} onChange={this.handleInputChange}/>
+      </FormGroup>
+      <FormGroup>
+        <Label for="description">Descripción</Label>
+        <Input  name="description" id="description"
+        value={this.state.description} onChange={this.handleInputChange}/>
+      </FormGroup>
       <FormGroup>
         <Label for="movility">Movilidad</Label>
         <Input  name="movility" id="movility"

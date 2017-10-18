@@ -21,9 +21,6 @@ const KEYS_TO_FILTERS = ['professional.id', 'job.job_type'];
 
 class SearchAnnouncements extends Component {
 
-  componentDidMount() {
-    this.props.getAnnouncements();
-  }
 
   constructor(props) {
     super(props);
@@ -94,6 +91,7 @@ class SearchAnnouncements extends Component {
   }
 
   requestSearch(){
+    console.log("Buscar: " + this.state.searchTerm)
     this.props.history.push('/buscar/anuncios/'+this.state.searchTerm);
     //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
   }

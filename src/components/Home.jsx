@@ -26,7 +26,7 @@ class Home extends Component {
         <h1>Lorem ipsum</h1>
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.Quisque rutrum. Aenean imperdiet.</p>
         <SearchAnnouncements/>
-
+        <div style={{textAlign:"center"}}><i><b>Explora las distintas categorías y servicios disponibles para tí</b></i></div>
         <JobCategories/>
 
         <ProfessionalThumbs/>

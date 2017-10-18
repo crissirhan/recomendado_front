@@ -6,14 +6,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   Link,
+  withRouter
 } from 'react-router-dom';
 import SearchAnnouncements from './SearchAnnouncements';
 
 class ListAnnouncements extends Component {
 
   componentDidMount(){
-    console.log(this.props.search)
-    this.props.getAnnouncements(this.props.search)
+    this.props.getAnnouncements(this.props.search);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,7 +21,9 @@ class ListAnnouncements extends Component {
       this.setState({
         announcements:nextProps.announcements
       });
-      nextProps.availability
+      if(this.props.search !== nextProps.search){
+        this.props.getAnnouncements(nextProps.search);
+      }
     }
   }
 
@@ -35,7 +37,7 @@ class ListAnnouncements extends Component {
 
   render() {
       if(this.state.announcements.length === 0 ){
-        return <div> No se encontraron resultados </div>;
+        return <div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div>;
       }
       let table_body = this.state.announcements.map(announcement => {
       let days = {
@@ -54,10 +56,9 @@ class ListAnnouncements extends Component {
           }
         }
       }
-      console.log(announcement.availability)
-      console.log(announcement.availability.indexOf('lun'))
-      console.log(days.lun)
       let result =<tr key={announcement.id}>
+                    <td>{announcement.title}</td>
+                    <td>{announcement.description}</td>
                     <td>
                       <Link to={'/profesionales/'+announcement.professional.id}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</Link>
                     </td>
@@ -114,6 +115,8 @@ class ListAnnouncements extends Component {
         <Table>
           <thead>
             <tr>
+              <th>Título</th>
+              <th>Descripción</th>
               <th>Profesional</th>
               <th>Categoría</th>
               <th>Subcategoría</th>
@@ -143,4 +146,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListAnnouncements);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListAnnouncements));

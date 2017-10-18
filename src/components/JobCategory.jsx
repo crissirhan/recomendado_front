@@ -14,7 +14,7 @@ class JobCategory extends Component {
   }
 
   render() {
-    let url = '/categorias/' + this.props.category_id + '/' + this.props.category + '/';
+    let url = this.props.url;
     return (
       <Col sm="3">
         <Link to={url}>

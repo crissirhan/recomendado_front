@@ -66,7 +66,7 @@ class App extends Component {
             <Route path="/buscar/anuncios/:query" render={({ match }) => (
               <ListAnnouncements search={match.params.query}/>
             )} />
-            <Route path="/buscar/anuncios/" render={({ match }) => (
+            <Route exact path="/buscar/anuncios/" render={({ match }) => (
               <ListAnnouncements search={''}/>
             )} />
           </Switch>

@@ -131,22 +131,8 @@ class ProjectNavbar extends Component {
 
     let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
     if(aux_exists && (cookie.load('token') != undefined )){
-      let annoucement_modal = null;
-      if(cookie.load('isProfessional') === "true"){
-        annoucement_modal =
-        <NavItem>
-          <Button color="link" onClick={this.announcementToggle}>Crear anuncio</Button>{' '}
-          <Modal isOpen={this.state.announcementModal} toggle={this.announcementToggle} className="navbar">
-            <ModalHeader toggle={this.announcementToggle}>Crear anuncio</ModalHeader>
-            <ModalBody>
-              <AnnouncementForm toggle={this.announcementToggle}/>
-            </ModalBody>
-          </Modal>
-        </NavItem>
-      }
       buttons =
-      <Nav>
-        {annoucement_modal}
+      <Nav className="ml-auto" > 
         <NavItem>
           <Link to={this.getLoggedInUserUrl()}>
             <Button color="link">Perfil</Button>{' | '}

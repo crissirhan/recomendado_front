@@ -4,10 +4,7 @@ import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function getAnnouncements(search_params) {
-  let query = "";
-  if(search_params){
-    query= "?search=" + search_params;
-  }
+  let query = search_params ? "?search=" + search_params : '';
   console.log(query);
   console.log(search_params);
   return dispatch => {
