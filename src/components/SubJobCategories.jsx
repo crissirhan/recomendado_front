@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import JobCategory from './JobCategory';
 import getSubJobCategories from '../actions/get_job_sub_categories';
 import { bindActionCreators } from 'redux';
-import { CardGroup } from 'reactstrap';
+import { CardGroup, Col, Row, Container } from 'reactstrap';
+import {
+  Link,
+  withRouter
+} from 'react-router-dom';
 
 class SubJobCategories extends Component {
 
@@ -27,12 +31,26 @@ class SubJobCategories extends Component {
   }
 
   render() {
+    let sub_categories = this.state.job_sub_categories.filter((sub_category)=>sub_category.job_category.job_type === this.props.job);
     return (
-      <CardGroup>
-        {this.state.job_sub_categories.filter((sub_category)=>sub_category.job_category.job_type === this.props.job).map(category =>
-          <JobCategory category={category.job_sub_type} key={category.id} category_id={category.id} url={'/x'}/>
-        )}
-      </CardGroup>
+
+      <Container>
+        <Row>
+          <Col xs="3">
+            <ul>{sub_categories.map(category =>
+              <li key={category.id}><Link to={this.props.location.pathname+category.job_sub_type}>{category.job_sub_type}</Link></li>)}
+            </ul>
+          </Col>
+          <Col xs="9">
+            <CardGroup>
+              {sub_categories.map(category =>
+                <JobCategory category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type}/>
+              )}
+            </CardGroup>
+          </Col>
+        </Row>
+      </Container>
+
     );
   }
 }
@@ -48,4 +66,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubJobCategories);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubJobCategories));

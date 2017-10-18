@@ -18,6 +18,7 @@ import login from './actions/login_user';
 import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
+import SubCategoryPage from './components/SubCategoryPage';
 import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
 import AnnouncementForm from './components/AnnouncementForm';
@@ -48,8 +49,11 @@ class App extends Component {
           <ProjectNavbar/>
           <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path="/categorias/:id/:categoria" render={({ match }) => (
-              <CategoryPage category={match.params.categoria} category_id={match.params.id}/>
+            <Route exact path="/categorias/:categoria/" render={({ match }) => (
+              <CategoryPage category={match.params.categoria}/>
+            )} />
+            <Route path="/categorias/:categoria/:sub_categoria" render={({ match }) => (
+              <SubCategoryPage sub_category={match.params.sub_categoria}/>
             )} />
             <Route path="/profesionales/:id/" render={({ match }) => (
               <ProfessionalPage professional_id={match.params.id}/>

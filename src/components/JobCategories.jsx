@@ -21,7 +21,7 @@ class JobCategories extends Component {
     return (
       <CardGroup>
         {this.props.job_categories.map(category =>
-          <JobCategory category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.id + '/' + category.job_type + '/'}/>
+          <JobCategory category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'}/>
         )}
       </CardGroup>
     );
