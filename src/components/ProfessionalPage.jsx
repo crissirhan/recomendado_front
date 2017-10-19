@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import getProfessional from '../actions/get_professional';
-import updateProfessional from '../actions/update_professional';
+import getUserReviews from '../actions/get_user_reviews';
+import getUserAnnouncements from '../actions/get_user_announcements';
 import AnnouncementsList from './AnnouncementEdition/AnnouncementsList';
+import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
 import {
   Container,
   Collapse,
-  TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col
+  TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col, Jumbotron, CardImg, ListGroup, ListGroupItem
 } from 'reactstrap';
 import classnames from 'classnames';
 import {
@@ -16,56 +18,53 @@ import {
   Link,
   Switch
 } from 'react-router-dom';
+import Rating from 'react-rating';
+import cookie from 'react-cookies';
 
 class ProfessionalPage extends Component {
 
   componentDidMount() {
     this.props.getProfessional(this.props.professional_id);
+    this.props.getUserReviews(this.props.professional_id);
+    this.props.getUserAnnouncements(this.props.professional_id);
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps) {
-      this.syncPropToState(nextProps);
+      if(this.state.professional !== nextProps.professional){
+        this.setState({
+          professional:nextProps.professional
+        })
+      }
+      if(this.state.reviews !== nextProps.user_reviews.reviews){
+        this.setState({
+          reviews: nextProps.user_reviews.reviews,
+          average: nextProps.user_reviews.average,
+          count: nextProps.user_reviews.count
+        });
+        if(this.state.count){
+          this.setState({
+            count:0
+          })
+        }
+      }
+      if(this.state.announcements !== nextProps.user_announcements){
+        this.setState({
+          announcements: nextProps.user_announcements
+        })
+      }
     }
   }
 
-  syncPropToState(nextProps){
-    if(this.state.lazyInitialization){
-      for(var key in nextProps.professional) {
-         if (nextProps.professional.hasOwnProperty(key)) {
-            this.setState({
-              [key]: nextProps.professional[key]
-            });
-         }
-      }
-      this.setState({
-        first_name:nextProps.professional.user.first_name,
-        last_name:nextProps.professional.user.last_name,
-        email:nextProps.professional.user.email,
-        username:nextProps.professional.user.username,
-        lazyInitialization: false
-      });
-    }
-  }
 
   constructor(props) {
     super(props);
     this.state = {
-      lazyInitialization: true,
-      editMode:false,
-      username:'',
-      id: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      rut: '',
-      region: '',
-      city: '',
-      street: '',
-      house_number: '',
-      phone_number: '',
-      identification: '',
-      activeTab: '1'
+      professional:null,
+      announcements:[],
+      reviews:[],
+      average:0,
+      count:0
     };
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
@@ -117,86 +116,119 @@ class ProfessionalPage extends Component {
     this.props.getProfessional(this.props.professional_id);
     this.editMode();
   }
+  timeSince(date){
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + " años";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + " meses";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + " días";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + " horas";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + " minutos";
+    }
+    return Math.floor(seconds) + " segundos";
+  }
+
   render() {
+    console.log(this.state.reviews);
+    if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
+      return <Container>Cargando</Container>;
+    }
     return (
-      <div>
-        <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '1' })}
-              onClick={() => { this.toggle('1'); }}
-            >
-              Datos de usuario
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '2' })}
-              onClick={() => { this.toggle('2'); }}
-            >
-              Anuncios
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
-            <Container>
-              <Form >
-                <FormGroup >
-                  <Label for="first_name">Nombre</Label><Input readOnly={!this.state.editMode} name="first_name" id="first_name"
-                  value={this.state.first_name} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="last_name">Apellido</Label><Input readOnly={!this.state.editMode} name="last_name" id="last_name"
-                  value={this.state.last_name} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="rut">Rut</Label><Input readOnly={!this.state.editMode} name="rut" id="rut"
-                  value={this.state.rut} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="region">Región</Label><Input readOnly={!this.state.editMode} name="region" id="region"
-                  value={this.state.region} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="rut">Ciudad</Label><Input readOnly={!this.state.editMode} name="city" id="city"
-                  value={this.state.city} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="street">Calle</Label><Input readOnly={!this.state.editMode} name="street" id="street"
-                  value={this.state.street} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="house_number">Número de casa</Label><Input readOnly={!this.state.editMode} name="house_number" id="house_number"
-                  value={this.state.house_number} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup >
-                  <Label for="phone_number">Número de teléfono</Label><Input readOnly={!this.state.editMode} name="phone_number" id="phone_number"
-                  value={this.state.phone_number} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <Button onClick={() => {this.editMode()}} hidden={this.state.editMode}>Editar</Button><Button hidden={!this.state.editMode} onClick={() => {this.handleSave()} }>Guardar</Button><Button hidden={!this.state.editMode} onClick={() => {this.handleCancel()} }>Cancelar</Button>
-              </Form>
-            </Container>
-          </TabPane>
-          <TabPane tabId="2">
-              <AnnouncementsList professional_id={this.props.professional_id} />
-          </TabPane>
-        </TabContent>
-      </div>
+      <Container>
+        <Row>
+          <Col sm="3" style={{textAlign:"center"}}>
+            <Card block className="text-center" >
+              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
+              <CardTitle>{this.state.professional.user.first_name + ' ' +this.state.professional.user.last_name}</CardTitle>
+              <Row>
+                <Rating
+                  empty="fa fa-star-o fa-2x orange-star"
+                  full="fa fa-star fa-2x orange-star"
+                  initialRate={this.state.average}
+                  readonly
+                />
+                <CardText>
+                  <b>{this.state.average}</b>
+                </CardText>
+                <CardText>
+                  <small className="text-muted">({this.state.count} evaluaciones)</small>
+                </CardText>
+              </Row>
+              <CardText>
+                Región: {this.state.professional.region}
+              </CardText>
+              <CardText>
+                Ciudad: {this.state.professional.city}
+              </CardText>
+            </Card>
+            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button>Crear anuncio</Button></Link> : null}
+          </Col>
+          <Col sm="9">
+              <Card block className="text-center">
+                <CardTitle>Anuncios de {this.state.professional.user.first_name} {this.state.professional.user.last_name}</CardTitle>
+              </Card>
+              <ListAnnouncementsDummy announcements_array={this.state.announcements}/>
+            <ListGroup>
+              <ListGroupItem style={{display:"inherit"}}>
+                  Reviews de {this.state.professional.user.first_name} {this.state.professional.user.last_name}
+                  <Col sm="8"><Rating
+                      empty="fa fa-star-o fa-2x orange-star"
+                      full="fa fa-star fa-2x orange-star"
+                      initialRate={this.state.average}
+                      readonly/> <b>{this.state.average}</b></Col>
+                  <Col ><small className="text-muted">({this.state.count} evaluaciones)</small></Col>
+              </ListGroupItem>
+              {this.state.reviews.map(review => {
+                return <ListGroupItem key={review.id} style={{display:"block"}}>
+                  <Row>
+                    <Col><Rating
+                        empty="fa fa-star-o fa-2x orange-star"
+                        full="fa fa-star fa-2x orange-star"
+                        initialRate={review.rating}
+                        readonly/>        hace {this.timeSince(new Date(review.date))}</Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">Review por <Link to={'/clientes/'+review.service.client.id}>{review.service.client.user.first_name} {review.service.client.user.last_name}</Link></Col>
+                    <Col sm="6">{review.client_comment}</Col>
+                  </Row>
+                </ListGroupItem>;
+              })}
+            </ListGroup>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 function mapStateToProps(state){
   return {
     professional: state.professional,
-    update_professional: state.update_professional
+    user_reviews: state.user_reviews,
+    user_announcements: state.user_announcements
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getProfessional: getProfessional,
-    updateProfessional: updateProfessional
+    getUserReviews: getUserReviews,
+    getUserAnnouncements:getUserAnnouncements
   }, dispatch);
 }
 

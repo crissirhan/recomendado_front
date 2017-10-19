@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col, Jumbotron, Button } from 'reactstrap';
+import { Container, Col, Jumbotron, Button, Row } from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
 
 
@@ -37,22 +37,28 @@ class AnnouncementPage extends Component {
     }
     return (
       <Container>
-        <Col sm="6" >
-          <Jumbotron>
-            <h1 className="display-3">{this.state.announcement.title}</h1>
-            <p className="lead">{this.state.announcement.description}</p>
-            <hr className="my-2" />
-            <p>${this.state.announcement.price}</p>
-            <p>WIP</p>
-            <p className="lead">
-              <Button color="link">
-                <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-                  {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-                </Link>
-              </Button>
-            </p>
-          </Jumbotron>
-        </Col>
+        <Row>
+          <Col sm="6" >
+            <Jumbotron>
+              <h1 className="display-3">{this.state.announcement.title}</h1>
+              <p className="lead">{this.state.announcement.description}</p>
+              <hr className="my-2" />
+              <p>${this.state.announcement.price}</p>
+              <p className="lead">
+                <Button color="link">
+                  <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+                    {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
+                  </Link>
+                </Button>
+              </p>
+            </Jumbotron>
+          </Col>
+          <Col sm="6" >
+            <Jumbotron>
+              WIP
+            </Jumbotron>
+          </Col>
+        </Row>
       </Container>
      )
   }

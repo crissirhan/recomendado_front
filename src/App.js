@@ -68,14 +68,14 @@ class App extends Component {
             <Route path="/registro/" render={({ match }) => (
               <SignUpForm />
             )} />
-            <Route path="/form/" render={({ match }) => (
-              <AnnouncementForm />
-            )} />
             <Route path="/buscar/anuncios/:query" render={({ match }) => (
               <ListAnnouncements search={match.params.query}/>
             )} />
             <Route exact path="/buscar/anuncios/" render={({ match }) => (
               <ListAnnouncements search={''}/>
+            )} />
+            <Route path="/crear/anuncio/" render={({ match }) => (
+              <AnnouncementForm/>
             )} />
           </Switch>
         </div>

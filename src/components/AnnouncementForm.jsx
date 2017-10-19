@@ -12,7 +12,7 @@ import './css/font-awesome/css/font-awesome.min.css';
 import './css/rating/rating.css';
 import getJobCategories from '../actions/get_job_categories';
 import cookie from 'react-cookies';
-
+import { Container } from 'reactstrap';
 
 class AnnouncementForm extends Component{
 
@@ -50,7 +50,8 @@ class AnnouncementForm extends Component{
       job:null,
       job_categories:[],
       title:'',
-      description:''
+      description:'',
+      price:''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
@@ -88,13 +89,14 @@ class AnnouncementForm extends Component{
       availability:days,
       location:this.state.location,
       title:this.state.title,
-      description:this.state.description
+      description:this.state.description,
+      price:this.state.price
     }
     if(this.state.job_subtype){
       data.job_subtype_id = this.state.job_subtype.id;
     }
     this.props.postAnnouncement(data);
-    this.props.toggle();
+    alert('Petición enviada.')
   }
 
   handleCheckBoxChange(event){
@@ -123,89 +125,99 @@ class AnnouncementForm extends Component{
     if(!this.state.job){
       return null;
     }
+    if(!cookie.load('user') || !cookie.load('user').id || cookie.load('isProfessional') !== "true"){
+      return <div>Debes estar logeado/a como profesional para realizar esta acción</div>;
+    }
     return (
-      <Form>
-      <FormGroup>
-        <Label for="title">Título</Label>
-        <Input  name="title" id="title"
-        value={this.state.title} onChange={this.handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="description">Descripción</Label>
-        <Input  name="description" id="description"
-        value={this.state.description} onChange={this.handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="movility">Movilidad</Label>
-        <Input  name="movility" id="movility"
-        value={this.state.movility} onChange={this.handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="location">Ubicación</Label>
-        <Input  name="location" id="location"
-        value={this.state.location} onChange={this.handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-         <Label for="job">Trabajo</Label>
-         <Input type="select" name="job" id="job" onChange={this.handleJobSelectChange}>
-           {this.state.job_categories.map((category, index) => {
-              return <option key={category.id} value={index}>{category.job_type}</option>
-           })}
-         </Input>
-      </FormGroup>
-      <FormGroup hidden={this.state.job.sub_type.length === 0}>
-         <Label for="job_subtype">Subtipo de trabajo</Label>
-         <Input type="select" name="job_subtype" id="job_subtype" onChange={this.handleJobSubtypeSelectChange}>
-           {this.state.job.sub_type.map((sub_job, index) => {
-              return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
-           })}
-         </Input>
-      </FormGroup>
-      <Label>Disponibilidad</Label>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
-          Lunes
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
-          Martes
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
-          Miércoles
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
-          Jueves
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
-          Viernes
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
-          Sábado
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
-          Domingo
-        </Label>
-      </FormGroup>
-      <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
-      </Form>
+      <Container>
+        <Form>
+        <FormGroup>
+          <Label for="title">Título</Label>
+          <Input  name="title" id="title"
+          value={this.state.title} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="description">Descripción</Label>
+          <Input  name="description" id="description"
+          value={this.state.description} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="price">Precio</Label>
+          <Input type="number" name="price" id="price"
+          value={this.state.price} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="movility">Movilidad</Label>
+          <Input  name="movility" id="movility"
+          value={this.state.movility} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="location">Ubicación</Label>
+          <Input  name="location" id="location"
+          value={this.state.location} onChange={this.handleInputChange}/>
+        </FormGroup>
+        <FormGroup>
+           <Label for="job">Trabajo</Label>
+           <Input type="select" name="job" id="job" onChange={this.handleJobSelectChange}>
+             {this.state.job_categories.map((category, index) => {
+                return <option key={category.id} value={index}>{category.job_type}</option>
+             })}
+           </Input>
+        </FormGroup>
+        <FormGroup hidden={this.state.job.sub_type.length === 0}>
+           <Label for="job_subtype">Subtipo de trabajo</Label>
+           <Input type="select" name="job_subtype" id="job_subtype" onChange={this.handleJobSubtypeSelectChange}>
+             {this.state.job.sub_type.map((sub_job, index) => {
+                return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
+             })}
+           </Input>
+        </FormGroup>
+        <Label>Disponibilidad</Label>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
+            Lunes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
+            Martes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
+            Miércoles
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
+            Jueves
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
+            Viernes
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
+            Sábado
+          </Label>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
+            Domingo
+          </Label>
+        </FormGroup>
+        <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
+        </Form>
+      </Container>
     )
   }
 }
