@@ -44,7 +44,7 @@ class SubJobCategories extends Component {
           <Col xs="9">
             <CardGroup>
               {sub_categories.map(category =>
-                <JobCategory category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type}/>
+                <JobCategory category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
               )}
             </CardGroup>
           </Col>

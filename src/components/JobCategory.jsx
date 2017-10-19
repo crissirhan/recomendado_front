@@ -15,6 +15,7 @@ class JobCategory extends Component {
 
   render() {
     let url = this.props.url;
+    let image_url = this.props.image ? this.props.image : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
     return (
       <Col sm="3">
         <Link to={url}>
@@ -22,7 +23,7 @@ class JobCategory extends Component {
             <CardBlock>
               <CardTitle>{this.props.category}</CardTitle>
             </CardBlock>
-            <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+            <CardImg top width="100%" src={image_url} alt="Card image cap" />
           </Card>
         </Link>
       </Col>
