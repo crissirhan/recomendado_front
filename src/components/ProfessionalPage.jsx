@@ -189,6 +189,8 @@ class ProfessionalPage extends Component {
                   <Col ><small className="text-muted">({this.state.count} evaluaciones)</small></Col>
               </ListGroupItem>
               {this.state.reviews.map(review => {
+                console.log(review.service.client);
+                let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
                 return <ListGroupItem key={review.id} style={{display:"block"}}>
                   <Row>
                     <Col><Rating
@@ -198,6 +200,7 @@ class ProfessionalPage extends Component {
                         readonly/>        hace {this.timeSince(new Date(review.date))}</Col>
                   </Row>
                   <Row>
+                    <Col sm="1"><img src={image_url}/></Col>
                     <Col sm="6">Review por <Link to={'/clientes/'+review.service.client.id}>{review.service.client.user.first_name} {review.service.client.user.last_name}</Link></Col>
                     <Col sm="6">{review.client_comment}</Col>
                   </Row>
