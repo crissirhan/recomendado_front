@@ -42,11 +42,6 @@ class ProfessionalPage extends Component {
           average: nextProps.user_reviews.average,
           count: nextProps.user_reviews.count
         });
-        if(this.state.count){
-          this.setState({
-            count:0
-          })
-        }
       }
       if(this.state.announcements !== nextProps.user_announcements){
         this.setState({
@@ -145,7 +140,6 @@ class ProfessionalPage extends Component {
   }
 
   render() {
-    console.log(this.state.reviews);
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container>Cargando</Container>;
     }
