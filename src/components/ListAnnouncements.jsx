@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, ListGroup, ListGroupItem, Input, Label } from 'reactstrap';
+import { Table, ListGroup, ListGroupItem, Input, Label, Container } from 'reactstrap';
 import CategoryPage from './CategoryPage';
 import getAnnouncements from '../actions/get_announcements';
 import { bindActionCreators } from 'redux';
@@ -9,11 +9,12 @@ import {
   withRouter
 } from 'react-router-dom';
 import SearchAnnouncements from './SearchAnnouncements';
+import ListAnnouncementsDummy from './ListAnnouncementsDummy'
 
 class ListAnnouncements extends Component {
 
   componentDidMount(){
-    this.props.getAnnouncements(this.props.search);
+    this.props.getAnnouncements(null,this.props.search);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,7 +23,7 @@ class ListAnnouncements extends Component {
         announcements:nextProps.announcements
       });
       if(this.props.search !== nextProps.search){
-        this.props.getAnnouncements(nextProps.search);
+        this.props.getAnnouncements(null,nextProps.search);
       }
     }
   }
@@ -37,7 +38,7 @@ class ListAnnouncements extends Component {
 
   render() {
       if(this.state.announcements.length === 0 ){
-        return <div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div>;
+        return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
       }
       let table_body = this.state.announcements.map(announcement => {
       let days = {
@@ -107,29 +108,13 @@ class ListAnnouncements extends Component {
 
     });
     return (
-      <div>
+      <Container>
         <h1>Lorem ipsum</h1>
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.Quisque rutrum. Aenean imperdiet.</p>
         <SearchAnnouncements/>
 
-        <Table>
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Descripción</th>
-              <th>Profesional</th>
-              <th>Categoría</th>
-              <th>Subcategoría</th>
-              <th>Fecha expiración</th>
-              <th>Ubicación</th>
-              <th>Disponibilidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            {table_body}
-          </tbody>
-        </Table>
-      </div>
+        <ListAnnouncementsDummy announcements_array={this.state.announcements}/>
+      </Container>
     );
   }
 }

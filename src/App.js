@@ -23,6 +23,7 @@ import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
 import AnnouncementForm from './components/AnnouncementForm';
 import ListAnnouncements from './components/ListAnnouncements';
+import AnnouncementPage from './components/AnnouncementPage'
 import {
   Route,
   Link,
@@ -57,6 +58,9 @@ class App extends Component {
             )} />
             <Route path="/profesionales/:id/" render={({ match }) => (
               <ProfessionalPage professional_id={match.params.id}/>
+            )} />
+            <Route path="/anuncios/:id/" render={({ match }) => (
+              <AnnouncementPage announcement_id={match.params.id}/>
             )} />
             <Route path="/clientes/:id/" render={({ match }) => (
               <ClientPage client_id={match.params.id}/>
