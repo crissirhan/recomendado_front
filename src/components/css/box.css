@@ -1,0 +1,12 @@
+.shadow-box {
+  box-shadow: 3px 3px 10px #888888;;
+}
+
+.round-border {
+  border-radius:5px;
+  background:#cccccc;
+}
+
+.jumbotron {
+  background-color:transparent !important;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardImg, CardGroup, Col, Card, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { CardImg, CardGroup, Col, Card, CardTitle, CardSubtitle, CardText, Row } from 'reactstrap';
 import CategoryPage from './CategoryPage';
 import getAnnouncements from '../actions/get_announcements';
 import { bindActionCreators } from 'redux';
@@ -9,6 +9,8 @@ import {
   withRouter
 } from 'react-router-dom';
 import SearchAnnouncements from './SearchAnnouncements';
+import './css/images.css';
+import './css/box.css';
 
 class ListAnnouncements extends Component {
 
@@ -22,17 +24,17 @@ class ListAnnouncements extends Component {
   render() {
     return (
       <CardGroup>
-      {this.props.announcements_array.map(announcement =>{
-        let image_url = announcement.announcement_thumbnail ? announcement.announcement_thumbnail : "https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180";
-        return <Col sm="4" key={announcement.id}>
-                <Card>
-                  <CardImg top width="100%" src={image_url} alt="Card image cap" />
-                  <CardTitle><Link to ={'/anuncios/' + announcement.id}>{announcement.title}</Link></CardTitle>
-                  <CardSubtitle><Link to={'/profesionales/'+announcement.professional.id}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</Link></CardSubtitle>
-                   <CardText>{announcement.description}</CardText>
-                </Card>
-              </Col>
-      })}
+        {this.props.announcements_array.map(announcement =>{
+          let image_url = announcement.announcement_thumbnail ? announcement.announcement_thumbnail : "https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180";
+          return <Col  height="360px" sm="4" key={announcement.id}>
+                  <Card className="shadow-box round-border" size="sm" >
+                    <img className="center-cropped announcement-thumbnail" src={image_url}/>
+                    <CardTitle><Link to ={'/anuncios/' + announcement.id}>{announcement.title}</Link></CardTitle>
+                    <CardSubtitle><Link to={'/profesionales/'+announcement.professional.id}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</Link></CardSubtitle>
+                     <CardText>{announcement.description}</CardText>
+                  </Card>
+                </Col>
+        })}
       </CardGroup>
     );
   }

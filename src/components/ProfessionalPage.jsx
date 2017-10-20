@@ -10,7 +10,8 @@ import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
 import {
   Container,
   Collapse,
-  TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col, Jumbotron, CardImg, ListGroup, ListGroupItem
+  TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col, Jumbotron, CardImg, ListGroup, ListGroupItem,
+  CardGroup
 } from 'reactstrap';
 import classnames from 'classnames';
 import {
@@ -20,6 +21,9 @@ import {
 } from 'react-router-dom';
 import Rating from 'react-rating';
 import cookie from 'react-cookies';
+import './css/images.css';
+import './css/col.css';
+import './css/box.css';
 
 class ProfessionalPage extends Component {
 
@@ -143,72 +147,96 @@ class ProfessionalPage extends Component {
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container>Cargando</Container>;
     }
+    <CardTitle>{this.state.professional.user.first_name + ' ' +this.state.professional.user.last_name}</CardTitle>
+    let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container>
         <Row>
-          <Col sm="3" style={{textAlign:"center"}}>
+          <Col sm="4">
             <Card block className="text-center" >
-              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180" alt="foto perfil" />
-              <CardTitle>{this.state.professional.user.first_name + ' ' +this.state.professional.user.last_name}</CardTitle>
-              <Row>
-                <Rating
-                  empty="fa fa-star-o fa-2x orange-star"
-                  full="fa fa-star fa-2x orange-star"
-                  initialRate={this.state.average}
-                  readonly
-                />
-                <CardText>
-                  <b>{this.state.average}</b>
-                </CardText>
-                <CardText>
-                  <small className="text-muted">({this.state.count} evaluaciones)</small>
-                </CardText>
-              </Row>
+              <img className="img-circle center-cropped professional-profile" src={image_url} alt="foto perfil" />
+              <Rating
+                empty="fa fa-star-o fa-2x orange-star"
+                full="fa fa-star fa-2x orange-star"
+                initialRate={this.state.average}
+                readonly
+              />
               <CardText>
-                Región: {this.state.professional.region}
-              </CardText>
-              <CardText>
-                Ciudad: {this.state.professional.city}
+                <small className="text-muted">({this.state.count} evaluaciones)</small>
               </CardText>
             </Card>
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button>Crear anuncio</Button></Link> : null}
           </Col>
-          <Col sm="9">
-              <Card block className="text-center">
-                <CardTitle>Anuncios de {this.state.professional.user.first_name} {this.state.professional.user.last_name}</CardTitle>
+          <Col sm="8">
+              <Card block className="text-left">
+                <CardTitle>{this.state.professional.user.first_name} {this.state.professional.user.last_name}</CardTitle>
+                <Row>
+                  <Col sm="6">
+                    <CardText className="text-left">
+                      Región: {this.state.professional.region}
+                    </CardText>
+                  </Col>
+                  <Col sm="6">
+                    <CardText className="text-left">
+                      Ciudad: {this.state.professional.city}
+                    </CardText>
+                  </Col>
+                </Row>
+                <CardText>
+
+                </CardText>
+                <CardText>
+
+                </CardText>
+                <CardText className="text-left">
+                  Experiencia:
+                </CardText>
+                <CardText>
+                  <i>"{this.state.professional.experience}Experiencia de relleno "</i>
+                </CardText>
               </Card>
-              <ListAnnouncementsDummy announcements_array={this.state.announcements}/>
-            <ListGroup>
-              <ListGroupItem style={{display:"inherit"}}>
-                  Reviews de {this.state.professional.user.first_name} {this.state.professional.user.last_name}
-                  <Col sm="8"><Rating
-                      empty="fa fa-star-o fa-2x orange-star"
-                      full="fa fa-star fa-2x orange-star"
-                      initialRate={this.state.average}
-                      readonly/> <b>{this.state.average}</b></Col>
-                  <Col ><small className="text-muted">({this.state.count} evaluaciones)</small></Col>
-              </ListGroupItem>
-              {this.state.reviews.map(review => {
-                console.log(review.service.client);
-                let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
-                return <ListGroupItem key={review.id} style={{display:"block"}}>
-                  <Row>
-                    <Col><Rating
-                        empty="fa fa-star-o fa-2x orange-star"
-                        full="fa fa-star fa-2x orange-star"
-                        initialRate={review.rating}
-                        readonly/>        hace {this.timeSince(new Date(review.date))}</Col>
-                  </Row>
-                  <Row>
-                    <Col sm="1"><img src={image_url}/></Col>
-                    <Col sm="6">Review por <Link to={'/clientes/'+review.service.client.id}>{review.service.client.user.first_name} {review.service.client.user.last_name}</Link></Col>
-                    <Col sm="6">{review.client_comment}</Col>
-                  </Row>
-                </ListGroupItem>;
-              })}
-            </ListGroup>
-          </Col>
+            </Col>
         </Row>
+        <Container>
+          <p></p>
+          <p></p>
+        </Container>
+        <Container>
+          <p className="h4"><b>Anuncios</b></p>
+          <Jumbotron>
+            <ListAnnouncementsDummy announcements_array={this.state.announcements}/>
+          </Jumbotron>
+        </Container>
+        <Container>
+          <p className="h4"><b>Reviews</b></p>
+          <Jumbotron>
+            <CardGroup>
+              <Row>
+                {this.state.reviews.map(review => {
+                  let image_url = review.service.client.profile_picture ? "http://35.196.31.174"+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+                  return (<Col  sm="4" key={review.id}>
+                            <Card className="shadow-box round-border">
+                              <CardTitle className="text-center">{review.service.announcement.job_subtype.job_sub_type}</CardTitle>
+                              <Rating className="text-center"
+                                  empty="fa fa-star-o fa-2x orange-star"
+                                  full="fa fa-star fa-2x orange-star"
+                                  initialRate={review.rating}
+                                  readonly/>
+                              <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
+                              <CardText className="text-center">
+                                <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
+                              </CardText>
+                              <Link to={'/clientes/'+review.service.client.id}>
+                                <img className="img-circle center-cropped review-client-profile" width="150px" height="150px" src={image_url}/>
+                                <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
+                              </Link>
+                            </Card>
+                          </Col>)
+                  })}
+                </Row>
+              </CardGroup>
+            </Jumbotron>
+        </Container>
       </Container>
     );
   }
