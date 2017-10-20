@@ -8,6 +8,7 @@ import {
   Container,
   Jumbotron
 } from 'reactstrap';
+import './css/text.css';
 
 class Home extends Component {
 
@@ -23,11 +24,15 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <h1>Lorem ipsum</h1>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.Quisque rutrum. Aenean imperdiet.</p>
+        <div  style={{textAlign:"center"}}>
+          <h5 className="title"><b>Busca un Recomendado para tu hogar</b></h5>
+        </div>
         <SearchAnnouncements/>
-        <div style={{textAlign:"center"}}><i><b>Explora las distintas categorías y servicios disponibles para tí</b></i></div>
+        <div className="sub-title" style={{marginTop:"100px", textAlign:"center"}}><i><b>Explora las distintas categorías y servicios disponibles para tí</b></i></div>
         <JobCategories/>
+
+        <div  className="sub-title" style={{marginTop:"100px", textAlign:"center"}}><b>Recomendados Recientes</b></div>
+        <div  className="sub-sub-title" style={{textAlign:"center"}}><i>Qué están diciendo los clientes de sus trabajadores</i></div>
 
         <ProfessionalThumbs/>
 

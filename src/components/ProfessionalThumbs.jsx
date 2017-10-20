@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ProfessionalThumb from './ProfessionalThumb';
 import {
-  CardGroup,
+  CardGroup, Row
 } from 'reactstrap';
 import getReviews from '../actions/get_reviews';
+import './css/col.css';
+import './css/box.css';
 
 class ProfessionalThumbs extends Component {
 
@@ -43,10 +45,12 @@ class ProfessionalThumbs extends Component {
       return null;
     }
     return (
-      <CardGroup>
-        {this.state.random_reviews.map(review =>
-          <ProfessionalThumb review={review} professional={review.service.announcement.professional} professional_id={review.service.announcement.professional.id} key={review.id.toString()}/>
-        )}
+      <CardGroup >
+        <Row>
+          {this.state.random_reviews.map(review =>
+            <ProfessionalThumb review={review} professional={review.service.announcement.professional} professional_id={review.service.announcement.professional.id} key={review.id.toString()}/>
+          )}
+        </Row>
       </CardGroup>
     );
   }

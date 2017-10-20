@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import JobCategory from './JobCategory';
 import getJobCategories from '../actions/get_job_categories';
 import { bindActionCreators } from 'redux';
-import { CardGroup } from 'reactstrap';
+import { CardGroup, Row } from 'reactstrap';
+import './css/col.css'
 
 class JobCategories extends Component {
 
@@ -20,9 +21,11 @@ class JobCategories extends Component {
   render() {
     return (
       <CardGroup>
-        {this.props.job_categories.map(category =>
-          <JobCategory category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
-        )}
+        <Row>
+          {this.props.job_categories.map(category =>
+            <JobCategory image_class="center-cropped job-category" category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
+          )}
+        </Row>
       </CardGroup>
     );
   }

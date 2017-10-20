@@ -14,9 +14,34 @@
   height: 100px;
 }
 
+.review-thumb {
+  width: 190px;
+  height: 190px;
+}
+
 .announcement-thumbnail{
   width: 310px;
   height: 350px;
+}
+
+.search-thumbnail{
+  width: 340px;
+  height: 370px;
+}
+
+.subcategory-announcement-thumbnail{
+  width: 340px;
+  height: 320px;
+}
+
+.job-category{
+  width: 327px;
+  height: 327px;
+}
+
+.job-sub-category{
+  width: 180px;
+  height: 180px;
 }
 
 .center-cropped {

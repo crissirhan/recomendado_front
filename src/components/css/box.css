@@ -3,10 +3,22 @@
 }
 
 .round-border {
-  border-radius:5px;
+  border-radius:10px;
   background:#cccccc;
 }
 
 .jumbotron {
   background-color:transparent !important;
+}
+
+.space-between{
+  margin: 10px;
+}
+
+.review-card {
+  width: 250px;
+}
+
+.reviews-thumb{
+  margin-top: 100px;
 }

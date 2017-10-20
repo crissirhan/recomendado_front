@@ -33,10 +33,13 @@ class SubCategoryPage extends Component {
   }
 
   render(){
-    console.log(this.state.announcements_by_job)
     return (
       <Container>
-        <ListAnnouncementsDummy announcements_array={this.state.announcements_by_job}/>
+        <div style={{textAlign:"center"}}>
+          <h5><b>{this.props.sub_category}</b></h5>
+          <p>{this.state.announcements_by_job[0] ? this.state.announcements_by_job[0].job_subtype.description : ""}</p>
+        </div>
+        <ListAnnouncementsDummy image_class="center-cropped subcategory-announcement-thumbnail" announcements_array={this.state.announcements_by_job}/>
       </Container>
      )
   }

@@ -204,7 +204,7 @@ class ProfessionalPage extends Component {
         <Container>
           <p className="h4"><b>Anuncios</b></p>
           <Jumbotron>
-            <ListAnnouncementsDummy announcements_array={this.state.announcements}/>
+            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/>
           </Jumbotron>
         </Container>
         <Container>
@@ -227,7 +227,7 @@ class ProfessionalPage extends Component {
                                 <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
                               </CardText>
                               <Link to={'/clientes/'+review.service.client.id}>
-                                <img className="img-circle center-cropped review-client-profile" width="150px" height="150px" src={image_url}/>
+                                <img className="img-circle center-cropped review-client-profile" src={image_url}/>
                                 <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
                               </Link>
                             </Card>

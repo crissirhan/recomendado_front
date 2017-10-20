@@ -70,10 +70,6 @@ class SearchAnnouncements extends Component {
   render(){
 
     return (
-      <div style={{textAlign:"center"}}>
-
-        <h5><b>Busca un Recomendado para tu hogar</b></h5>
-
         <SearchBar
           onChange={this.searchUpdated}
           onRequestSearch={this.requestSearch}
@@ -82,7 +78,6 @@ class SearchAnnouncements extends Component {
             maxWidth: 800
           }}
         />
-      </div>
      )
   }
 

@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom';
 import CategoryPage from './CategoryPage';
+import './css/images.css';
+import './css/box.css';
 
 class JobCategory extends Component {
   constructor(props) {
@@ -17,13 +19,13 @@ class JobCategory extends Component {
     let url = this.props.url;
     let image_url = this.props.image ? this.props.image : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
     return (
-      <Col sm="3">
+      <Col sm="4">
         <Link to={url}>
-          <Card>
+          <Card className="shadow-box round-border space-between">
             <CardBlock>
               <CardTitle>{this.props.category}</CardTitle>
             </CardBlock>
-            <CardImg top width="100%" src={image_url} alt="Card image cap" />
+            <img className={this.props.image_class} src={image_url} alt="Card image cap" />
           </Card>
         </Link>
       </Col>

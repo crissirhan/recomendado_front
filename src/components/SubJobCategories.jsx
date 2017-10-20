@@ -8,6 +8,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom';
+import './css/col.css';
 
 class SubJobCategories extends Component {
 
@@ -35,6 +36,10 @@ class SubJobCategories extends Component {
     return (
 
       <Container>
+        <div style={{textAlign:"center"}}>
+          <h5><b>{this.props.job}</b></h5>
+          <p>{sub_categories[0] ? sub_categories[0].job_category.description : ""}</p>
+        </div>
         <Row>
           <Col xs="3">
             <ul>{sub_categories.map(category =>
@@ -43,9 +48,11 @@ class SubJobCategories extends Component {
           </Col>
           <Col xs="9">
             <CardGroup>
-              {sub_categories.map(category =>
-                <JobCategory category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
-              )}
+              <Row>
+                {sub_categories.map(category =>
+                  <JobCategory image_class="center-cropped job-sub-category" category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
+                )}
+              </Row>
             </CardGroup>
           </Col>
         </Row>
