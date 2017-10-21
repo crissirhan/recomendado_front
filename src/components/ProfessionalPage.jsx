@@ -192,7 +192,7 @@ class ProfessionalPage extends Component {
                   Experiencia:
                 </CardText>
                 <CardText>
-                  <i>"{this.state.professional.experience}Experiencia de relleno "</i>
+                  <i>"{this.state.professional.experience}"</i>
                 </CardText>
               </Card>
             </Col>

@@ -22,3 +22,7 @@
 .reviews-thumb{
   margin-top: 100px;
 }
+
+.no-border {
+  border:none !important;
+}

@@ -23,7 +23,7 @@ class JobCategories extends Component {
       <CardGroup>
         <Row>
           {this.props.job_categories.map(category =>
-            <JobCategory image_class="center-cropped job-category" category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
+            <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
           )}
         </Row>
       </CardGroup>

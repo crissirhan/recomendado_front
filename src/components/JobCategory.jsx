@@ -21,9 +21,9 @@ class JobCategory extends Component {
     return (
       <Col sm="4">
         <Link to={url}>
-          <Card className="shadow-box round-border space-between">
+          <Card className="no-border space-between">
             <CardBlock>
-              <CardTitle>{this.props.category}</CardTitle>
+              <CardTitle className="text-center" style={{marginBottom:-10, fontSize: 32.0}}>{this.props.category}</CardTitle>
             </CardBlock>
             <img className={this.props.image_class} src={image_url} alt="Card image cap" />
           </Card>

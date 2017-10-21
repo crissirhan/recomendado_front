@@ -50,7 +50,7 @@ class ProfessionalThumb extends Component {
     let comment = <div>"{this.props.review.client_comment}" - <Link to={url}>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</Link></div>
     return (
       <Col sm="4" key={this.props.professional.id}>
-        <Card className="shadow-box round-border review-card text-center">
+        <Card className="shadow-box round-border text-center">
           <img className="review-thumb center-cropped img-circle" src={image_url}/>
           <Link to={'/profesionales/'+this.props.professional.id+'/'}>
             <CardTitle>{this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}</CardTitle>

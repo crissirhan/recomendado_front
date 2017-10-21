@@ -32,7 +32,7 @@ class Home extends Component {
         <JobCategories/>
 
         <div  className="sub-title" style={{marginTop:"100px", textAlign:"center"}}><b>Recomendados Recientes</b></div>
-        <div  className="sub-sub-title" style={{textAlign:"center"}}><i>Qué están diciendo los clientes de sus trabajadores</i></div>
+        <div  className="sub-sub-title" style={{textAlign:"center", marginBottom:"40px"}}><i>Qué están diciendo los clientes de sus trabajadores</i></div>
 
         <ProfessionalThumbs/>
 
