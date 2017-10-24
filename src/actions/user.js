@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_SIGNUP_PROFESSIONAL } from './types';
+import { USER_LOGIN_SUCCESS, USER_SIGNUP_PROFESSIONAL } from './types';
 import axios from 'axios';
 
 
@@ -23,7 +23,7 @@ function loginSuccessAsync(login){
   const key = login.data.key;
   console.log(key);
   return {
-    type: USER_LOGIN,
+    type: USER_LOGIN_SUCCESS,
     payload: key
   };
 }
@@ -31,7 +31,7 @@ function loginSuccessAsync(login){
 function loginFailureAsync(login){
   console.log("Login error!");
   return {
-    type: USER_LOGIN,
+    type: USER_LOGIN_ERROR,
     payload: null
   };
 }

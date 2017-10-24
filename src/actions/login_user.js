@@ -1,39 +1,41 @@
-import { USER_LOGIN, USER_LOGIN_ERROR } from './types';
+import { USER_LOGIN_SUCCESS, USER_LOGIN_ERROR, USER_LOGIN_LOADING } from './types';
 import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
-var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function login(username,password){
   return dispatch => {
+      dispatch(requestingLogin());
       axios.post(ENDPOINT_URI+'/rest-auth/login/', {
       username: username,
       password: password
     })
     .then(function (response) {
-      console.log(response);
       dispatch(loginSuccessAsync(response,username));
     })
     .catch(function (error) {
-      console.log(error);
       dispatch(loginFailureAsync(error));
     });
   }
 }
+function requestingLogin(){
+  return {
+    type: USER_LOGIN_LOADING,
+    payload: null
+  };
+}
 
 function loginSuccessAsync(login,username){
-  console.log("Success, key:: " + login.data.key);
   const key = login.data.key;
-  const data = {'token_key':key,'username':username};
+  const data = {'token':key,'username':username};
   return {
-    type: USER_LOGIN,
+    type: USER_LOGIN_SUCCESS,
     payload: data
   };
 }
 
-function loginFailureAsync(login){
-  console.log("Login error!");
+function loginFailureAsync(error){
   return {
     type: USER_LOGIN_ERROR,
-    payload: null
+    payload: error.response
   };
 }

@@ -15,6 +15,7 @@ import {bindActionCreators} from 'redux';
 import ProjectNavbar from './components/Navbar/ProjectNavbar';
 import SignUpForm from './components/Navbar/SignUpForm';
 import login from './actions/login_user';
+import LoginForm from './components/Navbar/LoginForm';
 import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
@@ -66,7 +67,10 @@ class App extends Component {
               <ClientPage client_id={match.params.id}/>
             )} />
             <Route path="/registro/" render={({ match }) => (
-              <SignUpForm />
+              <Container><SignUpForm /></Container>
+            )} />
+            <Route path="/login/" render={({ match }) => (
+              <Container><LoginForm /></Container>
             )} />
             <Route path="/buscar/anuncios/:query" render={({ match }) => (
               <ListAnnouncements search={match.params.query}/>

@@ -18,12 +18,13 @@ class ProjectNavbar extends Component {
   componentWillReceiveProps(nextProps) {
 
     if(this.props != nextProps){
+      console.log(nextProps)
       if(nextProps.logged_in_professional[0]){
         this.setState({
           user:nextProps.logged_in_professional[0],
           isProfessional:true
         });
-        cookie.save('token', this.props.token.token_key, { path: '/' });
+        cookie.save('token', this.props.login_state.token, { path: '/' });
         cookie.save('user', nextProps.logged_in_professional[0], { path: '/' });
         cookie.save('isProfessional', true, { path: '/' });
         cookie.save('isClient', false, { path: '/' });
@@ -36,7 +37,7 @@ class ProjectNavbar extends Component {
           user:nextProps.logged_in_client[0],
           isClient:true
         });
-        cookie.save('token', this.props.token.token_key, { path: '/' });
+        cookie.save('token', this.props.login_state.token, { path: '/' });
         cookie.save('user', nextProps.logged_in_client[0], { path: '/' });
         cookie.save('isProfessional', false, { path: '/' });
         cookie.save('isClient', true, { path: '/' });
@@ -48,9 +49,9 @@ class ProjectNavbar extends Component {
       if(this.state.fetched_user){
         return;
       }
-      if(nextProps.token && !this.state.fetch_user){
-        this.props.getClientByUsername(nextProps.token.username);
-        this.props.getProfessionalByUsername(nextProps.token.username);
+      if(nextProps.login_state.loggedIn){
+        this.props.getClientByUsername(nextProps.login_state.username);
+        this.props.getProfessionalByUsername(nextProps.login_state.username);
         this.setState({
           fetched_user: true
         });
@@ -132,7 +133,7 @@ class ProjectNavbar extends Component {
     let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
     if(aux_exists && (cookie.load('token') != undefined )){
       buttons =
-      <Nav className="ml-auto" > 
+      <Nav className="ml-auto" >
         <NavItem>
           <Link to={this.getLoggedInUserUrl()}>
             <Button color="link">Perfil</Button>{' | '}
@@ -146,13 +147,9 @@ class ProjectNavbar extends Component {
       buttons =
       <Nav className="ml-auto" >
         <NavItem>
-          <Button color="link" onClick={this.loginToggle}>Login</Button>{' | '}
-          <Modal isOpen={this.state.loginModal} toggle={this.loginToggle} >
-            <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
-            <ModalBody>
-              <LoginForm toggle={this.loginToggle}/>
-            </ModalBody>
-          </Modal>
+        <Link to="/login/">
+          <Button color="link" onClick={this.loginToggle}>Login</Button>
+        </Link>
         </NavItem>
         <NavItem>
           <Link to="/registro/">
@@ -175,8 +172,7 @@ class ProjectNavbar extends Component {
 }
 function mapStateToProps(state){
   return {
-    token:state.token,
-    login:state.login,
+    login_state:state.login,
     logged_in_professional:state.logged_in_professional,
     logged_in_client:state.logged_in_client
   }

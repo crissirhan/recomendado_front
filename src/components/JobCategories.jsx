@@ -8,6 +8,14 @@ import './css/col.css'
 
 class JobCategories extends Component {
 
+  componentWillReceiveProps(nextProps){
+    if(this.props !== nextProps){
+      this.setState({
+        job_categories:nextProps.job_categories.job_categories
+      })
+    }
+  }
+
   componentDidMount() {
     this.props.getJobCategories();
   }
@@ -15,6 +23,7 @@ class JobCategories extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      job_categories:[]
     };
   }
 
@@ -22,7 +31,7 @@ class JobCategories extends Component {
     return (
       <CardGroup>
         <Row>
-          {this.props.job_categories.map(category =>
+          {this.state.job_categories.map(category =>
             <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
           )}
         </Row>
