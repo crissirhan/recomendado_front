@@ -105,8 +105,9 @@ class ProjectNavbar extends Component {
     cookie.remove('user', { path: '/' });
     cookie.remove('isProfessional', { path: '/' });
     cookie.remove('isClient', { path: '/' });
-    //window.location.reload()
-    this.props.history.push('/');
+    window.location.assign('/')
+    //console.log(this.state)
+    
   }
 
   getLoggedInUserUrl(){
