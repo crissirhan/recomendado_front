@@ -5,7 +5,7 @@ import SignUpForm from './SignUpForm';
 import AnnouncementForm from '../AnnouncementForm';
 import '../css/navbar/navbar.css';
 import {
-  Link,
+  Link,withRouter
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -105,8 +105,8 @@ class ProjectNavbar extends Component {
     cookie.remove('user', { path: '/' });
     cookie.remove('isProfessional', { path: '/' });
     cookie.remove('isClient', { path: '/' });
-    window.location.reload()
-    //history.push('/');
+    //window.location.reload()
+    this.props.history.push('/');
   }
 
   getLoggedInUserUrl(){
@@ -185,4 +185,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectNavbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectNavbar));
