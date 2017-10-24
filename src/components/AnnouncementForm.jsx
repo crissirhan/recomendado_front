@@ -143,99 +143,101 @@ class AnnouncementForm extends Component{
     }
     return (
       <Container>
-        <AvForm onValidSubmit={this.handleSubmit}>
-          <AvGroup>
-            <Label for="title">Título</Label>
-            <AvInput  name="title" id="title"
-            value={this.state.title} onChange={this.handleInputChange} required/>
-            <AvFeedback>Debe ingresar un título para el anuncio</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="description">Descripción</Label>
-            <AvInput  name="description" id="description"
-            value={this.state.description} onChange={this.handleInputChange} required/>
-            <AvFeedback>Debe ingresar una descripción del anuncio</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="price">Precio</Label>
-            <AvInput type="number" name="price" id="price"
-            value={this.state.price} onChange={this.handleInputChange} required/>
-            <AvFeedback>Debe ingresar un precio</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="movility">Movilidad</Label>
-            <AvInput  name="movility" id="movility"
-            value={this.state.movility} onChange={this.handleInputChange} required/>
-            <AvFeedback>Debe ingresar su movilización</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="location">Ubicación</Label>
-            <AvInput  name="location" id="location"
-            value={this.state.location} onChange={this.handleInputChange} required/>
-            <AvFeedback>Debe ingresar la ubicación de su anuncio</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-             <Label for="job">Trabajo</Label>
-             <AvInput type="select" name="job" id="job" onChange={this.handleJobSelectChange}>
-               {this.state.job_categories.map((category, index) => {
-                  return <option key={category.id} value={index}>{category.job_type}</option>
-               })}
-             </AvInput>
-          </AvGroup>
-          <AvGroup hidden={this.state.job.sub_type.length === 0}>
-             <Label for="job_subtype">Subtipo de trabajo</Label>
-             <AvInput type="select" name="job_subtype" id="job_subtype" onChange={this.handleJobSubtypeSelectChange}>
-               {this.state.job.sub_type.map((sub_job, index) => {
-                  return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
-               })}
-             </AvInput>
-          </AvGroup>
-          <Label>Disponibilidad</Label>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
-              Lunes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
-              Martes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
-              Miércoles
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
-              Jueves
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
-              Viernes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
-              Sábado
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
-              Domingo
-            </Label>
-          </AvGroup>
-          {this.props.post_announcement.error ? <div className="message--error">¡Error! {this.props.post_announcement.error_type}</div> : null}
-          <Button >Crear anuncio</Button>
-        </AvForm>
+        <div style={{ opacity: this.props.post_announcement.loading ? 0.5 : 1 }}>
+          <AvForm onValidSubmit={this.handleSubmit}>
+            <AvGroup>
+              <Label for="title">Título</Label>
+              <AvInput  name="title" id="title"
+              value={this.state.title} onChange={this.handleInputChange} required/>
+              <AvFeedback>Debe ingresar un título para el anuncio</AvFeedback>
+            </AvGroup>
+            <AvGroup>
+              <Label for="description">Descripción</Label>
+              <AvInput  name="description" id="description"
+              value={this.state.description} onChange={this.handleInputChange} required/>
+              <AvFeedback>Debe ingresar una descripción del anuncio</AvFeedback>
+            </AvGroup>
+            <AvGroup>
+              <Label for="price">Precio</Label>
+              <AvInput type="number" name="price" id="price"
+              value={this.state.price} onChange={this.handleInputChange} required/>
+              <AvFeedback>Debe ingresar un precio</AvFeedback>
+            </AvGroup>
+            <AvGroup>
+              <Label for="movility">Movilidad</Label>
+              <AvInput  name="movility" id="movility"
+              value={this.state.movility} onChange={this.handleInputChange} required/>
+              <AvFeedback>Debe ingresar su movilización</AvFeedback>
+            </AvGroup>
+            <AvGroup>
+              <Label for="location">Ubicación</Label>
+              <AvInput  name="location" id="location"
+              value={this.state.location} onChange={this.handleInputChange} required/>
+              <AvFeedback>Debe ingresar la ubicación de su anuncio</AvFeedback>
+            </AvGroup>
+            <AvGroup>
+               <Label for="job">Trabajo</Label>
+               <AvInput type="select" name="job" id="job" onChange={this.handleJobSelectChange}>
+                 {this.state.job_categories.map((category, index) => {
+                    return <option key={category.id} value={index}>{category.job_type}</option>
+                 })}
+               </AvInput>
+            </AvGroup>
+            <AvGroup hidden={this.state.job.sub_type.length === 0}>
+               <Label for="job_subtype">Subtipo de trabajo</Label>
+               <AvInput type="select" name="job_subtype" id="job_subtype" onChange={this.handleJobSubtypeSelectChange}>
+                 {this.state.job.sub_type.map((sub_job, index) => {
+                    return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
+                 })}
+               </AvInput>
+            </AvGroup>
+            <Label>Disponibilidad</Label>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
+                Lunes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
+                Martes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
+                Miércoles
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
+                Jueves
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
+                Viernes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
+                Sábado
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
+                Domingo
+              </Label>
+            </AvGroup>
+            {this.props.post_announcement.error ? <div className="message--error">¡Error! {this.props.post_announcement.error_type}</div> : null}
+            <Button >Crear anuncio</Button>
+          </AvForm>
+        </div>
       </Container>
     )
   }
