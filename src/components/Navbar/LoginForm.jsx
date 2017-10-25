@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import login from '../../actions/login_user';
 import '../css/messages.css';
 import { withRouter } from 'react-router';
+import FacebookLoginButton from './FacebookLoginButton';
 
 class LoginForm extends Component{
 
@@ -31,7 +32,7 @@ class LoginForm extends Component{
   }
 
   handleLogin(){
-    
+
   }
 
   handleInputChange(event) {
@@ -51,6 +52,7 @@ class LoginForm extends Component{
   render(){
     return (
       <div style={{ opacity: this.props.login_state.loading ? 0.5 : 1 }}>
+        <FacebookLoginButton/>
         <Form>
            <FormGroup>
              <Label for="exampleEmail">Correo electrónico</Label>
