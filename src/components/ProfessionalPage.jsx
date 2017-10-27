@@ -11,7 +11,7 @@ import {
   Container,
   Collapse,
   TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col, Jumbotron, CardImg, ListGroup, ListGroupItem,
-  CardGroup
+  CardGroup, ModalBody, Modal, ModalHeader
 } from 'reactstrap';
 import classnames from 'classnames';
 import {
@@ -24,6 +24,7 @@ import cookie from 'react-cookies';
 import './css/images.css';
 import './css/col.css';
 import './css/box.css';
+import AnnouncementForm from './AnnouncementForm';
 
 class ProfessionalPage extends Component {
 
@@ -63,10 +64,12 @@ class ProfessionalPage extends Component {
       announcements:[],
       reviews:[],
       average:0,
-      count:0
+      count:0,
+      reviewCollapse:false
     };
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
+     this.toggleReviewCollapse = this.toggleReviewCollapse.bind(this);
   }
 
   handleInputChange(event) {
@@ -85,6 +88,10 @@ class ProfessionalPage extends Component {
         activeTab: tab
       });
     }
+  }
+
+  toggleReviewCollapse(){
+    this.setState({ collapse: !this.state.reviewCollapse });
   }
 
   editMode(){
@@ -142,12 +149,16 @@ class ProfessionalPage extends Component {
     }
     return Math.floor(seconds) + " segundos";
   }
-
+  toggleAnnouccementModal(){
+    this.setState({
+      showAnnoucementModal:!this.state.showAnnoucementModal
+    })
+  }
   render() {
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container>Cargando</Container>;
     }
-    <CardTitle>{this.state.professional.user.first_name + ' ' +this.state.professional.user.last_name}</CardTitle>
+
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container>
@@ -202,7 +213,16 @@ class ProfessionalPage extends Component {
           <p></p>
         </Container>
         <Container>
-          <p className="h4"><b>Anuncios</b></p>
+          <Row>
+            <p className="h4"><b>Avisos</b></p>
+            <Modal isOpen={this.state.showAnnoucementModal} toggle={this.toggle} className={this.props.className}>
+              <ModalHeader toggle={this.toggleAnnouccementModal.bind(this)}>Crear Aviso</ModalHeader>
+              <ModalBody>
+                <AnnouncementForm/>
+              </ModalBody>
+            </Modal>
+            <Button color="link" onClick={this.toggleAnnouccementModal.bind(this)}>Crear aviso</Button>
+          </Row>
           <Jumbotron>
             <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/>
           </Jumbotron>

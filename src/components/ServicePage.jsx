@@ -12,7 +12,7 @@ import './css/images.css';
 import putService from '../actions/put_service'
 import cookie from 'react-cookies';
 
-class AnnouncementPage extends Component {
+class ServicePage extends Component {
 
   componentDidMount(){
     this.props.getAnnouncements(this.props.announcement_id,null);
@@ -35,10 +35,13 @@ class AnnouncementPage extends Component {
   }
 
   handleCreateService(){
-    if(cookie.load('user').user){
+    if(cookie.load('user').user && cookie.load('isClient') === "true"){
+      let creation_date = new Date();
       let data = {
         client_id:cookie.load('user').id,
-        announcement_id:this.state.announcement.id
+        announcement_id:this.state.announcement.id,
+        cost: this.state.announcement.price,
+        creation_date: creation_date.toJSON()
       }
       console.log(data);
       this.props.putService(data);
@@ -48,35 +51,29 @@ class AnnouncementPage extends Component {
   }
 
   render(){
+    if(this.props.put_service.success){
+      return <Container><div className="message--info">Servicio contratado con éxito!</div></Container>;
+    }
     if(!this.state.announcement){
       return <Container>Cargando</Container>
     }
-    let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Ir a confirmar contrato</Button></Link>;
+    let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contratar</Button></Link>;
     return (
       <Container>
-        <Row>
-          <Col sm="6" >
-              <h1 className="display-3">{this.state.announcement.title}</h1>
-              <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen anuncio" />
-              <p className="lead">{this.state.announcement.description}</p>
-              <hr className="my-2" />
-              <p className="lead">Por:
-                <Button color="link">
-                  <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-                    {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-                  </Link>
-                </Button>
-              </p>
-          </Col>
-          <Col sm="6" >
+        <div style={{ opacity: this.props.put_service.loading ? 0.5 : 1 }}>
+            <p>Título: {this.state.announcement.title}</p>
+            <p>Descripción: {this.state.announcement.description}</p>
             <p>Precio: ${this.state.announcement.price}</p>
+            <p>Profesional: <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+              {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
+            </Link></p>
             <p>Expira el: {new Date(this.state.announcement.expire_date).toLocaleDateString()}</p>
             <p>Lugar: {this.state.announcement.location}</p>
             <p>Movilidad: {this.state.announcement.movility}</p>
             <p>Días de atención: {this.state.announcement.availability_display}</p>
-            {serviceButton}
-          </Col>
-        </Row>
+            {this.props.put_service.error ? <div className="message--error">¡Error! {this.props.put_service.error_type}</div> : null}
+            <Button onClick={this.handleCreateService} disabled={this.props.put_service.loading}>Contratar</Button>
+          </div>
       </Container>
      )
   }
@@ -86,7 +83,7 @@ class AnnouncementPage extends Component {
 function mapStateToProps(state){
   return {
     announcements: state.announcements,
-    putService: state.putService
+    put_service: state.put_service
   }
 }
 
@@ -97,4 +94,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ServicePage);

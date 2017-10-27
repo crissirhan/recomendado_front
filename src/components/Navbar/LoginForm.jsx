@@ -52,7 +52,6 @@ class LoginForm extends Component{
   render(){
     return (
       <div style={{ opacity: this.props.login_state.loading ? 0.5 : 1 }}>
-        <FacebookLoginButton/>
         <Form>
            <FormGroup>
              <Label for="exampleEmail">Correo electrónico</Label>

@@ -101,40 +101,42 @@ class SignUpClientForm extends Component{
       return <div className="message--info">¡Usuario creado con éxito!</div>;
     }
     return (
-      <AvForm onValidSubmit={this.handleSubmit}>
-        <AvGroup>
-          <Label for="exampleEmail">Correo electrónico</Label>
-          <AvInput type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
-          value={this.state.email} onChange={this.handleInputChange} required />
-          <AvFeedback>Debe ingresar un coreo electrónico válido</AvFeedback>
-        </AvGroup>
-        <AvGroup>
-          <Label for="examplePassword1">Contraseña</Label>
-          <AvInput type="password" name="password1" id="examplePassword1" placeholder="Ingrese su contraseña"
-          value={this.state.password1} onChange={this.handleInputChange} required />
-          <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
-        </AvGroup>
-        <AvGroup>
-          <Label for="examplePassword1">Repita su contraseña</Label>
-          <AvInput  type="password" name="password2" id="examplePassword2" placeholder="Ingrese su contraseña nuevamente"
-          value={this.state.password2} onChange={this.handleInputChange} required validate={{match:{value:'password1'}}} />
-          <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
-        </AvGroup>
-        <AvGroup >
-          <Label for="first_name">Nombre</Label>
-          <AvInput  name="first_name" id="first_name" placeholder="Ingrese su nombre"
-          value={this.state.first_name} onChange={this.handleInputChange} required />
-        </AvGroup>
-        <AvGroup >
-          <Label for="last_name">Apellido</Label>
-          <AvInput  name="last_name" id="last_name" placeholder="Ingrese su apellido"
-          value={this.state.last_name} onChange={this.handleInputChange} required />
-        </AvGroup>
-        {this.props.sign_up_client.error ? <div className="message--error">¡Error! {this.props.sign_up_client.error_type}</div> : null}
-        <FormGroup>
-          <Button>Registrarse</Button>
-        </FormGroup>
-      </AvForm>
+      <div style={{ opacity: this.props.sign_up_client.loading ? 0.5 : 1 }}>
+        <AvForm onValidSubmit={this.handleSubmit}>
+          <AvGroup>
+            <Label for="exampleEmail">Correo electrónico</Label>
+            <AvInput type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
+            value={this.state.email} onChange={this.handleInputChange} required />
+            <AvFeedback>Debe ingresar un coreo electrónico válido</AvFeedback>
+          </AvGroup>
+          <AvGroup>
+            <Label for="examplePassword1">Contraseña</Label>
+            <AvInput type="password" name="password1" id="examplePassword1" placeholder="Ingrese su contraseña"
+            value={this.state.password1} onChange={this.handleInputChange} required />
+            <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
+          </AvGroup>
+          <AvGroup>
+            <Label for="examplePassword1">Repita su contraseña</Label>
+            <AvInput  type="password" name="password2" id="examplePassword2" placeholder="Ingrese su contraseña nuevamente"
+            value={this.state.password2} onChange={this.handleInputChange} required validate={{match:{value:'password1'}}} />
+            <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
+          </AvGroup>
+          <AvGroup >
+            <Label for="first_name">Nombre</Label>
+            <AvInput  name="first_name" id="first_name" placeholder="Ingrese su nombre"
+            value={this.state.first_name} onChange={this.handleInputChange} required />
+          </AvGroup>
+          <AvGroup >
+            <Label for="last_name">Apellido</Label>
+            <AvInput  name="last_name" id="last_name" placeholder="Ingrese su apellido"
+            value={this.state.last_name} onChange={this.handleInputChange} required />
+          </AvGroup>
+          {this.props.sign_up_client.error ? <div className="message--error">¡Error! {this.props.sign_up_client.error_type}</div> : null}
+          <FormGroup>
+            <Button>Registrarse</Button>
+          </FormGroup>
+        </AvForm>
+      </div>
     )
   }
   checkRut(rutCompleto) {

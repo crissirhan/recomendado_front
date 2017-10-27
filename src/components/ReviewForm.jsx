@@ -13,11 +13,24 @@ import './css/rating/rating.css';
 
 
 class ReviewForm extends Component{
+
+  componentDidMount(){
+    if(this.props.alreadyReviewed){
+      this.setState({
+        rating:this.props.alreadyReviewed.rating,
+        client_comment:this.props.alreadyReviewed.client_comment
+      })
+    }
+  }
+
   constructor(props) {
     super(props);
+    let shouldEdit = this.props.alreadyReviewed ? false : true;
     this.state = {
       rating:1,
-      client_comment:''
+      client_comment:'',
+      reviewed:false,
+      shouldEdit:shouldEdit
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -48,6 +61,9 @@ class ReviewForm extends Component{
       date:date
     }
     this.props.postReview(data);
+    this.setState({
+      shouldEdit:false
+    });
   }
   render(){
     return (
@@ -58,14 +74,15 @@ class ReviewForm extends Component{
             full="fa fa-star fa-2x orange-star"
             initialRate={this.state.rating}
             onClick={this.handleStarChange}
+            readonly={!this.state.shouldEdit}
           />
         </FormGroup>
         <FormGroup >
           <Label for="client_comment">Comentario</Label>
-          <Input  name="client_comment" id="client_comment" 
+          <Input  name="client_comment" id="client_comment" disabled={!this.state.shouldEdit}
           value={this.state.client_comment} onChange={this.handleInputChange}/>
         </FormGroup>
-        <Button onClick={() => {this.handleSubmit()} }>Enviar</Button>
+        {this.state.shouldEdit ? <Button onClick={() => {this.handleSubmit()} }>Enviar</Button> : null}
       </Form>
     )
   }

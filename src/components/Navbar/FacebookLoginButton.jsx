@@ -17,13 +17,13 @@ class FacebookLoginButton extends React.Component{
       <div>
         <FacebookLogin socialId="1861672140513754"
                        language="en_US"
-                       scope="public_profile,email"
+                       scope="public_profile,email,user_friends"
                        responseHandler={this.responseFacebook}
                        xfbml={true}
                        fields="id,email,name"
                        version="v2.5"
                        className="facebook-login"
-                       buttonText="Login With Facebook"/>
+                       buttonText="Login con Facebook"/>
       </div>
     );
   }

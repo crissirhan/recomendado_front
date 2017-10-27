@@ -29,7 +29,8 @@ class signUpProfessionalForm extends Component{
       street: '',
       house_number: '',
       phone_number: '',
-      identification:null
+      identification:null,
+      profile_picture:null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -47,6 +48,17 @@ class signUpProfessionalForm extends Component{
       [name]: value
     });
   }
+  handleImageChange(event){
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        profile_picture: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+
+  }
 
   handleSwitchChange(){
     this.setState({
@@ -56,7 +68,6 @@ class signUpProfessionalForm extends Component{
   }
 
   handleSubmit(){
-    console.log("asd")
     if(this.state.password1 != this.state.password2){
       return;
     }
@@ -68,13 +79,13 @@ class signUpProfessionalForm extends Component{
       password: this.state.password1
     }
     let request = {
-      user: user_data
+      user: user_data,
+      profile_picture: this.state.profile_picture
     }
     if(this.state.switch_client){
       this.props.signUpClient(request);
     }
     if(this.state.switch_professional){
-      console.log("asd")
       request.rut = this.state.rut;
       request.region = this.state.region;
       request.city = this.state.city;
@@ -82,6 +93,7 @@ class signUpProfessionalForm extends Component{
       request.house_number = this.state.house_number;
       request.phone_number = this.state.phone_number;
       request.identification = this.state.identification;
+      console.log(request)
       this.props.signUpProfessional(request);
     }
     //this.props.signUp(this.state.email, this.state.password1, this.state.password2, this.state.email);
@@ -110,6 +122,11 @@ class signUpProfessionalForm extends Component{
             <AvInput type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
             value={this.state.email} onChange={this.handleInputChange} required />
             <AvFeedback>Debe ingresar un coreo electrónico válido</AvFeedback>
+          </AvGroup>
+          <AvGroup>
+            <Label for="profile_picture">Foto de perfil</Label>
+            <AvInput type="file" disabled={true} accept="image/*" name="profile_picture" id="profile_picture"
+             onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
           <AvGroup>
             <Label for="examplePassword1">Contraseña</Label>

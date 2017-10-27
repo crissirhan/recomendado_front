@@ -21,6 +21,7 @@ import PutServiceReducer from './reducer_put_service';
 import PutReviewReducer from './reducer_put_review';
 import GetReviewsReducer from './reducer_get_reviews';
 import ClientServicesReducer from './reducer_client_services';
+import ClientReviewsReducer from './reducer_client_reviews';
 import PostReviewReducer from './reducer_post_review';
 import PostAnnouncementnReducer from './reducer_post_announcement';
 import JobSubCategoriesReducer from './reducer_job_sub_categories';
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   put_review:PutReviewReducer,
   get_reviews:GetReviewsReducer,
   client_services:ClientServicesReducer,
+  client_reviews:ClientReviewsReducer,
   post_review:PostReviewReducer,
   post_announcement:PostAnnouncementnReducer,
   job_sub_categories: JobSubCategoriesReducer
