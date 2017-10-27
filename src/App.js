@@ -30,10 +30,12 @@ import {
   Route,
   Link,
   withRouter,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import AnnouncementsEdit from './components/AnnouncementEdition/AnnouncementsEdit';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import cookie from 'react-cookies';
 
 class App extends Component {
   componentDidMount() {
@@ -44,8 +46,15 @@ class App extends Component {
     };
   }
 
+  requireClient(nextState, replace) {
+      if(cookie.load('isClient') !== "true") {
+        replace({
+          pathname: '/login'
+        })
+      }
+  }
+
   render() {
-    console.log(process.env);
     return (
       <MuiThemeProvider>
         <div>
@@ -65,8 +74,9 @@ class App extends Component {
               <AnnouncementPage announcement_id={match.params.id}/>
             )} />
             <Route path="/contratar/aviso/:id/" render={({ match }) => (
-              <ServicePage announcement_id={match.params.id}/>
-            )} />
+              cookie.load('isClient') === "true" ? <ServicePage announcement_id={match.params.id}/> :
+              <Redirect to="/login/"/>
+            )}/>
             <Route path="/clientes/:id/" render={({ match }) => (
               <ClientPage client_id={match.params.id}/>
             )} />
@@ -84,6 +94,9 @@ class App extends Component {
             )} />
             <Route path="/crear/anuncio/" render={({ match }) => (
               <AnnouncementForm/>
+            )} />
+            <Route path="/editar/anuncio/:id/" render={({ match }) => (
+              <AnnouncementsEdit announcement_id={match.params.id}/>
             )} />
           </Switch>
         </div>

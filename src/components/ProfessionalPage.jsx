@@ -214,14 +214,14 @@ class ProfessionalPage extends Component {
         </Container>
         <Container>
           <Row>
-            <p className="h4"><b>Avisos</b></p>
+            <p className="h4"><b>Anuncios</b></p>
             <Modal isOpen={this.state.showAnnoucementModal} toggle={this.toggle} className={this.props.className}>
-              <ModalHeader toggle={this.toggleAnnouccementModal.bind(this)}>Crear Aviso</ModalHeader>
+              <ModalHeader toggle={this.toggleAnnouccementModal.bind(this)}>Crear Anuncio</ModalHeader>
               <ModalBody>
                 <AnnouncementForm/>
               </ModalBody>
             </Modal>
-            <Button color="link" onClick={this.toggleAnnouccementModal.bind(this)}>Crear aviso</Button>
+            <Button color="link" onClick={this.toggleAnnouccementModal.bind(this)}>Crear Anuncio</Button>
           </Row>
           <Jumbotron>
             <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/>

@@ -51,6 +51,10 @@ class AnnouncementPage extends Component {
     if(!this.state.announcement){
       return <Container>Cargando</Container>
     }
+    let owner = false;
+    if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id){
+      owner = true;
+    }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Ir a confirmar contrato</Button></Link>;
     return (
       <Container>
@@ -74,7 +78,8 @@ class AnnouncementPage extends Component {
             <p>Lugar: {this.state.announcement.location}</p>
             <p>Movilidad: {this.state.announcement.movility}</p>
             <p>Días de atención: {this.state.announcement.availability_display}</p>
-            {serviceButton}
+            {cookie.load('isClient') === "true"? serviceButton : null}
+            { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
         </Row>
       </Container>
