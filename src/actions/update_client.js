@@ -7,7 +7,6 @@ export default function updateClient(client_id,data) {
   return dispatch => {
     axios.patch(ENDPOINT_URI+'/clients/'+client_id+'/', data)
       .then(res => {
-        console.log(res.data);
         dispatch(updateClientlAsync(res.data));
       });
   }

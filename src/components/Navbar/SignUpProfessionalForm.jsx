@@ -68,9 +68,6 @@ class signUpProfessionalForm extends Component{
   }
 
   handleSubmit(){
-    if(this.state.password1 != this.state.password2){
-      return;
-    }
     let user_data = {
       username: this.state.email, //username === email
       email: this.state.email,
@@ -93,7 +90,6 @@ class signUpProfessionalForm extends Component{
       request.house_number = this.state.house_number;
       request.phone_number = this.state.phone_number;
       request.identification = this.state.identification;
-      console.log(request)
       this.props.signUpProfessional(request);
     }
     //this.props.signUp(this.state.email, this.state.password1, this.state.password2, this.state.email);

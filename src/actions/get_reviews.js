@@ -7,7 +7,6 @@ export default function getReviews() {
   return dispatch => {
     axios.get(ENDPOINT_URI+'/reviews/')
       .then(res => {
-        console.log(res.data);
         dispatch(getReviewsAsync(res.data));
       });
   }

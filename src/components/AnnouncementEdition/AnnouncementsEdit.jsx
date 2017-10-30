@@ -22,17 +22,36 @@ class AnnouncementsEdit extends Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
-      let days = this.state.availability;
-      nextProps.announcements.availability.map((day) => days[day] = true);
-      this.setState({
-        availability: days,
-        movility: nextProps.announcements.movility,
-        title: nextProps.announcements.title,
-        description: nextProps.announcements.description,
-        price: nextProps.announcements.price,
-        location: nextProps.announcements.location,
-        professional_id:nextProps.announcements.professional.id
-      })
+      if(nextProps.announcements !== this.props.announcements){
+        let days = this.state.availability;
+        nextProps.announcements.availability.map((day) => days[day] = true);
+        this.setState({
+          availability: days,
+          movility: nextProps.announcements.movility,
+          title: nextProps.announcements.title,
+          description: nextProps.announcements.description,
+          price: nextProps.announcements.price,
+          location: nextProps.announcements.location,
+          professional_id:nextProps.announcements.professional.id
+        })
+      }
+    }
+    if(nextProps.update_announcement !== this.props.update_announcement){
+      if(nextProps.update_announcement.success){
+        this.setState({
+          success:true
+        })
+      }
+      if(nextProps.update_announcement.error){
+        this.setState({
+          error:true
+        })
+      }
+      if(nextProps.update_announcement.loading){
+        this.setState({
+          loading:true
+        })
+      }
     }
   }
 
@@ -58,7 +77,10 @@ class AnnouncementsEdit extends Component {
       description:'',
       price:'',
       location:'',
-      professional_id:null
+      professional_id:null,
+      success:false,
+      error:false,
+      loading:false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
@@ -96,7 +118,14 @@ class AnnouncementsEdit extends Component {
             }
         }
     }
-    let data = {'availability': days, 'movility': this.state.movility};
+    let data = {
+      'availability': days,
+      'movility': this.state.movility,
+      'title': this.state.title,
+      'description': this.state.description,
+      'location':this.state.location,
+      'price':this.state.price
+    };
     this.props.updateAnnouncements(this.props.announcement_id,data);
   }
 
@@ -122,82 +151,90 @@ class AnnouncementsEdit extends Component {
 
   render(){
     let owner = false;
-    if(cookie.load('user') && cookie.load('user').id === this.state.professional_id){
+    if(cookie.load('user') && cookie.load('user').id === this.state.professional_id && cookie.load('isProfessional') === "true"){
       owner = true;
+    }
+    if(this.state.success){
+      return <Container><div className="message--info">¡Anuncio editado con éxito!</div></Container>;
+    }
+    if(this.state.error){
+      return <Container><div className="message--error">¡Ocurrió un error!</div></Container>;
     }
     return (
       <Container>
-        <AvForm>
-          <AvGroup>
-            <Label for="movility">Movilidad</Label>
-            <AvInput  name="movility" id="movility"
-            value={this.state.movility} onChange={this.handleInputChange}/>
-          </AvGroup>
-          <AvGroup>
-            <Label for="location">Ubicación</Label>
-            <AvInput  name="location" id="location"
-            value={this.state.location} onChange={this.handleInputChange}/>
-          </AvGroup>
-          <AvGroup>
-            <Label for="title">Título</Label>
-            <AvInput  name="title" id="title"
-            value={this.state.title} onChange={this.handleInputChange}/>
-          </AvGroup>
-          <AvGroup>
-            <Label for="description">Descripción</Label>
-            <AvInput  name="description" id="description"
-            value={this.state.description} onChange={this.handleInputChange}/>
-          </AvGroup>
-          <AvGroup>
-            <Label for="price">Precio</Label>
-            <AvInput type="number" name="price" id="price"
-            value={this.state.price} onChange={this.handleInputChange}/>
-          </AvGroup>
-          <Label>Disponibilidad</Label>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
-              Lunes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
-              Martes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
-              Miércoles
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
-              Jueves
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
-              Viernes
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
-              Sábado
-            </Label>
-          </AvGroup>
-          <AvGroup check>
-            <Label check>
-              <AvInput type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
-              Domingo
-            </Label>
-          </AvGroup>
-          {owner? <Button onClick={() => {this.handleSubmit()} }>Enviar</Button> : null}
-        </AvForm>
+        <div style={{ opacity: this.props.update_announcement.loading ? 0.5 : 1 }}>
+          <AvForm disabled={this.state.loading}>
+            <AvGroup>
+              <Label for="movility">Movilidad</Label>
+              <AvInput  name="movility" id="movility"
+              value={this.state.movility} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <AvGroup>
+              <Label for="location">Ubicación</Label>
+              <AvInput  name="location" id="location"
+              value={this.state.location} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <AvGroup>
+              <Label for="title">Título</Label>
+              <AvInput  name="title" id="title"
+              value={this.state.title} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <AvGroup>
+              <Label for="description">Descripción</Label>
+              <AvInput  name="description" id="description"
+              value={this.state.description} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <AvGroup>
+              <Label for="price">Precio</Label>
+              <AvInput type="number" name="price" id="price"
+              value={this.state.price} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <Label>Disponibilidad</Label>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="lun" checked={this.state.availability.lun} onChange={this.handleCheckBoxChange} />{' '}
+                Lunes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="mar" checked={this.state.availability.mar} onChange={this.handleCheckBoxChange} />{' '}
+                Martes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="mier" checked={this.state.availability.mier} onChange={this.handleCheckBoxChange} />{' '}
+                Miércoles
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="jue" checked={this.state.availability.jue} onChange={this.handleCheckBoxChange} />{' '}
+                Jueves
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="vier" checked={this.state.availability.vier} onChange={this.handleCheckBoxChange} />{' '}
+                Viernes
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="sab" checked={this.state.availability.sab} onChange={this.handleCheckBoxChange} />{' '}
+                Sábado
+              </Label>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="dom" checked={this.state.availability.dom} onChange={this.handleCheckBoxChange} />{' '}
+                Domingo
+              </Label>
+            </AvGroup>
+            {owner? <Button onClick={() => {this.handleSubmit()} } disabled={this.state.loading}>Guardar</Button> : null}
+          </AvForm>
+        </div>
       </Container>
      )
   }

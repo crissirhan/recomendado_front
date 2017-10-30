@@ -13,7 +13,6 @@ export default function getUserReviews(professional_id) {
 }
 
 function getUserReviewsAsync(reviews){
-  console.log(reviews);
   return {
     type: GET_USER_REVIEWS,
     payload: reviews

@@ -19,7 +19,7 @@ class AnnouncementPage extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props !== nextProps){
+    if(this.props !== nextProps){ 
       this.setState({
         announcement:nextProps.announcements
       })
@@ -52,7 +52,7 @@ class AnnouncementPage extends Component {
       return <Container>Cargando</Container>
     }
     let owner = false;
-    if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id){
+    if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id && cookie.load('isProfessional') === "true"){
       owner = true;
     }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Ir a confirmar contrato</Button></Link>;

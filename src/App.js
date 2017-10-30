@@ -34,6 +34,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import AnnouncementsEdit from './components/AnnouncementEdition/AnnouncementsEdit';
+import ProfessionalEdit from './components/ProfessionalEdit';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cookie from 'react-cookies';
 
@@ -97,6 +98,9 @@ class App extends Component {
             )} />
             <Route path="/editar/anuncio/:id/" render={({ match }) => (
               <AnnouncementsEdit announcement_id={match.params.id}/>
+            )} />
+            <Route path="/editar/profesional/:id/" render={({ match }) => (
+              <ProfessionalEdit professional_id={match.params.id}/>
             )} />
           </Switch>
         </div>

@@ -20,16 +20,23 @@ class ServicePage extends Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
+      if(this.props.announcements !== nextProps.announcements)
       this.setState({
         announcement:nextProps.announcements
       })
+      if(nextProps.put_service.success !== this.props.put_service.success){
+        this.setState({
+          success:nextProps.put_service.service
+        })
+      }
     }
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      announcement:null
+      announcement:null,
+      success: false
     };
     this.handleCreateService = this.handleCreateService.bind(this);
   }
@@ -51,13 +58,15 @@ class ServicePage extends Component {
   }
 
   render(){
-    if(this.props.put_service.success){
+
+    if(this.state.success){
       return <Container><div className="message--info">Servicio contratado con éxito!</div></Container>;
     }
     if(!this.state.announcement){
       return <Container>Cargando</Container>
     }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contratar</Button></Link>;
+
     return (
       <Container>
         <div style={{ opacity: this.props.put_service.loading ? 0.5 : 1 }}>

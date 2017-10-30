@@ -13,7 +13,6 @@ export default function getClientServices(client_id) {
 }
 
 function getClientServicesAsync(services){
-  console.log(services);
   return {
     type: GET_CLIENT_SERVICES,
     payload: services
