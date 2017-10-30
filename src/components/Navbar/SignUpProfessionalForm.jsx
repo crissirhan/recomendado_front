@@ -13,6 +13,27 @@ import '../css/messages.css';
 import { RegionesYcomunas } from '../../Globals'
 
 class signUpProfessionalForm extends Component{
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.sign_up_professional !== this.props.sign_up_professional){
+      if(this.props.sign_up_professional.success !== nextProps.sign_up_professional.success){
+        this.setState({
+          success:nextProps.sign_up_professional.success
+        })
+      }
+      if(this.props.sign_up_professional.error !== nextProps.sign_up_professional.error){
+        this.setState({
+          error:nextProps.sign_up_professional.error
+        })
+      }
+      if(this.props.sign_up_professional.loading !== nextProps.sign_up_professional.loading){
+        this.setState({
+          loading:nextProps.sign_up_professional.loading
+        })
+      }
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +51,10 @@ class signUpProfessionalForm extends Component{
       house_number: '',
       phone_number: '',
       identification:null,
-      profile_picture:null
+      profile_picture:null,
+      loading:false,
+      error:false,
+      success:false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -110,19 +134,14 @@ class signUpProfessionalForm extends Component{
       return <div className="message--info">¡Usuario creado con éxito!</div>;
     }
     return (
-      <div style={{ opacity: this.props.sign_up_professional.loading ? 0.5 : 1 }}>
-        <AvForm onValidSubmit={this.handleSubmit}>
+      <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
+        <AvForm onValidSubmit={this.handleSubmit} disabled={this.state.loading}>
 
           <AvGroup>
             <Label for="exampleEmail">Correo electrónico</Label>
             <AvInput type="email" name="email" id="exampleEmail" placeholder="ejemplo@correo.com"
             value={this.state.email} onChange={this.handleInputChange} required />
             <AvFeedback>Debe ingresar un coreo electrónico válido</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="profile_picture">Foto de perfil</Label>
-            <AvInput type="file" disabled={true} accept="image/*" name="profile_picture" id="profile_picture"
-             onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
           <AvGroup>
             <Label for="examplePassword1">Contraseña</Label>
@@ -135,6 +154,11 @@ class signUpProfessionalForm extends Component{
             <AvInput  type="password" name="password2" id="examplePassword2" minLength="8" placeholder="Ingrese su contraseña nuevamente"
             value={this.state.password2} onChange={this.handleInputChange} required validate={{match:{value:'password1'}}} />
             <AvFeedback>Las contraseñas deben coincidir y ser de un largo mínimo de 8 carácteres</AvFeedback>
+          </AvGroup>
+          <AvGroup>
+            <Label for="profile_picture">Foto de perfil</Label>
+            <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
+             onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
           <AvGroup >
             <Label for="first_name">Nombre</Label>
@@ -187,9 +211,9 @@ class signUpProfessionalForm extends Component{
             <AvInput  name="phone_number" id="phone_number" placeholder="ejemplos: 12345678, +56912345678"
             value={this.state.phone_number} onChange={this.handleInputChange} />
           </AvGroup>
-          {this.props.sign_up_professional.error ? <div className="message--error">¡Error! {this.props.sign_up_professional.error_type}</div> : null}
+          {this.state.error ? <div className="message--error">¡Error!</div> : null}
           <FormGroup>
-            <Button>Registrarse</Button>
+            <Button disabled={this.state.loading}>Registrarse</Button>
           </FormGroup>
         </AvForm>
       </div>

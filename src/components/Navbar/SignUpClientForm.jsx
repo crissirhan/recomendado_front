@@ -12,6 +12,27 @@ import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstr
 
 
 class SignUpClientForm extends Component{
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.sign_up_client !== this.props.sign_up_client){
+      if(this.props.sign_up_client.success !== nextProps.sign_up_client.success){
+        this.setState({
+          success:nextProps.sign_up_client.success
+        })
+      }
+      if(this.props.sign_up_client.error !== nextProps.sign_up_client.error){
+        this.setState({
+          error:nextProps.sign_up_client.error
+        })
+      }
+      if(this.props.sign_up_client.loading !== nextProps.sign_up_client.loading){
+        this.setState({
+          loading:nextProps.sign_up_client.loading
+        })
+      }
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +49,11 @@ class SignUpClientForm extends Component{
       street: '',
       house_number: '',
       phone_number: '',
-      identification:null
+      identification:null,
+      profile_picture:null,
+      loading:false,
+      error:false,
+      success:false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -55,7 +80,6 @@ class SignUpClientForm extends Component{
   }
 
   handleSubmit(){
-    console.log("asd")
     if(this.state.password1 != this.state.password2){
       return;
     }
@@ -67,13 +91,13 @@ class SignUpClientForm extends Component{
       password: this.state.password1
     }
     let request = {
-      user: user_data
+      user: user_data,
+      profile_picture :this.state.profile_picture
     }
     if(this.state.switch_client){
       this.props.signUpClient(request);
     }
     if(this.state.switch_professional){
-      console.log("asd")
       request.rut = this.state.rut;
       request.region = this.state.region;
       request.city = this.state.city;
@@ -94,15 +118,26 @@ class SignUpClientForm extends Component{
       return;
     }
     return this.checkRut(value) ? cb(true) : cb('Rut inválido');
-}
+  }
+  handleImageChange(event){
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        profile_picture: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+
+  }
 
   render(){
-    if(this.props.sign_up_client.success){
+    if(this.state.success){
       return <div className="message--info">¡Usuario creado con éxito!</div>;
     }
     return (
-      <div style={{ opacity: this.props.sign_up_client.loading ? 0.5 : 1 }}>
-        <AvForm onValidSubmit={this.handleSubmit}>
+      <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
+        <AvForm onValidSubmit={this.handleSubmit} disabled={this.state.loading}>
           <AvGroup>
             <Label for="exampleEmail">Correo electrónico</Label>
             <AvInput type="email" name="email" id="exampleEmail" placeholder="ejemplo@correo.com"
@@ -121,6 +156,11 @@ class SignUpClientForm extends Component{
             value={this.state.password2} onChange={this.handleInputChange} required validate={{match:{value:'password1'}}} />
             <AvFeedback>Las contraseñas deben coincidir y ser de un largo mínimo de 8 carácteres</AvFeedback>
           </AvGroup>
+          <AvGroup>
+            <Label for="profile_picture">Foto de perfil</Label>
+            <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
+             onChange={this.handleImageChange.bind(this)} />
+          </AvGroup>
           <AvGroup >
             <Label for="first_name">Nombre</Label>
             <AvInput  name="first_name" id="first_name" placeholder="Ingrese su nombre"
@@ -131,9 +171,9 @@ class SignUpClientForm extends Component{
             <AvInput  name="last_name" id="last_name" placeholder="Ingrese su apellido"
             value={this.state.last_name} onChange={this.handleInputChange} required />
           </AvGroup>
-          {this.props.sign_up_client.error ? <div className="message--error">¡Error! {this.props.sign_up_client.error_type}</div> : null}
+          {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
           <FormGroup>
-            <Button>Registrarse</Button>
+            <Button disabled={this.state.loading}>Registrarse</Button>
           </FormGroup>
         </AvForm>
       </div>
