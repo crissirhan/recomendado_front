@@ -155,7 +155,7 @@ class ClientPage extends Component {
             <Card block className="text-center" >
               <img className="img-circle center-cropped professional-profile" src={image_url} alt="foto perfil" />
             </Card>
-
+            {(cookie.load('isClient') === "true" && cookie.load('user').id ===this.state.client.id)? <Link to={'/editar/cliente/'+this.state.client.id+'/'}><Button>Editar perfil</Button></Link> : null}
           </Col>
           <Col sm="8">
               <Card block className="text-left">

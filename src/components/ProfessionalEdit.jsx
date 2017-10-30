@@ -132,7 +132,7 @@ class ProfessionalEdit extends Component {
       return <div>No deberías estar acá</div>
     }
     if(this.state.success){
-      return <Container><div className="message--info">¡Anuncio editado con éxito!</div></Container>;
+      return <Container><div className="message--info">Perfil editado con éxito!</div></Container>;
     }
     if(this.state.error){
       return <Container><div className="message--error">¡Ocurrió un error!</div></Container>;

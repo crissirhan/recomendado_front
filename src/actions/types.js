@@ -42,3 +42,6 @@ export const UPDATE_ANNOUNCEMENTS_LOADING = 'requesting update on announcement';
 export const UPDATE_PROFESSIONAL_SUCCESS = 'success on updating professional';
 export const UPDATE_PROFESSIONAL_ERROR = 'error on updating professional';
 export const UPDATE_PROFESSIONAL_LOADING = 'loading update professional';
+export const UPDATE_CLIENT_LOADING = 'loading update client';
+export const UPDATE_CLIENT_SUCCESS = 'success on updating client';
+export const UPDATE_CLIENT_ERROR = 'error on updating client'

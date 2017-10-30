@@ -177,6 +177,7 @@ class ProfessionalPage extends Component {
               </CardText>
             </Card>
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button>Crear anuncio</Button></Link> : null}
+            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
           </Col>
           <Col sm="8">
               <Card block className="text-left">
