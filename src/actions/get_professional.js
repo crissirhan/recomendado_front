@@ -7,7 +7,6 @@ export default function getProfessional(professional_id) {
   return dispatch => {
     axios.get(ENDPOINT_URI+'/professionals/'+professional_id+'/')
       .then(res => {
-        console.log(res.data);
         dispatch(getProfessionalAsync(res.data));
       });
   }

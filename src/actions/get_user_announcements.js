@@ -13,7 +13,6 @@ export default function getUserAnnouncements(professional_id) {
 }
 
 function getUserAnnouncementsAsync(announcements){
-  console.log(announcements);
   return {
     type: GET_USER_ANNOUNCEMENTS,
     payload: announcements
