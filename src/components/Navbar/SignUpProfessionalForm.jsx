@@ -115,7 +115,7 @@ class signUpProfessionalForm extends Component{
 
           <AvGroup>
             <Label for="exampleEmail">Correo electrónico</Label>
-            <AvInput type="email" name="email" id="exampleEmail" placeholder="Ingrese su correo electrónico"
+            <AvInput type="email" name="email" id="exampleEmail" placeholder="ejemplo@correo.com"
             value={this.state.email} onChange={this.handleInputChange} required />
             <AvFeedback>Debe ingresar un coreo electrónico válido</AvFeedback>
           </AvGroup>
@@ -126,15 +126,15 @@ class signUpProfessionalForm extends Component{
           </AvGroup>
           <AvGroup>
             <Label for="examplePassword1">Contraseña</Label>
-            <AvInput type="password" name="password1" id="examplePassword1" placeholder="Ingrese su contraseña"
+            <AvInput type="password" name="password1" id="examplePassword1" minLength="8" placeholder="Ingrese su contraseña"
             value={this.state.password1} onChange={this.handleInputChange} required />
-            <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
+            <AvFeedback>Las contraseñas deben coincidir y ser de un largo mínimo de 8 carácteres</AvFeedback>
           </AvGroup>
           <AvGroup>
             <Label for="examplePassword1">Repita su contraseña</Label>
-            <AvInput  type="password" name="password2" id="examplePassword2" placeholder="Ingrese su contraseña nuevamente"
+            <AvInput  type="password" name="password2" id="examplePassword2" minLength="8" placeholder="Ingrese su contraseña nuevamente"
             value={this.state.password2} onChange={this.handleInputChange} required validate={{match:{value:'password1'}}} />
-            <AvFeedback>Las contraseñas deben coincidir</AvFeedback>
+            <AvFeedback>Las contraseñas deben coincidir y ser de un largo mínimo de 8 carácteres</AvFeedback>
           </AvGroup>
           <AvGroup >
             <Label for="first_name">Nombre</Label>
@@ -150,7 +150,7 @@ class signUpProfessionalForm extends Component{
           </AvGroup>
           <AvGroup hidden={!this.state.switch_professional}>
             <Label for="rut">Rut</Label>
-            <AvInput  name="rut" id="rut" placeholder="Ingrese su rut"
+            <AvInput  name="rut" id="rut" placeholder="12345678-k"
             value={this.state.rut} onChange={this.handleInputChange} validate={{custom: this.validateRut}} required />
             <AvFeedback>Rut no válido</AvFeedback>
           </AvGroup>
@@ -177,14 +177,14 @@ class signUpProfessionalForm extends Component{
             <AvFeedback>Debe ingresar una calle</AvFeedback>
           </AvGroup>
           <AvGroup hidden={!this.state.switch_professional}>
-            <Label for="house_number">Número</Label>
-            <AvInput type="number" name="house_number" id="house_number" placeholder="Número de casa o departamento"
+            <Label for="house_number">Número de casa o departamento</Label>
+            <AvInput type="number" name="house_number" id="house_number" placeholder="ejemplo: 320"
             value={this.state.house_number} onChange={this.handleInputChange} required />
             <AvFeedback>Número no válido</AvFeedback>
           </AvGroup>
           <AvGroup hidden={!this.state.switch_professional}>
             <Label for="phone_number">Número de teléfono</Label>
-            <AvInput  name="phone_number" id="phone_number" placeholder="Número de teléfono"
+            <AvInput  name="phone_number" id="phone_number" placeholder="ejemplos: 12345678, +56912345678"
             value={this.state.phone_number} onChange={this.handleInputChange} />
           </AvGroup>
           {this.props.sign_up_professional.error ? <div className="message--error">¡Error! {this.props.sign_up_professional.error_type}</div> : null}

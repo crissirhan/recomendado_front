@@ -176,7 +176,6 @@ class ProfessionalPage extends Component {
                 <small className="text-muted">({this.state.count} evaluaciones)</small>
               </CardText>
             </Card>
-            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button>Crear anuncio</Button></Link> : null}
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
           </Col>
           <Col sm="8">
@@ -216,16 +215,12 @@ class ProfessionalPage extends Component {
         <Container>
           <Row>
             <p className="h4"><b>Anuncios</b></p>
-            <Modal isOpen={this.state.showAnnoucementModal} toggle={this.toggle} className={this.props.className}>
-              <ModalHeader toggle={this.toggleAnnouccementModal.bind(this)}>Crear Anuncio</ModalHeader>
-              <ModalBody>
-                <AnnouncementForm/>
-              </ModalBody>
-            </Modal>
-            <Button color="link" onClick={this.toggleAnnouccementModal.bind(this)}>Crear Anuncio</Button>
+            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link">Crear anuncio</Button></Link> : null}
           </Row>
           <Jumbotron>
-            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/>
+          {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id) ?
+            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/> :
+          <div>Debes estar logeado/a como {this.state.professional.user.first_name} {this.state.professional.user.last_name} para ver los anuncios</div>}
           </Jumbotron>
         </Container>
         <Container>
