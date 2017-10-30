@@ -79,6 +79,9 @@ class ClientEdit extends Component {
       user: user_data,
       profile_picture: this.state.profile_picture,
     }
+    if(this.state.profile_picture){
+      request.profile_picture = this.state.profile_picture
+    }
     this.props.updateClient(this.props.client_id,request);
   }
 
@@ -123,7 +126,7 @@ class ClientEdit extends Component {
           <AvForm disabled={this.state.loading} onValidSubmit={this.handleSubmit}>
           <AvGroup>
             <Label for="profile_picture">Foto de perfil</Label>
-            <AvInput type="file" disabled={true} accept="image/*" name="profile_picture" id="profile_picture"
+            <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
              onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
           <AvGroup >

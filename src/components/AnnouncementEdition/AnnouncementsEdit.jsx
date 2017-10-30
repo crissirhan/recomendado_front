@@ -77,6 +77,7 @@ class AnnouncementsEdit extends Component {
       description:'',
       price:'',
       location:'',
+      thumbnail:null,
       professional_id:null,
       success:false,
       error:false,
@@ -126,6 +127,9 @@ class AnnouncementsEdit extends Component {
       'location':this.state.location,
       'price':this.state.price
     };
+    if(this.state.thumbnail){
+      data.announcement_thumbnail=this.state.thumbnail
+    }
     this.props.updateAnnouncements(this.props.announcement_id,data);
   }
 
@@ -148,7 +152,17 @@ class AnnouncementsEdit extends Component {
     this.setState({availability:availability});
 
   }
+  handleImageChange(event){
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        thumbnail: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
 
+  }
   render(){
     let owner = false;
     if(cookie.load('user') && cookie.load('user').id === this.state.professional_id && cookie.load('isProfessional') === "true"){
@@ -164,6 +178,11 @@ class AnnouncementsEdit extends Component {
       <Container>
         <div style={{ opacity: this.props.update_announcement.loading ? 0.5 : 1 }}>
           <AvForm disabled={this.state.loading}>
+            <AvGroup>
+              <Label for="thumbnail">Imagén del aviso</Label>
+              <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
+               onChange={this.handleImageChange.bind(this)} />
+            </AvGroup>
             <AvGroup>
               <Label for="movility">Movilidad</Label>
               <AvInput  name="movility" id="movility"

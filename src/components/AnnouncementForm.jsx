@@ -74,8 +74,16 @@ class AnnouncementForm extends Component{
       [name]: value
     });
   }
-  handleFileChange(file){
-    console.log(file)
+  handleImageChange(event){
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        thumbnail: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+
   }
   handleSubmit(){
     console.log(this.state)
@@ -103,7 +111,7 @@ class AnnouncementForm extends Component{
       description:this.state.description,
       price:this.state.price,
       job_subtype_id:this.state.job_subtype.id,
-      thumbnail:this.state.thumbnail
+      announcement_thumbnail:this.state.thumbnail
     }
     console.log(data);
     this.props.postAnnouncement(data);
@@ -145,6 +153,11 @@ class AnnouncementForm extends Component{
       <Container>
         <div style={{ opacity: this.props.post_announcement.loading ? 0.5 : 1 }}>
           <AvForm onValidSubmit={this.handleSubmit}>
+            <AvGroup>
+              <Label for="thumbnail">Imagén del aviso</Label>
+              <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
+               onChange={this.handleImageChange.bind(this)} />
+            </AvGroup>
             <AvGroup>
               <Label for="title">Título</Label>
               <AvInput  name="title" id="title"
