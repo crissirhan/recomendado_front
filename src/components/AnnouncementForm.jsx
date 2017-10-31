@@ -63,7 +63,7 @@ class AnnouncementForm extends Component{
     this.handleJobSelectChange = this.handleJobSelectChange.bind(this);
     this.handleJobSubtypeSelectChange = this.handleJobSubtypeSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
   }
 
   handleInputChange(event) {
