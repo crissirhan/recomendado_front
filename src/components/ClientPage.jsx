@@ -35,6 +35,11 @@ class ClientPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.client_id !== this.props.client_id){
+      this.props.getClient(nextProps.client_id);
+      this.props.getClientServices(nextProps.client_id);
+      this.props.getClientReviews(nextProps.client_id);
+    }
     if(nextProps.client !== this.props.client) {
       //this.syncPropToState(nextProps);
       if(cookie.load('user')){

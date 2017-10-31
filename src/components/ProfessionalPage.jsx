@@ -35,6 +35,11 @@ class ProfessionalPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.professional_id !== this.props.professional_id){
+      this.props.getProfessional(nextProps.professional_id);
+      this.props.getUserReviews(nextProps.professional_id);
+      this.props.getUserAnnouncements(nextProps.professional_id);
+    }
     if(this.props != nextProps) {
       if(this.state.professional !== nextProps.professional){
         this.setState({
