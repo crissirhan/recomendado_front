@@ -4,7 +4,7 @@ import {
   Container,
   Collapse,
   TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col, Jumbotron, CardGroup,ListGroupItem, ListGroup,
-  ModalBody, Modal, ModalHeader
+  ModalBody, Modal, ModalHeader, ModalFooter
 } from 'reactstrap';
 import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
 import {
@@ -20,8 +20,16 @@ class ListGroupService extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       collapse: false,
-      service: this.props.service
+      service: this.props.service,
+      contact_modal: false
     };
+    this.toggleContactModal = this.toggleContactModal.bind(this);
+  }
+
+  toggleContactModal(){
+    this.setState({
+      contact_modal:!this.state.contact_modal
+    })
   }
 
   toggle() {
@@ -29,6 +37,7 @@ class ListGroupService extends React.Component {
   }
 
   render() {
+    console.log(this.state.service)
     return (
       <ListGroupItem key={this.state.service.id}>
         <Col sm="3">
@@ -55,6 +64,21 @@ class ListGroupService extends React.Component {
           <Collapse isOpen={this.state.collapse}>
             <ReviewForm service_id={this.state.service.id} service={this.state.service} alreadyReviewed={this.props.alreadyReviewed}/>
           </Collapse>
+        </Col>
+        <Col xs="2">
+          <Button onClick={this.toggleContactModal}>Contactar</Button>
+          <Modal isOpen={this.state.contact_modal} toggle={this.toggleContactModal}>
+            <ModalHeader toggle={this.toggleContactModal}>Datos contacto</ModalHeader>
+            <ModalBody>
+            <div>Correo electrónico: </div>
+              <div>Nombre: {this.state.service.announcement.professional.user.first_name} {this.state.service.announcement.professional.user.last_name}</div>
+              <div>Número de teléfono: {this.state.service.announcement.professional.phone_number}</div>
+              <div>Correo electrónico: {this.state.service.announcement.professional.user.email}</div>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.toggleContactModal}>Cerrar</Button>
+            </ModalFooter>
+          </Modal>
         </Col>
       </ListGroupItem>
     );

@@ -24,9 +24,10 @@ class ServicePage extends Component {
       this.setState({
         announcement:nextProps.announcements
       })
-      if(nextProps.put_service.success !== this.props.put_service.success){
+      if(nextProps.put_service !== this.props.put_service){
         this.setState({
-          success:nextProps.put_service.service
+          success:nextProps.put_service.success,
+          error: nextProps.put_service.error
         })
       }
     }
@@ -36,7 +37,9 @@ class ServicePage extends Component {
     super(props);
     this.state = {
       announcement:null,
-      success: false
+      success: false,
+      error: false,
+      loading_service: false
     };
     this.handleCreateService = this.handleCreateService.bind(this);
   }
@@ -58,7 +61,7 @@ class ServicePage extends Component {
   }
 
   render(){
-
+    console.log(this.props)
     if(this.state.success){
       return <Container><div className="message--info">Servicio contratado con éxito!</div></Container>;
     }

@@ -92,7 +92,9 @@ class SignUpClientForm extends Component{
     }
     let request = {
       user: user_data,
-      profile_picture :this.state.profile_picture
+    }
+    if(this.state.profile_picture){
+      request.profile_picture = this.state.profile_picture;
     }
     if(this.state.switch_client){
       this.props.signUpClient(request);

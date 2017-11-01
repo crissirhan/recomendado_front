@@ -148,18 +148,6 @@ class ProfessionalEdit extends Component {
             <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
              onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
-          <AvGroup >
-            <Label for="first_name">Nombre</Label>
-            <AvInput  name="first_name" id="first_name" placeholder="Ingrese su nombre"
-            value={this.state.first_name} onChange={this.handleInputChange} required />
-            <AvFeedback>Debe ingresar un nombre</AvFeedback>
-          </AvGroup>
-          <AvGroup >
-            <Label for="last_name">Apellido</Label>
-            <AvInput  name="last_name" id="last_name" placeholder="Ingrese su apellido"
-            value={this.state.last_name} onChange={this.handleInputChange} required />
-            <AvFeedback>Debe ingresar un apellido</AvFeedback>
-          </AvGroup>
           <AvGroup>
              <Label for="region">Región</Label>
              <AvInput type="select" name="region" id="region" onChange={this.handleInputChange} value={this.state.region}>

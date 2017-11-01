@@ -9,7 +9,6 @@ export default function(state=[], action) {
       loggedIn = {'loggedIn':true}
       loading = {'loading':false}
       data = {'token': action.payload.token, 'username':action.payload.username}
-      console.log(Object.assign({},state, data, loggedIn, loading));
       return Object.assign({}, data, loggedIn, loading);
     case USER_LOGIN_ERROR:
       loading = {'loading':false}

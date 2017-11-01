@@ -22,9 +22,29 @@ class ListAnnouncements extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps) {
-      this.setState({
-        announcements:nextProps.announcements
-      });
+      if(nextProps.announcements != this.props.announcements){
+        if(this.props.announcements.success !== nextProps.announcements.success){
+          this.setState({
+            success:nextProps.announcements.success
+          })
+        }
+        if(this.props.announcements.error !== nextProps.announcements.error){
+          this.setState({
+            error:nextProps.announcements.error
+          })
+        }
+        if(this.props.announcements.loading !== nextProps.announcements.loading){
+          this.setState({
+            loading:nextProps.announcements.loading
+          })
+        }
+        if(nextProps.announcements.result){
+          this.setState({
+            announcements: nextProps.announcements.result
+          })
+        }
+      }
+
       if(this.props.search !== nextProps.search){
         this.props.getAnnouncements(null,nextProps.search);
       }
@@ -35,18 +55,25 @@ class ListAnnouncements extends Component {
     super(props);
 
     this.state = {
-      announcements:[]
+      announcements:[],
+      loading: true,
+      error: false,
+      success: false
     };
   }
 
   render() {
-      if(this.state.announcements.length === 0 ){
-        return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
-      }
+    console.log(this.state)
+    if(this.state.loading){
+      return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
+    }
+    if(this.state.announcements.length === 0 ){
+      return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
+    }
     return (
       <Container>
-        <h1>Lorem ipsum</h1>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.Quisque rutrum. Aenean imperdiet.</p>
+        <h1>Búsqueda de avisos</h1>
+        <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
 
         <ListAnnouncementsDummy image_class="center-cropped search-thumbnail" announcements_array={this.state.announcements}/>

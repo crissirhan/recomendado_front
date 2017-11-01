@@ -223,9 +223,7 @@ class ProfessionalPage extends Component {
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link">Crear anuncio</Button></Link> : null}
           </Row>
           <Jumbotron>
-          {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id) ?
-            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/> :
-          <div>Debes estar logeado/a como {this.state.professional.user.first_name} {this.state.professional.user.last_name} para ver los anuncios</div>}
+            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/> 
           </Jumbotron>
         </Container>
         <Container>

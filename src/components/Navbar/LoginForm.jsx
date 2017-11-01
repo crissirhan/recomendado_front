@@ -10,11 +10,26 @@ import FacebookLoginButton from './FacebookLoginButton';
 
 class LoginForm extends Component{
 
+  parseQueryString(){
+
+    var str = this.props.location.search;
+    var objURL = {};
+
+    str.replace(
+        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+        function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
+        }
+    );
+    return objURL;
+  }
+
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
       if(nextProps.login_state.loggedIn){
         this.handleLogin();
-        this.props.history.push("/");
+        let goPage = this.parseQueryString()['from'] ? this.parseQueryString()['from'] : '/' ;
+        this.props.history.push(goPage);
       }
     }
   }

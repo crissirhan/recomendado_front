@@ -101,7 +101,9 @@ class signUpProfessionalForm extends Component{
     }
     let request = {
       user: user_data,
-      profile_picture: this.state.profile_picture
+    }
+    if(this.state.profile_picture){
+      request.profile_picture = this.state.profile_picture;
     }
     if(this.state.switch_client){
       this.props.signUpClient(request);
@@ -112,7 +114,7 @@ class signUpProfessionalForm extends Component{
       request.city = this.state.city;
       request.street = this.state.street;
       request.house_number = this.state.house_number;
-      request.phone_number = this.state.phone_number;
+      request.phone_number = this.state.phone_number.replace(' ', '');
       request.identification = this.state.identification;
       this.props.signUpProfessional(request);
     }
@@ -127,7 +129,15 @@ class signUpProfessionalForm extends Component{
       return;
     }
     return this.checkRut(value) ? cb(true) : cb('Rut inválido');
-}
+  }
+
+  validatePhoneNumber(value, ctx, input, cb){
+    if (!value || value === '') {
+      cb(false);
+      return;
+    }
+    return this.checkPhoneNumber(value) ? cb(true) : cb('Número de teléfono inválido');
+  }
 
   render(){
     if(this.props.sign_up_professional.success){
@@ -209,7 +219,7 @@ class signUpProfessionalForm extends Component{
           <AvGroup hidden={!this.state.switch_professional}>
             <Label for="phone_number">Número de teléfono</Label>
             <AvInput  name="phone_number" id="phone_number" placeholder="ejemplos: 12345678, +56912345678"
-            value={this.state.phone_number} onChange={this.handleInputChange} />
+            value={this.state.phone_number} onChange={this.handleInputChange} validate={{custom: this.checkPhoneNumber}} required />
           </AvGroup>
           {this.state.error ? <div className="message--error">¡Error!</div> : null}
           <FormGroup>
@@ -234,7 +244,12 @@ class signUpProfessionalForm extends Component{
 			S=(S+T%10*(9-M++%6))%11;
 		return S?S-1:'k';
 	}
+  checkPhoneNumber(number){
+    return /^\+?(\d+)\)?[-. ]?(\d+)$/.test(number)
+  }
 }
+
+
 
 function mapStateToProps(state){
   return {

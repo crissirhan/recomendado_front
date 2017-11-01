@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavbarBrand, Nav, N
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import AnnouncementForm from '../AnnouncementForm';
+import SearchAnnouncements from '../SearchAnnouncements';
 import '../css/navbar/navbar.css';
 import {
   Link,withRouter
@@ -18,7 +19,6 @@ class ProjectNavbar extends Component {
   componentWillReceiveProps(nextProps) {
 
     if(this.props != nextProps){
-      console.log(nextProps)
       if(nextProps.logged_in_professional[0]){
         this.setState({
           user:nextProps.logged_in_professional[0],
@@ -146,7 +146,7 @@ class ProjectNavbar extends Component {
       buttons =
       <Nav className="ml-auto" >
         <NavItem>
-        <Link to="/login/">
+        <Link to={"/login"+'?from=' + this.props.location.pathname}>
           <Button color="link" onClick={this.loginToggle}>Login</Button>
         </Link>
         </NavItem>
@@ -163,6 +163,7 @@ class ProjectNavbar extends Component {
           <Link to='/'>
             <NavbarBrand><h3><b>Recomendado</b></h3></NavbarBrand>
           </Link>
+          <SearchAnnouncements/>
           {buttons}
         </Navbar>
       </span>
