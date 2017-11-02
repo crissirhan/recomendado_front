@@ -73,9 +73,11 @@ class SearchAnnouncements extends Component {
         <SearchBar
           onChange={this.searchUpdated}
           onRequestSearch={this.requestSearch}
+          hintText="Buscar"
           style={{
             margin: '0 auto',
-            maxWidth: 800
+            maxWidth: 800,
+            minWidth: 700
           }}
         />
      )

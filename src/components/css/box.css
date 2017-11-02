@@ -26,3 +26,7 @@
 .no-border {
   border:none !important;
 }
+
+.min-width {
+  min-width: 300px
+}

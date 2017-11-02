@@ -223,7 +223,7 @@ class ProfessionalPage extends Component {
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link">Crear anuncio</Button></Link> : null}
           </Row>
           <Jumbotron>
-            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/> 
+            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={this.state.announcements}/>
           </Jumbotron>
         </Container>
         <Container>
@@ -231,10 +231,10 @@ class ProfessionalPage extends Component {
           <Jumbotron>
             <CardGroup>
               <Row>
-                {this.state.reviews.map(review => {
+                {this.state.reviews.sort(() => .5 - Math.random()).slice(0,3).map(review => {
                   let image_url = review.service.client.profile_picture ? "http://35.196.31.174"+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
                   return (<Col  sm="4" key={review.id}>
-                            <Card className="shadow-box round-border">
+                            <Card className="shadow-box round-border min-width">
                               <CardTitle className="text-center">{review.service.announcement.job_subtype.job_sub_type}</CardTitle>
                               <Rating className="text-center"
                                   empty="fa fa-star-o fa-2x orange-star"
