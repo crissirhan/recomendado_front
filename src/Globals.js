@@ -1,4 +1,4 @@
-export const ENDPOINT_URI = 'http://35.196.31.174';
+export const ENDPOINT_URI = 'http://api.recomendado-dev.samir.cl/';
 export const RegionesYcomunas = {
 
 	"regiones": [{

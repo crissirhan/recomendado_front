@@ -16,13 +16,6 @@ export default function getAnnouncementsByJob(job_name,search_params) {
 }
 
 function getAnnouncementsAsyncByJob(announcements){
-  function get(id){
-    var result = this.filter(function( obj ) {
-      return obj.id === id;
-    });
-    return result[0];
-  }
-  announcements.get = get;
   return {
     type: GET_ANNOUNCEMENTS_BY_JOB,
     payload: announcements

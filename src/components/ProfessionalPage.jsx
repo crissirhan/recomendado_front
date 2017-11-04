@@ -41,22 +41,26 @@ class ProfessionalPage extends Component {
       this.props.getUserAnnouncements(nextProps.professional_id);
     }
     if(this.props != nextProps) {
-      if(this.state.professional !== nextProps.professional){
+      if(this.props.professional !== nextProps.professional){
         this.setState({
           professional:nextProps.professional
         })
       }
-      if(this.state.reviews !== nextProps.user_reviews.reviews){
+      if(this.props.user_reviews.reviews !== nextProps.user_reviews.reviews){
         this.setState({
           reviews: nextProps.user_reviews.reviews,
           average: nextProps.user_reviews.average,
           count: nextProps.user_reviews.count
         });
       }
-      if(this.state.announcements !== nextProps.user_announcements){
-        this.setState({
-          announcements: nextProps.user_announcements
-        })
+      if(this.props.user_announcements !== nextProps.user_announcements){
+        console.log(nextProps.user_announcements)
+        if(nextProps.user_announcements.result){
+          console.log(nextProps.user_announcements)
+          this.setState({
+            announcements: nextProps.user_announcements.result
+          })
+        }
       }
     }
   }

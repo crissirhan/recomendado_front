@@ -7,7 +7,6 @@ export default function getJobSubCategories() {
   return dispatch => {
     axios.get(ENDPOINT_URI+'/job-sub-categories/')
       .then(res => {
-        console.log(res);
         dispatch(getJobSubCategoriesAsync(res.data));
       });
   }

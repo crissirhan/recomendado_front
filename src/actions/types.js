@@ -51,3 +51,6 @@ export const GET_USER_ANNOUNCEMENTS_ERROR = 'user error announcements';
 export const GET_ANNOUNCEMENTS_LOADING = ' announcemnts loading';
 export const GET_ANNOUNCEMENTS_SUCCESS = 'announcements success';
 export const GET_ANNOUNCEMENTS_ERROR = 'announcements error';
+export const GET_JOB_BY_NAME_SUCCESS = ' success get job by name';
+export const GET_JOB_BY_NAME_ERROR = ' error get job by name';
+export const GET_JOB_BY_NAME_LOADING = ' loading get job by name';

@@ -44,6 +44,7 @@ class LoginForm extends Component{
     this.handleInputChange = this.handleInputChange.bind(this);
     this.loginRequest = this.loginRequest.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleLogin(){
@@ -64,6 +65,12 @@ class LoginForm extends Component{
     this.props.login(this.state.username, this.state.password);
   }
 
+  handleKeyPress(target) {
+    if(target.charCode==13){
+            this.loginRequest();
+    }
+  }
+
   render(){
     return (
       <div style={{ opacity: this.props.login_state.loading ? 0.5 : 1 }}>
@@ -71,15 +78,15 @@ class LoginForm extends Component{
            <FormGroup>
              <Label for="exampleEmail">Correo electrónico</Label>
              <Input type="email" name="username" id="exampleEmail" placeholder="Ingrese su correo electrónico"
-             value={this.state.username} onChange={this.handleInputChange}/>
+             value={this.state.username} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
            </FormGroup>
            <FormGroup>
              <Label for="examplePassword">Contraseña</Label>
              <Input type="password" name="password" id="examplePassword" placeholder="Ingrese su contraseña"
-             value={this.state.password} onChange={this.handleInputChange}/>
+             value={this.state.password} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
            </FormGroup>
            {this.props.login_state.error ? <div className="message--error">Usuario o contraseña incorrecto</div> : null}
-           <Button onClick={() => this.loginRequest() }>Login</Button>
+           <Button onClick={() => this.loginRequest() } disabled={this.props.login_state.loading} >Login</Button>
          </Form>
        </div>
      )
