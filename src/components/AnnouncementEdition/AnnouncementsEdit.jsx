@@ -22,17 +22,20 @@ class AnnouncementsEdit extends Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
-      if(nextProps.announcements !== this.props.announcements){
+      if(nextProps.announcements.result){
         let days = this.state.availability;
-        nextProps.announcements.availability.map((day) => days[day] = true);
+        let announcement = nextProps.announcements.result;
+        console.log(announcement)
+        announcement.availability.map((day) => days[day] = true);
         this.setState({
           availability: days,
-          movility: nextProps.announcements.movility,
-          title: nextProps.announcements.title,
-          description: nextProps.announcements.description,
-          price: nextProps.announcements.price,
-          location: nextProps.announcements.location,
-          professional_id:nextProps.announcements.professional.id
+          movility: announcement.movility,
+          title: announcement.title,
+          description: announcement.description,
+          price: announcement.price,
+          location: announcement.location,
+          professional_id:announcement.professional.id,
+          visible:announcement.visible
         })
       }
     }
@@ -77,6 +80,7 @@ class AnnouncementsEdit extends Component {
       description:'',
       price:'',
       location:'',
+      visible:false,
       thumbnail:null,
       professional_id:null,
       success:false,
@@ -125,7 +129,8 @@ class AnnouncementsEdit extends Component {
       'title': this.state.title,
       'description': this.state.description,
       'location':this.state.location,
-      'price':this.state.price
+      'price':this.state.price,
+      'visible':this.state.visible
     };
     if(this.state.thumbnail){
       data.announcement_thumbnail=this.state.thumbnail
@@ -207,6 +212,12 @@ class AnnouncementsEdit extends Component {
               <Label for="price">Precio</Label>
               <AvInput type="number" name="price" id="price"
               value={this.state.price} onChange={this.handleInputChange}/>
+            </AvGroup>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="visible" checked={this.state.visible} onChange={this.handleInputChange} />{' '}
+                Visible
+              </Label>
             </AvGroup>
             <Label>Disponibilidad</Label>
             <AvGroup check>

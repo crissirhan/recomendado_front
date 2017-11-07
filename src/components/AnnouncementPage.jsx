@@ -86,6 +86,7 @@ class AnnouncementPage extends Component {
       owner = true;
     }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contactar</Button></Link>;
+    console.log(this.state.announcement.job_tags)
     return (
       <Container>
         <Row>
@@ -100,6 +101,15 @@ class AnnouncementPage extends Component {
                     {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
                   </Link>
                 </Button>
+              </p>
+              <p className="lead">Tags:
+                {this.state.announcement.job_tags.map(tag => {
+                  return <Button color="link" key={tag.id}>
+                    <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                      {tag.job.job_sub_type}
+                    </Link>
+                  </Button>
+                })}
               </p>
           </Col>
           <Col sm="6" >

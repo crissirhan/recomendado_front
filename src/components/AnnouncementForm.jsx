@@ -11,6 +11,7 @@ import Rating from 'react-rating';
 import './css/font-awesome/css/font-awesome.min.css';
 import './css/rating/rating.css';
 import getJobCategories from '../actions/get_job_categories';
+import getJobSubCategories from '../actions/get_job_sub_categories';
 import cookie from 'react-cookies';
 import { Container } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
@@ -28,10 +29,16 @@ class AnnouncementForm extends Component{
       }
 
     }
+    if(this.props.job_sub_categories !== nextProps.job_sub_categories){
+      this.setState({
+        job_sub_categories:nextProps.job_sub_categories
+      })
+    }
   }
 
   componentDidMount() {
     this.props.getJobCategories();
+    this.props.getJobSubCategories();
   }
 
   constructor(props) {
@@ -48,7 +55,7 @@ class AnnouncementForm extends Component{
 
     this.state = {
       availability:days,
-      movility:'',
+      movility:'Transporte Público',
       job_subtype:null,
       location:'',
       job:null,
@@ -56,7 +63,11 @@ class AnnouncementForm extends Component{
       title:'',
       description:'',
       price:'',
-      thumbnail:null
+      thumbnail:null,
+      job_tags:[],
+      images:[],
+      visible:false,
+      job_sub_categories:[]
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
@@ -64,8 +75,61 @@ class AnnouncementForm extends Component{
     this.handleJobSubtypeSelectChange = this.handleJobSubtypeSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleAddImage = this.handleAddImage.bind(this);
+    this.handleRemoveImage = this.handleRemoveImage.bind(this);
+    this.handleImagesChange = this.handleImagesChange.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
+    this.handleRemoveTag = this.handleRemoveTag.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
   }
 
+  handleAddImage(){
+    this.setState({
+      images: this.state.images.concat([{ image: null }])
+    });
+  }
+  handleRemoveImage = (idx) => () => {
+    this.setState({
+      images: this.state.images.filter((i, iidx) => idx !== iidx)
+    });
+  }
+
+  handleImagesChange = (idx) => (event) => {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      const newImages = this.state.images.map((image, sidx) => {
+        if (idx !== sidx) return image;
+        return { ...image, image: reader.result };
+      });
+
+      this.setState({ images: newImages });
+    }
+    reader.readAsDataURL(file);
+  }
+  handleAddTag(){
+    this.setState({
+      job_tags: this.state.job_tags.concat([{ job: this.state.job_sub_categories[0] }])
+    });
+  }
+  handleRemoveTag = (idx) => () => {
+    this.setState({
+      job_tags: this.state.job_tags.filter((t, tidx) => idx !== tidx)
+    });
+  }
+
+  handleTagChange = (idx) => (event) => {
+    console.log(event.target.value)
+    const newTags = this.state.job_tags.map((job, tidx) => {
+      console.log(tidx)
+      console.log(idx)
+      if (idx !== tidx) return job;
+      console.log(event.target.value)
+      return { ...job, job: this.state.job_sub_categories[event.target.value]};
+    });
+
+    this.setState({ job_tags: newTags });
+  }
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -98,21 +162,31 @@ class AnnouncementForm extends Component{
     let publish_date = new Date(); //time now
     let expire_date = new Date(publish_date);
     expire_date.setFullYear(expire_date.getFullYear() + 1);
-    console.log(this.state)
     let data = {
       publish_date:publish_date.toJSON(),
       expire_date:expire_date.toJSON(),
       movility:this.state.movility,
-      job_id:this.state.job.id,
       professional_id:cookie.load('user').id,
       availability:days,
       location:this.state.location,
       title:this.state.title,
       description:this.state.description,
       price:this.state.price,
-      job_subtype_id:this.state.job_subtype.id,
-      announcement_thumbnail:this.state.thumbnail
+      announcement_thumbnail:this.state.thumbnail,
+      announcement_images:[],
+      job_tags:[],
+      visible: this.state.visible
     }
+    this.state.images.map(img => {
+      if(img.image){
+        data.announcement_images.push(img)
+      }
+    })
+    this.state.job_tags.map(tag => {
+      if(tag.job){
+        data.job_tags.push(tag)
+      }
+    })
     console.log(data);
     this.props.postAnnouncement(data);
   }
@@ -149,6 +223,7 @@ class AnnouncementForm extends Component{
     if(this.props.post_announcement.success){
       return <Container><div className="message--info">Anuncio creado con éxito!</div></Container>;
     }
+    console.log(this.state)
     return (
       <Container>
         <div style={{ opacity: this.props.post_announcement.loading ? 0.5 : 1 }}>
@@ -156,7 +231,7 @@ class AnnouncementForm extends Component{
             <AvGroup>
               <Label for="thumbnail">Imagén del aviso</Label>
               <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
-               onChange={this.handleImageChange.bind(this)} />
+               onChange={this.handleImageChange.bind(this)} required />
             </AvGroup>
             <AvGroup>
               <Label for="title">Título</Label>
@@ -178,8 +253,11 @@ class AnnouncementForm extends Component{
             </AvGroup>
             <AvGroup>
               <Label for="movility">Movilidad</Label>
-              <AvInput  name="movility" id="movility"
-              value={this.state.movility} onChange={this.handleInputChange} required/>
+              <AvInput type="select" name="movility" id="movility"
+              onChange={this.handleInputChange} >
+                <option value={'Transporte Público'}>{'Transporte Público'}</option>
+                <option value={'Transporte Privado'}>{'Transporte Privado'}</option>
+              </AvInput>
               <AvFeedback>Debe ingresar su movilización</AvFeedback>
             </AvGroup>
             <AvGroup>
@@ -188,22 +266,26 @@ class AnnouncementForm extends Component{
               value={this.state.location} onChange={this.handleInputChange} required/>
               <AvFeedback>Debe ingresar la ubicación de su anuncio</AvFeedback>
             </AvGroup>
-            <AvGroup>
-               <Label for="job">Trabajo</Label>
-               <AvInput type="select" name="job" id="job" onChange={this.handleJobSelectChange}>
-                 {this.state.job_categories.map((category, index) => {
-                    return <option key={category.id} value={index}>{category.job_type}</option>
-                 })}
-               </AvInput>
+            <AvGroup check>
+              <Label check>
+                <AvInput type="checkbox" name="visible" checked={this.state.visible} onChange={this.handleInputChange} />{' '}
+                Visible
+              </Label>
             </AvGroup>
-            <AvGroup hidden={this.state.job.sub_type.length === 0}>
-               <Label for="job_subtype">Subtipo de trabajo</Label>
-               <AvInput type="select" name="job_subtype" id="job_subtype" onChange={this.handleJobSubtypeSelectChange}>
-                 {this.state.job.sub_type.map((sub_job, index) => {
-                    return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
-                 })}
-               </AvInput>
-            </AvGroup>
+            <div>
+              {this.state.job_tags.map((tag, idx) => (
+                <AvGroup key={idx}>
+                   <Label for={"job_tag_" +idx}>Tag de trabajo {idx+1}</Label>
+                   <AvInput type="select" name={"job_tag_" +idx} id={"job_tag_" +idx} onChange={this.handleTagChange(idx)}>
+                     {this.state.job_sub_categories.map((sub_job, index) => {
+                        return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
+                     })}
+                   </AvInput>
+                   <Button type="button" onClick={this.handleRemoveTag(idx)} className="small">Remover</Button>
+                </AvGroup>
+              ))}
+              <Button type="button" onClick={this.handleAddTag} className="small">Añadir tag de trabajo</Button>
+            </div>
             <Label>Disponibilidad</Label>
             <AvGroup check>
               <Label check>
@@ -247,8 +329,21 @@ class AnnouncementForm extends Component{
                 Domingo
               </Label>
             </AvGroup>
+            <div>
+              {this.state.images.map((image, idx) => (
+                <AvGroup key={idx}>
+                  <Label for={"imagenes-" + idx }>Imagén {idx+1}</Label>
+                  <AvInput name={"imagenes-" + idx}
+                    type="file" accept="image/*"
+                    onChange={this.handleImagesChange(idx)}
+                    required
+                  />
+                  <Button type="button" onClick={this.handleRemoveImage(idx)} className="small">Remover</Button>
+                </AvGroup>))}
+              <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
+            </div>
             {this.props.post_announcement.error ? <div className="message--error">¡Error! {this.props.post_announcement.error_type}</div> : null}
-            <Button >Crear anuncio</Button>
+            <Button disabled={this.props.post_announcement.loading} >Crear anuncio</Button>
           </AvForm>
         </div>
       </Container>
@@ -259,14 +354,17 @@ class AnnouncementForm extends Component{
 function mapStateToProps(state){
   return {
     post_announcement: state.post_announcement,
-    job_categories: state.job_categories
+    job_categories: state.job_categories,
+    job_sub_categories:state.job_sub_categories
+
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     postAnnouncement: postAnnouncement,
-    getJobCategories:getJobCategories
+    getJobCategories:getJobCategories,
+    getJobSubCategories:getJobSubCategories
   }, dispatch);
 }
 

@@ -76,7 +76,7 @@ class ListAnnouncements extends Component {
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
 
-        <ListAnnouncementsDummy image_class="center-cropped search-thumbnail" announcements_array={this.state.announcements}/>
+        <ListAnnouncementsDummy image_class="center-cropped search-thumbnail" announcements_array={this.state.announcements.filter(announcement => announcement.visible)}/>
       </Container>
     );
   }
