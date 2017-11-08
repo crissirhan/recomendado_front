@@ -15,11 +15,14 @@ import getJobSubCategories from '../actions/get_job_sub_categories';
 import cookie from 'react-cookies';
 import { Container } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 class AnnouncementForm extends Component{
 
   componentWillReceiveProps(nextProps) {
-    if(this.props != nextProps){
+    if(this.props !== nextProps){
       if(nextProps.job_categories && nextProps.job_categories.job_categories[0]){
         this.setState({
           job_categories:nextProps.job_categories.job_categories,
@@ -27,13 +30,31 @@ class AnnouncementForm extends Component{
           job_subtype:nextProps.job_categories.job_categories[0].sub_type[0]
         });
       }
+      if(this.props.post_announcement !== nextProps.post_announcement){
+        if(this.props.post_announcement.success !== nextProps.post_announcement.success){
+          this.setState({
+            success: nextProps.post_announcement.success
+          })
+        }
+        if(this.props.post_announcement.error !== nextProps.post_announcement.error){
+          this.setState({
+            error: nextProps.post_announcement.error,
+            error_type: nextProps.post_announcement.error_type
+          })
+        }
+        if(this.props.post_announcement.loading !== nextProps.post_announcement.loading){
+          this.setState({
+            loading:nextProps.post_announcement.loading
+          })
+        }
+      }
+      if(this.props.job_sub_categories !== nextProps.job_sub_categories){
+        this.setState({
+          job_sub_categories:nextProps.job_sub_categories
+        })
+      }
+    }
 
-    }
-    if(this.props.job_sub_categories !== nextProps.job_sub_categories){
-      this.setState({
-        job_sub_categories:nextProps.job_sub_categories
-      })
-    }
   }
 
   componentDidMount() {
@@ -67,7 +88,10 @@ class AnnouncementForm extends Component{
       job_tags:[],
       images:[],
       visible:false,
-      job_sub_categories:[]
+      job_sub_categories:[],
+      loading:false,
+      success:false,
+      error:false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
@@ -81,6 +105,8 @@ class AnnouncementForm extends Component{
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
   }
 
   handleAddImage(){
@@ -213,6 +239,15 @@ class AnnouncementForm extends Component{
     });
   }
 
+  handleSuccess(){
+    toast.success("Aviso creado con éxito")
+    this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
+  }
+
+  handleError(){
+    toast.error("Error al procesar la solicitud")
+  }
+
   render(){
     if(!this.state.job){
       return null;
@@ -220,13 +255,16 @@ class AnnouncementForm extends Component{
     if(!cookie.load('user') || !cookie.load('user').id || cookie.load('isProfessional') !== "true"){
       return <Container><div>Debes estar logeado/a como profesional para realizar esta acción</div></Container>;
     }
-    if(this.props.post_announcement.success){
-      return <Container><div className="message--info">Anuncio creado con éxito!</div></Container>;
+    if(this.state.success){
+      this.handleSuccess()
+    }
+    if(this.state.error){
+      this.handleError()
     }
     console.log(this.state)
     return (
       <Container>
-        <div style={{ opacity: this.props.post_announcement.loading ? 0.5 : 1 }}>
+        <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm onValidSubmit={this.handleSubmit}>
             <AvGroup>
               <Label for="thumbnail">Imagén del aviso</Label>
@@ -342,8 +380,8 @@ class AnnouncementForm extends Component{
                 </AvGroup>))}
               <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
             </div>
-            {this.props.post_announcement.error ? <div className="message--error">¡Error! {this.props.post_announcement.error_type}</div> : null}
-            <Button disabled={this.props.post_announcement.loading} >Crear anuncio</Button>
+            {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
+            <Button disabled={this.state.loading} >Crear anuncio</Button>
           </AvForm>
         </div>
       </Container>

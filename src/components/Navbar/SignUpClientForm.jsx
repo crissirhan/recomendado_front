@@ -9,6 +9,7 @@ import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 import { withRouter } from 'react-router';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 class SignUpClientForm extends Component{
@@ -61,6 +62,8 @@ class SignUpClientForm extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkRut = this.checkRut.bind(this);
     this.validateRut = this.validateRut.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
   handleInputChange(event) {
@@ -133,9 +136,21 @@ class SignUpClientForm extends Component{
 
   }
 
+  handleSuccess(){
+    toast.success("¡Usuario creado con éxito!")
+    this.props.history.push('/login');
+  }
+
+  handleError(){
+    toast.error("Error al procesar la solicitud")
+  }
+
   render(){
+    if(this.state.error){
+      this.handleError()
+    }
     if(this.state.success){
-      return <div className="message--info">¡Usuario creado con éxito!</div>;
+      this.handleSuccess()
     }
     return (
       <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>

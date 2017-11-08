@@ -17,6 +17,7 @@ import updateAnnouncements from '../../actions/update_announcement';
 import getAnnouncements from '../../actions/get_announcements';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import cookie from 'react-cookies';
+import { ToastContainer, toast } from 'react-toastify';
 
 class AnnouncementsEdit extends Component {
 
@@ -25,7 +26,6 @@ class AnnouncementsEdit extends Component {
       if(nextProps.announcements.result){
         let days = this.state.availability;
         let announcement = nextProps.announcements.result;
-        console.log(announcement)
         announcement.availability.map((day) => days[day] = true);
         this.setState({
           availability: days,
@@ -40,19 +40,19 @@ class AnnouncementsEdit extends Component {
       }
     }
     if(nextProps.update_announcement !== this.props.update_announcement){
-      if(nextProps.update_announcement.success){
+      if(nextProps.update_announcement.success !== this.props.update_announcement.success){
         this.setState({
-          success:true
+          success:nextProps.update_announcement.success
         })
       }
-      if(nextProps.update_announcement.error){
+      if(nextProps.update_announcement.error !== this.props.update_announcement.error){
         this.setState({
-          error:true
+          error:nextProps.update_announcement.error
         })
       }
-      if(nextProps.update_announcement.loading){
+      if(nextProps.update_announcement.loading !== this.props.update_announcement.loading){
         this.setState({
-          loading:true
+          loading:nextProps.update_announcement.loading
         })
       }
     }
@@ -89,6 +89,18 @@ class AnnouncementsEdit extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+  }
+
+  handleError(){
+    toast.success("Aviso editado con éxito")
+    this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
+  }
+
+  handleSuccess(){
+    toast.error("Error al procesar la solicitud")
   }
 
   toAnnouncements(){
@@ -174,14 +186,14 @@ class AnnouncementsEdit extends Component {
       owner = true;
     }
     if(this.state.success){
-      return <Container><div className="message--info">¡Anuncio editado con éxito!</div></Container>;
+      this.handleSuccess()
     }
     if(this.state.error){
-      return <Container><div className="message--error">¡Ocurrió un error!</div></Container>;
+      this.handleError()
     }
     return (
       <Container>
-        <div style={{ opacity: this.props.update_announcement.loading ? 0.5 : 1 }}>
+        <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm disabled={this.state.loading}>
             <AvGroup>
               <Label for="thumbnail">Imagén del aviso</Label>

@@ -33,8 +33,10 @@ class ListAnnouncements extends Component {
           let image_url = announcement.announcement_thumbnail ? announcement.announcement_thumbnail : "https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180";
           return <Col  height="360px" sm="4" key={announcement.id}>
                   <Card className="shadow-box round-border" size="sm" >
-                    <img className={this.props.image_class} src={image_url}/>
-                    <CardTitle><Link to ={'/anuncios/' + announcement.id}>{announcement.title}</Link></CardTitle>
+                    <Link to ={'/anuncios/' + announcement.id}>
+                      <img className={this.props.image_class} src={image_url}/>
+                      <CardTitle>{announcement.title}</CardTitle>
+                    </Link>
                     <CardSubtitle><Link to={'/profesionales/'+announcement.professional.id}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</Link></CardSubtitle>
                      <CardText>{announcement.description}</CardText>
                   </Card>

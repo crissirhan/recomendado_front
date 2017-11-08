@@ -7,6 +7,8 @@ import login from '../../actions/login_user';
 import '../css/messages.css';
 import { withRouter } from 'react-router';
 import FacebookLoginButton from './FacebookLoginButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class LoginForm extends Component{
 
@@ -26,6 +28,21 @@ class LoginForm extends Component{
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
+      if(this.props.loggedIn !== nextProps.loggedIn){
+        this.setState({
+          success: nextProps.loggedIn
+        })
+      }
+      if(this.props.loading !== nextProps.loading){
+        this.setState({
+          loading: nextProps.loading
+        })
+      }
+      if(this.props.error !== nextProps.error){
+        this.setState({
+          error:nextProps.error
+        })
+      }
       if(nextProps.login_state.loggedIn){
         this.handleLogin();
         let goPage = this.parseQueryString()['from'] ? this.parseQueryString()['from'] : '/' ;
@@ -38,7 +55,10 @@ class LoginForm extends Component{
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      success:false,
+      loading:false,
+      error:false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -48,7 +68,7 @@ class LoginForm extends Component{
   }
 
   handleLogin(){
-
+    toast.success("¡Logeado con éxito!");
   }
 
   handleInputChange(event) {
@@ -72,6 +92,9 @@ class LoginForm extends Component{
   }
 
   render(){
+    if(this.state.error){
+      toast.error("Error al intentar logear. Vuelva a intentar más tarde por favor.")
+    }
     return (
       <div style={{ opacity: this.props.login_state.loading ? 0.5 : 1 }}>
         <Form>

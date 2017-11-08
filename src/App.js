@@ -38,6 +38,8 @@ import ProfessionalEdit from './components/ProfessionalEdit';
 import ClientEdit from './components/ClientEdit';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cookie from 'react-cookies';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class App extends Component {
   componentDidMount() {
@@ -60,6 +62,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
+          <ToastContainer/> {/* Toast notifications app-wide */}
           <ProjectNavbar/>
           <Switch>
             <Route exact path='/' component={Home}/>

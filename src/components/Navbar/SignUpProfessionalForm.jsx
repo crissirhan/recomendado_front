@@ -11,6 +11,8 @@ import { withRouter } from 'react-router';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import '../css/messages.css';
 import { RegionesYcomunas } from '../../Globals'
+import { ToastContainer, toast } from 'react-toastify';
+
 
 class signUpProfessionalForm extends Component{
 
@@ -62,6 +64,18 @@ class signUpProfessionalForm extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkRut = this.checkRut.bind(this);
     this.validateRut = this.validateRut.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.handleError = this.handleError.bind(this);
+  }
+
+  handleSuccess(){
+    toast.success("¡Usuario creado con éxito!")
+    this.props.history.push('/login');
+  }
+
+  handleError(){
+    toast.error("Error al procesar la solicitud")
   }
 
   handleInputChange(event) {
@@ -140,8 +154,11 @@ class signUpProfessionalForm extends Component{
   }
 
   render(){
-    if(this.props.sign_up_professional.success){
-      return <div className="message--info">¡Usuario creado con éxito!</div>;
+    if(this.state.success){
+      this.handleSuccess()
+    }
+    if(this.state.error){
+      this.handleError()
     }
     return (
       <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>

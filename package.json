@@ -22,6 +22,7 @@
     "react-spinkit": "^3.0.0",
     "react-switch-button": "^2.2.2",
     "react-table": "^6.5.3",
+    "react-toastify": "^2.2.0",
     "react-transition-group": "^1.2.0",
     "reactstrap": "^4.8.0",
     "redux": "^3.7.2",
