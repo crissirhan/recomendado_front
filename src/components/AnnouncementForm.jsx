@@ -147,10 +147,7 @@ class AnnouncementForm extends Component{
   handleTagChange = (idx) => (event) => {
     console.log(event.target.value)
     const newTags = this.state.job_tags.map((job, tidx) => {
-      console.log(tidx)
-      console.log(idx)
       if (idx !== tidx) return job;
-      console.log(event.target.value)
       return { ...job, job: this.state.job_sub_categories[event.target.value]};
     });
 
@@ -210,7 +207,8 @@ class AnnouncementForm extends Component{
     })
     this.state.job_tags.map(tag => {
       if(tag.job){
-        data.job_tags.push(tag)
+        let justId = {'job': {'id':tag.job.id}}
+        data.job_tags.push(justId)
       }
     })
     console.log(data);
