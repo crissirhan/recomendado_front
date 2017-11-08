@@ -207,8 +207,9 @@ class AnnouncementForm extends Component{
     })
     this.state.job_tags.map(tag => {
       if(tag.job){
-        let justId = {'job': {'id':tag.job.id}}
-        data.job_tags.push(justId)
+        //let justId = {'job': {'id':tag.job.id}}
+        console.log(tag)
+        data.job_tags.push(tag)
       }
     })
     console.log(data);
