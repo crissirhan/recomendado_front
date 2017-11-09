@@ -25,6 +25,7 @@ import './css/images.css';
 import './css/col.css';
 import './css/box.css';
 import AnnouncementForm from './AnnouncementForm';
+import { ENDPOINT_URI } from '../Globals';
 
 class ProfessionalPage extends Component {
 
@@ -208,12 +209,9 @@ class ProfessionalPage extends Component {
                 <CardText>
 
                 </CardText>
-                <CardText className="text-left">
-                  Experiencia:
-                </CardText>
-                <CardText>
+                {this.state.professional.experience? <CardText>
                   <i>"{this.state.professional.experience}"</i>
-                </CardText>
+                </CardText> : null}
               </Card>
             </Col>
         </Row>
@@ -236,10 +234,12 @@ class ProfessionalPage extends Component {
             <CardGroup>
               <Row>
                 {this.state.reviews.sort(() => .5 - Math.random()).slice(0,3).map(review => {
-                  let image_url = review.service.client.profile_picture ? "http://35.196.31.174"+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+                  let image_url = review.service.client.profile_picture ? ENDPOINT_URI+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
                   return (<Col  sm="4" key={review.id}>
                             <Card className="shadow-box round-border min-width">
-                              <CardTitle className="text-center">{review.service.announcement.job_subtype.job_sub_type}</CardTitle>
+                              <CardTitle className="text-center">{review.service.announcement.job_tags.map(tag => {
+                                return tag.job.job_sub_type
+                              })}</CardTitle>
                               <Rating className="text-center"
                                   empty="fa fa-star-o fa-2x orange-star"
                                   full="fa fa-star fa-2x orange-star"

@@ -17,7 +17,8 @@ import getProfessional from '../actions/get_professional';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import cookie from 'react-cookies';
 import { RegionesYcomunas } from '../Globals';
-
+import { ToastContainer, toast } from 'react-toastify';
+import { withRouter } from 'react-router';
 
 class ProfessionalEdit extends Component {
 
@@ -43,11 +44,17 @@ class ProfessionalEdit extends Component {
         this.setState({
           success:nextProps.update_professional.success
         })
+        if(nextProps.update_professional.success){
+          this.handleSuccess()
+        }
       }
       if(this.props.update_professional.error !== nextProps.update_professional.error){
         this.setState({
           error:nextProps.update_professional.error
         })
+        if(nextProps.update_professional.error){
+          this.handleError()
+        }
       }
       if(this.props.update_professional.loading !== nextProps.update_professional.loading){
         this.setState({
@@ -82,6 +89,17 @@ class ProfessionalEdit extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+  }
+
+  handleSuccess(){
+    toast.success("Perfil editado con éxito")
+    this.props.history.push('/profesionales/' + this.state.professional_id + '/' );
+  }
+
+  handleError(){
+    toast.error("Error al procesar la solicitud")
   }
 
   handleSubmit(){
@@ -133,12 +151,6 @@ class ProfessionalEdit extends Component {
     if(!owner){
       return <div>No deberías estar acá</div>
     }
-    if(this.state.success){
-      return <Container><div className="message--info">Perfil editado con éxito!</div></Container>;
-    }
-    if(this.state.error){
-      return <Container><div className="message--error">¡Ocurrió un error!</div></Container>;
-    }
     return (
       <Container>
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
@@ -163,6 +175,12 @@ class ProfessionalEdit extends Component {
                   return <option key={index} value={comuna}>{comuna}</option>
                })}
              </AvInput>
+          </AvGroup>
+          <AvGroup >
+            <Label for="experience">Experiencia</Label>
+            <AvInput  name="experience" id="experience" placeholder="Breve descripción de su experiencia como profesional"
+            value={this.state.experience} onChange={this.handleInputChange} />
+            <AvFeedback>Revise su experiencia por favor</AvFeedback>
           </AvGroup>
           <AvGroup >
             <Label for="street">Calle</Label>
@@ -207,4 +225,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalEdit);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfessionalEdit));
