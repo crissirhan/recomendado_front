@@ -49,7 +49,7 @@ class ProfessionalThumb extends Component {
     let image_url = this.props.professional.profile_picture ? this.props.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     let comment = <div>"{this.props.review.client_comment}" - <Link to={url}>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</Link></div>
     return (
-      <Col sm="4" key={this.props.professional.id}>
+      <Col sm="4" key={this.props.professional.id} style={{minWidth:220}}>
         <Card className="shadow-box round-border text-center">
           <img className="review-thumb center-cropped img-circle" src={image_url}/>
           <Link to={'/profesionales/'+this.props.professional.id+'/'}>
