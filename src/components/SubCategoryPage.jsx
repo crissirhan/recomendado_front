@@ -15,6 +15,7 @@ import getAnnouncementsByJob from '../actions/get_announcements_by_job';
 class SubCategoryPage extends Component {
 
   componentDidMount(){
+    console.log(this.props.sub_category)
     this.props.getJobByName(this.props.sub_category);
     this.props.getAnnouncementsByJob(this.props.sub_category,null)
   }

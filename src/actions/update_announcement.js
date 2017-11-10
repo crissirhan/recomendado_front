@@ -18,7 +18,6 @@ export default function updateAnnouncement(announcement_id,data) {
 }
 
 function updateAnnouncementsSuccessAsync(response){
-  console.log(response)
   return {
     type: UPDATE_ANNOUNCEMENTS_SUCCESS,
     payload: response

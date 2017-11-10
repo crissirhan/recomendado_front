@@ -18,6 +18,8 @@ import getAnnouncements from '../../actions/get_announcements';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import cookie from 'react-cookies';
 import { ToastContainer, toast } from 'react-toastify';
+import { withRouter } from 'react-router';
+
 
 class AnnouncementsEdit extends Component {
 
@@ -40,15 +42,22 @@ class AnnouncementsEdit extends Component {
       }
     }
     if(nextProps.update_announcement !== this.props.update_announcement){
+
       if(nextProps.update_announcement.success !== this.props.update_announcement.success){
         this.setState({
           success:nextProps.update_announcement.success
         })
+        if(nextProps.update_announcement.success){
+          this.handleSuccess()
+        }
       }
       if(nextProps.update_announcement.error !== this.props.update_announcement.error){
         this.setState({
           error:nextProps.update_announcement.error
         })
+        if(nextProps.update_announcement.error){
+          this.handleError()
+        }
       }
       if(nextProps.update_announcement.loading !== this.props.update_announcement.loading){
         this.setState({
@@ -94,12 +103,12 @@ class AnnouncementsEdit extends Component {
     this.handleSuccess = this.handleSuccess.bind(this);
   }
 
-  handleError(){
+  handleSuccess(){
     toast.success("Aviso editado con éxito")
     this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
   }
 
-  handleSuccess(){
+  handleError(){
     toast.error("Error al procesar la solicitud")
   }
 
@@ -184,12 +193,6 @@ class AnnouncementsEdit extends Component {
     let owner = false;
     if(cookie.load('user') && cookie.load('user').id === this.state.professional_id && cookie.load('isProfessional') === "true"){
       owner = true;
-    }
-    if(this.state.success){
-      this.handleSuccess()
-    }
-    if(this.state.error){
-      this.handleError()
     }
     return (
       <Container>
@@ -297,4 +300,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementsEdit);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AnnouncementsEdit));

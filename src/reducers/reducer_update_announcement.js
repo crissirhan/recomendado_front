@@ -6,7 +6,7 @@ export default function(state=[], action) {
     case UPDATE_ANNOUNCEMENTS_SUCCESS:
       loading = {'loading':false}
       let success = {'success': true}
-      return Object.assign({}, action.payload, success, loading);
+      return Object.assign({}, {'result':action.payload}, success, loading);
     case UPDATE_ANNOUNCEMENTS_ERROR:
       loading = {'loading':false}
       let error = {'error': true}
