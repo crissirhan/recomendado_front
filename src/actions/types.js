@@ -54,3 +54,6 @@ export const GET_ANNOUNCEMENTS_ERROR = 'announcements error';
 export const GET_JOB_BY_NAME_SUCCESS = ' success get job by name';
 export const GET_JOB_BY_NAME_ERROR = ' error get job by name';
 export const GET_JOB_BY_NAME_LOADING = ' loading get job by name';
+export const GET_ANNOUNCEMENT_REVIEWS_SUCCESS = ''
+export const GET_ANNOUNCEMENT_REVIEWS_ERROR = ''
+export const GET_ANNOUNCEMENT_REVIEWS_LOADING = ''

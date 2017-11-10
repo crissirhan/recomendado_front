@@ -6,16 +6,20 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col, Jumbotron, Button, Row } from 'reactstrap';
+import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup} from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
+import getAnnouncementReviews from '../actions/get_announcement_reviews';
 import './css/images.css';
 import putService from '../actions/put_service'
 import cookie from 'react-cookies';
+import Rating from 'react-rating';
+import { ENDPOINT_URI } from '../Globals';
 
 class AnnouncementPage extends Component {
 
   componentDidMount(){
     this.props.getAnnouncements(this.props.announcement_id,null);
+    this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 
   componentWillReceiveProps(nextProps){
@@ -38,7 +42,16 @@ class AnnouncementPage extends Component {
         }
         if(nextProps.announcements.result !== this.props.announcements.result){
           this.setState({
-            announcement: nextProps.announcements.result
+            announcement: nextProps.announcements.result,
+            images: nextProps.announcements.result.announcement_images
+          })
+        }
+      }
+      if(nextProps.announcement_reviews !== this.props.announcement_reviews){
+        console.log(nextProps.announcement_reviews)
+        if(nextProps.announcement_reviews.result !== this.props.announcement_reviews.result){
+          this.setState({
+            announcement_reviews: nextProps.announcement_reviews.result
           })
         }
       }
@@ -49,12 +62,15 @@ class AnnouncementPage extends Component {
     super(props);
     this.state = {
       announcement:null,
+      announcement_reviews:{},
       success:false,
       error:false,
-      loading:false
+      loading:false,
+      images:[]
     };
     this.handleCreateService = this.handleCreateService.bind(this);
   }
+
 
   handleCreateService(){
     if(cookie.load('user').user){
@@ -72,7 +88,7 @@ class AnnouncementPage extends Component {
   render(){
     console.log(this.props)
     console.log(this.state.announcement)
-    if(this.state.loading){
+    if(this.state.loading || !this.state.announcement_reviews){
       return <Container>Cargando</Container>
     }
     if(this.state.error){
@@ -85,43 +101,116 @@ class AnnouncementPage extends Component {
     if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id && cookie.load('isProfessional') === "true"){
       owner = true;
     }
-    let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contactar</Button></Link>;
-    console.log(this.state.announcement.job_tags)
+    let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
+    console.log(this.state.announcement_reviews)
     return (
       <Container>
-        <Row>
-          <Col sm="6" >
-              <h1 className="display-3">{this.state.announcement.title}</h1>
-              <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen anuncio" />
-              <p className="lead">{this.state.announcement.description}</p>
-              <hr className="my-2" />
-              <p className="lead">Por:
-                <Button color="link">
-                  <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-                    {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-                  </Link>
-                </Button>
-              </p>
-              <p className="lead">Tags:
-                {this.state.announcement.job_tags.map(tag => {
-                  return <Button color="link" key={tag.id}>
-                    <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
-                      {tag.job.job_sub_type}
-                    </Link>
-                  </Button>
-                })}
-              </p>
+        <Row style={{marginBottom:25}}>
+          <Col >
+            <h1 className="display-3">{this.state.announcement.title}</h1>
+            <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen anuncio" />
+            <div>
+              <Rating
+                empty="fa fa-star-o fa-2x orange-star"
+                full="fa fa-star fa-2x orange-star"
+                initialRate={this.state.announcement_reviews.average ? this.state.announcement_reviews.average : 0}
+                readonly
+              />
+            </div>
+            <div>
+              <small style={{textAlign:"center"}}className="text-muted">{new Date(this.state.announcement.publish_date).toLocaleDateString()}</small>
+            </div>
           </Col>
-          <Col sm="6" >
-            <p>Precio: ${this.state.announcement.price}</p>
-            <p>Expira el: {new Date(this.state.announcement.expire_date).toLocaleDateString()}</p>
-            <p>Lugar: {this.state.announcement.location}</p>
-            <p>Movilidad: {this.state.announcement.movility}</p>
-            <p>Días de atención: {this.state.announcement.availability_display}</p>
+          <Col sm="2">
             {cookie.load('isClient') === "true"? serviceButton : null}
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
         </Row>
+        <div style={{marginBottom:25}}>
+          <i><p className="lead">{this.state.announcement.description}</p></i>
+        </div>
+        <div className="text-left">
+          <Row>
+            <Col>
+              <p>→Ubicación: {this.state.announcement.location}</p>
+            </Col>
+            <Col>
+              <p>→Monto: ${this.state.announcement.price}</p>
+            </Col>
+          </Row>
+        </div>
+        <div className="text-left" style={{marginBottom:25}}>
+          <Row>
+            <Col>
+              <p>→Disponibilidad: {this.state.announcement.availability_display}</p>
+            </Col>
+            <Col>
+              <p>→Movilidad: {this.state.announcement.movility}</p>
+            </Col>
+          </Row>
+        </div>
+        <div>
+          <p className="lead" style={{marginBottom:25}}>Tags:
+            {this.state.announcement.job_tags.map(tag => {
+              return <Button color="link" key={tag.id}>
+                <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                  {tag.job.job_sub_type}
+                </Link>
+              </Button>
+            })}
+          </p>
+        </div>
+        <div>
+          <Row style={{marginBottom:25}}>
+            <Col sm="4">
+              <img className="img-circle center-cropped professional-profile" src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
+            </Col>
+            <Col>
+              <div>
+                <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+                  {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
+                </Link>
+              </div>
+              <div>
+                <i>"{this.state.announcement.professional.experience}"</i>
+              </div>
+            </Col>
+          </Row>
+        </div>
+        <div>
+          <Container>
+            <p className="h4"><b>Reviews</b></p>
+            <Jumbotron>
+              <CardGroup>
+                <Row>
+                  {this.state.announcement_reviews.reviews.sort(() => .5 - Math.random()).slice(0,3).map(review => {
+                    let image_url = review.service.client.profile_picture ? ENDPOINT_URI+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+                    return (<Col  sm="4" key={review.id}>
+                              <Card className="shadow-box round-border min-width">
+                                <CardTitle className="text-center">{review.service.announcement.job_tags.map(tag => {
+                                  return tag.job.job_sub_type
+                                })}</CardTitle>
+                                <Rating className="text-center"
+                                    empty="fa fa-star-o fa-2x orange-star"
+                                    full="fa fa-star fa-2x orange-star"
+                                    initialRate={review.rating}
+                                    readonly/>
+                                <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
+                                <CardText className="text-center">
+                                  <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
+                                </CardText>
+                                <Link to={'/clientes/'+review.service.client.id}>
+                                  <img className="img-circle center-cropped review-client-profile" src={image_url}/>
+                                  <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
+                                </Link>
+                              </Card>
+                            </Col>)
+                    })}
+                  </Row>
+                </CardGroup>
+              </Jumbotron>
+          </Container>
+        </div>
       </Container>
      )
   }
@@ -131,14 +220,16 @@ class AnnouncementPage extends Component {
 function mapStateToProps(state){
   return {
     announcements: state.announcements,
-    putService: state.putService
+    putService: state.putService,
+    announcement_reviews:state.announcement_reviews
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getAnnouncements: getAnnouncements,
-    putService: putService
+    putService: putService,
+    getAnnouncementReviews:getAnnouncementReviews
   }, dispatch);
 }
 

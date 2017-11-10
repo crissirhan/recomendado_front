@@ -26,6 +26,7 @@ import PostReviewReducer from './reducer_post_review';
 import PostAnnouncementnReducer from './reducer_post_announcement';
 import JobSubCategoriesReducer from './reducer_job_sub_categories';
 import JobByNameReducer from './reducer_job_by_name';
+import AnnouncementReviewsReducer from './reducer_announcement_reviews'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -55,5 +56,6 @@ const rootReducer = combineReducers({
   post_announcement:PostAnnouncementnReducer,
   job_sub_categories: JobSubCategoriesReducer,
   job_by_name:JobByNameReducer,
+  announcement_reviews:AnnouncementReviewsReducer,
 });
 export default rootReducer;

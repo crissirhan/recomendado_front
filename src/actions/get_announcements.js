@@ -17,6 +17,7 @@ export default function getAnnouncements(announcement_id,search_params) {
         dispatch(getAnnouncementsSuccessAsync(res.data));
       })
       .catch(function (error) {
+        console.log(error)
         dispatch(getAnnouncementsErrorAsync(error.response));
       });
   }
