@@ -138,7 +138,7 @@ class SignUpClientForm extends Component{
 
   handleSuccess(){
     toast.success("¡Usuario creado con éxito!")
-    this.props.history.push('/login');
+    this.props.history.push('/');
   }
 
   handleError(){

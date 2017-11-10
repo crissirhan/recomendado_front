@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup} from 'reactstrap';
+import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
 import getAnnouncementReviews from '../actions/get_announcement_reviews';
 import './css/images.css';
@@ -40,7 +40,8 @@ class AnnouncementPage extends Component {
             loading:nextProps.announcements.loading
           })
         }
-        if(nextProps.announcements.result !== this.props.announcements.result){
+        if(nextProps.announcements.result !== this.props.announcements.result && nextProps.announcements.result ){
+          console.log(nextProps.announcements.result)
           this.setState({
             announcement: nextProps.announcements.result,
             images: nextProps.announcements.result.announcement_images
@@ -66,11 +67,18 @@ class AnnouncementPage extends Component {
       success:false,
       error:false,
       loading:false,
-      images:[]
+      images:[],
+      contact_modal: false
     };
     this.handleCreateService = this.handleCreateService.bind(this);
+    this.toggleContactModal = this.toggleContactModal.bind(this);
   }
 
+  toggleContactModal(){
+    this.setState({
+      contact_modal:!this.state.contact_modal
+    })
+  }
 
   handleCreateService(){
     if(cookie.load('user').user){
@@ -101,7 +109,9 @@ class AnnouncementPage extends Component {
     if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id && cookie.load('isProfessional') === "true"){
       owner = true;
     }
-    let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
+    //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
+    let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
+
     console.log(this.state.announcement_reviews)
     return (
       <Container>
@@ -123,6 +133,18 @@ class AnnouncementPage extends Component {
           </Col>
           <Col sm="2">
             {cookie.load('isClient') === "true"? serviceButton : null}
+            <Modal isOpen={this.state.contact_modal} toggle={this.toggleContactModal}>
+              <ModalHeader toggle={this.toggleContactModal}>Datos contacto</ModalHeader>
+              <ModalBody>
+              <div>Correo electrónico: </div>
+                <div>Nombre: {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
+                <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
+                <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="secondary" onClick={this.toggleContactModal}>Cerrar</Button>
+              </ModalFooter>
+            </Modal>
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
         </Row>
