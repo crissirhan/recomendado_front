@@ -41,11 +41,11 @@ class SubJobCategories extends Component {
           <p>{sub_categories[0] ? sub_categories[0].job_category.description : ""}</p>
         </div>
         <Row>
-          <Col xs="3">
+          {/*<Col xs="3">
             <ul>{sub_categories.map(category =>
               <li key={category.id}><Link to={this.props.location.pathname+category.job_sub_type}>{category.job_sub_type}</Link></li>)}
             </ul>
-          </Col>
+          </Col>*/}
           <Col xs="9">
             <CardGroup>
               <Row>
