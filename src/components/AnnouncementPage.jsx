@@ -18,7 +18,7 @@ import { ENDPOINT_URI } from '../Globals';
 class AnnouncementPage extends Component {
 
   componentDidMount(){
-    this.props.getAnnouncements(this.props.announcement_id,null);
+    this.props.getAnnouncements(null,{id:this.props.announcement_id});
     this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 
@@ -43,8 +43,8 @@ class AnnouncementPage extends Component {
         if(nextProps.announcements.result !== this.props.announcements.result && nextProps.announcements.result ){
           console.log(nextProps.announcements.result)
           this.setState({
-            announcement: nextProps.announcements.result,
-            images: nextProps.announcements.result.announcement_images
+            announcement: nextProps.announcements.result[0],
+            images: nextProps.announcements.result[0].announcement_images
           })
         }
       }
