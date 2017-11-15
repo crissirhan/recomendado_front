@@ -20,15 +20,19 @@ import { updateSearchParams } from '../actions/search'
 class SearchAnnouncements extends Component {
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.search !== this.props.search){
-      this.props.getAnnouncements(null,nextProps.search);
+    if(nextProps.search !== this.props.search && this.state.requestSearch){
+      this.props.getAnnouncements(nextProps.search);
+      this.setState({
+        requestSearch:false
+      })
     }
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ''
+      searchTerm: '',
+      requestSearch:false
     };
     this.searchUpdated = this.searchUpdated.bind(this);
     this.requestSearch = this.requestSearch.bind(this);
@@ -71,8 +75,13 @@ class SearchAnnouncements extends Component {
   }
 
   requestSearch(){
-    this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
-    this.props.history.push('/buscar/anuncios/')
+    this.setState({
+      requestSearch:true
+    }, () => {
+      this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
+      this.props.history.push('/buscar/anuncios/')
+    })
+
     //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
   }
 

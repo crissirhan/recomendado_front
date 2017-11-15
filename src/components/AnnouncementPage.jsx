@@ -19,7 +19,8 @@ import { updateSearchParams } from '../actions/search'
 class AnnouncementPage extends Component {
 
   componentDidMount(){
-    this.props.updateSearchParams({id:this.props.announcement_id});
+    //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
+    this.props.getAnnouncements({'id':this.props.announcement_id});
     this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 
@@ -42,7 +43,6 @@ class AnnouncementPage extends Component {
           })
         }
         if(nextProps.announcements.result !== this.props.announcements.result && nextProps.announcements.result ){
-          console.log(nextProps.announcements.result)
           this.setState({
             announcement: nextProps.announcements.result[0],
             images: nextProps.announcements.result[0].announcement_images
