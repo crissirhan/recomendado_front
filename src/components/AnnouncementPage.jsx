@@ -14,11 +14,12 @@ import putService from '../actions/put_service'
 import cookie from 'react-cookies';
 import Rating from 'react-rating';
 import { ENDPOINT_URI } from '../Globals';
+import { updateSearchParams } from '../actions/search'
 
 class AnnouncementPage extends Component {
 
   componentDidMount(){
-    this.props.getAnnouncements(null,{id:this.props.announcement_id});
+    this.props.updateSearchParams({id:this.props.announcement_id});
     this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 
@@ -112,7 +113,7 @@ class AnnouncementPage extends Component {
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
 
-    console.log(this.state.announcement_reviews)
+    console.log(this.state.announcement)
     return (
       <Container>
         <Row style={{marginBottom:25}}>
@@ -251,7 +252,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getAnnouncements: getAnnouncements,
     putService: putService,
-    getAnnouncementReviews:getAnnouncementReviews
+    getAnnouncementReviews:getAnnouncementReviews,
+    updateSearchParams:updateSearchParams
   }, dispatch);
 }
 

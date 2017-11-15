@@ -23,7 +23,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <div  style={{textAlign:"center"}}>
           <h5 className="title"><b>Busca un Recomendado para tu hogar</b></h5>
         </div>
@@ -36,7 +36,7 @@ class Home extends Component {
 
         <ProfessionalThumbs/>
 
-      </div>
+      </Container>
     );
   }
 }
