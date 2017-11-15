@@ -1,6 +1,11 @@
 import { GET_ANNOUNCEMENTS_LOADING, GET_ANNOUNCEMENTS_ERROR, GET_ANNOUNCEMENTS_SUCCESS } from '../actions/types';
 
-export default function(state=[], action) {
+export default function(state={
+  loading:false,
+  error:false,
+  success:false,
+  result:[]
+}, action) {
 
   let loading = {}
   let error = {}
@@ -9,15 +14,20 @@ export default function(state=[], action) {
       loading = {loading:false}
       error = {error: false}
       let success = {success:true}
-      let result = {'result':action.payload }
-      return Object.assign({}, result, success, error, loading)
+      let result = {'result':action.payload.results }
+      let lastPage = action.payload.next ? action.payload.lastPage : 1
+      console.log(action.payload)
+      let pagination = {pagination:
+          action.payload
+        }
+      return Object.assign({...state}, result, pagination, success, error, loading)
     case GET_ANNOUNCEMENTS_ERROR:
       loading = {loading:false}
-      error = {error: false, error_type: 'Ocurrió un error'}
-      return Object.assign({}, action.payload, error, loading)
+      error = {error: true, error_type: 'Ocurrió un error'}
+      return Object.assign({...state}, action.payload, error, loading)
     case GET_ANNOUNCEMENTS_LOADING:
       loading = {loading:true}
-      return Object.assign({}, loading)
+      return Object.assign({...state}, loading)
     default:
       return state;
   }

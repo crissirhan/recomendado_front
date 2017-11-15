@@ -3,17 +3,20 @@ import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function getAnnouncements(announcement_id,search_params) {
+export default function getAnnouncements(announcement_id,params) {
+  /*
   let query = '';
   if(announcement_id){
     query = announcement_id;
   } else{
     query = search_params ? "?search=" + search_params : '';
   }
+  */
   return dispatch => {
     dispatch(getAnnouncementsLoadingAsync());
-    axios.get(ENDPOINT_URI+'/announcements/' + query)
+    axios.get(ENDPOINT_URI+'/announcements/', {params: params} )
       .then(res => {
+        console.log(res.data)
         dispatch(getAnnouncementsSuccessAsync(res.data));
       })
       .catch(function (error) {

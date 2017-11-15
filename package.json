@@ -13,6 +13,7 @@
     "react-cookies": "^0.1.0",
     "react-dom": "^16.1.0",
     "react-facebook-login-component": "^0.9.1",
+    "react-js-pagination": "^3.0.0",
     "react-rating": "^0.8.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",

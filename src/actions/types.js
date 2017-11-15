@@ -57,3 +57,5 @@ export const GET_JOB_BY_NAME_LOADING = ' loading get job by name';
 export const GET_ANNOUNCEMENT_REVIEWS_SUCCESS = ''
 export const GET_ANNOUNCEMENT_REVIEWS_ERROR = ''
 export const GET_ANNOUNCEMENT_REVIEWS_LOADING = ''
+export const REQUEST_SEARCH = ''
+export const UPDATE_SEARCH_PARAMS = ''

@@ -14,13 +14,16 @@ import {
 import cookie from 'react-cookies';
 import { Button } from 'reactstrap';
 import SearchBar from 'material-ui-search-bar'
+import { updateSearchParams } from '../actions/search'
 
-
-
-const KEYS_TO_FILTERS = ['professional.id', 'job.job_type'];
 
 class SearchAnnouncements extends Component {
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.search !== this.props.search){
+      this.props.getAnnouncements(null,nextProps.search);
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -47,26 +50,6 @@ class SearchAnnouncements extends Component {
     return (days.map(day => <span key={day.toString()}>{day} </span>));
   }
 
-  handleService(announcement){
-    if(cookie.load('user').user){
-      let data = {
-        client_id:cookie.load('user').id,
-        announcement_id:announcement.id
-      }
-      console.log(data);
-      this.props.putService(data);
-    }else{
-      console.log("Error putService");
-    }
-  }
-
-  actionRenderer(props){
-    if(cookie.load('isClient') == "true"){
-      return <Button key={props.value.id} onClick={() => this.handleService(props.value)}>Contratar</Button>
-    }
-    return '';
-  }
-
   render(){
 
     return (
@@ -88,8 +71,8 @@ class SearchAnnouncements extends Component {
   }
 
   requestSearch(){
-    console.log("Buscar: " + this.state.searchTerm)
-    this.props.history.push('/buscar/anuncios/'+this.state.searchTerm);
+    this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
+    this.props.history.push('/buscar/anuncios/')
     //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
   }
 
@@ -97,14 +80,16 @@ class SearchAnnouncements extends Component {
 
 function mapStateToProps(state){
   return {
-    announcements: state.announcements
+    announcements: state.announcements,
+    search: state.search
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getAnnouncements: getAnnouncements,
-    putService:putService
+    putService:putService,
+    updateSearchParams:updateSearchParams
   }, dispatch);
 }
 

@@ -11,7 +11,6 @@ export default function getAnnouncementReviews(announcement_id) {
         dispatch(getAnnouncementReviewsSuccessAsync(res.data));
       })
       .catch(function (error) {
-        console.log(error)
         dispatch(getAnnouncementReviewsErrorAsync(error.data))
       });
   }

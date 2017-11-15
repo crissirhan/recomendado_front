@@ -13,16 +13,18 @@ import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import './css/images.css';
 import './css/col.css';
 import './css/box.css';
+import './css/pagination.css';
+import { updateSearchParams } from '../actions/search'
+import Pagination from "react-js-pagination";
 
 class ListAnnouncements extends Component {
 
   componentDidMount(){
-    this.props.getAnnouncements(null,this.props.search);
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps) {
-      if(nextProps.announcements != this.props.announcements){
+      if(nextProps.announcements != this.props.announcements && false){
         if(this.props.announcements.success !== nextProps.announcements.success){
           this.setState({
             success:nextProps.announcements.success
@@ -38,15 +40,17 @@ class ListAnnouncements extends Component {
             loading:nextProps.announcements.loading
           })
         }
-        if(nextProps.announcements.result){
+        if(nextProps.announcements.result !== this.props.announcements.result){
+          console.log(nextProps.announcements.result)
           this.setState({
             announcements: nextProps.announcements.result
           })
         }
-      }
-
-      if(this.props.search !== nextProps.search){
-        this.props.getAnnouncements(null,nextProps.search);
+        if(nextProps.announcements.pagination !== this.props.announcements.pagination){
+          this.setState({
+            pagination: nextProps.announcements.pagination
+          })
+        }
       }
     }
   }
@@ -58,16 +62,26 @@ class ListAnnouncements extends Component {
       announcements:[],
       loading: true,
       error: false,
-      success: false
+      success: false,
+      pagination:{},
+      params:{search:this.props.search}
     };
   }
 
+  handlePageChange(pageNumber){
+    //this.setState({params})
+    this.props.updateSearchParams({page:pageNumber});
+  };
+
   render() {
-    console.log(this.state)
-    if(this.state.loading){
+    console.log(this.props)
+    if(this.props.announcements.loading ){
       return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
     }
-    if(this.state.announcements.length === 0 ){
+    if(this.props.announcements.error ){
+      return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_type}</div><SearchAnnouncements/></div></Container>;
+    }
+    if(this.props.announcements.result.length === 0 ){
       return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
     }
     return (
@@ -76,7 +90,18 @@ class ListAnnouncements extends Component {
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
 
-        <ListAnnouncementsDummy image_class="center-cropped search-thumbnail" announcements_array={this.state.announcements.filter(announcement => announcement.visible)}/>
+        <ListAnnouncementsDummy
+          image_class="center-cropped search-thumbnail"
+          announcements_array={this.props.announcements.result.filter(announcement => announcement.visible)}
+        />
+        <Pagination
+          activePage={this.props.announcements.pagination.current}
+          itemsCountPerPage={this.props.announcements.pagination.countItemsOnPage}
+          totalItemsCount={this.props.announcements.pagination.totalElements}
+          hideDisabled={true}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageChange.bind(this)}
+        />
       </Container>
     );
   }
@@ -84,13 +109,15 @@ class ListAnnouncements extends Component {
 
 function mapStateToProps(state){
   return {
-    announcements: state.announcements
+    announcements: state.announcements,
+    search: state.search
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getAnnouncements: getAnnouncements
+    getAnnouncements: getAnnouncements,
+    updateSearchParams:updateSearchParams
   }, dispatch);
 }
 

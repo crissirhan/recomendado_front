@@ -29,7 +29,6 @@ class ListAnnouncements extends Component {
     return (
       <CardGroup>
         {this.props.announcements_array.map(announcement =>{
-          console.log("asd")
           let image_url = announcement.announcement_thumbnail ? announcement.announcement_thumbnail : "https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180";
           return <Col  height="360px" sm="4" key={announcement.id}>
                   <Card className="shadow-box round-border" size="sm" >
