@@ -23,8 +23,9 @@ class SearchAnnouncements extends Component {
     if(nextProps.search !== this.props.search && this.state.requestSearch){
       this.props.getAnnouncements(nextProps.search);
       this.setState({
-        requestSearch:false
-      })
+        requestSearch:false},
+        () => {this.props.history.push('/buscar/anuncios/')}
+      )
     }
   }
 
@@ -79,7 +80,6 @@ class SearchAnnouncements extends Component {
       requestSearch:true
     }, () => {
       this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
-      this.props.history.push('/buscar/anuncios/')
     })
 
     //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>

@@ -81,8 +81,15 @@ class ListAnnouncements extends Component {
     if(this.props.announcements.error ){
       return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_type}</div><SearchAnnouncements/></div></Container>;
     }
-    if(this.props.announcements.result.length === 0 ){
+    if(this.props.announcements.result.length === 0 && this.props.announcements.success){
       return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
+    }
+    if(!this.props.announcements.success && !this.props.announcements.loading && !this.props.announcements.error){
+      return <Container>
+        <h1>Búsqueda de avisos</h1>
+        <p>Busca avisos por nombre, categorias y profesionales.</p>
+        <SearchAnnouncements/>
+      </Container>
     }
     return (
       <Container>
@@ -92,16 +99,16 @@ class ListAnnouncements extends Component {
 
         <ListAnnouncementsDummy
           image_class="center-cropped search-thumbnail"
-          announcements_array={this.props.announcements.result.filter(announcement => announcement.visible)}
+          announcements_array={this.props.announcements.result}
         />
-        <Pagination
+        {this.props.announcements.result.length === 0  ? null :<Pagination
           activePage={this.props.announcements.pagination.current}
           itemsCountPerPage={this.props.announcements.pagination.countItemsOnPage}
           totalItemsCount={this.props.announcements.pagination.totalElements}
           hideDisabled={true}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange.bind(this)}
-        />
+        />}
       </Container>
     );
   }

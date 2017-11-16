@@ -20,7 +20,7 @@ class AnnouncementPage extends Component {
 
   componentDidMount(){
     //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
-    this.props.getAnnouncements({'id':this.props.announcement_id});
+    this.props.getAnnouncements({'id':this.props.announcement_id, 'visible':true});
     this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 

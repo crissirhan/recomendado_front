@@ -163,7 +163,6 @@ class ProjectNavbar extends Component {
           <Link to='/'>
             <NavbarBrand><h3><b>Recomendado</b></h3></NavbarBrand>
           </Link>
-          <SearchAnnouncements/>
           {buttons}
         </Navbar>
       </span>

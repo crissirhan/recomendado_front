@@ -68,7 +68,7 @@ class AnnouncementsEdit extends Component {
   }
 
   componentDidMount() {
-    this.props.getAnnouncements(this.props.announcement_id,null)
+    this.props.getAnnouncements({'id':this.props.announcement_id});
   }
 
   constructor(props) {
