@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, ListGroup, ListGroupItem, Input, Label, Container } from 'reactstrap';
+import { Table, ListGroup, ListGroupItem, Input, Label, Container, Button, Collapse } from 'reactstrap';
 import CategoryPage from './CategoryPage';
 import getAnnouncements from '../actions/get_announcements';
 import { bindActionCreators } from 'redux';
@@ -16,6 +16,7 @@ import './css/box.css';
 import './css/pagination.css';
 import { updateSearchParams } from '../actions/search'
 import Pagination from "react-js-pagination";
+import AdvancedFilter from './AdvancedFilter'
 
 class ListAnnouncements extends Component {
 
@@ -64,9 +65,16 @@ class ListAnnouncements extends Component {
       error: false,
       success: false,
       pagination:{},
-      params:{search:this.props.search}
+      params:{search:this.props.search},
+      collapse: false
     };
+    this.toggle = this.toggle.bind(this);
   }
+
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
+  }
+
 
   handlePageChange(pageNumber){
     //this.setState({params})
@@ -82,13 +90,21 @@ class ListAnnouncements extends Component {
       return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_type}</div><SearchAnnouncements/></div></Container>;
     }
     if(this.props.announcements.result.length === 0 && this.props.announcements.success){
-      return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div></Container>;
+      return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
+      <Collapse isOpen={this.state.collapse}>
+        <AdvancedFilter/>
+      </Collapse></Container>;
     }
     if(!this.props.announcements.success && !this.props.announcements.loading && !this.props.announcements.error){
       return <Container>
         <h1>Búsqueda de avisos</h1>
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
+        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
+        <Collapse isOpen={this.state.collapse}>
+          <AdvancedFilter/>
+        </Collapse>
+
       </Container>
     }
     return (
@@ -96,7 +112,10 @@ class ListAnnouncements extends Component {
         <h1>Búsqueda de avisos</h1>
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
-
+        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
+        <Collapse isOpen={this.state.collapse}>
+          <AdvancedFilter/>
+        </Collapse>
         <ListAnnouncementsDummy
           image_class="center-cropped search-thumbnail"
           announcements_array={this.props.announcements.result}

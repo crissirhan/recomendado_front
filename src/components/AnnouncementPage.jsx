@@ -137,7 +137,6 @@ class AnnouncementPage extends Component {
             <Modal isOpen={this.state.contact_modal} toggle={this.toggleContactModal}>
               <ModalHeader toggle={this.toggleContactModal}>Datos contacto</ModalHeader>
               <ModalBody>
-              <div>Correo electrónico: </div>
                 <div>Nombre: {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                 <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
