@@ -46,11 +46,11 @@ class SubJobCategories extends Component {
               <li key={category.id}><Link to={this.props.location.pathname+category.job_sub_type}>{category.job_sub_type}</Link></li>)}
             </ul>
           </Col>*/}
-          <Col xs="9">
+          <Col >
             <CardGroup>
               <Row>
                 {sub_categories.map(category =>
-                  <JobCategory image_class="center-cropped job-sub-category" category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
+                  <JobCategory image_class="center-cropped job-category" category={category.job_sub_type} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
                 )}
               </Row>
             </CardGroup>

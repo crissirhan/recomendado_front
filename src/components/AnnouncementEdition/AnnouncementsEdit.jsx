@@ -25,9 +25,10 @@ class AnnouncementsEdit extends Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
-      if(nextProps.announcements.result){
+      console.log(nextProps)
+      if(nextProps.announcements.result && nextProps.announcements.success){
         let days = this.state.availability;
-        let announcement = nextProps.announcements.result;
+        let announcement = nextProps.announcements.result[0];
         announcement.availability.map((day) => days[day] = true);
         this.setState({
           availability: days,

@@ -126,6 +126,20 @@ class ProjectNavbar extends Component {
     }
     return '/';
   }
+
+  getLoggedInUserName(){
+    if(cookie.load('user') != "undefined"){
+      if(cookie.load('user').user){
+        console.log(cookie.load('user').user)
+        return cookie.load('user').user.first_name + ' ' + cookie.load('user').user.last_name ;
+      } else {
+        return 'Perfil'
+      }
+    } else{
+      return this.state.user.first_name + ' ' + this.state.user.last_name
+    }
+  }
+
   render() {
     let buttons = null;
 
@@ -135,9 +149,10 @@ class ProjectNavbar extends Component {
       <Nav className="ml-auto" >
         <NavItem>
           <Link to={this.getLoggedInUserUrl()}>
-            <Button color="link">Perfil</Button>{' | '}
+            <Button color="link">{this.getLoggedInUserName()}</Button>
           </Link>
         </NavItem>
+        {' | '}
         <NavItem>
           <Button color="link" onClick={() => this.onLogout()}>Logout</Button>{' '}
         </NavItem>

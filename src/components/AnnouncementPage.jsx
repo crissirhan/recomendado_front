@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
+import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter, Collapse} from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
 import getAnnouncementReviews from '../actions/get_announcement_reviews';
 import './css/images.css';
@@ -15,12 +15,13 @@ import cookie from 'react-cookies';
 import Rating from 'react-rating';
 import { ENDPOINT_URI } from '../Globals';
 import { updateSearchParams } from '../actions/search'
+import { withRouter } from 'react-router';
 
 class AnnouncementPage extends Component {
 
   componentDidMount(){
     //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
-    this.props.getAnnouncements({'id':this.props.announcement_id, 'visible':true});
+    this.props.getAnnouncements({'id':this.props.announcement_id});
     this.props.getAnnouncementReviews(this.props.announcement_id)
   }
 
@@ -69,16 +70,26 @@ class AnnouncementPage extends Component {
       error:false,
       loading:false,
       images:[],
-      contact_modal: false
+      contact_collapse: false
     };
     this.handleCreateService = this.handleCreateService.bind(this);
-    this.toggleContactModal = this.toggleContactModal.bind(this);
+    this.toggleContactCollapse = this.toggleContactCollapse.bind(this);
+    this.handleToggleContactCollapse = this.handleToggleContactCollapse.bind(this);
   }
 
-  toggleContactModal(){
+  toggleContactCollapse(){
     this.setState({
-      contact_modal:!this.state.contact_modal
+      contact_collapse:!this.state.contact_collapse
     })
+  }
+
+  handleToggleContactCollapse(){
+    if(cookie.load('isClient') === "true"){
+      this.toggleContactCollapse()
+    } else {
+      console.log(this.props.history)
+      this.props.history.push('/login?from=' + this.props.history.location.pathname)
+    }
   }
 
   handleCreateService(){
@@ -133,18 +144,14 @@ class AnnouncementPage extends Component {
             </div>
           </Col>
           <Col sm="2">
-            {cookie.load('isClient') === "true"? serviceButton : null}
-            <Modal isOpen={this.state.contact_modal} toggle={this.toggleContactModal}>
-              <ModalHeader toggle={this.toggleContactModal}>Datos contacto</ModalHeader>
-              <ModalBody>
+            <Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
+            <Collapse isOpen={this.state.contact_collapse}>
+              <div>
                 <div>Nombre: {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                 <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="secondary" onClick={this.toggleContactModal}>Cerrar</Button>
-              </ModalFooter>
-            </Modal>
+              </div>
+            </Collapse>
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
         </Row>
@@ -221,10 +228,8 @@ class AnnouncementPage extends Component {
                                 <CardText className="text-center">
                                   <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
                                 </CardText>
-                                <Link to={'/clientes/'+review.service.client.id}>
-                                  <img className="img-circle center-cropped review-client-profile" src={image_url}/>
-                                  <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
-                                </Link>
+                                <img className="img-circle center-cropped review-client-profile" src={image_url}/>
+                                <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
                               </Card>
                             </Col>)
                     })}
@@ -256,4 +261,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AnnouncementPage));

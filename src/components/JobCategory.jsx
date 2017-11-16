@@ -23,7 +23,7 @@ class JobCategory extends Component {
         <Link to={url}>
           <Card className="no-border space-between">
             <CardBlock>
-              <CardTitle className="text-center" style={{marginBottom:-10, fontSize: 32.0}}>{this.props.category}</CardTitle>
+              <CardTitle className="text-center" style={{marginBottom:10, fontSize: 32.0}}>{this.props.category}</CardTitle>
             </CardBlock>
             <img className={this.props.image_class} src={image_url} alt="Card image cap" />
           </Card>

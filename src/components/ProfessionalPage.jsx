@@ -249,10 +249,8 @@ class ProfessionalPage extends Component {
                               <CardText className="text-center">
                                 <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
                               </CardText>
-                              <Link to={'/clientes/'+review.service.client.id}>
-                                <img className="img-circle center-cropped review-client-profile" src={image_url}/>
-                                <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
-                              </Link>
+                              <img className="img-circle center-cropped review-client-profile" src={image_url}/>
+                              <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
                             </Card>
                           </Col>)
                   })}

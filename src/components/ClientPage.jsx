@@ -203,7 +203,8 @@ class ClientPage extends Component {
             <CardGroup>
               <Row>
                 {this.state.client_reviews.map(review => {
-                  return (<Col  sm="4" key={review.id}>
+                  console.log(review)
+                  return (<Col  style={{minWidth:330}} sm="4" key={review.id}>
                             <Card className="shadow-box round-border">
                               <Link to={'/profesionales/'+review.service.announcement.professional.id}>
                                 <img className="img-circle center-cropped review-client-profile" src={review.service.announcement.professional.profile_picture}/>
@@ -216,7 +217,10 @@ class ClientPage extends Component {
                                   readonly/>
                               <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
                               <CardText className="text-center">
-                                <small className="text-muted">{review.service.announcement.job_subtype.job_sub_type}</small>
+                                <small className="text-muted">{review.service.announcement.job_tags.map((tag, index, array) => {
+                                  let url = '/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'
+                                  return (<div><Link to={url}>{tag.job.job_sub_type}</Link>{array.length !== index+1 ? ' | ' : null}</div>)
+                                })}</small>
                               </CardText>
                             </Card>
                           </Col>)
