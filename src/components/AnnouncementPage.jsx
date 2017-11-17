@@ -16,6 +16,8 @@ import Rating from 'react-rating';
 import { ENDPOINT_URI } from '../Globals';
 import { updateSearchParams } from '../actions/search'
 import { withRouter } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class AnnouncementPage extends Component {
 
@@ -27,6 +29,14 @@ class AnnouncementPage extends Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
+      if(nextProps.put_service !== this.props.put_service){
+        if(nextProps.put_service.success){
+          this.handleSuccessPutService()
+        }
+        if(nextProps.put_service.error){
+          this.handleErrorPutService()
+        }
+      }
       if(nextProps.announcements != this.props.announcements){
         if(this.props.announcements.success !== nextProps.announcements.success){
           this.setState({
@@ -75,6 +85,33 @@ class AnnouncementPage extends Component {
     this.handleCreateService = this.handleCreateService.bind(this);
     this.toggleContactCollapse = this.toggleContactCollapse.bind(this);
     this.handleToggleContactCollapse = this.handleToggleContactCollapse.bind(this);
+    this.handleCreateService = this.handleCreateService.bind(this);
+    this.handleSuccessPutService = this.handleSuccessPutService.bind(this)
+    this.handleErrorPutService = this.handleErrorPutService.bind(this)
+  }
+
+  handleSuccessPutService(){
+    toast.success("Notifcado. ¡Gracias!")
+  }
+
+  handleErrorPutService(){
+    toast.error("Ha ocurrido un error")
+  }
+
+  handleCreateService(){
+    if(cookie.load('user').user && cookie.load('isClient') === "true"){
+      let creation_date = new Date();
+      let data = {
+        client_id:cookie.load('user').id,
+        announcement_id:this.state.announcement.id,
+        cost: this.state.announcement.price,
+        creation_date: creation_date.toJSON()
+      }
+      console.log(data)
+      this.props.putService(data);
+    }else{
+      alert('Debes logearte como cliente para realizar esta acción')
+    }
   }
 
   toggleContactCollapse(){
@@ -89,19 +126,6 @@ class AnnouncementPage extends Component {
     } else {
       console.log(this.props.history)
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
-    }
-  }
-
-  handleCreateService(){
-    if(cookie.load('user').user){
-      let data = {
-        client_id:cookie.load('user').id,
-        announcement_id:this.state.announcement.id
-      }
-      console.log(data);
-      this.props.putService(data);
-    }else{
-      alert('Debes logearte como cliente para realizar esta acción')
     }
   }
 
@@ -151,6 +175,14 @@ class AnnouncementPage extends Component {
                 <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
               </div>
+              <Row>
+                <Col>
+                  <Button color="primary" onClick={this.handleCreateService} disabled={this.props.put_service.loading}>Trabajo aceptado</Button>
+                </Col>
+                <Col>
+                  <Button color="primary" disabled={this.props.put_service.loading}>Trabajo rechazado</Button>
+                </Col>
+              </Row>
             </Collapse>
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
@@ -247,7 +279,7 @@ class AnnouncementPage extends Component {
 function mapStateToProps(state){
   return {
     announcements: state.announcements,
-    putService: state.putService,
+    put_service: state.put_service,
     announcement_reviews:state.announcement_reviews
   }
 }

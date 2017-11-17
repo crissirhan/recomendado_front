@@ -53,7 +53,6 @@ class ServicePage extends Component {
         cost: this.state.announcement.price,
         creation_date: creation_date.toJSON()
       }
-      console.log(data);
       this.props.putService(data);
     }else{
       alert('Debes logearte como cliente para realizar esta acción')

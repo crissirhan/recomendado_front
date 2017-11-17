@@ -10,14 +10,15 @@ import { Container, Col } from 'reactstrap';
 import getJobByName from '../actions/get_job_sub_category_by_name';
 import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import getAnnouncementsByJob from '../actions/get_announcements_by_job';
-
+import getAnnouncements from '../actions/get_announcements';
 
 class SubCategoryPage extends Component {
 
   componentDidMount(){
     console.log(this.props.sub_category)
     this.props.getJobByName(this.props.sub_category);
-    this.props.getAnnouncementsByJob(this.props.sub_category,null)
+    console.log({job:this.props.sub_category,visible:true})
+    this.props.getAnnouncements({job:this.props.sub_category,visible:true})
   }
 
   componentWillReceiveProps(nextProps){
@@ -44,7 +45,7 @@ class SubCategoryPage extends Component {
           })
         }
       }
-      if(nextProps.announcements_by_job !== this.props.announcements_by_job){
+      if(nextProps.announcements !== this.props.announcements){
         this.setState({
           announcements_by_job:nextProps.announcements_by_job
         })
@@ -65,6 +66,7 @@ class SubCategoryPage extends Component {
 
   render(){
     console.log(this.state)
+    console.log(this.props)
     if(this.state.loading){
       return <Container>Cargando</Container>
     }
@@ -81,7 +83,7 @@ class SubCategoryPage extends Component {
           <h5><b>{this.state.job.job_sub_type}</b></h5>
           <p>{this.state.job ? this.state.job.description : ""}</p>
         </div>
-        <ListAnnouncementsDummy image_class="center-cropped subcategory-announcement-thumbnail" announcements_array={this.state.announcements_by_job}/>
+        <ListAnnouncementsDummy image_class="center-cropped subcategory-announcement-thumbnail" announcements_array={this.props.announcements.result}/>
       </Container>
      )
   }
@@ -91,14 +93,16 @@ class SubCategoryPage extends Component {
 function mapStateToProps(state){
   return {
     job_by_name:state.job_by_name,
-    announcements_by_job: state.announcements_by_job
+    announcements_by_job: state.announcements_by_job,
+    announcements:state.announcements
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getJobByName:getJobByName,
-    getAnnouncementsByJob:getAnnouncementsByJob
+    getAnnouncementsByJob:getAnnouncementsByJob,
+    getAnnouncements:getAnnouncements
   }, dispatch);
 }
 
