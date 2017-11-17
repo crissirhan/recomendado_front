@@ -146,6 +146,7 @@ class AnnouncementForm extends Component{
 
   handleTagChange = (idx) => (event) => {
     console.log(event.target.value)
+    let newJob = this.state.job_sub_categories.find(x => x.id === event.target.value)
     const newTags = this.state.job_tags.map((job, tidx) => {
       if (idx !== tidx) return job;
       return { ...job, job: this.state.job_sub_categories[event.target.value]};
@@ -314,8 +315,11 @@ class AnnouncementForm extends Component{
                 <AvGroup key={idx}>
                    <Label for={"job_tag_" +idx}>Tag de trabajo {idx+1}</Label>
                    <AvInput type="select" name={"job_tag_" +idx} id={"job_tag_" +idx} onChange={this.handleTagChange(idx)}>
-                     {this.state.job_sub_categories.map((sub_job, index) => {
-                        return <option key={sub_job.id} value={index}>{sub_job.job_sub_type}</option>
+                     {this.state.job_categories.map((category, index) => {
+                       let options = this.state.job_sub_categories.filter(sub_job => sub_job.job_category.job_type === category.job_type).map((sub_job, sub_index) => {
+                          return <option key={sub_job.id} value={sub_job.id}>{sub_job.job_sub_type}</option>
+                       })
+                       return <optgroup label={category.job_type} key={index}>{options}</optgroup>
                      })}
                    </AvInput>
                    <Button type="button" onClick={this.handleRemoveTag(idx)} className="small">Remover</Button>
