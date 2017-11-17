@@ -83,7 +83,7 @@ class AnnouncementForm extends Component{
       job_categories:[],
       title:'',
       description:'',
-      price:'',
+      price:null,
       thumbnail:null,
       job_tags:[],
       images:[],
@@ -134,8 +134,11 @@ class AnnouncementForm extends Component{
     reader.readAsDataURL(file);
   }
   handleAddTag(){
+    let all_jobs = this.state.job_categories.map((category, index) => {
+             return this.state.job_sub_categories.filter(sub_job => sub_job.job_category.job_type === category.job_type)
+           })
     this.setState({
-      job_tags: this.state.job_tags.concat([{ job: this.state.job_sub_categories[0] }])
+      job_tags: this.state.job_tags.concat([{ job: all_jobs[0][0] }])
     });
   }
   handleRemoveTag = (idx) => () => {
@@ -145,11 +148,10 @@ class AnnouncementForm extends Component{
   }
 
   handleTagChange = (idx) => (event) => {
-    console.log(event.target.value)
-    let newJob = this.state.job_sub_categories.find(x => x.id === event.target.value)
+    let newJob = this.state.job_sub_categories.find(x => x.id == event.target.value)
     const newTags = this.state.job_tags.map((job, tidx) => {
       if (idx !== tidx) return job;
-      return { ...job, job: this.state.job_sub_categories[event.target.value]};
+      return { ...job, job: newJob};
     });
 
     this.setState({ job_tags: newTags });
@@ -175,6 +177,10 @@ class AnnouncementForm extends Component{
   }
   handleSubmit(){
     console.log(this.state)
+    if(this.state.job_tags.length === 0){
+      alert("Debe escoger al menos una categoría para el aviso")
+      return null;
+    }
     let days = [];
     for (var property in this.state.availability) {
         if (this.state.availability.hasOwnProperty(property)) {
@@ -189,7 +195,7 @@ class AnnouncementForm extends Component{
     let data = {
       publish_date:publish_date.toJSON(),
       expire_date:expire_date.toJSON(),
-      movility:this.state.movility,
+      //movility:this.state.movility,
       professional_id:cookie.load('user').id,
       availability:days,
       location:this.state.location,
@@ -270,6 +276,7 @@ class AnnouncementForm extends Component{
               <Label for="thumbnail">Imagén del aviso</Label>
               <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
                onChange={this.handleImageChange.bind(this)} required />
+               <AvFeedback>Debe subir una imagen para su aviso</AvFeedback>
             </AvGroup>
             <AvGroup>
               <Label for="title">Título</Label>
@@ -286,10 +293,10 @@ class AnnouncementForm extends Component{
             <AvGroup>
               <Label for="price">Precio</Label>
               <AvInput type="number" name="price" id="price"
-              value={this.state.price} onChange={this.handleInputChange} required/>
+              value={this.state.price} onChange={this.handleInputChange}/>
               <AvFeedback>Debe ingresar un precio</AvFeedback>
             </AvGroup>
-            <AvGroup>
+            <AvGroup hidden={true}>
               <Label for="movility">Movilidad</Label>
               <AvInput type="select" name="movility" id="movility"
               onChange={this.handleInputChange} >
@@ -299,10 +306,10 @@ class AnnouncementForm extends Component{
               <AvFeedback>Debe ingresar su movilización</AvFeedback>
             </AvGroup>
             <AvGroup>
-              <Label for="location">Ubicación</Label>
+              <Label for="location">Ubicación: Ingresa la región o comuna a la que puedes asistir</Label>
               <AvInput  name="location" id="location"
               value={this.state.location} onChange={this.handleInputChange} required/>
-              <AvFeedback>Debe ingresar la ubicación de su anuncio</AvFeedback>
+              <AvFeedback>Debe ingresar una ubicación donde operar</AvFeedback>
             </AvGroup>
             <AvGroup check>
               <Label check>
@@ -310,11 +317,12 @@ class AnnouncementForm extends Component{
                 Visible
               </Label>
             </AvGroup>
+            <Label for="job_tags">Elige una o varias categorías para tu aviso</Label>
             <div>
               {this.state.job_tags.map((tag, idx) => (
                 <AvGroup key={idx}>
-                   <Label for={"job_tag_" +idx}>Tag de trabajo {idx+1}</Label>
-                   <AvInput type="select" name={"job_tag_" +idx} id={"job_tag_" +idx} onChange={this.handleTagChange(idx)}>
+                   <Label for={"job_tag_" + idx}>Tag de trabajo {idx + 1}</Label>
+                   <AvInput type="select" name={"job_tag_" + idx} id={"job_tag_" + idx} onChange={this.handleTagChange(idx)}>
                      {this.state.job_categories.map((category, index) => {
                        let options = this.state.job_sub_categories.filter(sub_job => sub_job.job_category.job_type === category.job_type).map((sub_job, sub_index) => {
                           return <option key={sub_job.id} value={sub_job.id}>{sub_job.job_sub_type}</option>
