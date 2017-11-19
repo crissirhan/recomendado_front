@@ -17,6 +17,7 @@ import './css/pagination.css';
 import { updateSearchParams } from '../actions/search'
 import Pagination from "react-js-pagination";
 import AdvancedFilter from './AdvancedFilter'
+import AnnouncementCardGroup from './AnnouncementCardGroup'
 
 class ListAnnouncements extends Component {
 
@@ -77,8 +78,8 @@ class ListAnnouncements extends Component {
 
 
   handlePageChange(pageNumber){
-    //this.setState({params})
-    this.props.updateSearchParams({page:pageNumber});
+    let new_query = Object.assign({}, this.props.announcements.params, {page:pageNumber})
+    this.props.getAnnouncements(new_query)
   };
 
   render() {
@@ -116,18 +117,11 @@ class ListAnnouncements extends Component {
         <Collapse isOpen={this.state.collapse}>
           <AdvancedFilter/>
         </Collapse>
-        <ListAnnouncementsDummy
-          image_class="center-cropped search-thumbnail"
-          announcements_array={this.props.announcements.result}
+        <AnnouncementCardGroup
+          announcements={this.props.announcements.result}
+          pagination={this.props.announcements.pagination}
+          handlePageChange={this.handlePageChange.bind(this)}
         />
-        {this.props.announcements.result.length === 0  ? null :<Pagination
-          activePage={this.props.announcements.pagination.current}
-          itemsCountPerPage={this.props.announcements.pagination.countItemsOnPage}
-          totalItemsCount={this.props.announcements.pagination.totalElements}
-          hideDisabled={true}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange.bind(this)}
-        />}
       </Container>
     );
   }

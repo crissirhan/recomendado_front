@@ -41,7 +41,9 @@ class ListGroupService extends React.Component {
     return (
       <ListGroupItem key={this.state.service.id}>
         <Col sm="3">
-          <div>{this.state.service.announcement.job_subtype.job_sub_type}</div>
+          <div>{this.state.service.announcement.job_tags.map(tag => {
+            return tag.job.job_sub_type
+          })}</div>
           <div><Link to={'/profesionales/' + this.state.service.announcement.professional.id}>{this.state.service.announcement.professional.user.first_name} {this.state.service.announcement.professional.user.last_name}</Link></div>
           <div>Publicación: {new Date(this.state.service.announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}</div>
           <div>Contratado: {new Date(this.state.service.creation_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}</div>

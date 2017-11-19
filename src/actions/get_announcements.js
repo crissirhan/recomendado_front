@@ -18,7 +18,7 @@ export default function getAnnouncements(params) {
     axios.get(ENDPOINT_URI+'/announcements/', {params: params} )
       .then(res => {
         console.log(res.data)
-        dispatch(getAnnouncementsSuccessAsync(res.data));
+        dispatch(getAnnouncementsSuccessAsync(res.data, params));
       })
       .catch(function (error) {
         console.log(error)
@@ -27,10 +27,11 @@ export default function getAnnouncements(params) {
   }
 }
 
-function getAnnouncementsSuccessAsync(announcements){
+function getAnnouncementsSuccessAsync(announcements, params){
   return {
     type: GET_ANNOUNCEMENTS_SUCCESS,
-    payload: announcements
+    payload: announcements,
+    params: params
   };
 }
 function getAnnouncementsErrorAsync(error){

@@ -76,12 +76,9 @@ class SearchAnnouncements extends Component {
   }
 
   requestSearch(){
-    this.setState({
-      requestSearch:true
-    }, () => {
-      this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
-    })
-
+    this.props.updateSearchParams({search:this.state.searchTerm, visible:true, page_size:2})
+    this.props.getAnnouncements({search:this.state.searchTerm, visible:true, page_size:2})
+    this.props.history.push('/buscar/anuncios/')
     //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
   }
 

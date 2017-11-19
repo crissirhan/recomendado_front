@@ -206,7 +206,7 @@ class AnnouncementPage extends Component {
               <p>→Disponibilidad: {this.state.announcement.availability_display}</p>
             </Col>
             <Col>
-              <p>→Movilidad: {this.state.announcement.movility}</p>
+              {/*}<p>→Movilidad: {this.state.announcement.movility}</p>*/}
             </Col>
           </Row>
         </div>
@@ -232,9 +232,9 @@ class AnnouncementPage extends Component {
                   {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
                 </Link>
               </div>
-              <div>
+              {this.state.announcement.professional.experience? <div>
                 <i>"{this.state.announcement.professional.experience}"</i>
-              </div>
+              </div> : null}
             </Col>
           </Row>
         </div>

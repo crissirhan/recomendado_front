@@ -4,7 +4,9 @@ export default function(state={
   loading:false,
   error:false,
   success:false,
-  result:[]
+  result:[],
+  pagination:{},
+  params:{}
 }, action) {
 
   let loading = {}
@@ -20,7 +22,7 @@ export default function(state={
       let pagination = {pagination:
           action.payload
         }
-      return Object.assign({...state}, result, pagination, success, error, loading)
+      return Object.assign({...state}, result, pagination, success, error, loading, {params:action.params})
     case GET_ANNOUNCEMENTS_ERROR:
       loading = {loading:false}
       error = {error: true, error_type: 'Ocurrió un error'}
