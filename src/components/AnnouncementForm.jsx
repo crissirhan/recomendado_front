@@ -78,7 +78,7 @@ class AnnouncementForm extends Component{
       availability:days,
       movility:'Transporte Público',
       job_subtype:null,
-      location:'',
+      location:RegionesYcomunas.regiones[0].NombreRegion,
       job:null,
       job_categories:[],
       title:'',
@@ -322,7 +322,7 @@ class AnnouncementForm extends Component{
                 Visible
               </Label>
             </AvGroup>
-            <Label for="job_tags">Elige una o varias categorías para tu aviso</Label>
+            <Label for="job_tags">Elige la(s) categoría(s) de tu servicio, para que así los clientes te encuentren fácilmente</Label>
             <div>
               {this.state.job_tags.map((tag, idx) => (
                 <AvGroup key={idx}>
@@ -338,7 +338,7 @@ class AnnouncementForm extends Component{
                    <Button type="button" onClick={this.handleRemoveTag(idx)} className="small">Remover</Button>
                 </AvGroup>
               ))}
-              <Button type="button" onClick={this.handleAddTag} className="small">Añadir tag de trabajo</Button>
+              <Button type="button" hidden={this.state.job_tags.length >=3 ? true : false } disabled={this.state.job_tags.length >=3 ? true : false } onClick={this.handleAddTag} className="small">Añadir tag de trabajo</Button>
             </div>
             <Label>Disponibilidad</Label>
             <AvGroup check>

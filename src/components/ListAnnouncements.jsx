@@ -81,7 +81,6 @@ class ListAnnouncements extends Component {
   };
 
   render() {
-    console.log(this.porps.announcements)
     if(this.props.announcements.loading ){
       return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
     }
