@@ -28,9 +28,11 @@ import JobSubCategoriesReducer from './reducer_job_sub_categories';
 import JobByNameReducer from './reducer_job_by_name';
 import AnnouncementReviewsReducer from './reducer_announcement_reviews'
 import SearchReducer from './reducer_search'
+import ReviewsReducer from './reducer_reviews'
 
 const rootReducer = combineReducers({
   form: formReducer,
+  reviews:ReviewsReducer,
   announcements: AnnouncementsReducer,
   job_categories: JobCategoriesReducer,
   user_reviews: UserReviewsReducer,

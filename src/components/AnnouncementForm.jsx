@@ -16,7 +16,7 @@ import cookie from 'react-cookies';
 import { Container } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { RegionesYcomunas } from '../Globals'
 
 
 class AnnouncementForm extends Component{
@@ -191,7 +191,7 @@ class AnnouncementForm extends Component{
     }
     let publish_date = new Date(); //time now
     let expire_date = new Date(publish_date);
-    expire_date.setFullYear(expire_date.getFullYear() + 1);
+    expire_date.setMonth(expire_date.getMonth() + 1);
     let data = {
       publish_date:publish_date.toJSON(),
       expire_date:expire_date.toJSON(),
@@ -202,10 +202,12 @@ class AnnouncementForm extends Component{
       title:this.state.title,
       description:this.state.description,
       price:this.state.price,
-      announcement_thumbnail:this.state.thumbnail,
       announcement_images:[],
       job_tags:[],
       visible: this.state.visible
+    }
+    if(this.state.thumbnail){
+      data.announcement_thumbnail = this.state.thumbnail
     }
     this.state.images.map(img => {
       if(img.image){
@@ -275,7 +277,7 @@ class AnnouncementForm extends Component{
             <AvGroup>
               <Label for="thumbnail">Imagén del aviso</Label>
               <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
-               onChange={this.handleImageChange.bind(this)} required />
+               onChange={this.handleImageChange.bind(this)} />
                <AvFeedback>Debe subir una imagen para su aviso</AvFeedback>
             </AvGroup>
             <AvGroup>
@@ -306,9 +308,12 @@ class AnnouncementForm extends Component{
               <AvFeedback>Debe ingresar su movilización</AvFeedback>
             </AvGroup>
             <AvGroup>
-              <Label for="location">Ubicación: Ingresa la región o comuna a la que puedes asistir</Label>
-              <AvInput  name="location" id="location"
-              value={this.state.location} onChange={this.handleInputChange} required/>
+              <Label for="location">Ubicación: Ingresa la región a la que puedes asistir</Label>
+              <AvInput type="select" name="location" id="location" onChange={this.handleInputChange}>
+                {RegionesYcomunas.regiones.map((region, index) => {
+                   return <option key={index} value={region.NombreRegion}>{region.NombreRegion}</option>
+                })}
+              </AvInput>
               <AvFeedback>Debe ingresar una ubicación donde operar</AvFeedback>
             </AvGroup>
             <AvGroup check>

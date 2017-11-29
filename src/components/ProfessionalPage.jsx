@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import getProfessional from '../actions/get_professional';
-import getUserReviews from '../actions/get_user_reviews';
-import getUserAnnouncements from '../actions/get_user_announcements';
+import getReviews from '../actions/get_reviews';
+import getAnnouncements from '../actions/get_announcements';
 import AnnouncementsList from './AnnouncementEdition/AnnouncementsList';
 import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
@@ -26,20 +26,37 @@ import './css/col.css';
 import './css/box.css';
 import AnnouncementForm from './AnnouncementForm';
 import { ENDPOINT_URI } from '../Globals';
+import AnnouncementListGroup from './AnnouncementListGroup'
+import ReviewCardGroup from './ReviewCardGroup'
 
 class ProfessionalPage extends Component {
 
   componentDidMount() {
     this.props.getProfessional(this.props.professional_id);
-    this.props.getUserReviews(this.props.professional_id);
-    this.props.getUserAnnouncements(this.props.professional_id);
+    this.props.getReviews({professional_id:this.props.professional_id,page_size:3});
+    //this.props.getUserAnnouncements(this.props.professional_id);
+    if(this.state.owner){
+      this.props.getAnnouncements({professional_id:this.props.professional_id});
+    } else {
+      this.props.getAnnouncements({professional_id:this.props.professional_id, visible:true});
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.professional_id !== this.props.professional_id){
       this.props.getProfessional(nextProps.professional_id);
-      this.props.getUserReviews(nextProps.professional_id);
-      this.props.getUserAnnouncements(nextProps.professional_id);
+      this.props.getReviews({professional_id:nextProps.professional_id,page_size:3});
+      this.setState({owner:(cookie.load('isProfessional') === "true" && cookie.load('user').id == nextProps.professional_id)},
+      () => {
+        if(this.state.owner){
+          this.props.getAnnouncements({professional_id:this.props.professional_id});
+        } else {
+          this.props.getAnnouncements({professional_id:this.props.professional_id, visible:true});
+        }
+      }
+    )
+
+
     }
     if(this.props != nextProps) {
       if(this.props.professional !== nextProps.professional){
@@ -47,11 +64,11 @@ class ProfessionalPage extends Component {
           professional:nextProps.professional
         })
       }
-      if(this.props.user_reviews.reviews !== nextProps.user_reviews.reviews){
+      if(this.props.reviews.result !== nextProps.reviews.result){
         this.setState({
-          reviews: nextProps.user_reviews.reviews,
-          average: nextProps.user_reviews.average,
-          count: nextProps.user_reviews.count
+          reviews: nextProps.reviews.result,
+          average: nextProps.reviews.result.average,
+          count: nextProps.reviews.result.count,
         });
       }
       if(this.props.user_announcements !== nextProps.user_announcements){
@@ -75,7 +92,8 @@ class ProfessionalPage extends Component {
       reviews:[],
       average:0,
       count:0,
-      reviewCollapse:false
+      reviewCollapse:false,
+      owner: (cookie.load('isProfessional') === "true" && cookie.load('user').id == this.props.professional_id)
     };
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
@@ -164,11 +182,20 @@ class ProfessionalPage extends Component {
       showAnnoucementModal:!this.state.showAnnoucementModal
     })
   }
+  handlePageChange(pageNumber){
+    let new_query = Object.assign({}, this.props.announcements.params, {page:pageNumber})
+    this.props.getAnnouncements(new_query)
+  }
+  handleReviewPageChange(pageNumber){
+    let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
+    this.props.getReviews(new_query)
+  }
   render() {
+    console.log(this.state.owner)
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container>Cargando</Container>;
     }
-
+    console.log(this.props.announcements.result)
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container>
@@ -220,43 +247,29 @@ class ProfessionalPage extends Component {
           <p></p>
         </Container>
         <Container>
-          <Row>
-            <p className="h4"><b>Anuncios</b></p>
-            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link">Crear anuncio</Button></Link> : null}
+          <Row style={{marginTop:100}}>
+            <p className="h4"><b>Anuncios  </b></p>
+            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link"><p className="h4" style={{position:'absolute',top:0}}><b>Crear anuncio</b></p></Button></Link> : null}
           </Row>
           <Jumbotron>
-            <ListAnnouncementsDummy image_class="center-cropped announcement-thumbnail" announcements_array={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id) ? this.state.announcements : this.state.announcements.filter(announcement => announcement.visible)}/>
+            <AnnouncementListGroup
+            extend_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
+            visible_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
+            pagination={this.props.announcements.pagination}
+            announcements={this.props.announcements.result}
+            handlePageChange={this.handlePageChange.bind(this)}
+            />
           </Jumbotron>
         </Container>
         <Container>
           <p className="h4"><b>Reviews</b></p>
           <Jumbotron>
-            <CardGroup>
-              <Row>
-                {this.state.reviews.sort(() => .5 - Math.random()).slice(0,3).map(review => {
-                  let image_url = review.service.client.profile_picture ? ENDPOINT_URI+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
-                  return (<Col  sm="4" key={review.id}>
-                            <Card className="shadow-box round-border min-width">
-                              <CardTitle className="text-center">{review.service.announcement.job_tags.map(tag => {
-                                return tag.job.job_sub_type
-                              })}</CardTitle>
-                              <Rating className="text-center"
-                                  empty="fa fa-star-o fa-2x orange-star"
-                                  full="fa fa-star fa-2x orange-star"
-                                  initialRate={review.rating}
-                                  readonly/>
-                              <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
-                              <CardText className="text-center">
-                                <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
-                              </CardText>
-                              <img className="img-circle center-cropped review-client-profile" src={image_url}/>
-                              <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
-                            </Card>
-                          </Col>)
-                  })}
-                </Row>
-              </CardGroup>
-            </Jumbotron>
+            <ReviewCardGroup
+            reviews={this.props.reviews.result}
+            pagination={this.props.reviews.pagination}
+            handlePageChange={this.handleReviewPageChange.bind(this)}
+            />
+          </Jumbotron>
         </Container>
       </Container>
     );
@@ -265,16 +278,16 @@ class ProfessionalPage extends Component {
 function mapStateToProps(state){
   return {
     professional: state.professional,
-    user_reviews: state.user_reviews,
-    user_announcements: state.user_announcements
+    reviews: state.reviews,
+    announcements: state.announcements
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getProfessional: getProfessional,
-    getUserReviews: getUserReviews,
-    getUserAnnouncements:getUserAnnouncements
+    getReviews: getReviews,
+    getAnnouncements:getAnnouncements
   }, dispatch);
 }
 

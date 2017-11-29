@@ -42,6 +42,7 @@ class ProfessionalThumb extends Component {
   }
 
   render() {
+    console.log(this.props)
     if(!this.state.count){
       return null;
     }

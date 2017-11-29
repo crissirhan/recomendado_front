@@ -1,20 +1,41 @@
-import { GET_REVIEWS } from './types';
+import { GET_REVIEWS_ERROR, GET_REVIEWS_LOADING, GET_REVIEWS_SUCCESS } from './types';
 import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
-var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function getReviews() {
+
+export default function getReviews(params) {
   return dispatch => {
-    axios.get(ENDPOINT_URI+'/reviews/')
+    dispatch(getReviewsLoadingAsync())
+    axios.get(ENDPOINT_URI+'/reviews/', {params: params})
       .then(res => {
-        dispatch(getReviewsAsync(res.data));
+        console.log(res)
+        dispatch(getReviewsSuccessAsync(res.data, params));
+      })
+      .catch(function (error) {
+        console.log(error)
+        dispatch(getReviewsErrorAsync(error.response));
       });
   }
 }
 
-function getReviewsAsync(reviews){
+function getReviewsSuccessAsync(reviews, params){
   return {
-    type: GET_REVIEWS,
-    payload: reviews
+    type: GET_REVIEWS_SUCCESS,
+    payload: reviews,
+    params: params
   };
+}
+
+function getReviewsLoadingAsync(){
+  return {
+    type: GET_REVIEWS_LOADING,
+    payload: null
+  }
+}
+
+function getReviewsErrorAsync(error){
+  return {
+    type: GET_REVIEWS_ERROR,
+    payload: error
+  }
 }

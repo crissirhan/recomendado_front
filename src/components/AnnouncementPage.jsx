@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter, Collapse} from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
-import getAnnouncementReviews from '../actions/get_announcement_reviews';
+import getReviews from '../actions/get_reviews';
 import './css/images.css';
 import putService from '../actions/put_service'
 import cookie from 'react-cookies';
@@ -18,13 +18,14 @@ import { updateSearchParams } from '../actions/search'
 import { withRouter } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import ReviewCardGroup from './ReviewCardGroup'
 
 class AnnouncementPage extends Component {
 
   componentDidMount(){
     //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
     this.props.getAnnouncements({'id':this.props.announcement_id});
-    this.props.getAnnouncementReviews(this.props.announcement_id)
+    this.props.getReviews({announcement_id:this.props.announcement_id,page_size:3})
   }
 
   componentWillReceiveProps(nextProps){
@@ -60,11 +61,11 @@ class AnnouncementPage extends Component {
           })
         }
       }
-      if(nextProps.announcement_reviews !== this.props.announcement_reviews){
-        console.log(nextProps.announcement_reviews)
-        if(nextProps.announcement_reviews.result !== this.props.announcement_reviews.result){
+      if(nextProps.reviews !== this.props.reviews){
+        console.log(nextProps.reviews)
+        if(nextProps.reviews.result !== this.props.reviews.result){
           this.setState({
-            announcement_reviews: nextProps.announcement_reviews.result
+            announcement_reviews: nextProps.reviews.result
           })
         }
       }
@@ -128,10 +129,11 @@ class AnnouncementPage extends Component {
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
     }
   }
-
+  handleReviewPageChange(pageNumber){
+    let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
+    this.props.getReviews(new_query)
+  }
   render(){
-    console.log(this.props)
-    console.log(this.state.announcement)
     if(this.state.loading || !this.state.announcement_reviews){
       return <Container>Cargando</Container>
     }
@@ -242,32 +244,12 @@ class AnnouncementPage extends Component {
           <Container>
             <p className="h4"><b>Reviews</b></p>
             <Jumbotron>
-              <CardGroup>
-                <Row>
-                  {this.state.announcement_reviews.reviews.sort(() => .5 - Math.random()).slice(0,3).map(review => {
-                    let image_url = review.service.client.profile_picture ? ENDPOINT_URI+review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
-                    return (<Col  sm="4" key={review.id}>
-                              <Card className="shadow-box round-border min-width">
-                                <CardTitle className="text-center">{review.service.announcement.job_tags.map(tag => {
-                                  return tag.job.job_sub_type
-                                })}</CardTitle>
-                                <Rating className="text-center"
-                                    empty="fa fa-star-o fa-2x orange-star"
-                                    full="fa fa-star fa-2x orange-star"
-                                    initialRate={review.rating}
-                                    readonly/>
-                                <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
-                                <CardText className="text-center">
-                                  <small className="text-muted">{new Date(review.date).toLocaleDateString()}</small>
-                                </CardText>
-                                <img className="img-circle center-cropped review-client-profile" src={image_url}/>
-                                <CardText className="text-center">{review.service.client.user.first_name} {review.service.client.user.last_name}</CardText>
-                              </Card>
-                            </Col>)
-                    })}
-                  </Row>
-                </CardGroup>
-              </Jumbotron>
+              <ReviewCardGroup
+              reviews={this.props.reviews.result}
+              pagination={this.props.reviews.pagination}
+              handlePageChange={this.handleReviewPageChange.bind(this)}
+              />
+            </Jumbotron>
           </Container>
         </div>
       </Container>
@@ -280,7 +262,7 @@ function mapStateToProps(state){
   return {
     announcements: state.announcements,
     put_service: state.put_service,
-    announcement_reviews:state.announcement_reviews
+    reviews:state.reviews
   }
 }
 
@@ -288,7 +270,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getAnnouncements: getAnnouncements,
     putService: putService,
-    getAnnouncementReviews:getAnnouncementReviews,
+    getReviews:getReviews,
     updateSearchParams:updateSearchParams
   }, dispatch);
 }

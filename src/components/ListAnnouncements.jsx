@@ -65,8 +65,6 @@ class ListAnnouncements extends Component {
       loading: true,
       error: false,
       success: false,
-      pagination:{},
-      params:{search:this.props.search},
       collapse: false
     };
     this.toggle = this.toggle.bind(this);
@@ -83,7 +81,7 @@ class ListAnnouncements extends Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.porps.announcements)
     if(this.props.announcements.loading ){
       return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
     }

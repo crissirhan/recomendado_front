@@ -17,7 +17,6 @@ export default function getAnnouncements(params) {
     console.log(params)
     axios.get(ENDPOINT_URI+'/announcements/', {params: params} )
       .then(res => {
-        console.log(res.data)
         dispatch(getAnnouncementsSuccessAsync(res.data, params));
       })
       .catch(function (error) {

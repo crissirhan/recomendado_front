@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {  CardGroup, Col } from 'reactstrap';
-import AnnouncementCard from './AnnouncementCard'
+import {  ListGroup, Button } from 'reactstrap';
+import AnnouncementListElement from './AnnouncementListElement'
 import Pagination from "react-js-pagination";
 import './css/images.css';
 import './css/box.css';
@@ -18,11 +18,10 @@ class AnnouncementCardGroup extends Component {
   render() {
     return (
       <div>
-        <CardGroup>
+        <ListGroup>
           {this.props.announcements.map(announcement =>
-            <Col height="360px" sm="4" key={announcement.id}><AnnouncementCard announcement={announcement}/></Col>
-          )}
-        </CardGroup>
+            <AnnouncementListElement announcement={announcement} extend_button={this.props.extend_button} visible_button={this.props.visible_button} />)}
+        </ListGroup>
         <Pagination
           activePage={this.props.pagination.current}
           itemsCountPerPage={this.props.pagination.page_size}
@@ -35,5 +34,6 @@ class AnnouncementCardGroup extends Component {
     );
   }
 }
+
 
 export default AnnouncementCardGroup;

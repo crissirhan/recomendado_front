@@ -5,7 +5,7 @@ import getClient from '../actions/get_client';
 import updateClient from '../actions/update_client';
 import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
 import getClientServices from '../actions/get_client_services';
-import getClientReviews from '../actions/get_client_reviews';
+import getReviews from '../actions/get_reviews';
 import {
   Container,
   Collapse,
@@ -25,20 +25,21 @@ import './css/box.css';
 import cookie from 'react-cookies';
 import Rating from 'react-rating';
 import ListGroupService from './ListGroupService';
+import ReviewCardGroup from './ReviewCardGroup'
 
 class ClientPage extends Component {
 
   componentDidMount() {
     this.props.getClient(this.props.client_id);
     this.props.getClientServices(this.props.client_id);
-    this.props.getClientReviews(this.props.client_id);
+    this.props.getReviews({client_id:this.props.client_id,page_size:3});
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.client_id !== this.props.client_id){
       this.props.getClient(nextProps.client_id);
       this.props.getClientServices(nextProps.client_id);
-      this.props.getClientReviews(nextProps.client_id);
+      this.props.getReviews({client_id:nextProps.client_id,page_size:3});
     }
     if(nextProps.client !== this.props.client) {
       //this.syncPropToState(nextProps);
@@ -58,9 +59,9 @@ class ClientPage extends Component {
         client_services:nextProps.client_services
       })
     }
-    if(nextProps.client_reviews !== this.props.client_reviews){
+    if(nextProps.reviews !== this.props.reviews){
       this.setState({
-        client_reviews:nextProps.client_reviews
+        client_reviews:nextProps.reviews.result
       })
     }
   }
@@ -148,6 +149,10 @@ class ClientPage extends Component {
   fakeUpdate(){
     this.setState({fakeUpdate:!this.state.fakeUpdate});
   }
+  handleReviewPageChange(pageNumber){
+    let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
+    this.props.getReviews(new_query)
+  }
   render() {
     if(!this.state.client || !this.state.client_services || !this.state.client_reviews){
       return <Container>Cargando</Container>;
@@ -200,33 +205,11 @@ class ClientPage extends Component {
         <Container>
           <p className="h4"><b>Reviews</b></p>
           <Jumbotron>
-            <CardGroup>
-              <Row>
-                {this.state.client_reviews.map(review => {
-                  console.log(review)
-                  return (<Col  style={{minWidth:330}} sm="4" key={review.id}>
-                            <Card className="shadow-box round-border">
-                              <Link to={'/profesionales/'+review.service.announcement.professional.id}>
-                                <img className="img-circle center-cropped review-client-profile" src={review.service.announcement.professional.profile_picture}/>
-                                <CardTitle className="text-center">{review.service.announcement.professional.user.first_name} {review.service.announcement.professional.user.last_name}</CardTitle>
-                              </Link>
-                              <Rating className="text-center"
-                                  empty="fa fa-star-o fa-2x orange-star"
-                                  full="fa fa-star fa-2x orange-star"
-                                  initialRate={review.rating}
-                                  readonly/>
-                              <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
-                              <CardText className="text-center">
-                                <small className="text-muted">{review.service.announcement.job_tags.map((tag, index, array) => {
-                                  let url = '/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'
-                                  return (<div><Link to={url}>{tag.job.job_sub_type}</Link>{array.length !== index+1 ? ' | ' : null}</div>)
-                                })}</small>
-                              </CardText>
-                            </Card>
-                          </Col>)
-                })}
-              </Row>
-            </CardGroup>
+            <ReviewCardGroup
+            reviews={this.props.reviews.result}
+            pagination={this.props.reviews.pagination}
+            handlePageChange={this.handleReviewPageChange.bind(this)}
+            />
           </Jumbotron>
       </Container>
     </Container>
@@ -238,7 +221,7 @@ function mapStateToProps(state){
     client: state.client,
     update_client: state.update_client,
     client_services:state.client_services,
-    client_reviews:state.client_reviews
+    reviews:state.reviews
   }
 }
 
@@ -247,7 +230,7 @@ function mapDispatchToProps(dispatch) {
     getClient: getClient,
     updateClient: updateClient,
     getClientServices:getClientServices,
-    getClientReviews:getClientReviews
+    getReviews:getReviews
   }, dispatch);
 }
 

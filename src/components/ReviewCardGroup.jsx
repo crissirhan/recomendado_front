@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {  CardGroup, Col } from 'reactstrap';
-import AnnouncementCard from './AnnouncementCard'
+import ReviewCard from './ReviewCard'
 import Pagination from "react-js-pagination";
 import './css/images.css';
 import './css/box.css';
 import './css/pagination.css';
 
-class AnnouncementCardGroup extends Component {
+class ReviewCardGroup extends Component {
 
   constructor(props) {
     super(props);
@@ -19,8 +19,8 @@ class AnnouncementCardGroup extends Component {
     return (
       <div>
         <CardGroup>
-          {this.props.announcements.map(announcement =>
-            <Col height="360px" sm="4" key={announcement.id}><AnnouncementCard announcement={announcement}/></Col>
+          {this.props.reviews.map(review =>
+            <Col height="360px" sm="4" key={review.id}><ReviewCard review={review}/></Col>
           )}
         </CardGroup>
         <Pagination
@@ -36,4 +36,4 @@ class AnnouncementCardGroup extends Component {
   }
 }
 
-export default AnnouncementCardGroup;
+export default ReviewCardGroup;

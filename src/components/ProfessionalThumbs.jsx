@@ -12,15 +12,16 @@ import './css/box.css';
 class ProfessionalThumbs extends Component {
 
   componentDidMount() {
-    this.props.getReviews();
+    this.props.getReviews({});
   }
 
   componentWillReceiveProps(nextProps) {
 
-    if(this.props != nextProps){
-      let random_professional_ids_with_reviews = [...new Set(nextProps.get_reviews.map(review => review.service.announcement.professional.id))].sort(() => .5 - Math.random()).slice(0,3);
+    if(this.props != nextProps && nextProps.reviews.result){
+      console.log(nextProps.reviews.result)
+      let random_professional_ids_with_reviews = [...new Set(nextProps.reviews.result.map(review => review.service.announcement.professional.id))].sort(() => .5 - Math.random()).slice(0,3);
 
-      let random_reviews = nextProps.get_reviews.filter(function( review ) {
+      let random_reviews = nextProps.reviews.result.filter(function( review ) {
         let index = random_professional_ids_with_reviews.indexOf(review.service.announcement.professional.id);
         if(index !== -1){
           random_professional_ids_with_reviews.splice(index, 1);
@@ -55,9 +56,10 @@ class ProfessionalThumbs extends Component {
     );
   }
 }
+
 function mapStateToProps(state){
   return {
-    get_reviews:state.get_reviews
+    reviews:state.reviews
   }
 }
 
