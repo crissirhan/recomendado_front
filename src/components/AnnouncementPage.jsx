@@ -161,7 +161,7 @@ class AnnouncementPage extends Component {
               <Rating
                 empty="fa fa-star-o fa-2x orange-star"
                 full="fa fa-star fa-2x orange-star"
-                initialRate={this.state.announcement_reviews.average ? this.state.announcement_reviews.average : 0}
+                initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
                 readonly
               />
             </div>
