@@ -21,7 +21,10 @@ class AnnouncementCard extends Component {
     console.log(announcement)
     return (
               <Card className="shadow-box round-border" style={{marginBottom:20,minHeight:300,height:300,width:230, overflow:"hidden" }} size="sm" >
-                <CardImg top style={{height:142,width:230}} src={announcement.announcement_thumbnail} />
+                <Link to ={'/anuncios/' + announcement.id}>
+                  <CardImg top style={{height:142,width:230}} src={announcement.announcement_thumbnail} />
+                </Link>
+
                 <Row>
                   <Col sm="1">
                     <img className="center-cropped img-circle" style={{height:24,width:24}} src={announcement.professional.profile_picture} />
