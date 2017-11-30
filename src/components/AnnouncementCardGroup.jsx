@@ -20,7 +20,7 @@ class AnnouncementCardGroup extends Component {
       <div>
         <CardGroup>
           {this.props.announcements.map(announcement =>
-            <Col height="360px" sm="4" key={announcement.id}><AnnouncementCard announcement={announcement}/></Col>
+            <Col height="360px" sm="3" key={announcement.id}><AnnouncementCard announcement={announcement}/></Col>
           )}
         </CardGroup>
         <Pagination

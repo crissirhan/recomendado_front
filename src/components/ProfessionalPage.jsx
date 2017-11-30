@@ -192,6 +192,7 @@ class ProfessionalPage extends Component {
   }
   render() {
     console.log(this.state.owner)
+    console.log(this.props.reviews)
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container>Cargando</Container>;
     }
@@ -206,11 +207,11 @@ class ProfessionalPage extends Component {
               <Rating
                 empty="fa fa-star-o fa-2x orange-star"
                 full="fa fa-star fa-2x orange-star"
-                initialRate={this.state.average}
+                initialRate={this.state.professional.average}
                 readonly
               />
               <CardText>
-                <small className="text-muted">({this.state.count} evaluaciones)</small>
+                <small className="text-muted">({this.state.professional.count} evaluaciones)</small>
               </CardText>
             </Card>
             {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
