@@ -27,7 +27,7 @@ class ReviewForm extends Component{
     super(props);
     let shouldEdit = this.props.alreadyReviewed ? false : true;
     this.state = {
-      rating:1,
+      rating:this.props.rating,
       client_comment:'',
       reviewed:false,
       shouldEdit:shouldEdit
@@ -64,6 +64,7 @@ class ReviewForm extends Component{
     this.setState({
       shouldEdit:false
     });
+    this.props.ratingCallback(this.state.rating)
   }
   render(){
     return (
@@ -82,7 +83,7 @@ class ReviewForm extends Component{
           <Input  name="client_comment" id="client_comment" disabled={!this.state.shouldEdit}
           value={this.state.client_comment} onChange={this.handleInputChange}/>
         </FormGroup>
-        {this.state.shouldEdit ? <Button onClick={() => {this.handleSubmit()} }>Enviar</Button> : null}
+        {this.state.shouldEdit ? <Button onClick={() => {this.handleSubmit()} }>Evaluar</Button> : null}
       </Form>
     )
   }

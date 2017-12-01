@@ -92,7 +92,7 @@ class AnnouncementPage extends Component {
   }
 
   handleSuccessPutService(){
-    toast.success("Notifcado. ¡Gracias!")
+    toast.success("Contactado")
   }
 
   handleErrorPutService(){
@@ -106,7 +106,9 @@ class AnnouncementPage extends Component {
         client_id:cookie.load('user').id,
         announcement_id:this.state.announcement.id,
         cost: this.state.announcement.price,
-        creation_date: creation_date.toJSON()
+        creation_date: creation_date.toJSON(),
+        contacted:true,
+        contacted_date: creation_date.toJSON(),
       }
       console.log(data)
       this.props.putService(data);
@@ -116,8 +118,11 @@ class AnnouncementPage extends Component {
   }
 
   toggleContactCollapse(){
+    if(!this.state.contact_collapse){
+      this.handleCreateService()
+    }
     this.setState({
-      contact_collapse:!this.state.contact_collapse
+      contact_collapse:true
     })
   }
 
@@ -177,14 +182,6 @@ class AnnouncementPage extends Component {
                 <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
               </div>
-              <Row>
-                <Col>
-                  <Button color="primary" onClick={this.handleCreateService} disabled={this.props.put_service.loading}>Trabajo aceptado</Button>
-                </Col>
-                <Col>
-                  <Button color="primary" disabled={this.props.put_service.loading}>Trabajo rechazado</Button>
-                </Col>
-              </Row>
             </Collapse>
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>

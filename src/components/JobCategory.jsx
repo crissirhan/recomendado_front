@@ -25,8 +25,9 @@ class JobCategory extends Component {
             <CardBlock>
               <CardTitle className="text-center" style={{marginBottom:10, fontSize: 32.0}}>{this.props.category}</CardTitle>
             </CardBlock>
-            <img className={this.props.image_class} src={image_url} alt="Card image cap" />
+
           </Card>
+          <img className={this.props.image_class+' text-center'} src={image_url} alt="Imagen categoria" />
         </Link>
       </Col>
     );
