@@ -20,7 +20,7 @@ class ReviewCardGroup extends Component {
       <div>
         <CardGroup>
           {this.props.reviews.map(review =>
-            <Col height="360px" sm="4" key={review.id}><ReviewCard review={review}/></Col>
+            <Col style={{marginBottom:20}} height="360px" sm="4" key={review.id}><ReviewCard review={review}/></Col>
           )}
         </CardGroup>
         <Pagination

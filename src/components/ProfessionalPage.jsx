@@ -33,7 +33,7 @@ class ProfessionalPage extends Component {
 
   componentDidMount() {
     this.props.getProfessional(this.props.professional_id);
-    this.props.getReviews({professional_id:this.props.professional_id,page_size:3});
+    this.props.getReviews({professional_id:this.props.professional_id,page_size:9});
     //this.props.getUserAnnouncements(this.props.professional_id);
     if(this.state.owner){
       this.props.getAnnouncements({professional_id:this.props.professional_id});
@@ -45,7 +45,7 @@ class ProfessionalPage extends Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.professional_id !== this.props.professional_id){
       this.props.getProfessional(nextProps.professional_id);
-      this.props.getReviews({professional_id:nextProps.professional_id,page_size:3});
+      this.props.getReviews({professional_id:nextProps.professional_id,page_size:9});
       this.setState({owner:(cookie.load('isProfessional') === "true" && cookie.load('user').id == nextProps.professional_id)},
       () => {
         if(this.state.owner){
