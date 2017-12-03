@@ -16,11 +16,12 @@ class ServiceListGroup extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <ListGroup>
           {this.props.services.map(service =>
-            <ServiceListElement service={service}/>)}
+            <ServiceListElement service={service} pending={this.props.pending} rejected={this.props.rejected} />)}
         </ListGroup>
         <Pagination
           activePage={this.props.pagination.current}

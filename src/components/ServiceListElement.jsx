@@ -23,16 +23,16 @@ class ServiceListElement extends Component {
 
   handleYes(){
     let today = new Date()
-    this.props.updateService(this.props.service.id, {hired_date:today.toJSON(),hired:true})
+    this.props.updateService(this.props.service.id, {hired_date:today.toJSON(),hired:true, })
     this.setState({accepted:true, answered:true})
   }
 
   handleNo(){
     this.setState({accepted:false,answered:true})
+    this.props.updateService(this.props.service.id, { professional_rejected:true})
   }
 
   render() {
-    console.log(this.props)
     let service = this.props.service
     let announcement = service.announcement
     let image_url = announcement.announcement_thumbnail;
@@ -94,7 +94,7 @@ class ServiceListElement extends Component {
                     <div>
                       Contactado: {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                     </div>
-                    {this.state.answered ? <div>Gracias por su respuesta</div> :
+                    { !this.props.pending ? null :
                       <div>
                       <div>
                         ¿Aceptó tu propuesta de trabajo?
