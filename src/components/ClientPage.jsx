@@ -39,12 +39,12 @@ class ClientPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.update_service != this.props.update_service){
-      if(!nextProps.update_service.loading){
+      if(nextProps.update_service.success){
         this.updateServices()
       }
     }
     if(nextProps.put_service != this.props.put_service){
-      if(!nextProps.put_service.loading){
+      if(nextProps.put_service.success){
         this.updateServices()
       }
     }
@@ -76,45 +76,39 @@ class ClientPage extends Component {
         client_reviews:nextProps.reviews.result
       })
     }
-    if(nextProps.services !== this.props.services){
-      if(nextProps.services.result.length > 0){
-        if(nextProps.services.result[0].contacted && !nextProps.services.result[0].hired && !nextProps.services.result[0].professional_rejected){
+    if(nextProps.services !== this.props.services && nextProps.services.success){
+        if(nextProps.services.params.contacted && !nextProps.services.params.hired && !nextProps.services.params.professional_rejected){
           this.setState({
             pending_services:nextProps.services.result,
             pending_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.result[0].contacted && nextProps.services.result[0].hired && !nextProps.services.result[0].professional_rejected){
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && !nextProps.services.params.professional_rejected){
           this.setState({
             accepted_services:nextProps.services.result,
             accepted_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.result[0].contacted && !nextProps.services.result[0].hired && nextProps.services.result[0].professional_rejected){
+        if(nextProps.services.params.contacted && !nextProps.services.params.hired && nextProps.services.params.professional_rejected){
           this.setState({
             rejected_services:nextProps.services.result,
             rejected_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.result[0].contacted && nextProps.services.result[0].hired){
-          console.log(nextProps.services.result[0])
-          console.log(nextProps.services.result[0].review.length == 0)
+        if(nextProps.services.params.contacted && nextProps.services.params.hired){
           if(nextProps.services.result[0].review.length == 0){
-            console.log(nextProps.services.result[0].review)
             this.setState({
               hired_pending_services:nextProps.services.result,
               hired_pending_pagination:nextProps.services.pagination
             })
           }
           if(nextProps.services.result[0].review.length > 0){
-            console.log(nextProps.services.result[0].review)
             this.setState({
               hired_reviewed_services:nextProps.services.result,
               hired_reviewed_pagination:nextProps.services.pagination
             })
           }
         }
-      }
     }
   }
 
