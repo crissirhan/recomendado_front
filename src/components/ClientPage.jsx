@@ -85,12 +85,6 @@ class ClientPage extends Component {
             accepted_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.result[0].contacted && !nextProps.services.result[0].hired && !nextProps.services.result[0].professional_rejected){
-          this.setState({
-            pending_services:nextProps.services.result,
-            pending_pagination:nextProps.services.pagination
-          })
-        }
         if(nextProps.services.result[0].contacted && !nextProps.services.result[0].hired && nextProps.services.result[0].professional_rejected){
           this.setState({
             rejected_services:nextProps.services.result,
@@ -258,7 +252,7 @@ class ClientPage extends Component {
           <p></p>
         </Container>
         <Container>
-          <p className="h4"><b>Servicios contactados</b></p>
+          <p className="h4"><b>Servicios Contactados</b></p>
 
             <Nav tabs>
               <NavItem>
@@ -266,7 +260,7 @@ class ClientPage extends Component {
                   className={classnames({ active: this.state.activeTab === 'pending' })}
                   onClick={() => { this.toggleTab('pending'); }}
                 >
-                  Servicios contactados por responder
+                  Pendientes
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -274,7 +268,7 @@ class ClientPage extends Component {
                   className={classnames({ active: this.state.activeTab === 'accepted' })}
                   onClick={() => { this.toggleTab('accepted'); }}
                 >
-                  Servicios aceptados
+                  Aceptados
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -282,7 +276,7 @@ class ClientPage extends Component {
                   className={classnames({ active: this.state.activeTab === 'rejected' })}
                   onClick={() => { this.toggleTab('rejected'); }}
                 >
-                  Servicios rechazados
+                  Rechazados
                 </NavLink>
               </NavItem>
             </Nav>
@@ -346,16 +340,7 @@ class ClientPage extends Component {
             </ListGroup>
           </Jumbotron>
         </Container>
-        <Container>
-          <p className="h4"><b>Reviews</b></p>
-          <Jumbotron>
-            <ReviewCardGroup
-            reviews={this.props.reviews.result}
-            pagination={this.props.reviews.pagination}
-            handlePageChange={this.handleReviewPageChange.bind(this)}
-            />
-          </Jumbotron>
-      </Container>
+
     </Container>
     );
   }

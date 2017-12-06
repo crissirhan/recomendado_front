@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroupItem, CardTitle, Col, Button, Row } from 'reactstrap';
+import { ListGroupItem, CardTitle, Col, Button, Row, Collapse } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
 import './css/images.css';
 import './css/box.css';
@@ -9,6 +9,8 @@ import {bindActionCreators} from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import updateService from '../actions/update_service'
+import putService from '../actions/put_service'
+import cookie from 'react-cookies';
 
 class ServiceListElement extends Component {
 
@@ -16,8 +18,10 @@ class ServiceListElement extends Component {
     super(props);
     this.state = {
       accepted:null,
-      answered:false
+      answered:false,
+      contacted:false
     };
+    this.handleCreateService = this.handleCreateService.bind(this)
   }
 
 
@@ -30,6 +34,43 @@ class ServiceListElement extends Component {
   handleNo(){
     this.setState({accepted:false,answered:true})
     this.props.updateService(this.props.service.id, { professional_rejected:true})
+  }
+
+  handleDelete(){
+    this.props.updateService(this.props.service.id, {deleted:true})
+  }
+
+  createService(){
+    if(cookie.load('user').user && cookie.load('isClient') === "true"){
+      let creation_date = new Date();
+      let data = {
+        client_id:cookie.load('user').id,
+        announcement_id:this.props.service.announcement.id,
+        cost: this.props.service.announcement.price,
+        creation_date: creation_date.toJSON(),
+        contacted:true,
+        contacted_date: creation_date.toJSON(),
+      }
+      this.props.putService(data);
+    }else{
+      alert('Debes logearte como cliente para realizar esta acción')
+    }
+  }
+
+  handleCreateService(){
+    if(!this.state.contacted){
+      this.createService()
+    }
+    this.setState({
+      contacted:true
+    })
+  }
+  handleContactAgain(){
+    if(cookie.load('isClient') === "true"){
+      this.handleCreateService()
+    } else {
+      this.props.history.push('/login?from=' + this.props.history.location.pathname)
+    }
   }
 
   render() {
@@ -82,7 +123,10 @@ class ServiceListElement extends Component {
                     </div>
                   </Col>
                   <Col sm="4" style={{width:500}}>
-                    <div>
+                    <Button type="button" class="close" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right"}}>
+                      <span aria-hidden="true">&times;</span>
+                    </Button>
+                    {this.props.pending ? <div style={{marginTop:30}}><div>
                       <b>Teléfono: {announcement.professional.phone_number}</b>
                     </div>
                     <div>
@@ -93,9 +137,18 @@ class ServiceListElement extends Component {
                     </div>
                     <div>
                       Contactado: {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                    </div>
-                    { !this.props.pending ? null :
-                      <div>
+                    </div></div> : null}
+                    { !this.props.pending ? <div style={{marginTop:30}}>
+                        <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
+                        <Collapse isOpen={this.state.contacted}>
+                          <div>
+                            <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
+                            <div>Número de teléfono: {announcement.professional.phone_number}</div>
+                            <div>Correo electrónico: {announcement.professional.user.email}</div>
+                          </div>
+                        </Collapse>
+                        </div> :
+                      <div style={{marginTop:30}}>
                       <div>
                         ¿Aceptó tu propuesta de trabajo?
                       </div>
@@ -109,6 +162,9 @@ class ServiceListElement extends Component {
                         </Row>
                       </div>}
                   </Col>
+                  <Col>
+
+                  </Col>
                 </Row>
               </ListGroupItem>
     );
@@ -117,13 +173,15 @@ class ServiceListElement extends Component {
 
 function mapStateToProps(state){
   return {
-    update_service:state.update_service
+    update_service:state.update_service,
+    put_service:state.put_service
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateService:updateService
+    updateService:updateService,
+    putService: putService,
   }, dispatch);
 }
 
