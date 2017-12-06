@@ -39,7 +39,12 @@ class ClientPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.update_service != this.props.update_service){
-      if(nextProps.update_service.loading !== this.props.update_service.loading && nextProps.update_service.loading === false){
+      if(!nextProps.update_service.loading){
+        this.updateServices()
+      }
+    }
+    if(nextProps.put_service != this.props.put_service){
+      if(!nextProps.put_service.loading){
         this.updateServices()
       }
     }
@@ -147,6 +152,7 @@ class ClientPage extends Component {
      this.handleInputChange = this.handleInputChange.bind(this);
      this.toggle = this.toggle.bind(this);
      this.updateServices = this.updateServices.bind(this)
+     this.toggleTab = this.toggleTab.bind(this)
   }
 
   updateServices(){
@@ -315,6 +321,7 @@ class ClientPage extends Component {
                       handlePageChange={this.handlePendingServicePageChange.bind(this)}
                       pending={true}
                       rejected={false}
+                      toggleTab={this.toggleTab}
                       />
                     : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
                   </ListGroup>
@@ -329,6 +336,7 @@ class ClientPage extends Component {
                       handlePageChange={this.handleAcceptedServicePageChange.bind(this)}
                       pending={false}
                       rejected={false}
+                      toggleTab={this.toggleTab}
                       />
                     : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
                   </ListGroup>
@@ -343,6 +351,7 @@ class ClientPage extends Component {
                       handlePageChange={this.handleRejectedServicePageChange.bind(this)}
                       pending={false}
                       rejected={true}
+                      toggleTab={this.toggleTab.bind(this)}
                       />
                     : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
                   </ListGroup>
@@ -353,7 +362,7 @@ class ClientPage extends Component {
 
         </Container>
         <Container>
-          <p className="h4"><b>Servicios contratados</b></p>
+          <p className="h4"><b>Servicios Contratados</b></p>
           <Nav tabs>
             <NavItem>
               <NavLink
@@ -411,7 +420,8 @@ function mapStateToProps(state){
     update_client: state.update_client,
     reviews:state.reviews,
     services:state.services,
-    update_service:state.update_service
+    update_service:state.update_service,
+    put_service:state.put_service
   }
 }
 

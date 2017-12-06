@@ -12,13 +12,14 @@ import './css/box.css';
 class ProfessionalThumbs extends Component {
 
   componentDidMount() {
-    this.props.getReviews({});
+    this.props.getReviews({ordering:'-date', min_rating:4, page_size:3});
   }
 
   componentWillReceiveProps(nextProps) {
 
     if(this.props != nextProps && nextProps.reviews.result){
       console.log(nextProps.reviews.result)
+      /*
       let random_professional_ids_with_reviews = [...new Set(nextProps.reviews.result.map(review => review.service.announcement.professional.id))].sort(() => .5 - Math.random()).slice(0,3);
 
       let random_reviews = nextProps.reviews.result.filter(function( review ) {
@@ -28,8 +29,9 @@ class ProfessionalThumbs extends Component {
         }
         return index !== -1;
       }).sort(() => .5 - Math.random()).slice(0,3);
+      */
       this.setState({
-        random_reviews:random_reviews
+        random_reviews:nextProps.reviews.result
       });
     }
   }

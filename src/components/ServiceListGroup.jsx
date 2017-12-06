@@ -21,7 +21,7 @@ class ServiceListGroup extends Component {
       <div>
         <ListGroup>
           {this.props.services.map(service =>
-            <ServiceListElement service={service} pending={this.props.pending} rejected={this.props.rejected} />)}
+            <ServiceListElement service={service} pending={this.props.pending} rejected={this.props.rejected} toggleTab={this.props.toggleTab}/>)}
         </ListGroup>
         <Pagination
           activePage={this.props.pagination.current}

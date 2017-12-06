@@ -68,6 +68,7 @@ class ServiceListElement extends Component {
   handleContactAgain(){
     if(cookie.load('isClient') === "true"){
       this.handleCreateService()
+      this.props.toggleTab('pending')
     } else {
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
     }
@@ -140,7 +141,7 @@ class ServiceListElement extends Component {
                     </div></div> : null}
                     { !this.props.pending ? <div style={{marginTop:30}}>
                         <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
-                        <Collapse isOpen={this.state.contacted}>
+                        <Collapse isOpen={false}>
                           <div>
                             <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
                             <div>Número de teléfono: {announcement.professional.phone_number}</div>
