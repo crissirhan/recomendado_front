@@ -25,7 +25,7 @@ class AnnouncementPage extends Component {
   componentDidMount(){
     //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
     this.props.getAnnouncements({'id':this.props.announcement_id});
-    this.props.getReviews({announcement_id:this.props.announcement_id,page_size:3})
+    this.props.getReviews({announcement_id:this.props.announcement_id,page_size:3, ordering:'-date'})
   }
 
   componentWillReceiveProps(nextProps){
