@@ -105,7 +105,7 @@ class AnnouncementPage extends Component {
       let data = {
         client_id:cookie.load('user').id,
         announcement_id:this.state.announcement.id,
-        cost: this.state.announcement.price,
+        cost: this.state.announcement.price ? this.state.announcement.price : 0,
         creation_date: creation_date.toJSON(),
         contacted:true,
         contacted_date: creation_date.toJSON(),
