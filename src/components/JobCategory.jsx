@@ -22,8 +22,8 @@ class JobCategory extends Component {
       <Col sm="4">
         <Link to={url}>
           <Card className="no-border space-between">
-            <CardBlock>
-              <CardTitle className="text-center" style={{marginBottom:10, fontSize: 32.0}}>{this.props.category}</CardTitle>
+            <CardBlock style={{minHeight:80}}>
+              <CardTitle className="text-center" style={{position:"absolute", width:"100%",bottom:0, marginBottom:10, fontSize: 32.0}}>{this.props.category}</CardTitle>
             </CardBlock>
 
           </Card>
