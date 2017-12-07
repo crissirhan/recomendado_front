@@ -50,7 +50,8 @@ class ProfessionalEdit extends Component {
       }
       if(this.props.update_professional.error !== nextProps.update_professional.error){
         this.setState({
-          error:nextProps.update_professional.error
+          error:nextProps.update_professional.error,
+          error_types:nextProps.update_professional.error_types
         })
         if(nextProps.update_professional.error){
           this.handleError()
@@ -85,7 +86,8 @@ class ProfessionalEdit extends Component {
       error:false,
       loading:false,
       user_id: null,
-      professional_id:null
+      professional_id:null,
+      error_types:[]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -199,7 +201,7 @@ class ProfessionalEdit extends Component {
             <AvInput  name="phone_number" id="phone_number" placeholder="Número de teléfono"
             value={this.state.phone_number} onChange={this.handleInputChange} />
           </AvGroup>
-          {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
+          {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
           <FormGroup>
             <Button>Guardar</Button>
           </FormGroup>

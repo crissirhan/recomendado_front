@@ -8,7 +8,10 @@ export default function login(username,password){
       axios.post(ENDPOINT_URI+'/rest-auth/login/', {
       username: username,
       password: password
-    })
+    },{
+      headers:{
+        'Accept-Language':'es'
+    }})
     .then(function (response) {
       dispatch(loginSuccessAsync(response,username));
     })

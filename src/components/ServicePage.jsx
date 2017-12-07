@@ -27,7 +27,8 @@ class ServicePage extends Component {
       if(nextProps.put_service !== this.props.put_service){
         this.setState({
           success:nextProps.put_service.success,
-          error: nextProps.put_service.error
+          error: nextProps.put_service.error,
+          error_types:nextProps.put_service.error_types
         })
       }
     }
@@ -39,7 +40,8 @@ class ServicePage extends Component {
       announcement:null,
       success: false,
       error: false,
-      loading_service: false
+      loading_service: false,
+      error_types:[]
     };
     this.handleCreateService = this.handleCreateService.bind(this);
   }
@@ -82,7 +84,7 @@ class ServicePage extends Component {
             <p>Lugar: {this.state.announcement.location}</p>
             <p>Movilidad: {this.state.announcement.movility}</p>
             <p>Días de atención: {this.state.announcement.availability_display}</p>
-            {this.props.put_service.error ? <div className="message--error">¡Error! {this.props.put_service.error_type}</div> : null}
+            {this.props.put_service.error ? <div className="message--error">¡Error! {this.props.put_service.error_types.join(' ')}</div> : null}
             <Button onClick={this.handleCreateService} disabled={this.props.put_service.loading}>Contratar</Button>
           </div>
       </Container>

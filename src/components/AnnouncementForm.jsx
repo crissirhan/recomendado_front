@@ -39,7 +39,8 @@ class AnnouncementForm extends Component{
         if(this.props.post_announcement.error !== nextProps.post_announcement.error){
           this.setState({
             error: nextProps.post_announcement.error,
-            error_type: nextProps.post_announcement.error_type
+            error_type: nextProps.post_announcement.error_type,
+            error_types:nextProps.post_announcement.error_types
           })
         }
         if(this.props.post_announcement.loading !== nextProps.post_announcement.loading){
@@ -204,7 +205,8 @@ class AnnouncementForm extends Component{
       price:this.state.price,
       announcement_images:[],
       job_tags:[],
-      visible: this.state.visible
+      visible: this.state.visible,
+      error_types:[]
     }
     if(this.state.thumbnail){
       data.announcement_thumbnail = this.state.thumbnail
@@ -396,7 +398,7 @@ class AnnouncementForm extends Component{
                 </AvGroup>))}
               <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
             </div>
-            {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
+            {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
             <Button disabled={this.state.loading} >Crear anuncio</Button>
           </AvForm>
         </div>

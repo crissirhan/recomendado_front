@@ -34,7 +34,8 @@ class ListAnnouncements extends Component {
         }
         if(this.props.announcements.error !== nextProps.announcements.error){
           this.setState({
-            error:nextProps.announcements.error
+            error:nextProps.announcements.error,
+            error_types:nextProps.announcements.error_types
           })
         }
         if(this.props.announcements.loading !== nextProps.announcements.loading){
@@ -65,7 +66,8 @@ class ListAnnouncements extends Component {
       loading: true,
       error: false,
       success: false,
-      collapse: false
+      collapse: false,
+      error_types:[]
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -85,7 +87,7 @@ class ListAnnouncements extends Component {
       return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
     }
     if(this.props.announcements.error ){
-      return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_type}</div><SearchAnnouncements/></div></Container>;
+      return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
     }
     if(this.props.announcements.result.length === 0 && this.props.announcements.success){
       return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>

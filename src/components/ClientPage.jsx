@@ -96,17 +96,19 @@ class ClientPage extends Component {
           })
         }
         if(nextProps.services.params.contacted && nextProps.services.params.hired){
-          if(nextProps.services.result[0].review.length == 0){
-            this.setState({
-              hired_pending_services:nextProps.services.result,
-              hired_pending_pagination:nextProps.services.pagination
-            })
-          }
-          if(nextProps.services.result[0].review.length > 0){
-            this.setState({
-              hired_reviewed_services:nextProps.services.result,
-              hired_reviewed_pagination:nextProps.services.pagination
-            })
+          if(nextProps.services.result[0]){
+            if(nextProps.services.result[0].review.length == 0){
+              this.setState({
+                hired_pending_services:nextProps.services.result,
+                hired_pending_pagination:nextProps.services.pagination
+              })
+            }
+            if(nextProps.services.result[0].review.length > 0){
+              this.setState({
+                hired_reviewed_services:nextProps.services.result,
+                hired_reviewed_pagination:nextProps.services.pagination
+              })
+            }
           }
         }
     }

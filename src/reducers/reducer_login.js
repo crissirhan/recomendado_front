@@ -14,6 +14,7 @@ export default function(state=[], action) {
       loading = {'loading':false}
       loggedIn = {'loggedIn':false}
       data = {'error':true}
+      console.log(action.payload)
       return Object.assign({}, data, loggedIn, loading);
     case USER_LOGIN_LOADING:
       loading = {'loading':true}

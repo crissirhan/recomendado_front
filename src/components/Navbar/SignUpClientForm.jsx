@@ -23,7 +23,8 @@ class SignUpClientForm extends Component{
       }
       if(this.props.sign_up_client.error !== nextProps.sign_up_client.error){
         this.setState({
-          error:nextProps.sign_up_client.error
+          error:nextProps.sign_up_client.error,
+          error_types:[]
         })
       }
       if(this.props.sign_up_client.loading !== nextProps.sign_up_client.loading){
@@ -54,7 +55,8 @@ class SignUpClientForm extends Component{
       profile_picture:null,
       loading:false,
       error:false,
-      success:false
+      success:false,
+      error_types:[]
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -188,7 +190,7 @@ class SignUpClientForm extends Component{
             <AvInput  name="last_name" id="last_name" placeholder="Ingrese su apellido"
             value={this.state.last_name} onChange={this.handleInputChange} required />
           </AvGroup>
-          {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
+          {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
           <FormGroup>
             <Button disabled={this.state.loading}>Registrarse</Button>
           </FormGroup>

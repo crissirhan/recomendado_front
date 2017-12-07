@@ -6,7 +6,11 @@ var baseUri = 'http://api.recomendado-dev.samir.cl';
 export default function signUpProfessional(data) {
   return dispatch => {
     dispatch(signUpProfessionalLoadingAsync());
-    axios.post(ENDPOINT_URI+'/professionals/',data).then(response => {
+    axios.post(ENDPOINT_URI+'/professionals/',data,{
+      headers:{
+        'Accept-Language':'es-cl'
+      }
+    }).then(response => {
         dispatch(signUpProfessionalAsync(response));
       })
       .catch(function (error) {

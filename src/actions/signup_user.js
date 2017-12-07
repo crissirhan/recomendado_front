@@ -10,6 +10,10 @@ export default function signUp(username, password1, password2, email) {
       password1: password1,
       password2: password2,
       email: email
+    },{
+      headers:{
+        'Accept-Language':'es-cl'
+      }
     }).then(response => {
         dispatch(signUpAsync(response));
       });

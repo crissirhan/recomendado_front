@@ -39,7 +39,8 @@ class ClientEdit extends Component {
       }
       if(this.props.update_client.error !== nextProps.update_client.error){
         this.setState({
-          error:nextProps.update_client.error
+          error:nextProps.update_client.error,
+          error_types:nextProps.update_client.error_types
         })
       }
       if(this.props.update_client.loading !== nextProps.update_client.loading){
@@ -64,7 +65,8 @@ class ClientEdit extends Component {
       success:false,
       error:false,
       loading:false,
-      client_id:null
+      client_id:null,
+      error_types:[]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -118,7 +120,7 @@ class ClientEdit extends Component {
       return <Container><div className="message--info">Perfil editado con éxito!</div></Container>;
     }
     if(this.state.error){
-      return <Container><div className="message--error">¡Ocurrió un error!</div></Container>;
+      return <Container><div className="message--error">{this.state.error_types.join(' ')}</div></Container>;
     }
     return (
       <Container>
@@ -129,7 +131,7 @@ class ClientEdit extends Component {
             <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
              onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
-          {this.state.error ? <div className="message--error">¡Error! {this.state.error_type}</div> : null}
+          {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
           <FormGroup>
             <Button>Guardar</Button>
           </FormGroup>
