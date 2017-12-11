@@ -108,6 +108,7 @@ class AnnouncementForm extends Component{
     this.handleTagChange = this.handleTagChange.bind(this);
     this.handleError = this.handleError.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
+    this.validateTags = this.validateTags.bind(this)
   }
 
   handleAddImage(){
@@ -258,6 +259,14 @@ class AnnouncementForm extends Component{
     toast.error("Error al procesar la solicitud")
   }
 
+  validateTags(value, ctx, input, cb){
+    if(this.state.job_tags.length === 0){
+      cb(false)
+      return
+    }
+    return cb(true)
+  }
+
   render(){
     if(!this.state.job){
       return null;
@@ -268,7 +277,7 @@ class AnnouncementForm extends Component{
     if(this.state.success){
       this.handleSuccess()
     }
-    console.log(this.state)
+
     return (
       <Container>
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
@@ -326,7 +335,7 @@ class AnnouncementForm extends Component{
               {this.state.job_tags.map((tag, idx) => (
                 <AvGroup key={idx}>
                    <Label for={"job_tag_" + idx}>Tag de trabajo {idx + 1}</Label>
-                   <AvInput type="select" name={"job_tag_" + idx} id={"job_tag_" + idx} onChange={this.handleTagChange(idx)}>
+                   <AvInput type="select" name={"job_tag_" + idx} id={"job_tag_" + idx} onChange={this.handleTagChange(idx)} validate={{custom: this.validateTags}}>
                      {this.state.job_categories.map((category, index) => {
                        let options = this.state.job_sub_categories.filter(sub_job => sub_job.job_category.job_type === category.job_type).map((sub_job, sub_index) => {
                           return <option key={sub_job.id} value={sub_job.id}>{sub_job.job_sub_type}</option>
