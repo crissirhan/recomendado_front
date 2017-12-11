@@ -172,14 +172,14 @@ class AnnouncementPage extends Component {
             </div>
           </Col>
           <Col sm="2">
-            <Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
+            {cookie.load('isClient') == "true" ? <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
             <Collapse isOpen={this.state.contact_collapse}>
               <div>
                 <div>Nombre: {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                 <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
               </div>
-            </Collapse>
+            </Collapse> </div>: null}
             { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
           </Col>
         </Row>
