@@ -28,9 +28,6 @@ class AnnouncementsListElement extends Component {
           }
 
         }
-        if(nextProps.update_announcement.error){
-          toast.error('Ha ocurrido un error al editar el aviso')
-        }
       }
     }
   }

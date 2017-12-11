@@ -157,9 +157,6 @@ class signUpProfessionalForm extends Component{
     if(this.state.success){
       this.handleSuccess()
     }
-    if(this.state.error){
-      this.handleError()
-    }
     return (
       <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
         <AvForm onValidSubmit={this.handleSubmit} disabled={this.state.loading}>

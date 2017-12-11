@@ -34,9 +34,6 @@ class AnnouncementPage extends Component {
         if(nextProps.put_service.success){
           this.handleSuccessPutService()
         }
-        if(nextProps.put_service.error){
-          this.handleErrorPutService()
-        }
       }
       if(nextProps.announcements != this.props.announcements){
         if(this.props.announcements.success !== nextProps.announcements.success){

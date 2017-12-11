@@ -11,6 +11,7 @@ export default function putService(data) {
         console.log(res.data);
         dispatch(putServiceAsync(res.data));
       }).catch(function (error) {
+        console.log(error)
         dispatch(putServiceErrorAsync(error));
       });
   }
