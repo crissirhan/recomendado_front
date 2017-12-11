@@ -88,7 +88,7 @@ class AnnouncementForm extends Component{
       thumbnail:null,
       job_tags:[],
       images:[],
-      visible:false,
+      visible:true,
       job_sub_categories:[],
       loading:false,
       success:false,
