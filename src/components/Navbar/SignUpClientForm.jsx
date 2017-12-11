@@ -148,9 +148,6 @@ class SignUpClientForm extends Component{
   }
 
   render(){
-    if(this.state.error){
-      this.handleError()
-    }
     if(this.state.success){
       this.handleSuccess()
     }

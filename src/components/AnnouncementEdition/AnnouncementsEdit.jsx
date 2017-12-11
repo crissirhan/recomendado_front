@@ -56,9 +56,6 @@ class AnnouncementsEdit extends Component {
         this.setState({
           error:nextProps.update_announcement.error
         })
-        if(nextProps.update_announcement.error){
-          this.handleError()
-        }
       }
       if(nextProps.update_announcement.loading !== this.props.update_announcement.loading){
         this.setState({
@@ -109,8 +106,9 @@ class AnnouncementsEdit extends Component {
     this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
   }
 
-  handleError(){
-    toast.error("Error al procesar la solicitud")
+  handleError(errors){
+    errors.forEach(error => toast.error(error))
+    //toast.error("Error al procesar la solicitud")
   }
 
   toAnnouncements(){

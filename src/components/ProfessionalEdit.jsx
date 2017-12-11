@@ -53,9 +53,6 @@ class ProfessionalEdit extends Component {
           error:nextProps.update_professional.error,
           error_types:nextProps.update_professional.error_types
         })
-        if(nextProps.update_professional.error){
-          this.handleError()
-        }
       }
       if(this.props.update_professional.loading !== nextProps.update_professional.loading){
         this.setState({

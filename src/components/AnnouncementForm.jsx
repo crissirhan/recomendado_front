@@ -268,9 +268,6 @@ class AnnouncementForm extends Component{
     if(this.state.success){
       this.handleSuccess()
     }
-    if(this.state.error){
-      this.handleError()
-    }
     console.log(this.state)
     return (
       <Container>
