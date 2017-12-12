@@ -54,7 +54,6 @@ class ClientPage extends Component {
       this.props.getReviews({client_id:nextProps.client_id,page_size:3});
     }
     if(nextProps.client !== this.props.client) {
-      //this.syncPropToState(nextProps);
       if(cookie.load('user')){
         if(cookie.load('user').id === nextProps.client.id){
           this.setState({
@@ -95,22 +94,18 @@ class ClientPage extends Component {
             rejected_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed){
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed === true){
           this.setState({
             hired_reviewed_services:nextProps.services.result,
             hired_reviewed_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && !nextProps.services.params.reviewed){
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed === false){
+          console.log(nextProps.services)
           this.setState({
             hired_pending_services:nextProps.services.result,
-            hired_pending_pagination:nextProps.services.pagination
+            hired_pending_pagination:nextProps.services.pagination,
           })
-          if(nextProps.services.result.length == 0 ){
-            this.setState({
-              hiredActiveTab:'reviewed'
-            })
-          }
         }
     }
   }
