@@ -93,7 +93,7 @@ class ServiceListElement extends Component {
                   </Col>
                   <Col style={{marginTop:0}} sm="6">
                     <div>
-                      <Link to ={'/anuncios/' + announcement.id}>
+                      <Link to ={'/avisos/' + announcement.id}>
                         <CardTitle><b>{announcement.title}</b></CardTitle>
                       </Link>
                     </div>

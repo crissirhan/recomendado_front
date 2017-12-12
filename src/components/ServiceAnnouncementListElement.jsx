@@ -111,7 +111,7 @@ class AnnouncementsListElement extends Component {
                 </Col>
                 <Col style={{marginTop:-90}}>
                   <div>
-                    <Link to ={'/anuncios/' + announcement.id}>
+                    <Link to ={'/avisos/' + announcement.id}>
                       <CardTitle><b>{announcement.title}</b></CardTitle>
                     </Link>
                   </div>

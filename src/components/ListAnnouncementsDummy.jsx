@@ -23,7 +23,7 @@ class ListAnnouncements extends Component {
 
   render() {
     if(this.props.announcements_array.length === 0){
-      return <div>No existen anuncios</div>;
+      return <div>No existen avisos</div>;
     }
     console.log(this.props)
     return (
@@ -32,7 +32,7 @@ class ListAnnouncements extends Component {
           let image_url = announcement.announcement_thumbnail ? announcement.announcement_thumbnail : "https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180";
           return <Col  height="360px" sm="4" key={announcement.id}>
                   <Card className="shadow-box round-border" size="sm" >
-                    <Link to ={'/anuncios/' + announcement.id}>
+                    <Link to ={'/avisos/' + announcement.id}>
                       <img className={this.props.image_class} src={image_url}/>
                       <CardTitle>{announcement.title}</CardTitle>
                     </Link>

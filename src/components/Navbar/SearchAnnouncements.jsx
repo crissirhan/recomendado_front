@@ -87,8 +87,8 @@ class SearchAnnouncements extends Component {
 
   requestSearch(){
     console.log("Buscar: " + this.state.searchTerm)
-    this.props.history.push('/buscar/anuncios/'+this.state.searchTerm);
-    //return <Redirect push to={'/buscar/anuncios/'+this.state.searchTerm}/>
+    this.props.history.push('/buscar/avisos/'+this.state.searchTerm);
+    //return <Redirect push to={'/buscar/avisos/'+this.state.searchTerm}/>
   }
 
 }

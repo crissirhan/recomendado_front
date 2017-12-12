@@ -21,7 +21,7 @@ class AnnouncementCard extends Component {
     console.log(announcement)
     return (
               <Card className="shadow-box round-border" style={{marginBottom:20,minHeight:300,height:300,width:230, overflow:"hidden" }} size="sm" >
-                <Link to ={'/anuncios/' + announcement.id}>
+                <Link to ={'/avisos/' + announcement.id}>
                   <CardImg top style={{height:142,width:230}} src={announcement.announcement_thumbnail} />
                 </Link>
 
@@ -35,7 +35,7 @@ class AnnouncementCard extends Component {
                     </Link>
                   </Col>
                 </Row>
-                <Link to ={'/anuncios/' + announcement.id}>
+                <Link to ={'/avisos/' + announcement.id}>
                   <CardTitle>{announcement.title}</CardTitle>
                 </Link>
                 <Row style={{height:26, position:"absolute", bottom:10, fontSize:"10px"}}>

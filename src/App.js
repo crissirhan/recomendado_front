@@ -63,7 +63,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          
+
           <ProjectNavbar/>
           <ErrorBoundary>
             <Switch>
@@ -77,7 +77,7 @@ class App extends Component {
               <Route path="/profesionales/:id/" render={({ match }) => (
                 <ProfessionalPage professional_id={match.params.id}/>
               )} />
-              <Route path="/anuncios/:id/" render={({ match }) => (
+              <Route path="/avisos/:id/" render={({ match }) => (
                 <AnnouncementPage announcement_id={match.params.id}/>
               )} />
               <Route path="/contratar/aviso/:id/" render={({ match }) => (
@@ -93,10 +93,10 @@ class App extends Component {
               <Route path="/login/" render={({ match }) => (
                 <Container><LoginForm /></Container>
               )} />
-              <Route path="/buscar/anuncios/:query" render={({ match }) => (
+              <Route path="/buscar/avisos/:query" render={({ match }) => (
                 <ListAnnouncements search={match.params.query}/>
               )} />
-              <Route exact path="/buscar/anuncios/" render={({ match }) => (
+              <Route exact path="/buscar/avisos/" render={({ match }) => (
                 <ListAnnouncements search={''}/>
               )} />
               <Route path="/crear/anuncio/" render={({ match }) => (
