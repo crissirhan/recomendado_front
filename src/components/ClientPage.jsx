@@ -95,20 +95,21 @@ class ClientPage extends Component {
             rejected_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired){
-          if(nextProps.services.result[0]){
-            if(nextProps.services.result[0].review.length == 0){
-              this.setState({
-                hired_pending_services:nextProps.services.result,
-                hired_pending_pagination:nextProps.services.pagination
-              })
-            }
-            if(nextProps.services.result[0].review.length > 0){
-              this.setState({
-                hired_reviewed_services:nextProps.services.result,
-                hired_reviewed_pagination:nextProps.services.pagination
-              })
-            }
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed){
+          this.setState({
+            hired_reviewed_services:nextProps.services.result,
+            hired_reviewed_pagination:nextProps.services.pagination
+          })
+        }
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && !nextProps.services.params.reviewed){
+          this.setState({
+            hired_pending_services:nextProps.services.result,
+            hired_pending_pagination:nextProps.services.pagination
+          })
+          if(nextProps.services.result.length == 0 ){
+            this.setState({
+              hiredActiveTab:'reviewed'
+            })
           }
         }
     }
@@ -137,7 +138,7 @@ class ClientPage extends Component {
       hired_pending_services:[],
       hired_pending_pagination:{},
       activeTab: 'pending',
-      hiredActiveTab: 'pending',
+      hiredActiveTab: 'review_pending',
       pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false},
       acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false},
       rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true},
@@ -286,6 +287,7 @@ class ClientPage extends Component {
                 <NavLink
                   className={classnames({ active: this.state.activeTab === 'pending' })}
                   onClick={() => { this.toggleTab('pending'); }}
+                  style={{cursor:'pointer'}}
                 >
                   Pendientes
                 </NavLink>
@@ -294,6 +296,7 @@ class ClientPage extends Component {
                 <NavLink
                   className={classnames({ active: this.state.activeTab === 'accepted' })}
                   onClick={() => { this.toggleTab('accepted'); }}
+                  style={{cursor:'pointer'}}
                 >
                   Aceptados
                 </NavLink>
@@ -302,6 +305,7 @@ class ClientPage extends Component {
                 <NavLink
                   className={classnames({ active: this.state.activeTab === 'rejected' })}
                   onClick={() => { this.toggleTab('rejected'); }}
+                  style={{cursor:'pointer'}}
                 >
                   Rechazados
                 </NavLink>
@@ -364,6 +368,7 @@ class ClientPage extends Component {
               <NavLink
                 className={classnames({ active: this.state.hiredActiveTab === 'review_pending' })}
                 onClick={() => { this.toggleHiredTab('review_pending'); }}
+                style={{cursor:'pointer'}}
               >
                 Evaluación pendiente
               </NavLink>
@@ -372,12 +377,13 @@ class ClientPage extends Component {
               <NavLink
                 className={classnames({ active: this.state.hiredActiveTab === 'reviewed' })}
                 onClick={() => { this.toggleHiredTab('reviewed'); }}
+                style={{cursor:'pointer'}}
               >
                 Evaluados
               </NavLink>
             </NavItem>
           </Nav>
-          <TabContent activeTab={this.state.hired_pending_services.length > 0 ? "review_pending" : 'reviewed'}>
+          <TabContent activeTab={this.state.hiredActiveTab} >
             <TabPane tabId="review_pending">
               <Jumbotron>
                 <ListGroup>
