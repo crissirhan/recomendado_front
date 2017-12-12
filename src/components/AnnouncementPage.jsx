@@ -158,7 +158,7 @@ class AnnouncementPage extends Component {
         <Row style={{marginBottom:25}}>
           <Col >
             <h1 className="display-3">{this.state.announcement.title}</h1>
-            <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen anuncio" />
+            <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen Aviso" />
             <div>
               <Rating
                 empty="fa fa-star-o fa-2x orange-star"
@@ -180,7 +180,7 @@ class AnnouncementPage extends Component {
                 <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
               </div>
             </Collapse> </div>: null}
-            { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Anuncio</Button></Link> : null}
+            { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Aviso</Button></Link> : null}
           </Col>
         </Row>
         <div style={{marginBottom:25}}>

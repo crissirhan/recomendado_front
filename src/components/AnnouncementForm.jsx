@@ -292,13 +292,13 @@ class AnnouncementForm extends Component{
               <Label for="title">Título</Label>
               <AvInput  name="title" id="title"
               value={this.state.title} onChange={this.handleInputChange} required/>
-              <AvFeedback>Debe ingresar un título para el anuncio</AvFeedback>
+              <AvFeedback>Debe ingresar un título para el aviso</AvFeedback>
             </AvGroup>
             <AvGroup>
               <Label for="description">Descripción</Label>
               <AvInput  name="description" id="description"
               value={this.state.description} onChange={this.handleInputChange} required/>
-              <AvFeedback>Debe ingresar una descripción del anuncio</AvFeedback>
+              <AvFeedback>Debe ingresar una descripción del aviso</AvFeedback>
             </AvGroup>
             <AvGroup>
               <Label for="price">Precio</Label>
@@ -405,7 +405,7 @@ class AnnouncementForm extends Component{
               <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
             </div>
             {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
-            <Button disabled={this.state.loading} >Crear anuncio</Button>
+            <Button disabled={this.state.loading} >Crear Aviso</Button>
           </AvForm>
         </div>
       </Container>
