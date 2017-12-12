@@ -38,6 +38,11 @@ class ClientPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.post_review !== this.props.post_review){
+      if(nextProps.post_review.success){
+        this.updateServices()
+      }
+    }
     if(nextProps.update_service != this.props.update_service){
       if(nextProps.update_service.success){
         this.updateServices()
@@ -76,19 +81,20 @@ class ClientPage extends Component {
       })
     }
     if(nextProps.services !== this.props.services && nextProps.services.success){
-        if(nextProps.services.params.contacted && !nextProps.services.params.hired && !nextProps.services.params.professional_rejected){
+        if(nextProps.services.params.contacted && !nextProps.services.params.hired && nextProps.services.params.professional_rejected === false){
           this.setState({
             pending_services:nextProps.services.result,
             pending_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && !nextProps.services.params.professional_rejected){
+        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.professional_rejected === false){
+          console.log(nextProps.services)
           this.setState({
             accepted_services:nextProps.services.result,
             accepted_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && !nextProps.services.params.hired && nextProps.services.params.professional_rejected){
+        if(nextProps.services.params.contacted && nextProps.services.params.hired === false && nextProps.services.params.professional_rejected){
           this.setState({
             rejected_services:nextProps.services.result,
             rejected_pagination:nextProps.services.pagination
@@ -105,6 +111,7 @@ class ClientPage extends Component {
           this.setState({
             hired_pending_services:nextProps.services.result,
             hired_pending_pagination:nextProps.services.pagination,
+            hiredActiveTab: nextProps.services.result.length === 0 ? 'reviewed' : this.state.hiredActiveTab
           })
         }
     }
@@ -418,7 +425,8 @@ function mapStateToProps(state){
     reviews:state.reviews,
     services:state.services,
     update_service:state.update_service,
-    put_service:state.put_service
+    put_service:state.put_service,
+    post_review:state.post_review
   }
 }
 
