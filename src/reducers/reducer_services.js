@@ -16,6 +16,7 @@ export default function(state={
       loading = {loading:false}
       error = {error: false}
       let success = {success:true}
+      state.params = action.params
       let result = {'result':action.payload.results }
       let lastPage = action.payload.next ? action.payload.lastPage : 1
       console.log(action.payload)
