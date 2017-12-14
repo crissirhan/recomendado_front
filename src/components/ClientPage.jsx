@@ -333,7 +333,7 @@ class ClientPage extends Component {
             <Select
                name="hired-order-by"
                multi={true}
-               options={[{ value: 'creation_date', label: 'Fecha contrado ascendiente' },{ value: '-creation_date', label: 'Fecha contrado descendiente' }]}
+               options={[{ value: 'creation_date', label: 'Fecha contrato ascendiente' },{ value: '-creation_date', label: 'Fecha contrato descendiente' }]}
                onChange={this.handleChangeHiredOrder.bind(this)}
                searchable={false}
                autosize={true}
