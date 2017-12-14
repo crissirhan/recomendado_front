@@ -31,6 +31,7 @@ class AnnouncementsListElement extends Component {
         }
       }
     }
+    this.setState(this.state)
   }
 
   constructor(props) {

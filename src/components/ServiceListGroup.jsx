@@ -5,8 +5,13 @@ import Pagination from "react-js-pagination";
 import './css/images.css';
 import './css/box.css';
 import './css/pagination.css';
+import shortid from 'shortid'
 
 class ServiceListGroup extends Component {
+
+  componentWillReceiveProps(){
+    this.setState(this.state)
+  }
 
   constructor(props) {
     super(props);
@@ -16,12 +21,11 @@ class ServiceListGroup extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <ListGroup>
           {this.props.services.map(service =>
-            <ServiceListElement service={service} pending={this.props.pending} rejected={this.props.rejected} toggleTab={this.props.toggleTab}/>)}
+            <ServiceListElement key={shortid.generate()} service={service} />)}
         </ListGroup>
         <Pagination
           activePage={this.props.pagination.current}
