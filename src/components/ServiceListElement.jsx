@@ -98,7 +98,15 @@ class ServiceListElement extends Component {
     if(!image_url){
       image_url = announcement.professional.profile_picture
     }
-    return (  <ListGroupItem style={{marginBottom:20, minHeight:200}} className="shadow-box round-border" key={announcement.id}>
+    let border_color = ''
+    if(this.state.pending){
+      border_color = 'yellow'
+    } else if (service.professional_rejected) {
+      border_color = 'red'
+    } else if (service.hired) {
+      border_color = 'GreenYellow'
+    }
+    return (  <ListGroupItem style={{marginBottom:20, minHeight:200, borderColor:border_color}} className="shadow-box round-border" key={announcement.id}>
                 <Row>
                   <Col sm="2">
                     <Link to={'/profesionales/' + announcement.professional.id}>

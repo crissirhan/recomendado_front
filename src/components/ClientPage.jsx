@@ -22,6 +22,7 @@ import ServiceList from './ServiceList';
 import './css/images.css';
 import './css/col.css';
 import './css/box.css';
+import './css/select.css';
 import cookie from 'react-cookies';
 import Rating from 'react-rating';
 import ListGroupService from './ListGroupService';
@@ -123,8 +124,9 @@ class ClientPage extends Component {
       hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true},
       hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false},
       contactedQuery: {client_id:this.props.client_id, contacted:true},
-      hiredQuery:{client_id:this.props.client_id, hired:true}
-
+      hiredQuery:{client_id:this.props.client_id, hired:true},
+      contactedSelectValue:null,
+      hiredSelectValue:null
     };
    this.handleInputChange = this.handleInputChange.bind(this);
    this.toggle = this.toggle.bind(this);
@@ -137,7 +139,6 @@ class ClientPage extends Component {
     this.props.getServices(this.state.hiredQuery);
   }
   handleSwitchQuery(new_query){
-    console.log("asd")
     this.setState(new_query,() => this.updateServices())
   }
   handleInputChange(event) {
@@ -204,7 +205,6 @@ class ClientPage extends Component {
   }
 
   handleContactedServicePageChange(pageNumber){
-    console.log("ASD")
     let new_query = Object.assign({}, this.state.contactedQuery, {page:pageNumber})
     this.props.getReviews(new_query)
   }
@@ -231,16 +231,17 @@ class ClientPage extends Component {
   }
 
   handleChangeContactedOrder(new_order){
-    console.log(new_order.value)
+    console.log(Object.assign({}, this.state.contactedQuery, {ordering:new_order.value}))
     this.setState({
-      contactedQuery: Object.assign({}, this.setState.contactedQuery, {ordering:new_order.value})
+      contactedQuery: Object.assign({}, this.state.contactedQuery, {ordering:new_order.value}),
+      contactedSelectValue:new_order
     },() => this.updateServices())
   }
 
   handleChangeHiredOrder(new_order){
-    console.log(new_order.value)
     this.setState({
-      hiredQuery: Object.assign({}, this.setState.hiredQuery, {ordering:new_order.value})
+      hiredQuery: Object.assign({}, this.state.hiredQuery, {ordering:new_order.value}),
+      hiredSelectValue:new_order
     },() => this.updateServices())
   }
 
@@ -300,11 +301,18 @@ class ClientPage extends Component {
                multi={false}
                options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
                onChange={this.handleChangeContactedOrder.bind(this)}
+               searchable={false}
+               autosize={true}
+               clearable={false}
+               closeOnSelect={true}
+               placeholder={'Ordenar por...'}
+
              />
             <ListGroup>
               {this.state.owner ? <ServiceListGroup
                 services={this.state.contacted_services}
                 pagination={this.state.contacted_pagination}
+                value={this.state.contactedSelectValue}
                 handlePageChange={this.handleContactedServicePageChange.bind(this)}
                 />
               : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
@@ -327,6 +335,12 @@ class ClientPage extends Component {
                multi={true}
                options={[{ value: 'creation_date', label: 'Fecha contrado ascendiente' },{ value: '-creation_date', label: 'Fecha contrado descendiente' }]}
                onChange={this.handleChangeHiredOrder.bind(this)}
+               searchable={false}
+               autosize={true}
+               clearable={false}
+               closeOnSelect={true}
+               placeholder={'Ordenar por...'}
+
              />
             <ListGroup>
               {this.state.owner ? <ServiceAnnouncementListGroup
