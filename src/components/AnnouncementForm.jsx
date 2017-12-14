@@ -4,8 +4,6 @@ import { Input, Form, FormGroup, Label,Button } from 'reactstrap';
 import postAnnouncement from '../actions/post_announcement';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import SwitchButton from 'react-switch-button';
-import 'react-switch-button/dist/react-switch-button.css';
 import { withRouter } from 'react-router';
 import Rating from 'react-rating';
 import './css/font-awesome/css/font-awesome.min.css';
@@ -17,7 +15,7 @@ import { Container } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import { ToastContainer, toast } from 'react-toastify';
 import { RegionesYcomunas } from '../Globals'
-
+import shortid from 'shortid'
 
 class AnnouncementForm extends Component{
 
@@ -343,7 +341,7 @@ class AnnouncementForm extends Component{
                        return <optgroup label={category.job_type} key={index}>{options}</optgroup>
                      })}
                    </AvInput>
-                   <Button type="button" onClick={this.handleRemoveTag(idx)} className="small">Remover</Button>
+                   {idx + 1 === this.state.job_tags.length? <Button type="button" onClick={this.handleRemoveTag(idx)} className="small">Remover</Button> : null}
                 </AvGroup>
               ))}
               <Button type="button" hidden={this.state.job_tags.length >=3 ? true : false } disabled={this.state.job_tags.length >=3 ? true : false } onClick={this.handleAddTag} className="small">Añadir tag de trabajo</Button>
@@ -393,7 +391,7 @@ class AnnouncementForm extends Component{
             </AvGroup>
             <div>
               {this.state.images.map((image, idx) => (
-                <AvGroup key={idx}>
+                <AvGroup key={shortid.generate()}>
                   <Label for={"imagenes-" + idx }>Imagén {idx+1}</Label>
                   <AvInput name={"imagenes-" + idx}
                     type="file" accept="image/*"

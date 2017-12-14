@@ -20,7 +20,7 @@ class ProfessionalThumb extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props != nextProps){
-      if(nextProps.user_reviews.reviews[0].service.announcement.professional.id === this.props.professional.id){
+      if(nextProps.user_reviews.reviews[0] && nextProps.user_reviews.reviews[0].service.announcement.professional.id === this.props.professional.id){
         this.setState({
           average:nextProps.user_reviews.average,
           count:nextProps.user_reviews.count

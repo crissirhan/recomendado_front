@@ -8,6 +8,10 @@ import './css/pagination.css';
 
 class AnnouncementCardGroup extends Component {
 
+  componentWillReceiveProps(){
+    this.setState(this.state)
+  }
+
   constructor(props) {
     super(props);
 

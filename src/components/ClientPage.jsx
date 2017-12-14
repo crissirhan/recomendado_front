@@ -28,6 +28,8 @@ import ListGroupService from './ListGroupService';
 import ReviewCardGroup from './ReviewCardGroup'
 import ServiceListGroup from './ServiceListGroup'
 import ServiceAnnouncementListGroup from './ServiceAnnouncementListGroup'
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class ClientPage extends Component {
 
@@ -81,37 +83,18 @@ class ClientPage extends Component {
       })
     }
     if(nextProps.services !== this.props.services && nextProps.services.success){
-        if(nextProps.services.params.contacted && !nextProps.services.params.hired && nextProps.services.params.professional_rejected === false){
+      console.log(nextProps.services)
+        if(nextProps.services.params.contacted){
+
           this.setState({
-            pending_services:nextProps.services.result,
-            pending_pagination:nextProps.services.pagination
+            contacted_services:nextProps.services.result,
+            contacted_pagination:nextProps.services.pagination
           })
         }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.professional_rejected === false){
-          console.log(nextProps.services)
+        if(nextProps.services.params.hired === true){
           this.setState({
-            accepted_services:nextProps.services.result,
-            accepted_pagination:nextProps.services.pagination
-          })
-        }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired === false && nextProps.services.params.professional_rejected){
-          this.setState({
-            rejected_services:nextProps.services.result,
-            rejected_pagination:nextProps.services.pagination
-          })
-        }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed === true){
-          this.setState({
-            hired_reviewed_services:nextProps.services.result,
-            hired_reviewed_pagination:nextProps.services.pagination
-          })
-        }
-        if(nextProps.services.params.contacted && nextProps.services.params.hired && nextProps.services.params.reviewed === false){
-          console.log(nextProps.services)
-          this.setState({
-            hired_pending_services:nextProps.services.result,
-            hired_pending_pagination:nextProps.services.pagination,
-            hiredActiveTab: nextProps.services.result.length === 0 ? 'reviewed' : this.state.hiredActiveTab
+            hired_services:nextProps.services.result,
+            hired_pagination:nextProps.services.pagination
           })
         }
     }
@@ -123,45 +106,40 @@ class ClientPage extends Component {
     this.state = {
       client:null,
       user:{},
-      activeTab: '1',
       client_services:null,
       client_reviews:null,
       owner:false,
       showReviewModal: false,
       fakeUpdate:false,
-      pending_services:[],
-      pending_pagination:{},
-      accepted_services:[],
-      accepted_pagination:{},
-      rejected_services:[],
-      rejected_pagination:{},
-      hired_reviewed_services:[],
-      hired_reviewed_pagination:{},
-      hired_pending_services:[],
-      hired_pending_pagination:{},
-      activeTab: 'pending',
-      hiredActiveTab: 'review_pending',
+      contacted_services:[],
+      contacted_pagination:{},
+      hired_services:[],
+      hired_pagination:{},
+      contactedAllParams : {client_id:this.props.client_id, contacted:true},
       pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false},
       acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false},
       rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true},
-      hiredParamsReviewed : {client_id:this.props.client_id, contacted:true,hired:true, reviewed:true},
-      hiredParamsPendingReview : {client_id:this.props.client_id, contacted:true,hired:true, reviewed:false}
+      hiredAllParams: {client_id:this.props.client_id, hired:true},
+      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true},
+      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false},
+      contactedQuery: {client_id:this.props.client_id, contacted:true},
+      hiredQuery:{client_id:this.props.client_id, hired:true}
 
     };
-     this.handleInputChange = this.handleInputChange.bind(this);
-     this.toggle = this.toggle.bind(this);
-     this.updateServices = this.updateServices.bind(this)
-     this.toggleTab = this.toggleTab.bind(this)
+   this.handleInputChange = this.handleInputChange.bind(this);
+   this.toggle = this.toggle.bind(this);
+   this.updateServices = this.updateServices.bind(this)
+   this.toggleTab = this.toggleTab.bind(this)
   }
 
   updateServices(){
-    this.props.getServices(this.state.pendingParams);
-    this.props.getServices(this.state.acceptedParams);
-    this.props.getServices(this.state.rejectedParams);
-    this.props.getServices(this.state.hiredParamsReviewed);
-    this.props.getServices(this.state.hiredParamsPendingReview);
+    this.props.getServices(this.state.contactedQuery);
+    this.props.getServices(this.state.hiredQuery);
   }
-
+  handleSwitchQuery(new_query){
+    console.log("asd")
+    this.setState(new_query,() => this.updateServices())
+  }
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -225,7 +203,18 @@ class ClientPage extends Component {
     this.props.getReviews(new_query)
   }
 
-  toggleTab(tab) {
+  handleContactedServicePageChange(pageNumber){
+    console.log("ASD")
+    let new_query = Object.assign({}, this.state.contactedQuery, {page:pageNumber})
+    this.props.getReviews(new_query)
+  }
+
+  handleHiredServicePageChange(pageNumber){
+    let new_query = Object.assign({}, this.state.hiredQuery, {page:pageNumber})
+    this.props.getReviews(new_query)
+  }
+
+   toggleTab(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
@@ -240,12 +229,25 @@ class ClientPage extends Component {
       });
     }
   }
+
+  handleChangeContactedOrder(new_order){
+    console.log(new_order.value)
+    this.setState({
+      contactedQuery: Object.assign({}, this.setState.contactedQuery, {ordering:new_order.value})
+    },() => this.updateServices())
+  }
+
+  handleChangeHiredOrder(new_order){
+    console.log(new_order.value)
+    this.setState({
+      hiredQuery: Object.assign({}, this.setState.hiredQuery, {ordering:new_order.value})
+    },() => this.updateServices())
+  }
+
   render() {
     if(!this.state.client || !this.state.client_reviews){
-      return <Container>Cargando</Container>;
+      return <Container>Cargando</Container>
     }
-    console.log(this.props)
-    console.log(this.state)
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container>
@@ -282,136 +284,61 @@ class ClientPage extends Component {
           <p></p>
         </Container>
         <Container>
-          <p className="h4"><b>Servicios Contactados</b></p>
-
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  className={classnames({ active: this.state.activeTab === 'pending' })}
-                  onClick={() => { this.toggleTab('pending'); }}
-                  style={{cursor:'pointer'}}
-                >
-                  Pendientes
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames({ active: this.state.activeTab === 'accepted' })}
-                  onClick={() => { this.toggleTab('accepted'); }}
-                  style={{cursor:'pointer'}}
-                >
-                  Aceptados
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames({ active: this.state.activeTab === 'rejected' })}
-                  onClick={() => { this.toggleTab('rejected'); }}
-                  style={{cursor:'pointer'}}
-                >
-                  Rechazados
-                </NavLink>
-              </NavItem>
-            </Nav>
-            <TabContent activeTab={this.state.activeTab}>
-              <TabPane tabId="pending">
-                <Jumbotron>
-                  <ListGroup>
-                    {this.state.owner ? <ServiceListGroup
-                      services={this.state.pending_services}
-                      pagination={this.state.pending_pagination}
-                      handlePageChange={this.handlePendingServicePageChange.bind(this)}
-                      pending={true}
-                      rejected={false}
-                      toggleTab={this.toggleTab}
-                      />
-                    : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-                  </ListGroup>
-                </Jumbotron>
-              </TabPane>
-              <TabPane tabId="accepted">
-                <Jumbotron>
-                  <ListGroup>
-                    {this.state.owner ? <ServiceListGroup
-                      services={this.state.accepted_services}
-                      pagination={this.state.accepted_pagination}
-                      handlePageChange={this.handleAcceptedServicePageChange.bind(this)}
-                      pending={false}
-                      rejected={false}
-                      toggleTab={this.toggleTab}
-                      />
-                    : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-                  </ListGroup>
-                </Jumbotron>
-              </TabPane>
-              <TabPane tabId="rejected">
-                <Jumbotron>
-                  <ListGroup>
-                    {this.state.owner ? <ServiceListGroup
-                      services={this.state.rejected_services}
-                      pagination={this.state.rejected_pagination}
-                      handlePageChange={this.handleRejectedServicePageChange.bind(this)}
-                      pending={false}
-                      rejected={true}
-                      toggleTab={this.toggleTab.bind(this)}
-                      />
-                    : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-                  </ListGroup>
-                </Jumbotron>
-              </TabPane>
-            </TabContent>
-
-
+          <Row style={{marginTop:100}}>
+            <p className="h4"><b>Servicios Contactados</b></p>
+            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link"><p className="h8" style={{top:0}}>Todos</p></Button>
+            <p  style={{top:0}}> | </p>
+            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link"><p className="h8" style={{top:0}}>Pendientes</p></Button>
+            <p  style={{top:0}}> | </p>
+            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link"><p className="h8" style={{top:0}}>Aceptados</p></Button>
+            <p  style={{top:0}}> | </p>
+            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link"><p className="h8" style={{top:0}}>Rechazados</p></Button>
+          </Row>
+          <Jumbotron>
+            <Select
+               name="contacted-order-by"
+               multi={false}
+               options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
+               onChange={this.handleChangeContactedOrder.bind(this)}
+             />
+            <ListGroup>
+              {this.state.owner ? <ServiceListGroup
+                services={this.state.contacted_services}
+                pagination={this.state.contacted_pagination}
+                handlePageChange={this.handleContactedServicePageChange.bind(this)}
+                />
+              : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
+            </ListGroup>
+          </Jumbotron>
         </Container>
         <Container>
+        <Row style={{marginTop:100}}>
           <p className="h4"><b>Servicios Contratados</b></p>
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.hiredActiveTab === 'review_pending' })}
-                onClick={() => { this.toggleHiredTab('review_pending'); }}
-                style={{cursor:'pointer'}}
-              >
-                Evaluación pendiente
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.hiredActiveTab === 'reviewed' })}
-                onClick={() => { this.toggleHiredTab('reviewed'); }}
-                style={{cursor:'pointer'}}
-              >
-                Evaluados
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={this.state.hiredActiveTab} >
-            <TabPane tabId="review_pending">
-              <Jumbotron>
-                <ListGroup>
-                  {this.state.owner ? <ServiceAnnouncementListGroup
-                    services={this.state.hired_pending_services}
-                    pagination={this.state.hired_pending_pagination}
-                    handlePageChange={this.handleHiredServicePageChange.bind(this)}
-                    />
-                  : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-                </ListGroup>
-              </Jumbotron>
-            </TabPane>
-            <TabPane tabId="reviewed">
-              <Jumbotron>
-                <ListGroup>
-                  {this.state.owner ? <ServiceAnnouncementListGroup
-                    services={this.state.hired_reviewed_services}
-                    pagination={this.state.hired_reviewed_pagination}
-                    handlePageChange={this.handleHiredServicePageChange.bind(this)}
-                    />
-                  : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-                </ListGroup>
-              </Jumbotron>
-            </TabPane>
-          </TabContent>
+          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredAllParams})} color="link"><p className="h8" style={{top:0}}>Todos</p></Button>
+          <p  style={{top:0}}> | </p>
+          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredParamsPendingReview})} color="link"><p className="h8" style={{top:0}}>Evaluación Pendiente</p></Button>
+          <p  style={{top:0}}> | </p>
+          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredParamsReviewed})} color="link"><p className="h8" style={{top:0}}>Evaluados</p></Button>
 
+        </Row>
+          <Jumbotron>
+            <Select
+               name="hired-order-by"
+               multi={true}
+               options={[{ value: 'creation_date', label: 'Fecha contrado ascendiente' },{ value: '-creation_date', label: 'Fecha contrado descendiente' }]}
+               onChange={this.handleChangeHiredOrder.bind(this)}
+             />
+            <ListGroup>
+              {this.state.owner ? <ServiceAnnouncementListGroup
+                services={this.state.hired_services}
+                pagination={this.state.hired_pagination}
+                handlePageChange={this.handleHiredServicePageChange.bind(this)}
+                pending={true}
+                rejected={false}
+                />
+              : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
+            </ListGroup>
+          </Jumbotron>
         </Container>
 
     </Container>

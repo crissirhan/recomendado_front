@@ -5,8 +5,6 @@ import signUpClient from '../../actions/signup_client';
 import signUpProfessional from '../../actions/signup_professional';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import SwitchButton from 'react-switch-button';
-import 'react-switch-button/dist/react-switch-button.css';
 import { withRouter } from 'react-router';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import '../css/messages.css';

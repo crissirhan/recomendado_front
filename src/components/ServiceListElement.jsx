@@ -14,12 +14,30 @@ import cookie from 'react-cookies';
 
 class ServiceListElement extends Component {
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps != this.props){
+      this.setState({
+        shouldReRender:true
+      })
+    }
+  }
+  componentDidMount(){
+    if(this.state.shouldReRender){
+      this.setState({
+        shouldReRender:false
+      })
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       accepted:null,
       answered:false,
-      contacted:false
+      contacted:false,
+      pending: this.props.service.contacted === true && !this.props.service.professional_rejected  && !this.props.service.hired,
+      shouldReRender:false
+
     };
     this.handleCreateService = this.handleCreateService.bind(this)
   }
@@ -68,7 +86,6 @@ class ServiceListElement extends Component {
   handleContactAgain(){
     if(cookie.load('isClient') === "true"){
       this.handleCreateService()
-      this.props.toggleTab('pending')
     } else {
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
     }
@@ -139,7 +156,7 @@ class ServiceListElement extends Component {
                     <div>
                       Contactado: {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                     </div></div> : null}
-                    { !this.props.pending ? <div style={{marginTop:30}}>
+                    { !this.state.pending ? <div style={{marginTop:30}}>
                         <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
                         <Collapse isOpen={false}>
                           <div>
