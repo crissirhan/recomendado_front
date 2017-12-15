@@ -117,14 +117,14 @@ class ClientPage extends Component {
       hired_services:[],
       hired_pagination:{},
       contactedAllParams : {client_id:this.props.client_id, contacted:true},
-      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false},
-      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false},
-      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true},
-      hiredAllParams: {client_id:this.props.client_id, hired:true},
-      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true},
-      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false},
-      contactedQuery: {client_id:this.props.client_id, contacted:true},
-      hiredQuery:{client_id:this.props.client_id, hired:true},
+      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:10},
+      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:10},
+      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:10},
+      hiredAllParams: {client_id:this.props.client_id, hired:true, page_size:10},
+      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true, page_size:10},
+      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false, page_size:10},
+      contactedQuery: {client_id:this.props.client_id, contacted:true, page_size:10},
+      hiredQuery:{client_id:this.props.client_id, hired:true, page_size:10},
       contactedSelectValue:null,
       hiredSelectValue:null
     };
@@ -182,36 +182,16 @@ class ClientPage extends Component {
     this.editMode();
   }
 
-  handlePendingServicePageChange(pageNumber){
-    let new_query = Object.assign({}, {client_id:this.props.client_id, contacted:true,hired:false}, {page:pageNumber})
-    this.props.getServices(new_query)
-  }
-  handleAcceptedServicePageChange(pageNumber){
-    let new_query = Object.assign({}, {client_id:this.props.client_id, contacted:true,hired:false}, {page:pageNumber})
-    this.props.getServices(new_query)
-  }
-  handleRejectedServicePageChange(pageNumber){
-    let new_query = Object.assign({}, {client_id:this.props.client_id, contacted:true,hired:false}, {page:pageNumber})
-    this.props.getServices(new_query)
-  }
-  handleHiredServicePageChange(pageNumber){
-    let new_query = Object.assign({}, {client_id:this.props.client_id, contacted:true,hired:true}, {page:pageNumber})
-    this.props.getServices(new_query)
-  }
-
-  handleReviewPageChange(pageNumber){
-    let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
-    this.props.getReviews(new_query)
-  }
-
   handleContactedServicePageChange(pageNumber){
-    let new_query = Object.assign({}, this.state.contactedQuery, {page:pageNumber})
-    this.props.getReviews(new_query)
+    this.setState({
+      contactedQuery: Object.assign({}, this.state.contactedQuery, {page:pageNumber})
+    },() => this.updateServices())
   }
 
   handleHiredServicePageChange(pageNumber){
-    let new_query = Object.assign({}, this.state.hiredQuery, {page:pageNumber})
-    this.props.getReviews(new_query)
+    this.setState({
+      hiredQuery: Object.assign({}, this.state.hiredQuery, {page:pageNumber})
+    },() => this.updateServices())
   }
 
    toggleTab(tab) {
