@@ -8,7 +8,6 @@ export default function putReview(data) {
   return dispatch => {
     axios.post(ENDPOINT_URI+'/reviews/', data)
       .then(res => {
-        console.log(res.data);
         dispatch(putReviewAsync(res.data));
       });
   }

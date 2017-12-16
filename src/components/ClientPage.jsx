@@ -31,6 +31,7 @@ import ServiceListGroup from './ServiceListGroup'
 import ServiceAnnouncementListGroup from './ServiceAnnouncementListGroup'
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import './css/loading.css'
 
 class ClientPage extends Component {
 
@@ -51,7 +52,7 @@ class ClientPage extends Component {
         this.updateServices()
       }
     }
-    if(nextProps.put_service != this.props.put_service){
+    if(nextProps.put_service != this.props.put_service && false){
       if(nextProps.put_service.success){
         this.updateServices()
       }
@@ -84,18 +85,19 @@ class ClientPage extends Component {
       })
     }
     if(nextProps.services !== this.props.services && nextProps.services.success){
-      console.log(nextProps.services)
         if(nextProps.services.params.contacted){
 
           this.setState({
             contacted_services:nextProps.services.result,
-            contacted_pagination:nextProps.services.pagination
+            contacted_pagination:nextProps.services.pagination,
+            contactLoading:false
           })
         }
         if(nextProps.services.params.hired === true){
           this.setState({
             hired_services:nextProps.services.result,
-            hired_pagination:nextProps.services.pagination
+            hired_pagination:nextProps.services.pagination,
+            hiredLoading:false
           })
         }
     }
@@ -117,16 +119,18 @@ class ClientPage extends Component {
       hired_services:[],
       hired_pagination:{},
       contactedAllParams : {client_id:this.props.client_id, contacted:true},
-      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:10},
-      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:10},
-      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:10},
-      hiredAllParams: {client_id:this.props.client_id, hired:true, page_size:10},
-      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true, page_size:10},
-      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false, page_size:10},
-      contactedQuery: {client_id:this.props.client_id, contacted:true, page_size:10},
-      hiredQuery:{client_id:this.props.client_id, hired:true, page_size:10},
+      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:5},
+      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:5},
+      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:5},
+      hiredAllParams: {client_id:this.props.client_id, hired:true, page_size:5},
+      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true, page_size:5},
+      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false, page_size:5},
+      contactedQuery: {client_id:this.props.client_id, contacted:true, page_size:5},
+      hiredQuery:{client_id:this.props.client_id, hired:true, page_size:5},
       contactedSelectValue:null,
-      hiredSelectValue:null
+      hiredSelectValue:null,
+      contactLoading:true,
+      hiredLoading:true
     };
    this.handleInputChange = this.handleInputChange.bind(this);
    this.toggle = this.toggle.bind(this);
@@ -139,7 +143,10 @@ class ClientPage extends Component {
     this.props.getServices(this.state.hiredQuery);
   }
   handleSwitchQuery(new_query){
-    this.setState(new_query,() => this.updateServices())
+    this.setState({hiredLoading:true,contactLoading:true},
+    ()=>this.setState(new_query,() => this.updateServices())
+  )
+
   }
   handleInputChange(event) {
     const target = event.target;
@@ -205,13 +212,12 @@ class ClientPage extends Component {
   toggleHiredTab(tab) {
     if (this.state.hiredActiveTab !== tab) {
       this.setState({
-        hiredActiveTab: tab
+        hiredActiveTab: !this.state.hiredActiveTab
       });
     }
   }
 
   handleChangeContactedOrder(new_order){
-    console.log(Object.assign({}, this.state.contactedQuery, {ordering:new_order.value}))
     this.setState({
       contactedQuery: Object.assign({}, this.state.contactedQuery, {ordering:new_order.value}),
       contactedSelectValue:new_order
@@ -227,11 +233,11 @@ class ClientPage extends Component {
 
   render() {
     if(!this.state.client || !this.state.client_reviews){
-      return <Container>Cargando</Container>
+      return <Container class="loader"></Container>
     }
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
-      <Container>
+      <Container className="container">
         <Row>
           <Col sm="4">
             <Card block className="text-center" >
@@ -276,7 +282,7 @@ class ClientPage extends Component {
             <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link"><p className="h8" style={{top:0}}>Rechazados</p></Button>
           </Row>
           <Jumbotron>
-            <Select
+            {this.props.services.loading? null : <Select
                name="contacted-order-by"
                multi={false}
                options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
@@ -287,13 +293,14 @@ class ClientPage extends Component {
                closeOnSelect={true}
                placeholder={'Ordenar por...'}
 
-             />
+             />}
             <ListGroup>
               {this.state.owner ? <ServiceListGroup
                 services={this.state.contacted_services}
                 pagination={this.state.contacted_pagination}
                 value={this.state.contactedSelectValue}
                 handlePageChange={this.handleContactedServicePageChange.bind(this)}
+                loading = {this.props.services.loading}
                 />
               : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
             </ListGroup>
@@ -310,7 +317,7 @@ class ClientPage extends Component {
 
         </Row>
           <Jumbotron>
-            <Select
+            {this.props.services.loading ? null : <Select
                name="hired-order-by"
                multi={true}
                options={[{ value: 'creation_date', label: 'Fecha contrato ascendiente' },{ value: '-creation_date', label: 'Fecha contrato descendiente' }]}
@@ -321,7 +328,7 @@ class ClientPage extends Component {
                closeOnSelect={true}
                placeholder={'Ordenar por...'}
 
-             />
+             />}
             <ListGroup>
               {this.state.owner ? <ServiceAnnouncementListGroup
                 services={this.state.hired_services}
@@ -329,6 +336,7 @@ class ClientPage extends Component {
                 handlePageChange={this.handleHiredServicePageChange.bind(this)}
                 pending={true}
                 rejected={false}
+                loading = {this.props.services.loading}
                 />
               : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
             </ListGroup>

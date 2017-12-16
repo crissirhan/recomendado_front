@@ -176,7 +176,6 @@ class AnnouncementForm extends Component{
 
   }
   handleSubmit(){
-    console.log(this.state)
     if(this.state.job_tags.length === 0){
       alert("Debe escoger al menos una categoría para el aviso")
       return null;
@@ -217,12 +216,9 @@ class AnnouncementForm extends Component{
     })
     this.state.job_tags.map(tag => {
       if(tag.job){
-        //let justId = {'job': {'id':tag.job.id}}
-        console.log(tag)
         data.job_tags.push(tag)
       }
     })
-    console.log(data);
     this.props.postAnnouncement(data);
   }
 

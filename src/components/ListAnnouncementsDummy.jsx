@@ -25,7 +25,6 @@ class ListAnnouncements extends Component {
     if(this.props.announcements_array.length === 0){
       return <div>No existen avisos</div>;
     }
-    console.log(this.props)
     return (
       <CardGroup>
         {this.props.announcements_array.map(announcement =>{

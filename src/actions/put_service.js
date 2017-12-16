@@ -8,10 +8,8 @@ export default function putService(data) {
     dispatch(putServiceLoadingAsync());
     axios.post(ENDPOINT_URI+'/post-services/', data)
       .then(res => {
-        console.log(res.data);
         dispatch(putServiceAsync(res.data));
       }).catch(function (error) {
-        console.log(error)
         dispatch(putServiceErrorAsync(error));
       });
   }

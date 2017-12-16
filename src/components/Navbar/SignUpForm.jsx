@@ -75,7 +75,6 @@ class SignUpForm extends Component{
       this.props.signUpClient(request);
     }
     if(this.state.switch_professional){
-      console.log("asd")
       request.rut = this.state.rut;
       request.region = this.state.region;
       request.city = this.state.city;

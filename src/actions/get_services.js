@@ -4,23 +4,13 @@ import { ENDPOINT_URI } from '../Globals'
 
 
 export default function getServices(params) {
-  /*
-  let query = '';
-  if(announcement_id){
-    query = announcement_id;
-  } else{
-    query = search_params ? "?search=" + search_params : '';
-  }
-  */
   return dispatch => {
     dispatch(getServicesLoadingAsync());
-    console.log(params)
     axios.get(ENDPOINT_URI+'/services/', {params: params} )
       .then(res => {
         dispatch(getServicesSuccessAsync(res.data, params));
       })
       .catch(function (error) {
-        console.log(error)
         dispatch(getServicesErrorAsync(error.response));
       });
   }

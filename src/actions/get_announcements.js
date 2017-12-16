@@ -14,13 +14,11 @@ export default function getAnnouncements(params) {
   */
   return dispatch => {
     dispatch(getAnnouncementsLoadingAsync());
-    console.log(params)
     axios.get(ENDPOINT_URI+'/announcements/', {params: params} )
       .then(res => {
         dispatch(getAnnouncementsSuccessAsync(res.data, params));
       })
       .catch(function (error) {
-        console.log(error)
         dispatch(getAnnouncementsErrorAsync(error.response));
       });
   }

@@ -84,7 +84,6 @@ class AnnouncementsListElement extends Component {
     let announcement = service.announcement
     let today = new Date()
     let review = ((service.review ? service.review.length : -1) > 0) ? service.review[0] : {}
-    console.log((service.review ? service.review.length : -1))
     return (  <ListGroupItem style={{marginBottom:20}} className="shadow-box round-border" key={announcement.id}>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>

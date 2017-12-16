@@ -21,7 +21,6 @@ axios.interceptors.response.use((response) => {
 }, (error) => {
   for (var key in error.response.data) {
       if (error.response.data.hasOwnProperty(key)) {
-        console.log(error.response.data[key])
         error.response.data[key].forEach(e => toast.error(key + ': ' + e))
       }
   }

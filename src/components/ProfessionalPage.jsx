@@ -28,6 +28,7 @@ import AnnouncementForm from './AnnouncementForm';
 import { ENDPOINT_URI } from '../Globals';
 import AnnouncementListGroup from './AnnouncementListGroup'
 import ReviewCardGroup from './ReviewCardGroup'
+import './css/loading.css'
 
 class ProfessionalPage extends Component {
 
@@ -72,9 +73,7 @@ class ProfessionalPage extends Component {
         });
       }
       if(this.props.user_announcements !== nextProps.user_announcements){
-        console.log(nextProps.user_announcements)
         if(nextProps.user_announcements.result){
-          console.log(nextProps.user_announcements)
           this.setState({
             announcements: nextProps.user_announcements.result
           })
@@ -191,15 +190,12 @@ class ProfessionalPage extends Component {
     this.props.getReviews(new_query)
   }
   render() {
-    console.log(this.state.owner)
-    console.log(this.props.reviews)
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
-      return <Container>Cargando</Container>;
+      return <Container class="loader"></Container>
     }
-    console.log(this.props.announcements.result)
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
-      <Container>
+      <Container className="container">
         <Row>
           <Col sm="4">
             <Card block className="text-center" >

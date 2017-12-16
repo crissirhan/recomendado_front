@@ -7,9 +7,7 @@ export function getReviews(){
   return axios.get(baseUrl+'/reviews/', {
   })
   .then(function (response) {
-    console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
   });
 }

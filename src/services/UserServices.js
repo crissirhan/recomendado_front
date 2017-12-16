@@ -9,25 +9,20 @@ export function login(username,password){
     password: password
   })
   .then(function (response) {
-    console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
   });
 }
 
 export function signUp(username,password1, password2, email){
-  console.log(username + ' ' + password1);
   return axios.post(baseUrl+'/rest-auth/registration/', {
     username: username,
-    password1: password1, 
+    password1: password1,
     password2: password2,
     email: email
   })
   .then(function (response) {
-    console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
   });
 }

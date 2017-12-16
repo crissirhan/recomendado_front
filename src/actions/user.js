@@ -19,9 +19,7 @@ export default function login(username,password){
 }
 
 function loginSuccessAsync(login){
-  console.log("Success, key:: " + login.data.key);
   const key = login.data.key;
-  console.log(key);
   return {
     type: USER_LOGIN_SUCCESS,
     payload: key
@@ -29,7 +27,6 @@ function loginSuccessAsync(login){
 }
 
 function loginFailureAsync(login){
-  console.log("Login error!");
   return {
     type: USER_LOGIN_ERROR,
     payload: null
@@ -38,7 +35,6 @@ function loginFailureAsync(login){
 
 
 export function signUp(username,password1, password2, email){
-  console.log(username + ' ' + password1);
   return axios.post(baseUri+'/rest-auth/registration/', {
     username: username,
     password1: password1,
@@ -46,9 +42,7 @@ export function signUp(username,password1, password2, email){
     email: email
   })
   .then(function (response) {
-    console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
   });
 }

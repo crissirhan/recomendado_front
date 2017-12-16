@@ -18,7 +18,6 @@ export default function(state={
       let success = {success:true}
       let result = {'result':action.payload.results }
       let lastPage = action.payload.next ? action.payload.lastPage : 1
-      console.log(action.payload)
       let pagination = {pagination:
           action.payload
         }

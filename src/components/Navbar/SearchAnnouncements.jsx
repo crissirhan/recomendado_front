@@ -53,10 +53,8 @@ class SearchAnnouncements extends Component {
         client_id:cookie.load('user').id,
         announcement_id:announcement.id
       }
-      console.log(data);
       this.props.putService(data);
     }else{
-      console.log("Error putService");
     }
   }
 
@@ -86,9 +84,7 @@ class SearchAnnouncements extends Component {
   }
 
   requestSearch(){
-    console.log("Buscar: " + this.state.searchTerm)
     this.props.history.push('/buscar/avisos/'+this.state.searchTerm);
-    //return <Redirect push to={'/buscar/avisos/'+this.state.searchTerm}/>
   }
 
 }

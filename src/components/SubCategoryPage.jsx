@@ -12,13 +12,12 @@ import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import getAnnouncementsByJob from '../actions/get_announcements_by_job';
 import getAnnouncements from '../actions/get_announcements';
 import AnnouncementCardGroup from './AnnouncementCardGroup'
+import './css/loading.css'
 
 class SubCategoryPage extends Component {
 
   componentDidMount(){
-    console.log(this.props.sub_category)
     this.props.getJobByName(this.props.sub_category);
-    console.log({job:this.props.sub_category,visible:true})
     this.props.getAnnouncements({job:this.props.sub_category,visible:true})
   }
 
@@ -71,10 +70,8 @@ class SubCategoryPage extends Component {
   };
 
   render(){
-    console.log(this.state)
-    console.log(this.props)
     if(this.state.loading){
-      return <Container>Cargando</Container>
+      return <Container class="loader"></Container>
     }
     if(this.state.error){
       return <Container>Ha ocurrido un error</Container>
@@ -84,7 +81,7 @@ class SubCategoryPage extends Component {
     }
 
     return (
-      <Container>
+      <Container className="container">
         <div style={{textAlign:"center"}}>
           <h5><b>{this.state.job.job_sub_type}</b></h5>
           <p>{this.state.job ? this.state.job.description : ""}</p>
@@ -94,7 +91,7 @@ class SubCategoryPage extends Component {
           pagination={this.props.announcements.pagination}
           handlePageChange={this.handlePageChange.bind(this)}
         />
-        
+
       </Container>
      )
   }

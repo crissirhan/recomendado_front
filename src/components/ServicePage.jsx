@@ -11,6 +11,7 @@ import getAnnouncements from '../actions/get_announcements';
 import './css/images.css';
 import putService from '../actions/put_service'
 import cookie from 'react-cookies';
+import './css/loading.css'
 
 class ServicePage extends Component {
 
@@ -62,17 +63,16 @@ class ServicePage extends Component {
   }
 
   render(){
-    console.log(this.props)
     if(this.state.success){
       return <Container><div className="message--info">Servicio contratado con éxito!</div></Container>;
     }
     if(!this.state.announcement){
-      return <Container>Cargando</Container>
+      return <Container class="loader"></Container>
     }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contratar</Button></Link>;
 
     return (
-      <Container>
+      <Container className="container">
         <div style={{ opacity: this.props.put_service.loading ? 0.5 : 1 }}>
             <p>Título: {this.state.announcement.title}</p>
             <p>Descripción: {this.state.announcement.description}</p>

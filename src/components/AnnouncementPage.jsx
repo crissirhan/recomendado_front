@@ -19,6 +19,7 @@ import { withRouter } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ReviewCardGroup from './ReviewCardGroup'
+import './css/loading.css'
 
 class AnnouncementPage extends Component {
 
@@ -59,7 +60,6 @@ class AnnouncementPage extends Component {
         }
       }
       if(nextProps.reviews !== this.props.reviews){
-        console.log(nextProps.reviews)
         if(nextProps.reviews.result !== this.props.reviews.result){
           this.setState({
             announcement_reviews: nextProps.reviews.result
@@ -107,7 +107,6 @@ class AnnouncementPage extends Component {
         contacted:true,
         contacted_date: creation_date.toJSON(),
       }
-      console.log(data)
       this.props.putService(data);
     }else{
       alert('Debes logearte como cliente para realizar esta acción')
@@ -127,7 +126,6 @@ class AnnouncementPage extends Component {
     if(cookie.load('isClient') === "true"){
       this.toggleContactCollapse()
     } else {
-      console.log(this.props.history)
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
     }
   }
@@ -137,7 +135,7 @@ class AnnouncementPage extends Component {
   }
   render(){
     if(this.state.loading || !this.state.announcement_reviews){
-      return <Container>Cargando</Container>
+      return <Container class="loader"></Container>
     }
     if(this.state.error){
       return <Container>Ha ocurrido un error</Container>
@@ -151,10 +149,8 @@ class AnnouncementPage extends Component {
     }
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
-
-    console.log(this.state.announcement)
     return (
-      <Container>
+      <Container className="container">
         <Row style={{marginBottom:25}}>
           <Col >
             <h1 className="display-3">{this.state.announcement.title}</h1>

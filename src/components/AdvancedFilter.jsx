@@ -55,7 +55,6 @@ class AdvancedFilter extends Component {
       query.max_publish_date = this.state.max_publish_date.toISOString()
     }
     query.tags = this.state.tags.map(tag => tag.value).join(", ")
-    console.log(query)
     this.props.getAnnouncements(query)
 
   }
@@ -67,7 +66,6 @@ class AdvancedFilter extends Component {
   }
 
   handleMaxDateChange(date) {
-    console.log(date)
     this.setState({
       max_publish_date: date
     });
@@ -101,7 +99,6 @@ class AdvancedFilter extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <Form>
          <FormGroup>

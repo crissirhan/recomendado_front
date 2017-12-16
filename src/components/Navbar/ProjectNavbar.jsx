@@ -130,7 +130,6 @@ class ProjectNavbar extends Component {
   getLoggedInUserName(){
     if(cookie.load('user') != "undefined"){
       if(cookie.load('user').user){
-        console.log(cookie.load('user').user)
         return cookie.load('user').user.first_name + ' ' + cookie.load('user').user.last_name ;
       } else {
         return 'Perfil'

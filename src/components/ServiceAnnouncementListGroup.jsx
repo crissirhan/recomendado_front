@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {  ListGroup, Button } from 'reactstrap';
+import {  ListGroup, Button, Container } from 'reactstrap';
 import ServiceAnnouncementListElement from './ServiceAnnouncementListElement'
 import Pagination from "react-js-pagination";
 import './css/images.css';
 import './css/box.css';
 import './css/pagination.css';
+import './css/loading.css'
 
 class AnnouncementCardGroup extends Component {
 
@@ -20,6 +21,9 @@ class AnnouncementCardGroup extends Component {
   }
 
   render() {
+    if(this.props.loading){
+      return <Container class="loader"></Container>
+    }
     return (
       <div>
         <ListGroup>
