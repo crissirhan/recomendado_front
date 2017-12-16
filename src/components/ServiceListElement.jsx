@@ -109,6 +109,7 @@ class ServiceListElement extends Component {
     } else if (service.hired) {
       border_color = 'GreenYellow'
     }
+    console.log(service)
     return (
       <ListGroupItem style={{marginBottom:20, minHeight:200, borderColor:border_color}} className="shadow-box round-border" key={announcement.id}>
                 <Row>
@@ -134,12 +135,12 @@ class ServiceListElement extends Component {
                             <Rating className="text-center"
                                 empty="fa fa-star-o fa-2x orange-star"
                                 full="fa fa-star fa-2x orange-star"
-                                initialRate={announcement.review_average}
+                                initialRate={service.review_average}
                                 readonly/>
                           </div>
                         </Col>
                         <Col>
-                          <small style={{textAlign:"center", marginLeft:-70}}className="text-muted">{announcement.review_count? announcement.review_count : 0} evaluaciones</small>
+                          <small style={{textAlign:"center", marginLeft:-70}}className="text-muted">{service.review_count? service.review_count : 0} evaluaciones</small>
                         </Col>
                       </Row>
                     </div>
