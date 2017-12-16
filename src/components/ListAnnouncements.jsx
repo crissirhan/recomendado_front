@@ -17,8 +17,10 @@ import './css/pagination.css';
 import { updateSearchParams } from '../actions/search'
 import Pagination from "react-js-pagination";
 import AdvancedFilter from './AdvancedFilter'
-import AnnouncementCardGroup from './AnnouncementCardGroup'
+import AnnouncementListGroup from './AnnouncementListGroup'
 import './css/loading.css'
+import 'react-select/dist/react-select.css';
+import Select from 'react-select';
 
 class ListAnnouncements extends Component {
 
@@ -80,12 +82,14 @@ class ListAnnouncements extends Component {
   handlePageChange(pageNumber){
     let new_query = Object.assign({}, this.props.announcements.params, {page:pageNumber})
     this.props.getAnnouncements(new_query)
-  };
+  }
+
+  handleOrderingChange(new_order){
+    let new_query = Object.assign({}, this.props.announcements.params, {ordering:new_order.value})
+    this.props.getAnnouncements(new_query)
+  }
 
   render() {
-    if(this.props.announcements.loading ){
-      return <Container><div class="loader"></div></Container>
-    }
     if(this.props.announcements.error ){
       return <Container className="container"><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
     }
@@ -116,11 +120,23 @@ class ListAnnouncements extends Component {
         <Collapse isOpen={this.state.collapse}>
           <AdvancedFilter/>
         </Collapse>
-        <AnnouncementCardGroup
+        {this.props.announcements.loading ? <Container><div class="loader"></div></Container> : <div><Select
+           name="announcements-order-by"
+           multi={false}
+           options={[{ value: 'price', label: 'Precio ascendiente' },{ value: '-price', label: 'Precio descendiente' },{ value: 'publish_date', label: 'Fecha publicación ascendiente' },{ value: '-publish_date', label: 'Fecha publicación descendiente' }]}
+           onChange={this.handleOrderingChange.bind(this)}
+           searchable={false}
+           autosize={true}
+           clearable={false}
+           closeOnSelect={true}
+           placeholder={'Ordenar por...'}
+
+         />
+        <AnnouncementListGroup
           announcements={this.props.announcements.result}
           pagination={this.props.announcements.pagination}
           handlePageChange={this.handlePageChange.bind(this)}
-        />
+        /></div>}
       </Container>
     );
   }
