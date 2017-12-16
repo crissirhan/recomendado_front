@@ -71,7 +71,7 @@ class SubCategoryPage extends Component {
 
   render(){
     if(this.state.loading){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     if(this.state.error){
       return <Container>Ha ocurrido un error</Container>

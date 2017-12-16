@@ -84,7 +84,7 @@ class ListAnnouncements extends Component {
 
   render() {
     if(this.props.announcements.loading ){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     if(this.props.announcements.error ){
       return <Container className="container"><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;

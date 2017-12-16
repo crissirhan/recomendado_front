@@ -191,7 +191,7 @@ class ProfessionalPage extends Component {
   }
   render() {
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
