@@ -21,7 +21,6 @@ export default function signUp(username, password1, password2, email) {
 }
 
 function signUpAsync(response){
-  console.log(response);
   return {
     type: SIGNUP_USER,
     payload: response

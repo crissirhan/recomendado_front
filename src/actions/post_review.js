@@ -8,10 +8,8 @@ export default function postReview(data) {
     dispatch(postReviewLoadingAsync());
     axios.post(ENDPOINT_URI+'/post-reviews/', data)
       .then(res => {
-        console.log(res.data);
         dispatch(postReviewSuccessAsync(res.data));
       }).catch(function (error) {
-        console.log(error);
         dispatch(postReviewErrorAsync(error));
       });
   }

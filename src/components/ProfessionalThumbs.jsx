@@ -18,18 +18,6 @@ class ProfessionalThumbs extends Component {
   componentWillReceiveProps(nextProps) {
 
     if(this.props != nextProps && nextProps.reviews.result){
-      console.log(nextProps.reviews.result)
-      /*
-      let random_professional_ids_with_reviews = [...new Set(nextProps.reviews.result.map(review => review.service.announcement.professional.id))].sort(() => .5 - Math.random()).slice(0,3);
-
-      let random_reviews = nextProps.reviews.result.filter(function( review ) {
-        let index = random_professional_ids_with_reviews.indexOf(review.service.announcement.professional.id);
-        if(index !== -1){
-          random_professional_ids_with_reviews.splice(index, 1);
-        }
-        return index !== -1;
-      }).sort(() => .5 - Math.random()).slice(0,3);
-      */
       this.setState({
         random_reviews:nextProps.reviews.result
       });

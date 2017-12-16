@@ -8,11 +8,9 @@ export default function getReviews(params) {
     dispatch(getReviewsLoadingAsync())
     axios.get(ENDPOINT_URI+'/reviews/', {params: params})
       .then(res => {
-        console.log(res)
         dispatch(getReviewsSuccessAsync(res.data, params));
       })
       .catch(function (error) {
-        console.log(error)
         dispatch(getReviewsErrorAsync(error.response));
       });
   }

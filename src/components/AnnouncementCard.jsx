@@ -18,7 +18,6 @@ class AnnouncementCard extends Component {
       image_url = this.props.announcement.professional.profile_picture
     }
     let announcement = this.props.announcement
-    console.log(announcement)
     return (
               <Card className="shadow-box round-border" style={{marginBottom:20,minHeight:300,height:300,width:230, overflow:"hidden" }} size="sm" >
                 <Link to ={'/avisos/' + announcement.id}>

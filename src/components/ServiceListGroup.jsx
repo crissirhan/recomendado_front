@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {  ListGroup, Button } from 'reactstrap';
+import {  ListGroup, Button, Container } from 'reactstrap';
 import ServiceListElement from './ServiceListElement'
 import Pagination from "react-js-pagination";
 import './css/images.css';
 import './css/box.css';
 import './css/pagination.css';
+import './css/loading.css'
 import shortid from 'shortid'
 
 class ServiceListGroup extends Component {
@@ -21,11 +22,14 @@ class ServiceListGroup extends Component {
   }
 
   render() {
+    if(this.props.loading){
+      return <Container class="loader"></Container>
+    }
     return (
       <div>
         <ListGroup>
           {this.props.services.map(service =>
-            <ServiceListElement key={shortid.generate()} service={service} />)}
+            <ServiceListElement key={service.id} service={service} />)}
         </ListGroup>
         <Pagination
           activePage={this.props.pagination.current}

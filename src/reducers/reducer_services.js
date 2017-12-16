@@ -19,7 +19,6 @@ export default function(state={
       state.params = action.params
       let result = {'result':action.payload.results }
       let lastPage = action.payload.next ? action.payload.lastPage : 1
-      console.log(action.payload)
       let pagination = {pagination:
           action.payload
         }

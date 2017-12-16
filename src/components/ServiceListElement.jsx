@@ -3,6 +3,7 @@ import { ListGroupItem, CardTitle, Col, Button, Row, Collapse } from 'reactstrap
 import { Route, Link } from 'react-router-dom';
 import './css/images.css';
 import './css/box.css';
+import './css/tab.css';
 import Rating from 'react-rating';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -36,8 +37,8 @@ class ServiceListElement extends Component {
       answered:false,
       contacted:false,
       pending: this.props.service.contacted === true && !this.props.service.professional_rejected  && !this.props.service.hired,
-      shouldReRender:false
-
+      shouldReRender:false,
+      contactAgain:false
     };
     this.handleCreateService = this.handleCreateService.bind(this)
   }
@@ -85,7 +86,9 @@ class ServiceListElement extends Component {
   }
   handleContactAgain(){
     if(cookie.load('isClient') === "true"){
-      this.handleCreateService()
+      this.setState({contactAgain:true},
+      ()=>this.handleCreateService())
+
     } else {
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
     }
@@ -106,7 +109,8 @@ class ServiceListElement extends Component {
     } else if (service.hired) {
       border_color = 'GreenYellow'
     }
-    return (  <ListGroupItem style={{marginBottom:20, minHeight:200, borderColor:border_color}} className="shadow-box round-border" key={announcement.id}>
+    return (
+      <ListGroupItem style={{marginBottom:20, minHeight:200, borderColor:border_color}} className="shadow-box round-border" key={announcement.id}>
                 <Row>
                   <Col sm="2">
                     <Link to={'/profesionales/' + announcement.professional.id}>
@@ -152,6 +156,9 @@ class ServiceListElement extends Component {
                     <Button type="button" class="close" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right"}}>
                       <span aria-hidden="true">&times;</span>
                     </Button>
+                    <div>
+                      Contactado:  {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                    </div>
                     {this.props.pending ? <div style={{marginTop:30}}><div>
                       <b>Teléfono: {announcement.professional.phone_number}</b>
                     </div>
@@ -166,7 +173,7 @@ class ServiceListElement extends Component {
                     </div></div> : null}
                     { !this.state.pending ? <div style={{marginTop:30}}>
                         <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
-                        <Collapse isOpen={false}>
+                        <Collapse isOpen={this.state.contactAgain}>
                           <div>
                             <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
                             <div>Número de teléfono: {announcement.professional.phone_number}</div>

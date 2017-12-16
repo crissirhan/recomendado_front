@@ -37,7 +37,6 @@ class ListGroupService extends React.Component {
   }
 
   render() {
-    console.log(this.state.service)
     return (
       <ListGroupItem key={this.state.service.id}>
         <Col sm="3">

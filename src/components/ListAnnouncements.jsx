@@ -18,6 +18,7 @@ import { updateSearchParams } from '../actions/search'
 import Pagination from "react-js-pagination";
 import AdvancedFilter from './AdvancedFilter'
 import AnnouncementCardGroup from './AnnouncementCardGroup'
+import './css/loading.css'
 
 class ListAnnouncements extends Component {
 
@@ -44,7 +45,6 @@ class ListAnnouncements extends Component {
           })
         }
         if(nextProps.announcements.result !== this.props.announcements.result){
-          console.log(nextProps.announcements.result)
           this.setState({
             announcements: nextProps.announcements.result
           })
@@ -84,10 +84,10 @@ class ListAnnouncements extends Component {
 
   render() {
     if(this.props.announcements.loading ){
-      return <Container><div style={{textAlign:"center"}}> <div>Cargando</div><SearchAnnouncements/></div></Container>;
+      return <Container class="loader"></Container>
     }
     if(this.props.announcements.error ){
-      return <Container><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
+      return <Container className="container"><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
     }
     if(this.props.announcements.result.length === 0 && this.props.announcements.success){
       return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
@@ -96,7 +96,7 @@ class ListAnnouncements extends Component {
       </Collapse></Container>;
     }
     if(!this.props.announcements.success && !this.props.announcements.loading && !this.props.announcements.error){
-      return <Container>
+      return <Container className="container">
         <h1>Búsqueda de avisos</h1>
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
@@ -108,7 +108,7 @@ class ListAnnouncements extends Component {
       </Container>
     }
     return (
-      <Container>
+      <Container className="container">
         <h1>Búsqueda de avisos</h1>
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>

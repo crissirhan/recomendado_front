@@ -7,9 +7,7 @@ export function getAnnouncements(){
   return axios.get(baseUrl+'/announcements/', {
   })
   .then(function (response) {
-    console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
   });
 }
