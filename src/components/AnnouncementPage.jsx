@@ -135,7 +135,7 @@ class AnnouncementPage extends Component {
   }
   render(){
     if(this.state.loading || !this.state.announcement_reviews){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     if(this.state.error){
       return <Container>Ha ocurrido un error</Container>

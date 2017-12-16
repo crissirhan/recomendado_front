@@ -118,7 +118,7 @@ class ClientPage extends Component {
       contacted_pagination:{},
       hired_services:[],
       hired_pagination:{},
-      contactedAllParams : {client_id:this.props.client_id, contacted:true},
+      contactedAllParams : {client_id:this.props.client_id, contacted:true, page_size:5},
       pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:5},
       acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:5},
       rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:5},
@@ -233,7 +233,7 @@ class ClientPage extends Component {
 
   render() {
     if(!this.state.client || !this.state.client_reviews){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (

@@ -23,7 +23,7 @@ class ServiceListGroup extends Component {
 
   render() {
     if(this.props.loading){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     return (
       <div>

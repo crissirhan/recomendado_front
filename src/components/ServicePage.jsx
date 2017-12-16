@@ -67,7 +67,7 @@ class ServicePage extends Component {
       return <Container><div className="message--info">Servicio contratado con éxito!</div></Container>;
     }
     if(!this.state.announcement){
-      return <Container class="loader"></Container>
+      return <Container><div class="loader"></div></Container>
     }
     let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button color="link">Contratar</Button></Link>;
 
