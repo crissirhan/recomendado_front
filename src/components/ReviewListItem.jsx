@@ -15,7 +15,7 @@ class ReviewListItem extends Component {
 
   render() {
     let review = this.props.review
-    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : null;
     return (
       <div>
         <Rating
@@ -25,7 +25,7 @@ class ReviewListItem extends Component {
             initialRate={review.rating}
             readonly/>
         <p>{review.client_comment}</p>
-        <small class="text-muted">Evaluado por {review.service.client.user.first_name} {review.service.client.user.last_name} el {new Date(review.date).toLocaleDateString()}</small>
+        <small class="text-muted">Evaluado por {review.service.client.user.first_name} {review.service.client.user.last_name} {image_url ? <img class="center-cropped text-sized-image" src={image_url}/> : null} el {new Date(review.date).toLocaleDateString()}</small>
       </div>
     )
   }

@@ -1,0 +1,9 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+  padding-top: 100px;
+  padding-bottom: 150px;
+}

@@ -145,41 +145,47 @@ class ProjectNavbar extends Component {
     let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
     if(aux_exists && (cookie.load('token') != undefined )){
       buttons =
-      <Nav className="ml-auto" >
-        <NavItem>
-          <Link to={this.getLoggedInUserUrl()}>
-            <Button color="link">{this.getLoggedInUserName()}</Button>
-          </Link>
-        </NavItem>
-        {' | '}
-        <NavItem>
-          <Button color="link" onClick={() => this.onLogout()}>Logout</Button>{' '}
-        </NavItem>
-      </Nav>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href={this.getLoggedInUserUrl()}>
+            {this.getLoggedInUserName()}
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" onClick={() => this.onLogout()}>
+            Logout
+          </a>
+        </li>
+      </ul>
     } else{
       buttons =
-      <Nav className="ml-auto" >
-        <NavItem>
-        <Link to={"/login"+'?from=' + this.props.location.pathname}>
-          <Button color="link" onClick={this.loginToggle}>Login</Button>
-        </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/registro/">
-            <Button color="link" onClick={this.signUpToggle}>Registrarse</Button>
-          </Link>
-        </NavItem>
-      </Nav>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" onClick={this.loginToggle} href={"/login"+'?from=' + this.props.location.pathname}>
+            Login
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" onClick={this.signUpToggle} href="/registro/">
+            Registrarse
+          </a>
+        </li>
+      </ul>
     }
     return (
-      <span>
-        <Navbar light>
-          <Link to='/'>
-            <NavbarBrand><h3><b>Recomendado</b></h3></NavbarBrand>
-          </Link>
-          {buttons}
-        </Navbar>
-      </span>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href='/'>
+              Recomendado
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            {buttons}
+          </div>
+        </div>
+      </nav>
     );
   }
 }
