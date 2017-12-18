@@ -41,6 +41,9 @@ import cookie from 'react-cookies';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ErrorBoundary from './components/ErrorBoundary'
+import Footer from './components/Footer'
+import 'bootstrap/dist/css/bootstrap.css';
+import './components/css/page.css';
 
 class App extends Component {
   componentDidMount() {
@@ -64,55 +67,58 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
 
-          <ProjectNavbar/>
+        <ProjectNavbar/>
           <ErrorBoundary>
-            <Switch>
-              <Route exact path='/' component={Home}/>
-              <Route exact path="/categorias/:categoria/" render={({ match }) => (
-                <CategoryPage category={match.params.categoria}/>
-              )} />
-              <Route path="/categorias/:categoria/:sub_categoria" render={({ match }) => (
-                <SubCategoryPage sub_category={match.params.sub_categoria}/>
-              )} />
-              <Route path="/profesionales/:id/" render={({ match }) => (
-                <ProfessionalPage professional_id={match.params.id}/>
-              )} />
-              <Route path="/avisos/:id/" render={({ match }) => (
-                <AnnouncementPage announcement_id={match.params.id}/>
-              )} />
-              <Route path="/contratar/aviso/:id/" render={({ match }) => (
-                cookie.load('isClient') === "true" ? <ServicePage announcement_id={match.params.id}/> :
-                <Redirect to="/login/"/>
-              )}/>
-              <Route path="/clientes/:id/" render={({ match }) => (
-                <ClientPage client_id={match.params.id}/>
-              )} />
-              <Route path="/registro/" render={({ match }) => (
-                <Container><SignUpForm /></Container>
-              )} />
-              <Route path="/login/" render={({ match }) => (
-                <Container><LoginForm /></Container>
-              )} />
-              <Route path="/buscar/avisos/:query" render={({ match }) => (
-                <ListAnnouncements search={match.params.query}/>
-              )} />
-              <Route exact path="/buscar/avisos/" render={({ match }) => (
-                <ListAnnouncements search={''}/>
-              )} />
-              <Route path="/crear/anuncio/" render={({ match }) => (
-                <AnnouncementForm/>
-              )} />
-              <Route path="/editar/anuncio/:id/" render={({ match }) => (
-                <AnnouncementsEdit announcement_id={match.params.id}/>
-              )} />
-              <Route path="/editar/profesional/:id/" render={({ match }) => (
-                <ProfessionalEdit professional_id={match.params.id}/>
-              )} />
-              <Route path="/editar/cliente/:id/" render={({ match }) => (
-                <ClientEdit client_id={match.params.id}/>
-              )} />
-            </Switch>
+            <div class="body">
+              <Switch>
+                <Route exact path='/' component={Home}/>
+                <Route exact path="/categorias/:categoria/" render={({ match }) => (
+                  <CategoryPage category={match.params.categoria}/>
+                )} />
+                <Route path="/categorias/:categoria/:sub_categoria" render={({ match }) => (
+                  <SubCategoryPage sub_category={match.params.sub_categoria}/>
+                )} />
+                <Route path="/profesionales/:id/" render={({ match }) => (
+                  <ProfessionalPage professional_id={match.params.id}/>
+                )} />
+                <Route path="/avisos/:id/" render={({ match }) => (
+                  <AnnouncementPage announcement_id={match.params.id}/>
+                )} />
+                <Route path="/contratar/aviso/:id/" render={({ match }) => (
+                  cookie.load('isClient') === "true" ? <ServicePage announcement_id={match.params.id}/> :
+                  <Redirect to="/login/"/>
+                )}/>
+                <Route path="/clientes/:id/" render={({ match }) => (
+                  <ClientPage client_id={match.params.id}/>
+                )} />
+                <Route path="/registro/" render={({ match }) => (
+                  <Container><SignUpForm /></Container>
+                )} />
+                <Route path="/login/" render={({ match }) => (
+                  <Container><LoginForm /></Container>
+                )} />
+                <Route path="/buscar/avisos/:query" render={({ match }) => (
+                  <ListAnnouncements search={match.params.query}/>
+                )} />
+                <Route exact path="/buscar/avisos/" render={({ match }) => (
+                  <ListAnnouncements search={''}/>
+                )} />
+                <Route path="/crear/anuncio/" render={({ match }) => (
+                  <AnnouncementForm/>
+                )} />
+                <Route path="/editar/anuncio/:id/" render={({ match }) => (
+                  <AnnouncementsEdit announcement_id={match.params.id}/>
+                )} />
+                <Route path="/editar/profesional/:id/" render={({ match }) => (
+                  <ProfessionalEdit professional_id={match.params.id}/>
+                )} />
+                <Route path="/editar/cliente/:id/" render={({ match }) => (
+                  <ClientEdit client_id={match.params.id}/>
+                )} />
+              </Switch>
+            </div>
           </ErrorBoundary>
+          <Footer/>
         </div>
       </MuiThemeProvider>
     );

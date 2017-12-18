@@ -10,6 +10,11 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import $ from 'jquery';
+window.jQuery = window.$ = $;
+require('bootstrap/dist/js/bootstrap.bundle');
+
 const store = createAppStore();
 
 axios.interceptors.response.use((response) => {

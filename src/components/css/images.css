@@ -44,6 +44,11 @@
   height: 180px;
 }
 
+.text-sized-image{
+  height: 2em;
+  width: 2em;
+}
+
 .center-cropped {
   background-position: center center;
   background-repeat: no-repeat;

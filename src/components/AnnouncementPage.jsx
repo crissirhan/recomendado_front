@@ -155,12 +155,12 @@ class AnnouncementPage extends Component {
         <div class="row">
 
           <div class="col-lg-3">
-            <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
-            <div>
-              <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+            <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+              <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
+              <div>
                 {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
 
           <div class="col-lg-9">

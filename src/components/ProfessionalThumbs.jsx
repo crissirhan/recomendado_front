@@ -36,7 +36,7 @@ class ProfessionalThumbs extends Component {
       return null;
     }
     return (
-      <CardGroup >
+      <CardGroup>
         <Row>
           {this.state.random_reviews.map(review =>
             <ProfessionalThumb review={review} professional={review.service.announcement.professional} professional_id={review.service.announcement.professional.id} key={review.id.toString()}/>
