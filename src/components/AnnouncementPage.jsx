@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter, Collapse} from 'reactstrap';
+import { Col, Jumbotron, Button, Row, Card, CardTitle, CardText, CardGroup, Modal, ModalBody, ModalHeader, ModalFooter, Collapse} from 'reactstrap';
 import getAnnouncements from '../actions/get_announcements';
 import getReviews from '../actions/get_reviews';
 import './css/images.css';
@@ -18,7 +18,7 @@ import { updateSearchParams } from '../actions/search'
 import { withRouter } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import ReviewCardGroup from './ReviewCardGroup'
+import ReviewList from './ReviewList'
 import './css/loading.css'
 
 class AnnouncementPage extends Component {
@@ -26,7 +26,7 @@ class AnnouncementPage extends Component {
   componentDidMount(){
     //this.props.updateSearchParams({search:this.state.searchTerm, visible:true})
     this.props.getAnnouncements({'id':this.props.announcement_id});
-    this.props.getReviews({announcement_id:this.props.announcement_id,page_size:3, ordering:'-date'})
+    this.props.getReviews({announcement_id:this.props.announcement_id,page_size:10, ordering:'-date'})
   }
 
   componentWillReceiveProps(nextProps){
@@ -135,13 +135,13 @@ class AnnouncementPage extends Component {
   }
   render(){
     if(this.state.loading || !this.state.announcement_reviews){
-      return <Container><div class="loader"></div></Container>
+      return <div class="container"><div class="loader"></div></div>
     }
     if(this.state.error){
-      return <Container>Ha ocurrido un error</Container>
+      return <div class="container">Ha ocurrido un error</div>
     }
     if(!this.state.announcement){
-      return <Container>Ha ocurrido un error</Container>
+      return <div class="container">Ha ocurrido un error</div>
     }
     let owner = false;
     if(cookie.load('user') && cookie.load('user').id === this.state.announcement.professional.id && cookie.load('isProfessional') === "true"){
@@ -150,99 +150,69 @@ class AnnouncementPage extends Component {
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
     return (
-      <Container className="container">
-        <Row style={{marginBottom:25}}>
-          <Col >
-            <h1 className="display-3">{this.state.announcement.title}</h1>
-            <img className="center-cropped announcement-thumbnail" src={this.state.announcement.announcement_thumbnail} alt="Imagen Aviso" />
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-3">
+            <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
             <div>
-              <Rating
-                empty="fa fa-star-o fa-2x orange-star"
-                full="fa fa-star fa-2x orange-star"
-                initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
-                readonly
-              />
+              <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+                {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
+              </Link>
             </div>
-            <div>
-              <small style={{textAlign:"center"}}className="text-muted">{new Date(this.state.announcement.publish_date).toLocaleDateString()}</small>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="card mt-4">
+              <img class="card-img-top img-fluid" src={this.state.announcement.announcement_thumbnail} alt=""/>
+              <div class="card-body">
+                <div>
+                  <small>{new Date(this.state.announcement.publish_date).toLocaleDateString()}</small>
+                </div>
+                <h3 class="card-title">{this.state.announcement.title}</h3>
+                <h4>{this.state.announcement.price ? '$'+this.state.announcement.price : 'Precio no definido'}</h4>
+                <p class="card-text">{this.state.announcement.description}</p>
+                <p class="card-text">{this.state.announcement.location}</p>
+                <p class="card-text">{this.state.announcement.availability_display}</p>
+                <p className="lead" style={{marginBottom:25}}>
+                  {this.state.announcement.job_tags.map(tag => {
+                    return <Button color="link" key={tag.id}>
+                      <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                        {tag.job.job_sub_type}
+                      </Link>
+                    </Button>
+                  })}
+                </p>
+                <span >
+                  <Rating
+                    class="text-warning"
+                    empty="fa fa-star-o fa-2x orange-star"
+                    full="fa fa-star fa-2x orange-star"
+                    initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
+                    readonly
+                  />
+                </span>
+                {Math.round( this.state.announcement.review_average * 10) / 10} estrellas
+
+                {cookie.load('isClient') == "true" ? <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
+                <Collapse isOpen={this.state.contact_collapse}>
+                  <div>
+                    <div>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
+                    <div>{this.state.announcement.professional.phone_number}</div>
+                    <div>{this.state.announcement.professional.user.email}</div>
+                  </div>
+                </Collapse> </div>: null}
+              </div>
             </div>
-          </Col>
-          <Col sm="2">
-            {cookie.load('isClient') == "true" ? <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
-            <Collapse isOpen={this.state.contact_collapse}>
-              <div>
-                <div>Nombre: {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
-                <div>Número de teléfono: {this.state.announcement.professional.phone_number}</div>
-                <div>Correo electrónico: {this.state.announcement.professional.user.email}</div>
-              </div>
-            </Collapse> </div>: null}
-            { owner ? <Link to={'/editar/anuncio/'+this.state.announcement.id}><Button>Editar Aviso</Button></Link> : null}
-          </Col>
-        </Row>
-        <div style={{marginBottom:25}}>
-          <i><p className="lead">{this.state.announcement.description}</p></i>
-        </div>
-        <div className="text-left">
-          <Row>
-            <Col>
-              <p>→Ubicación: {this.state.announcement.location}</p>
-            </Col>
-            <Col>
-              <p>→Monto: ${this.state.announcement.price}</p>
-            </Col>
-          </Row>
-        </div>
-        <div className="text-left" style={{marginBottom:25}}>
-          <Row>
-            <Col>
-              <p>→Disponibilidad: {this.state.announcement.availability_display}</p>
-            </Col>
-            <Col>
-              {/*}<p>→Movilidad: {this.state.announcement.movility}</p>*/}
-            </Col>
-          </Row>
-        </div>
-        <div>
-          <p className="lead" style={{marginBottom:25}}>Tags:
-            {this.state.announcement.job_tags.map(tag => {
-              return <Button color="link" key={tag.id}>
-                <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
-                  {tag.job.job_sub_type}
-                </Link>
-              </Button>
-            })}
-          </p>
-        </div>
-        <div>
-          <Row style={{marginBottom:25}}>
-            <Col sm="4">
-              <img className="img-circle center-cropped professional-profile" src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
-            </Col>
-            <Col>
-              <div>
-                <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-                  {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-                </Link>
-              </div>
-              {this.state.announcement.professional.experience? <div>
-                <i>"{this.state.announcement.professional.experience}"</i>
-              </div> : null}
-            </Col>
-          </Row>
-        </div>
-        <div>
-          <Container>
-            <p className="h4"><b>Reviews</b></p>
-            <Jumbotron>
-              <ReviewCardGroup
+            <ReviewList
               reviews={this.props.reviews.result}
               pagination={this.props.reviews.pagination}
               handlePageChange={this.handleReviewPageChange.bind(this)}
               />
-            </Jumbotron>
-          </Container>
+          </div>
         </div>
-      </Container>
+      </div>
      )
   }
 }
