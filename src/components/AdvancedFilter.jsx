@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 import getSubJobCategories from '../actions/get_job_sub_categories';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import Rating from 'react-rating';
@@ -32,7 +30,9 @@ class AdvancedFilter extends Component {
       min_price:'',
       max_price:'',
       min_rating:0,
-      visible:true
+      visible:true,
+      search:'',
+      page_size:6
     };
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -101,13 +101,18 @@ class AdvancedFilter extends Component {
   render() {
     return (
       <Form>
+        <FormGroup>
+          <Label for="search">Búsqueda general</Label>
+          <Input type="text" name="search" id="search"
+          value={this.state.search} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
+        </FormGroup>
          <FormGroup>
-           <Label for="exampleEmail">Título del aviso</Label>
+           <Label for="title">Título del aviso</Label>
            <Input type="text" name="title" id="title"
            value={this.state.title} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
          </FormGroup>
          <FormGroup>
-           <Label for="exampleEmail">Descripción del aviso</Label>
+           <Label for="description">Descripción del aviso</Label>
            <Input type="text" name="description" id="description"
            value={this.state.description} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
          </FormGroup>
@@ -151,17 +156,7 @@ class AdvancedFilter extends Component {
               onChange={this.handleMaxDateChange.bind(this)}
            />
          </FormGroup>
-         <FormGroup>
-           <Label for="job">Tags</Label>
-           <Select
-              name="form-field-name"
-              value={this.state.tags}
-              multi={true}
-              placeholder={'Tags'}
-              options={this.props.job_sub_categories ? this.props.job_sub_categories.map((tag) => {return {value:tag.id, label:tag.job_sub_type}}) : []}
-              onChange={this.handleTagChange.bind(this)}
-            />
-         </FormGroup>
+
          <FormGroup>
            <Label for="rating">Rating mínimo</Label>
            <Rating

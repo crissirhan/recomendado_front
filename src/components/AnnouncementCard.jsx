@@ -18,48 +18,33 @@ class AnnouncementCard extends Component {
       image_url = this.props.announcement.professional.profile_picture
     }
     let announcement = this.props.announcement
-    return (
-              <Card className="shadow-box round-border" style={{marginBottom:20,minHeight:300,height:300,width:230, overflow:"hidden" }} size="sm" >
-                <Link to ={'/avisos/' + announcement.id}>
-                  <CardImg top style={{height:142,width:230}} src={announcement.announcement_thumbnail} />
-                </Link>
-
-                <Row>
-                  <Col sm="1">
-                    <img className="center-cropped img-circle" style={{height:24,width:24}} src={announcement.professional.profile_picture} />
-                  </Col>
-                  <Col>
-                    <Link to={'/profesionales/' + announcement.professional.id}>
-                      <p style={{fontSize:16}}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</p>
+    return (<div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="#"></a>
+                  <Link to ={'/avisos/' + announcement.id}>
+                    <img class="card-img-top" src={announcement.announcement_thumbnail} alt=""/>
+                  </Link>
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <Link to ={'/avisos/' + announcement.id}>
+                        {announcement.title}
+                      </Link>
+                    </h4>
+                    <h5>{announcement.price? '$'+announcement.price : 'Precio no definido'}</h5>
+                    <p class="card-text">{announcement.description}</p>
+                    <Link class="card-text row" to={'/profesionales/' + announcement.professional.id}>
+                      {announcement.professional.user.first_name} {announcement.professional.user.last_name} {announcement.professional.profile_picture? <img className="center-cropped img-circle text-sized-image" src={announcement.professional.profile_picture}/> : null}
                     </Link>
-                  </Col>
-                </Row>
-                <Link to ={'/avisos/' + announcement.id}>
-                  <CardTitle>{announcement.title}</CardTitle>
-                </Link>
-                <Row style={{height:26, position:"absolute", bottom:10, fontSize:"10px"}}>
-                  <Col sm="1">
+                  </div>
+                  <div class="card-footer">
                     <Rating className="text-center" syle={{fontSize:"10px"}}
-                        empty="fa fa-star-o fa-2x orange-star"
-                        full="fa fa-star fa-2x orange-star"
-                        initialRate={1}
-                        stop={1}
+                        empty="fa fa-star-o fa-2x orange-star text-muted small"
+                        full="fa fa-star fa-2x orange-star text-muted small"
+                        initialRate={announcement.review_average ? Math.round(announcement.review_average * 10) / 10 : 0}
                         readonly/>
-                  </Col>
-                  <Col>
-                    <CardText style={{}}>
-                      <Row>
-                        <Col sm="1">
-                          <p style={{color:"#ffbf00", fontSize:"14px", marginLeft:-5 }}>{announcement.review_average ? Math.round(announcement.review_average * 10) / 10 : 0}</p>
-                        </Col>
-                        <Col>
-                          <p style={{color: "#b2b2b2", fontSize:"14px", marginLeft:-10}}>({announcement.review_count} evaluaciones)</p>
-                        </Col>
-                      </Row>
-                    </CardText>
-                  </Col>
-                </Row>
-              </Card>
+                  </div>
+                </div>
+              </div>
     );
   }
 }

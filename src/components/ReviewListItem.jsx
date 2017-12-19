@@ -25,7 +25,7 @@ class ReviewListItem extends Component {
             initialRate={review.rating}
             readonly/>
         <p>{review.client_comment}</p>
-        <small class="text-muted">Evaluado por {review.service.client.user.first_name} {review.service.client.user.last_name} {image_url ? <img class="center-cropped text-sized-image" src={image_url}/> : null} el {new Date(review.date).toLocaleDateString()}</small>
+        <small class="text-muted">Evaluado por {review.service.client.user.first_name} {review.service.client.user.last_name} {image_url ? <img class="text-sized-image" src={image_url}/> : null} el {new Date(review.date).toLocaleDateString()}</small>
       </div>
     )
   }
