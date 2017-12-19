@@ -92,7 +92,7 @@ class AnnouncementsListElement extends Component {
                         {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
                       </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-8 text-left">
                       <div>
                         <Link to ={'/avisos/' + announcement.id}>
                           <CardTitle><b>{announcement.title}</b></CardTitle>
