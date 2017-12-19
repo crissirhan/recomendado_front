@@ -107,10 +107,10 @@ class ServiceListElement extends Component {
     } else if (service.professional_rejected) {
       border_color = 'red'
     } else if (service.hired) {
-      border_color = 'GreenYellow'
+      border_color = 'YellowGreen'
     }
     console.log(service)
-    return (  <div class="card card-outline-primary mb-3 shadow-box round-border" key={announcement.id}>
+    return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{border: "2px solid", borderColor:border_color}}>
                 <div class="card-block">
                   <div class="row">
                   <div class="col-2">
@@ -153,8 +153,9 @@ class ServiceListElement extends Component {
                     </div>
                   </div>
                   <div class="col-4" >
-                    <Button type="button" class="close danger" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right"}}>
-                      <span aria-hidden="true">&times;</span>
+
+                    <Button type="button" class="close danger" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
+                      <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                     </Button>
 
                     {this.state.pending ? <div>

@@ -266,22 +266,30 @@ class ClientPage extends Component {
               </Card>
             </Col>
         </Row>
-        <Container>
+        <div>
           <p></p>
           <p></p>
-        </Container>
-        <Container>
-          <Row style={{marginTop:100}}>
+        </div>
+        <div>
+          <div class="row" style={{marginTop:100}}>
             <p className="h4"><b>Servicios Contactados</b></p>
-            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link"><p className="h8" style={{top:0}}>Todos</p></Button>
+            <button type="button" class="btn btn-link"  onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link">
+              <p className="h8" style={{top:0}}>Todos</p>
+            </button>
             <p  style={{top:0}}> | </p>
-            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link"><p className="h8" style={{top:0}}>Pendientes</p></Button>
+            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
+              <p className="h8" style={{top:0}}>Pendientes</p>
+            </button>
             <p  style={{top:0}}> | </p>
-            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link"><p className="h8" style={{top:0}}>Aceptados</p></Button>
+            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
+              <p className="h8" style={{top:0}}>Aceptados</p>
+            </button>
             <p  style={{top:0}}> | </p>
-            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link"><p className="h8" style={{top:0}}>Rechazados</p></Button>
-          </Row>
-          <Jumbotron>
+            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
+              <p className="h8" style={{top:0}}>Rechazados</p>
+            </button>
+          </div>
+          <div>
             {this.props.services.loading? null : <Select
                name="contacted-order-by"
                multi={false}
@@ -294,7 +302,7 @@ class ClientPage extends Component {
                placeholder={'Ordenar por...'}
 
              />}
-            <ListGroup>
+            <div>
               {this.state.owner ? <ServiceListGroup
                 services={this.state.contacted_services}
                 pagination={this.state.contacted_pagination}
@@ -303,11 +311,11 @@ class ClientPage extends Component {
                 loading = {this.props.services.loading}
                 />
               : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-            </ListGroup>
-          </Jumbotron>
-        </Container>
-        <Container>
-        <Row style={{marginTop:100}}>
+            </div>
+          </div>
+        </div>
+        <div>
+        <div class="row" style={{marginTop:100}}>
           <p className="h4"><b>Servicios Contratados</b></p>
           <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredAllParams})} color="link"><p className="h8" style={{top:0}}>Todos</p></Button>
           <p  style={{top:0}}> | </p>
@@ -315,8 +323,8 @@ class ClientPage extends Component {
           <p  style={{top:0}}> | </p>
           <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredParamsReviewed})} color="link"><p className="h8" style={{top:0}}>Evaluados</p></Button>
 
-        </Row>
-          <Jumbotron>
+        </div>
+          <div>
             {this.props.services.loading ? null : <Select
                name="hired-order-by"
                multi={true}
@@ -329,7 +337,7 @@ class ClientPage extends Component {
                placeholder={'Ordenar por...'}
 
              />}
-            <ListGroup>
+            <div>
               {this.state.owner ? <ServiceAnnouncementListGroup
                 services={this.state.hired_services}
                 pagination={this.state.hired_pagination}
@@ -339,9 +347,9 @@ class ClientPage extends Component {
                 loading = {this.props.services.loading}
                 />
               : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-            </ListGroup>
-          </Jumbotron>
-        </Container>
+            </div>
+          </div>
+        </div>
 
     </Container>
     );
