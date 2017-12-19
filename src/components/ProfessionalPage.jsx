@@ -27,7 +27,7 @@ import './css/box.css';
 import AnnouncementForm from './AnnouncementForm';
 import { ENDPOINT_URI } from '../Globals';
 import AnnouncementListGroup from './AnnouncementListGroup'
-import ReviewCardGroup from './ReviewCardGroup'
+import ReviewList from './ReviewList'
 import './css/loading.css'
 
 class ProfessionalPage extends Component {
@@ -261,7 +261,7 @@ class ProfessionalPage extends Component {
         <Container>
           <p className="h4"><b>Reviews</b></p>
           <Jumbotron>
-            <ReviewCardGroup
+            <ReviewList
             reviews={this.props.reviews.result}
             pagination={this.props.reviews.pagination}
             handlePageChange={this.handleReviewPageChange.bind(this)}

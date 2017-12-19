@@ -65,51 +65,56 @@ class AnnouncementsListElement extends Component {
     }
     let announcement = this.props.announcement
     let today = new Date()
-    return (  <ListGroupItem style={{marginBottom:20}} className="shadow-box round-border" key={announcement.id}>
-                <Col sm="3">
-                  <Rating className="text-center"
-                      empty="fa fa-star-o fa-2x orange-star"
-                      full="fa fa-star fa-2x orange-star"
-                      initialRate={announcement.review_average}
-                      readonly/>
-                  <div>
-                    <small style={{textAlign:"center"}}className="text-muted">{announcement.review_count} evaluaciones</small>
-                  </div>
+    return (
+              <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id}>
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-3">
+                      <Rating className="text-center"
+                          empty="fa fa-star-o fa-2x orange-star medium"
+                          full="fa fa-star fa-2x orange-star medium"
+                          initialRate={announcement.review_average}
+                          readonly/>
+                      <div>
+                        <small style={{textAlign:"center"}}className="text-muted">{announcement.review_count} evaluaciones</small>
+                      </div>
 
-                  <div>
-                    Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                      <div>
+                        Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                      </div>
+                      <div>
+                        Expira: {this.state.expire_date.toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                      </div>
+                      <div>
+                        {today > this.state.expire_date ? <font size="3" color="red">EXPIRADO</font> : <font size="3" color="gray">Vigente</font>}
+                      </div>
+                      <div>
+                        {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div>
+                        <Link to ={'/avisos/' + announcement.id}>
+                          <CardTitle><b>{announcement.title}</b></CardTitle>
+                        </Link>
+                      </div>
+                      <div>
+                        <i>{announcement.description}</i>
+                      </div>
+                      <div >
+                        tags: {announcement.job_tags.map((tag,index) => {
+                          return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
+                        })}
+                      </div>
+                    </div>
+                    <div class="col-1">
+                      <div>
+                        {this.props.visible_button ? <SwitchButton label={this.state.visible? 'Visible' : 'Oculto'} key={announcement.id} name={"switch-"+announcement.id} defaultChecked={announcement.visible} onChange={this.handleSwitchChange.bind(this)} />: null}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    Expira: {this.state.expire_date.toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                  </div>
-                  <div>
-                    {today > this.state.expire_date ? <font size="3" color="red">EXPIRADO</font> : <font size="3" color="gray">Vigente</font>}
-                  </div>
-                  <div>
-                    {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
-                  </div>
-                </Col>
-                <Col style={{marginTop:-90}}>
-                  <div>
-                    <Link to ={'/avisos/' + announcement.id}>
-                      <CardTitle><b>{announcement.title}</b></CardTitle>
-                    </Link>
-                  </div>
-                  <div>
-                    <i>{announcement.description}</i>
-                  </div>
-                  <div style={{allign:"right", bottom: -90, position: "absolute"}}>
-                    tags: {announcement.job_tags.map((tag,index) => {
-                      return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
-                    })}
-                  </div>
-                </Col>
-                <Col sm="1" style={{marginTop:-100}}>
-                  <div>
-                    {this.props.visible_button ? <SwitchButton label={this.state.visible? 'Visible' : 'Oculto'} key={announcement.id} name={"switch-"+announcement.id} defaultChecked={announcement.visible} onChange={this.handleSwitchChange.bind(this)} />: null}
-                  </div>
-                </Col>
-              </ListGroupItem>
+                </div>
+              </div>
     );
   }
 }

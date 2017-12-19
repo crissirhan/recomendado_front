@@ -18,10 +18,10 @@ class AnnouncementCardGroup extends Component {
   render() {
     return (
       <div>
-        <ListGroup>
+        <div>
           {this.props.announcements.map(announcement =>
             <AnnouncementListElement announcement={announcement} extend_button={this.props.extend_button} visible_button={this.props.visible_button} />)}
-        </ListGroup>
+        </div>
         <Pagination
           activePage={this.props.pagination.current}
           itemsCountPerPage={this.props.pagination.page_size}
