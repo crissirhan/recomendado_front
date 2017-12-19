@@ -24,6 +24,7 @@ import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
 import AnnouncementForm from './components/AnnouncementForm';
 import ListAnnouncements from './components/ListAnnouncements';
+import SearchPage from './components/SearchPage';
 import AnnouncementPage from './components/AnnouncementPage';
 import ServicePage from './components/ServicePage'
 import {
@@ -42,7 +43,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import Footer from './components/Footer'
-import 'bootstrap/dist/css/bootstrap.css';
 import './components/css/page.css';
 
 class App extends Component {
@@ -97,11 +97,8 @@ class App extends Component {
                 <Route path="/login/" render={({ match }) => (
                   <Container><LoginForm /></Container>
                 )} />
-                <Route path="/buscar/avisos/:query" render={({ match }) => (
-                  <ListAnnouncements search={match.params.query}/>
-                )} />
                 <Route exact path="/buscar/avisos/" render={({ match }) => (
-                  <ListAnnouncements search={''}/>
+                  <SearchPage/>
                 )} />
                 <Route path="/crear/anuncio/" render={({ match }) => (
                   <AnnouncementForm/>

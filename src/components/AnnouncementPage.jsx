@@ -156,7 +156,7 @@ class AnnouncementPage extends Component {
 
           <div class="col-lg-3">
             <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-              <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture} alt="foto perfil" />
+              <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture} alt="" />
               <div>
                 {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
               </div>
@@ -172,7 +172,7 @@ class AnnouncementPage extends Component {
                 </div>
                 <h3 class="card-title">{this.state.announcement.title}</h3>
                 <h4>{this.state.announcement.price ? '$'+this.state.announcement.price : 'Precio no definido'}</h4>
-                <p class="card-text">{this.state.announcement.description}</p>
+                <p class="card-text">{this.state.announcement.description.substr(0,20)+'...'}</p>
                 <p class="card-text">{this.state.announcement.location}</p>
                 <p class="card-text">{this.state.announcement.availability_display}</p>
                 <p className="lead" style={{marginBottom:25}}>

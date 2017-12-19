@@ -18,11 +18,11 @@ class AnnouncementCardGroup extends Component {
   render() {
     return (
       <div>
-        <CardGroup>
+        <div class="row">
           {this.props.announcements.map(announcement =>
-            <Col height="360px" sm="3" key={announcement.id}><AnnouncementCard announcement={announcement}/></Col>
+            <AnnouncementCard announcement={announcement} key={announcement.id}/>
           )}
-        </CardGroup>
+        </div>
         <Pagination
           activePage={this.props.pagination.current}
           itemsCountPerPage={this.props.pagination.page_size}

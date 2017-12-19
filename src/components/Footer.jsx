@@ -11,7 +11,7 @@ class Footer extends React.Component {
     return(
       <footer class="py-5 bg-dark footer">
         <div class="container">
-          <p class="m-0 text-center text-white">Copyright &copy; Recomendado 2017</p>
+          <p class="m-0 text-center text-white">Recomendado 2017</p>
         </div>
       </footer>
     )
