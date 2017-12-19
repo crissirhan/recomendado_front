@@ -37,9 +37,10 @@ class AnnouncementCard extends Component {
                     </Link>
                   </div>
                   <div class="card-footer">
-                    <Rating className="text-center" syle={{fontSize:"10px"}}
-                        empty="fa fa-star-o fa-2x orange-star text-muted small"
-                        full="fa fa-star fa-2x orange-star text-muted small"
+                    <Rating
+                        className="text-center" 
+                        empty="fa fa-star-o fa-2x orange-star text-muted"
+                        full="fa fa-star fa-2x orange-star text-muted"
                         initialRate={announcement.review_average ? Math.round(announcement.review_average * 10) / 10 : 0}
                         readonly/>
                   </div>
