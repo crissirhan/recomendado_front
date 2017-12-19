@@ -110,71 +110,67 @@ class ServiceListElement extends Component {
       border_color = 'GreenYellow'
     }
     console.log(service)
-    return (
-      <ListGroupItem style={{marginBottom:20, minHeight:200, borderColor:border_color}} className="shadow-box round-border" key={announcement.id}>
-                <Row>
-                  <Col sm="2">
+    return (  <div class="card card-outline-primary mb-3 shadow-box round-border" key={announcement.id}>
+                <div class="card-block">
+                  <div class="row">
+                  <div class="col-2">
                     <Link to={'/profesionales/' + announcement.professional.id}>
-                      <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture} />
+                      {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture} /> : null}
                       <div>
                         {announcement.professional.user.first_name} {announcement.professional.user.last_name}
                       </div>
                     </Link>
-                  </Col>
-                  <Col style={{marginTop:0}} sm="6">
+                  </div>
+                  <div class="col-6">
                     <div>
                       <Link to ={'/avisos/' + announcement.id}>
                         <CardTitle><b>{announcement.title}</b></CardTitle>
                       </Link>
                     </div>
-
                     <div>
-                      <Row>
-                        <Col>
-                          <div  syle={{fontSize:"10px"}}>
+                      <div class="row">
+                        <div class="col">
+                          <div >
                             <Rating className="text-center"
-                                empty="fa fa-star-o fa-2x orange-star"
-                                full="fa fa-star fa-2x orange-star"
+                                empty="fa fa-star-o fa-2x orange-star medium"
+                                full="fa fa-star fa-2x orange-star medium"
                                 initialRate={service.review_average}
                                 readonly/>
                           </div>
-                        </Col>
-                        <Col>
-                          <small style={{textAlign:"center", marginLeft:-70}}className="text-muted">{service.review_count? service.review_count : 0} evaluaciones</small>
-                        </Col>
-                      </Row>
+                        </div>
+                        <div class="col">
+                          <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
+                        </div>
+                      </div>
                     </div>
-                    <div>
+                    {announcement.announcement_thumbnail ? <div>
                       <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail} />
-                    </div>
-                    <div style={{allign:"right", }}>
+                    </div> : null}
+                    <div class="text-right">
                       tags: {announcement.job_tags.map((tag,index) => {
                         return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
                       })}
                     </div>
-                  </Col>
-                  <Col sm="4" style={{width:500}}>
-                    <Button type="button" class="close" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right"}}>
+                  </div>
+                  <div class="col-4" >
+                    <Button type="button" class="close danger" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right"}}>
                       <span aria-hidden="true">&times;</span>
                     </Button>
+
+                    {this.state.pending ? <div>
+                      <div>
+                        <b>Teléfono: {announcement.professional.phone_number}</b>
+                      </div>
+                      <div>
+                        <b>Email: {announcement.professional.user.email}</b>
+                      </div>
+                    </div> : null}
                     <div>
                       Contactado:  {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                     </div>
-                    {this.props.pending ? <div style={{marginTop:30}}><div>
-                      <b>Teléfono: {announcement.professional.phone_number}</b>
-                    </div>
-                    <div>
-                      <b>Email: {announcement.professional.user.email}</b>
-                    </div>
-                    <div>
-                      Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                    </div>
-                    <div>
-                      Contactado: {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                    </div></div> : null}
                     { !this.state.pending ? <div style={{marginTop:30}}>
                         <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
-                        <Collapse isOpen={this.state.contactAgain}>
+                        <Collapse isOpen={this.state.contactAgain && false}>
                           <div>
                             <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
                             <div>Número de teléfono: {announcement.professional.phone_number}</div>
@@ -195,12 +191,10 @@ class ServiceListElement extends Component {
                           </Col>
                         </Row>
                       </div>}
-                  </Col>
-                  <Col>
-
-                  </Col>
-                </Row>
-              </ListGroupItem>
+                  </div>
+              </div>
+            </div>
+          </div>
     );
   }
 }

@@ -84,56 +84,62 @@ class AnnouncementsListElement extends Component {
     let announcement = service.announcement
     let today = new Date()
     let review = ((service.review ? service.review.length : -1) > 0) ? service.review[0] : {}
-    return (  <ListGroupItem style={{marginBottom:20}} className="shadow-box round-border" key={announcement.id}>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>
-                    <ModalBody>
-                      <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
-                    </ModalBody>
-                  </Modal>
-                <Col sm="3">
-                  <Rating className="text-center"
-                      empty="fa fa-star-o fa-2x orange-star"
-                      full="fa fa-star fa-2x orange-star"
-                      initialRate={review.rating}
-                      onClick={this.handleStarChange.bind(this)}
-                      readonly={review.rating || this.state.reviewed}
-                      />
-                  {review.rating || this.state.reviewed ? <p style={{color: "#b2b2b2", fontSize:"14px", marginLeft:-10}}>Evaluación completa</p>
-                  : <p style={{color: "#FF0000", fontSize:"14px", marginLeft:-10}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
-                  <Link to={'/profesionales/' + announcement.professional.id}>
-                    <img className="center-cropped img-circle" style={{height:90,width:90}} src={announcement.professional.profile_picture} />
-                    <p style={{}}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</p>
-                  </Link>
-                  <div>
-                    {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
+    return (
+              <div class="card card-outline-primary mb-3 shadow-box round-border" key={announcement.id}>
+                <div class="card-block">
+                  <div class="row">
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                          <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>
+                          <ModalBody>
+                            <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
+                          </ModalBody>
+                        </Modal>
+                      <div class="col-3">
+                        <Rating className="text-center"
+                            empty="fa fa-star-o fa-2x orange-star"
+                            full="fa fa-star fa-2x orange-star"
+                            initialRate={review.rating}
+                            onClick={this.handleStarChange.bind(this)}
+                            readonly={review.rating || this.state.reviewed}
+                            />
+                        {review.rating || this.state.reviewed ? <p class="text-center" style={{color: "#b2b2b2", fontSize:"14px"}}>Evaluación completa</p>
+                        : <p class="text-center" style={{color: "#FF0000", fontSize:"14px"}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
+                        <Link to={'/profesionales/' + announcement.professional.id}>
+                          <img className="center-cropped img-circle" style={{height:90,width:90}} src={announcement.professional.profile_picture} />
+                          <p style={{}}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</p>
+                        </Link>
+                        <div>
+                          {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
+                        </div>
+                      </div>
+                      <div class="col" >
+                        <div>
+                          <Link to ={'/avisos/' + announcement.id}>
+                            <div class="card-title"><b>{announcement.title}</b></div>
+                          </Link>
+                        </div>
+                        <div>
+                          <i>{announcement.description}</i>
+                        </div>
+                        <div>
+                          tags: {announcement.job_tags.map((tag,index) => {
+                            return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
+                          })}
+                        </div>
+                      </div>
+                      <div class="col-3" >
+                        <div>
+                          Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                        </div>
+                        <div>
+                          Contratado: {new Date(service.hired_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                        </div>
+                        {announcement.announcement_thumbnail? <img  style={{height:150,width:200}} src={announcement.announcement_thumbnail} /> : null}
+                      </div>
+                    </div>
                   </div>
-                </Col>
-                <Col style={{marginTop:-90}}>
-                  <div>
-                    <Link to ={'/avisos/' + announcement.id}>
-                      <CardTitle><b>{announcement.title}</b></CardTitle>
-                    </Link>
-                  </div>
-                  <div>
-                    <i>{announcement.description}</i>
-                  </div>
-                  <div style={{allign:"right", bottom: -90, position: "absolute"}}>
-                    tags: {announcement.job_tags.map((tag,index) => {
-                      return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
-                    })}
-                  </div>
-                </Col>
-                <Col sm="3" style={{marginTop:-0}}>
-                  <div>
-                    Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                  </div>
-                  <div>
-                    Contratado: {new Date(service.hired_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                  </div>
-                  <img  style={{height:150,width:200}} src={announcement.announcement_thumbnail} />
-                </Col>
-              </ListGroupItem>
+                </div>
+
     );
   }
 }

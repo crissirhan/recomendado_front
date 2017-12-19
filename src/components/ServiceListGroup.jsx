@@ -27,10 +27,10 @@ class ServiceListGroup extends Component {
     }
     return (
       <div>
-        <ListGroup>
+        <div>
           {this.props.services.map(service =>
             <ServiceListElement key={service.id} service={service} />)}
-        </ListGroup>
+        </div>
         <Pagination
           activePage={this.props.pagination.current}
           itemsCountPerPage={this.props.pagination.page_size}

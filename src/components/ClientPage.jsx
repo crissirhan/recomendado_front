@@ -52,9 +52,9 @@ class ClientPage extends Component {
         this.updateServices()
       }
     }
-    if(nextProps.put_service != this.props.put_service && false){
+    if(nextProps.put_service != this.props.put_service ){
       if(nextProps.put_service.success){
-        this.updateServices()
+        this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})
       }
     }
     if(nextProps.client_id !== this.props.client_id){
