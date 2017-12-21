@@ -5,8 +5,8 @@ import getProfessional from '../actions/get_professional';
 import getClient from '../actions/get_client';
 import { bindActionCreators } from 'redux';
 import Rating from 'react-rating';
-import './css/font-awesome/css/font-awesome.min.css';
 import './css/rating/rating.css';
+import './css/font-awesome/css/font-awesome.min.css';
 import { Card, CardBlock, Button, CardTitle, CardText, CardImg, Col } from 'reactstrap';
 import ClientName from './ClientName';
 import {
@@ -49,26 +49,26 @@ class ProfessionalThumb extends Component {
     let image_url = this.props.professional.profile_picture ? this.props.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     let comment = <div><div>"{this.props.review.client_comment}"</div><div style={{marginTop:5}}> <b>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</b></div></div>
     return (
-      <Col sm="4" key={this.props.professional.id} style={{minWidth:220}}>
-        <Card className="shadow-box round-border text-center">
-          <img className="review-thumb center-cropped img-circle" src={image_url}/>
-          <Link to={'/profesionales/'+this.props.professional.id+'/'}>
-            <CardTitle>{this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}</CardTitle>
-          </Link>
-          <Rating
-            empty="fa fa-star-o fa-2x orange-star"
-            full="fa fa-star fa-2x orange-star"
+      <div class="col-sm-4" key={this.props.professional.id} >
+        <div class="team-member">
+          <img class="mx-auto rounded-circle" src={image_url} alt=""/>
+          <h4>
+            <Link to={'/profesionales/'+this.props.professional.id+'/'}>
+              {this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}
+            </Link>
+          </h4>
+          <div class="row small text-center">
+            <Rating
+            empty="fa fa-star-o fa-2x orange-star small center"
+            full="fa fa-star fa-2x orange-star small center"
             initialRate={this.state.average}
             readonly
-          />
-          <CardText>
+            />
             <small className="text-muted">{this.state.count} evaluaciones</small>
-          </CardText>
-          <CardText>
-            {comment}
-          </CardText>
-        </Card>
-      </Col>
+          </div>
+          <p class="text-muted">{comment}</p>
+        </div>
+      </div>
     );
   }
 }

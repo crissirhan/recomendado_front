@@ -12,8 +12,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import $ from 'jquery';
+import './components/css/home/agency.css';
+import './components/css/font-awesome/css/font-awesome.css';
 window.jQuery = window.$ = $;
 require('bootstrap/dist/js/bootstrap.bundle');
+
 
 const store = createAppStore();
 
@@ -24,10 +27,12 @@ axios.interceptors.response.use((response) => {
 
   return response
 }, (error) => {
-  for (var key in error.response.data) {
+  if(error.response){
+    for (var key in error.response.data) {
       if (error.response.data.hasOwnProperty(key)) {
         error.response.data[key].forEach(e => toast.error(key + ': ' + e))
       }
+    }
   }
   store.dispatch({ type: "RESPONSE_HAD_ERROR", error })
 

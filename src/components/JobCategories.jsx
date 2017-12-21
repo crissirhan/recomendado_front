@@ -29,13 +29,11 @@ class JobCategories extends Component {
 
   render() {
     return (
-      <CardGroup>
-        <Row>
-          {this.state.job_categories.map(category =>
-            <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category.job_type} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
-          )}
-        </Row>
-      </CardGroup>
+      <div class="row">
+        {this.state.job_categories.map(category =>
+          <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
+        )}
+      </div>
     );
   }
 }

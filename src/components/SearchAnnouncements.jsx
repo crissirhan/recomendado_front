@@ -63,9 +63,7 @@ class SearchAnnouncements extends Component {
           onRequestSearch={this.requestSearch}
           hintText="Buscar"
           style={{
-            margin: '0 auto',
-            maxWidth: 800,
-            minWidth: 700
+            margin: '100 auto',
           }}
         />
      )

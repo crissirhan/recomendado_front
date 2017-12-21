@@ -9,6 +9,7 @@ import {
   Jumbotron
 } from 'reactstrap';
 import './css/text.css';
+import { Link,} from 'react-router-dom';
 
 class Home extends Component {
 
@@ -23,20 +24,49 @@ class Home extends Component {
 
   render() {
     return (
-      <Container>
-        <div  style={{textAlign:"center"}}>
-          <h5 className="title"><b>Busca un Recomendado para tu hogar</b></h5>
-        </div>
-        <SearchAnnouncements/>
-        <div className="sub-title" style={{marginTop:"100px", textAlign:"center"}}><i><b>Explora las distintas categorías y servicios disponibles para tí</b></i></div>
-        <JobCategories/>
+      <div>
+        <header class="masthead">
+          <div class="container">
+            <div class="intro-text">
+              <div class="intro-lead-in">¿Buscas alguien que te pueda hacer un trabajo?</div>
+              <div class="intro-heading text-uppercase">Busca un Recomendado</div>
+              <SearchAnnouncements/>
+            </div>
+          </div>
+        </header>
 
-        <div  className="sub-title" style={{marginTop:"100px", textAlign:"center"}}><b>Recomendados Recientes</b></div>
-        <div  className="sub-sub-title" style={{textAlign:"center", marginBottom:"40px"}}><i>Qué están diciendo los clientes de sus trabajadores</i></div>
+        <section class="" id="portfolio">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2 class="section-heading text-uppercase">Categorías</h2>
+                <h3 class="section-subheading text-muted">Explora las distintas categorías y servicios disponibles para tí</h3>
+              </div>
+            </div>
+            <JobCategories/>
+          </div>
+        </section>
 
-        <ProfessionalThumbs/>
+        <section class="bg-light" id="recomendados">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2 class="section-heading text-uppercase">Recomendados Recientes</h2>
+                <h3 class="section-subheading text-muted">Lo que dicen los clientes de sus trabajadores</h3>
+              </div>
+            </div>
+            <ProfessionalThumbs/>
+            <div class="row">
+              <div class="col-lg-8 mx-auto text-center">
+                <p class="large text-muted">¿Quieres unirte? <Link to={'/registro/'}>Registrate</Link> y publica tus trabajos con nosotros</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      </Container>
+
+
+      </div>
     );
   }
 }
