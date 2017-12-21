@@ -19,17 +19,22 @@ class JobCategory extends Component {
     let url = this.props.url;
     let image_url = this.props.image ? this.props.image : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
     return (
-      <Col sm="4">
+      <div class="col-md-4 col-sm-6 portfolio-item" key={this.props.category.id}>
         <Link to={url}>
-          <Card className="no-border space-between">
-            <CardBlock style={{minHeight:80 }}>
-              <CardTitle className="text-center" style={{position:"absolute", width:"100%",bottom:0, marginBottom:10, fontSize: 32.0}}>{this.props.category}</CardTitle>
-            </CardBlock>
-
-          </Card>
-          <img className={this.props.image_class+' text-center'} src={image_url} alt="Imagen categoria" />
+          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+            <div class="portfolio-hover">
+              <div class="portfolio-hover-content">
+                {/*<i class="fa fa-plus fa-3x"></i> */}
+              </div>
+            </div>
+            <img class="img-fluid" src={image_url} alt=""/>
+          </a>
         </Link>
-      </Col>
+        <div class="portfolio-caption">
+          <h4>{this.props.category.job_type}</h4>
+          <p class="text-muted">{this.props.category.description}</p>
+        </div>
+      </div>
     );
   }
 }

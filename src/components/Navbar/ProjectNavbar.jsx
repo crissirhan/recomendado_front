@@ -13,9 +13,20 @@ import {bindActionCreators} from 'redux';
 import cookie from 'react-cookies';
 import getClientByUsername from '../../actions/get_client_by_username';
 import getProfessionalByUsername from '../../actions/get_professional_by_username';
+import ReactDOM from 'react-dom'
 
 class ProjectNavbar extends Component {
 
+  componentDidMount(){
+    this.updateWindowDimensions();
+    window.addEventListener('onscroll', this.updateWindowDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('onscroll', this.updateWindowDimensions);
+  }
+  updateWindowDimensions() {
+    this.setState({ offset: window.pageYOffset });
+  }
   componentWillReceiveProps(nextProps) {
 
     if(this.props != nextProps){
@@ -73,13 +84,16 @@ class ProjectNavbar extends Component {
       user:null,
       isClient:false,
       isProfessional:false,
-      announcementModal: false
+      announcementModal: false,
+      offset:0,
+      element:null
     };
     this.loginToggle = this.loginToggle.bind(this);
     this.signUpToggle = this.signUpToggle.bind(this);
     this.getLoggedInUserUrl = this.getLoggedInUserUrl.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.announcementToggle = this.announcementToggle.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   loginToggle(){
@@ -141,6 +155,10 @@ class ProjectNavbar extends Component {
 
   render() {
     let buttons = null;
+    if(this.state.element){
+      console.log(this.state.offset)
+
+    }
 
     let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
     if(aux_exists && (cookie.load('token') != undefined )){
@@ -173,13 +191,14 @@ class ProjectNavbar extends Component {
       </ul>
     }
     return (
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand" href='/'>
+          <a class="navbar-brand js-scroll-trigger" href='/'>
               Recomendado
           </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             {buttons}
