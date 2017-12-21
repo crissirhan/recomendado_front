@@ -17,6 +17,11 @@ import ReactDOM from 'react-dom'
 
 class ProjectNavbar extends Component {
 
+  componentDidUpdate(){
+    var rect = ReactDOM.findDOMNode(this).offsetTop;
+    console.log(rect);
+  }
+
   componentDidMount(){
     this.updateWindowDimensions();
     window.addEventListener('onscroll', this.updateWindowDimensions);

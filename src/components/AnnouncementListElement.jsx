@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import Truncate from 'react-truncate';
 
 class AnnouncementsListElement extends Component {
 
@@ -99,7 +100,9 @@ class AnnouncementsListElement extends Component {
                         </Link>
                       </div>
                       <div>
-                        <i>{announcement.description}</i>
+                        <Truncate lines={3} ellipsis={<span>... <a href='/link/to/article'>Read more</a></span>}>
+                          <i>{announcement.description}</i>
+                        </Truncate>
                       </div>
                       <div >
                         tags: {announcement.job_tags.map((tag,index) => {

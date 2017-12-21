@@ -20,15 +20,13 @@ class JobCategory extends Component {
     let image_url = this.props.image ? this.props.image : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
     return (
       <div class="col-md-4 col-sm-6 portfolio-item" key={this.props.category.id}>
-        <Link to={url}>
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                {/*<i class="fa fa-plus fa-3x"></i> */}
-              </div>
+        <Link class="portfolio-link" to={url}>
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              {/*<i class="fa fa-plus fa-3x"></i> */}
             </div>
-            <img class="img-fluid" src={image_url} alt=""/>
-          </a>
+          </div>
+          <img class="img-fluid" src={image_url} alt=""/>
         </Link>
         <div class="portfolio-caption">
           <h4>{this.props.category.job_type}</h4>
