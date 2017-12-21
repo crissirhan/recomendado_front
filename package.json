@@ -29,6 +29,7 @@
     "react-table": "^6.5.3",
     "react-toastify": "^2.2.0",
     "react-transition-group": "^1.2.0",
+    "react-truncate": "^2.3.0",
     "reactstrap": "^5.0.0-alpha.3",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
