@@ -178,7 +178,7 @@ class ProjectNavbar extends Component {
         </li>
         <li class="nav-item active">
           <div class="nav-link">
-            <Link t0={() => this.onLogout()}>
+            <Link to={this.props.location.pathname} onClick={() => this.onLogout()}>
               Logout
             </Link>
           </div>
