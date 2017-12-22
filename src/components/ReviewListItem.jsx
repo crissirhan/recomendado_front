@@ -43,7 +43,7 @@ class ReviewListItem extends Component {
     let review = this.props.review
     let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : null;
     return (
-      <div>
+      <div class="container" style={{display:'inline-block'}}>
         <div style={{border:'none'}} class="card">
           <Rating
               syle={{fontSize:"10px"}}
@@ -59,19 +59,18 @@ class ReviewListItem extends Component {
           <small class="text-muted">Respuesta del profesional {review.service.announcement.professional.user.first_name} {review.service.announcement.professional.user.last_name} {review.service.announcement.professional.profile_picture && <img class="text-sized-image" src={review.service.announcement.professional.profile_picture}/>}</small>
         </div>}
         {this.props.owner && this.state.shouldRespond &&
-          <div class="float-right">
-            <button class="btn" type="button" hidden={this.state.collapse} onClick={this.toggle.bind(this)}>Añadir respuesta</button>
-            <Collapse isOpen={this.state.collapse}>
-              <div >
-                <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)} />
-                <div class="row">
-                  <button class="btn" type="button" onClick={this.handleSubmitResponse.bind(this)} disable={this.props.update_review.loading}>Comentar</button>
-                  <button class="btn" type="button" onClick={this.handleCancel.bind(this)}>Cancelar</button>
-                </div>
+        <div class="float-right">
+          <button class="btn" type="button" hidden={this.state.collapse} onClick={this.toggle.bind(this)}>Añadir respuesta</button>
+          <Collapse isOpen={this.state.collapse}>
+            <div >
+              <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)} />
+              <div class="row">
+                <button class="btn" type="button" onClick={this.handleSubmitResponse.bind(this)} disable={this.props.update_review.loading}>Comentar</button>
+                <button class="btn" type="button" onClick={this.handleCancel.bind(this)}>Cancelar</button>
               </div>
-            </Collapse>
-          </div>
-        }
+            </div>
+          </Collapse>
+        </div>}
       </div>
     )
   }
