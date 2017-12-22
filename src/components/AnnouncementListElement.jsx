@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroupItem, CardTitle, Col, Button } from 'reactstrap';
+import { ListGroupItem, CardTitle, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
 import './css/images.css';
 import './css/box.css';
@@ -9,9 +9,11 @@ import 'react-switch-button/dist/react-switch-button.css';
 import updateAnnouncements from '../actions/update_announcement';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Truncate from 'react-truncate';
+import './css/messages.css';
+
 
 class AnnouncementsListElement extends Component {
 
@@ -24,7 +26,9 @@ class AnnouncementsListElement extends Component {
       if(nextProps.update_announcement !== this.props.update_announcement ){
         if(nextProps.update_announcement.success){
           if (! toast.isActive(this.toastId) && this.announcement_toast) {
-            this.toastId = toast.success('Aviso editado con éxito')
+            this.toastId = toast.success('Aviso extendido con éxito', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
             this.announcement_toast = false
           }
 
@@ -37,8 +41,22 @@ class AnnouncementsListElement extends Component {
     super(props);
     this.state = {
       visible:this.props.announcement.visible,
-      expire_date:new Date(this.props.announcement.expire_date)
+      expire_date:new Date(this.props.announcement.expire_date),
+      expire_modal:false,
+      value:'',
+      displayError:false
     };
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      expire_modal: !this.state.expire_modal
+    });
+}
+
+  handleChange(event) {
+   this.setState({value: event.target.value});
   }
 
   handleSwitchChange(event){
@@ -48,15 +66,22 @@ class AnnouncementsListElement extends Component {
   }
 
   handleExpireButton(event){
-    let today = new Date()
-    let new_expire_date = this.state.expire_date > today ? this.state.expire_date : today
-    new_expire_date.setMonth(new_expire_date.getMonth() + 1)
-    this.setState({expire_date:new_expire_date},
-    () => {
-      this.props.updateAnnouncements(this.props.announcement.id, {expire_date:this.state.expire_date.toJSON()})
-      this.announcement_toast = true
-  })
-
+    if(this.state.value !== '12345678'){
+      toast.error('Código inválido', {
+        position: toast.POSITION.BOTTOM_LEFT
+      });
+      this.setState({displayError:true})
+      return;
+    } else{
+      let today = new Date()
+      let new_expire_date = this.state.expire_date > today ? this.state.expire_date : today
+      new_expire_date.setMonth(new_expire_date.getMonth() + 1)
+      this.setState({expire_date:new_expire_date, displayError:false},
+      () => {
+        this.props.updateAnnouncements(this.props.announcement.id, {expire_date:this.state.expire_date.toJSON()})
+        this.announcement_toast = true
+      })
+    }
   }
 
   render() {
@@ -90,7 +115,21 @@ class AnnouncementsListElement extends Component {
                         {today > this.state.expire_date ? <font size="3" color="red">EXPIRADO</font> : <font size="3" color="gray">Vigente</font>}
                       </div>
                       <div>
-                        {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
+                        {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.toggle}>Extender</Button> : null}
+                        <Modal isOpen={this.state.expire_modal} toggle={this.toggle}>
+                          <ModalHeader toggle={this.toggle}>Extender aviso</ModalHeader>
+                          <ModalBody>
+                            <div class="row">
+                              <p>Código extensión:</p>
+                              <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)} />
+                            </div>
+                            {this.state.displayError && <div className="message--error">Usuario o contraseña incorrecto</div>}
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button color="primary" onClick={this.handleExpireButton.bind(this)}>Extender</Button>{' '}
+                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                          </ModalFooter>
+                        </Modal>
                       </div>
                     </div>
                     <div class="col-8 text-left">
