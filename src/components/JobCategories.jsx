@@ -31,7 +31,7 @@ class JobCategories extends Component {
     return (
       <div class="row">
         {this.state.job_categories.map(category =>
-          <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
+          <JobCategory image_class="center-cropped job-category shadow-box round-border" name={category.job_type} description={category.description} category={category} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
         )}
       </div>
     );
