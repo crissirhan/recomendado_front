@@ -170,37 +170,47 @@ class ProjectNavbar extends Component {
       buttons =
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href={this.getLoggedInUserUrl()}>
-            {this.getLoggedInUserName()}
-          </a>
+          <div class="nav-link">
+            <Link to={this.getLoggedInUserUrl()}>
+              {this.getLoggedInUserName()}
+            </Link>
+          </div>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" onClick={() => this.onLogout()}>
-            Logout
-          </a>
+          <div class="nav-link">
+            <Link t0={() => this.onLogout()}>
+              Logout
+            </Link>
+          </div>
         </li>
       </ul>
     } else{
       buttons =
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" onClick={this.loginToggle} href={"/login"+'?from=' + this.props.location.pathname}>
-            Login
-          </a>
+          <div class="nav-link" onClick={this.loginToggle}>
+            <Link to={"/login"+'?from=' + this.props.location.pathname}>
+              Login
+            </Link>
+          </div>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" onClick={this.signUpToggle} href="/registro/">
-            Registrarse
-          </a>
+          <div class="nav-link">
+            <Link to="/registro/">
+              Registrarse
+            </Link>
+          </div>
         </li>
       </ul>
     }
     return (
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand js-scroll-trigger" href='/'>
+          <div class="navbar-brand js-scroll-trigger" >
+            <Link to={'/'}>
               Recomendado
-          </a>
+            </Link>
+          </div>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
