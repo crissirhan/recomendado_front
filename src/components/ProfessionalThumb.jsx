@@ -57,7 +57,7 @@ class ProfessionalThumb extends Component {
               {this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}
             </Link>
           </h4>
-          <div class="row small text-center">
+          <div class="row small text-center" style={{paddingLeft:135}}>
             <Rating
             empty="fa fa-star-o fa-2x orange-star small center"
             full="fa fa-star fa-2x orange-star small center"
