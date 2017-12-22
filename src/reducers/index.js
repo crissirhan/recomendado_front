@@ -31,9 +31,11 @@ import SearchReducer from './reducer_search'
 import ReviewsReducer from './reducer_reviews'
 import ServicesReducer from './reducer_services'
 import UpdateService from './reducer_update_service'
+import UpdateReview from './reducer_update_review'
 
 const rootReducer = combineReducers({
   form: formReducer,
+  update_review:UpdateReview,
   services:ServicesReducer,
   update_service:UpdateService,
   reviews:ReviewsReducer,

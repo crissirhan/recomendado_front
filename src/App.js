@@ -66,8 +66,9 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-
-        <ProjectNavbar/>
+        <ErrorBoundary>
+          <ProjectNavbar/>
+        </ErrorBoundary>
           <ErrorBoundary>
             <div class="body">
               <Switch>
@@ -115,7 +116,9 @@ class App extends Component {
               </Switch>
             </div>
           </ErrorBoundary>
-          <Footer/>
+          <ErrorBoundary>
+            <Footer/>
+          </ErrorBoundary>
         </div>
       </MuiThemeProvider>
     );

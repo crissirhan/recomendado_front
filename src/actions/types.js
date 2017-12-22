@@ -71,3 +71,6 @@ export const UPDATE_SERVICE_LOADING = 'requesting update on service';
 export const GET_SERVICES_LOADING = ' SERVICES loading';
 export const GET_SERVICES_SUCCESS = 'SERVICES success';
 export const GET_SERVICES_ERROR = 'SERVICES error';
+export const UPDATE_REVIEW_ERROR = 'UPDATE_REVIEW_ERROR'
+export const UPDATE_REVIEW_SUCCESS = 'UPDATE_REVIEW_SUCCESS'
+export const UPDATE_REVIEW_LOADING = 'UPDATE_REVIEW_LOADING'

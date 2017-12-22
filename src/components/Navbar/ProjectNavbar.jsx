@@ -19,7 +19,6 @@ class ProjectNavbar extends Component {
 
   componentDidUpdate(){
     var rect = ReactDOM.findDOMNode(this).offsetTop;
-    console.log(rect);
   }
 
   componentDidMount(){
@@ -161,7 +160,6 @@ class ProjectNavbar extends Component {
   render() {
     let buttons = null;
     if(this.state.element){
-      console.log(this.state.offset)
 
     }
 

@@ -24,7 +24,7 @@ class ReviewList extends Component {
           </div>
           <div class="card-body">
             {this.props.reviews.map((review,index) =>
-              <div><ReviewListItem review={review}/>{index + 1 < this.props.reviews.length ? <hr/> : null}</div>
+              <div><ReviewListItem key={review.id} owner={this.props.owner} review={review}/>{index + 1 < this.props.reviews.length ? <hr/> : null}</div>
             )}
           </div>
         </div>

@@ -99,14 +99,14 @@ class SearchPage extends Component {
     }
 
     return (
-      <div class="container">
+      <div class="">
 
         <div class="row">
 
           <div class="col-lg-3">
-
-            <AdvancedFilter/>
-
+            <div class="container">
+              <AdvancedFilter/>
+            </div>
           </div>
 
           <div class="col-lg-9">
