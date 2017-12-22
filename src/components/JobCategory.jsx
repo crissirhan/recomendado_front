@@ -29,8 +29,8 @@ class JobCategory extends Component {
           <img class="img-fluid" src={image_url} alt=""/>
         </Link>
         <div class="portfolio-caption">
-          <h4>{this.props.category.job_type}</h4>
-          <p class="text-muted">{this.props.category.description}</p>
+          <h4>{this.props.name}</h4>
+          <p class="text-muted">{this.props.description}</p>
         </div>
       </div>
     );
