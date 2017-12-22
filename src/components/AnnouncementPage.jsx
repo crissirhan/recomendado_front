@@ -209,6 +209,7 @@ class AnnouncementPage extends Component {
               reviews={this.props.reviews.result}
               pagination={this.props.reviews.pagination}
               handlePageChange={this.handleReviewPageChange.bind(this)}
+              owner={owner}
               />
           </div>
         </div>
