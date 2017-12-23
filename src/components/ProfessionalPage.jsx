@@ -193,6 +193,7 @@ class ProfessionalPage extends Component {
     if(!this.state.professional || !this.state.professional.user || !this.state.reviews){
       return <Container><div class="loader"></div></Container>
     }
+    let owner= (cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container className="container">
@@ -210,7 +211,7 @@ class ProfessionalPage extends Component {
                 <small className="text-muted">({this.state.professional.count} evaluaciones)</small>
               </CardText>
             </Card>
-            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
+            {owner ? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
           </Col>
           <Col sm="8">
               <Card block className="text-left">
@@ -264,6 +265,7 @@ class ProfessionalPage extends Component {
             <ReviewList
             reviews={this.props.reviews.result}
             pagination={this.props.reviews.pagination}
+            owner={owner}
             handlePageChange={this.handleReviewPageChange.bind(this)}
             />
           </Jumbotron>
