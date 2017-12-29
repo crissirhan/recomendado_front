@@ -95,9 +95,9 @@ class ClientPage extends Component {
         }
         if(nextProps.services.params.hired === true){
           this.setState({
-            hired_services:nextProps.services.result,
-            hired_pagination:nextProps.services.pagination,
-            hiredLoading:false
+            contacted_services:nextProps.services.result,
+            contacted_services:nextProps.services.pagination,
+            contactedLoading:false
           })
         }
     }
@@ -140,10 +140,9 @@ class ClientPage extends Component {
 
   updateServices(){
     this.props.getServices(this.state.contactedQuery);
-    this.props.getServices(this.state.hiredQuery);
   }
   handleSwitchQuery(new_query){
-    this.setState({hiredLoading:true,contactLoading:true},
+    this.setState({contactLoading:true},
     ()=>this.setState(new_query,() => this.updateServices())
   )
 
@@ -278,11 +277,15 @@ class ClientPage extends Component {
             </button>
             <p  style={{top:0}}> | </p>
             <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
-              <p className="h8" style={{top:0}}>Pendientes</p>
+              <p className="h8" style={{top:0}}>Por contactar</p>
             </button>
             <p  style={{top:0}}> | </p>
+            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.hiredParamsPendingReview})} color="link">
+              <p className="h8" style={{top:0}}>Por evaluar</p>
+            </Button>
+            <p  style={{top:0}}> | </p>
             <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
-              <p className="h8" style={{top:0}}>Aceptados</p>
+              <p className="h8" style={{top:0}}>Contratados</p>
             </button>
             <p  style={{top:0}}> | </p>
             <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
@@ -290,7 +293,7 @@ class ClientPage extends Component {
             </button>
           </div>
           <div>
-            {this.props.services.loading? null : <Select
+            {false && this.props.services.loading? null : <Select
                name="contacted-order-by"
                multi={false}
                options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
@@ -314,43 +317,6 @@ class ClientPage extends Component {
             </div>
           </div>
         </div>
-        <div>
-        <div class="row" style={{marginTop:100}}>
-          <p className="h4"><b>Servicios Contratados</b></p>
-          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredAllParams})} color="link"><p className="h8" style={{top:0}}>Todos</p></Button>
-          <p  style={{top:0}}> | </p>
-          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredParamsPendingReview})} color="link"><p className="h8" style={{top:0}}>Evaluación Pendiente</p></Button>
-          <p  style={{top:0}}> | </p>
-          <Button onClick={() => this.handleSwitchQuery({hiredQuery:this.state.hiredParamsReviewed})} color="link"><p className="h8" style={{top:0}}>Evaluados</p></Button>
-
-        </div>
-          <div>
-            {this.props.services.loading ? null : <Select
-               name="hired-order-by"
-               multi={true}
-               options={[{ value: 'creation_date', label: 'Fecha contrato ascendiente' },{ value: '-creation_date', label: 'Fecha contrato descendiente' }]}
-               onChange={this.handleChangeHiredOrder.bind(this)}
-               searchable={false}
-               autosize={true}
-               clearable={false}
-               closeOnSelect={true}
-               placeholder={'Ordenar por...'}
-
-             />}
-            <div>
-              {this.state.owner ? <ServiceAnnouncementListGroup
-                services={this.state.hired_services}
-                pagination={this.state.hired_pagination}
-                handlePageChange={this.handleHiredServicePageChange.bind(this)}
-                pending={true}
-                rejected={false}
-                loading = {this.props.services.loading}
-                />
-              : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-            </div>
-          </div>
-        </div>
-
     </Container>
     );
   }

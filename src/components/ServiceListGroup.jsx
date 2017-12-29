@@ -22,13 +22,14 @@ class ServiceListGroup extends Component {
   }
 
   render() {
+    let services = this.props.services.lastPage ? this.props.services.results : this.props.services
     if(this.props.loading){
       return <Container><div class="loader"></div></Container>
     }
     return (
       <div>
         <div>
-          {this.props.services.map(service =>
+          {services.map(service =>
             <ServiceListElement key={service.id} service={service} />)}
         </div>
         <Pagination

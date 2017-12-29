@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroupItem, CardTitle, Col, Button, Row, Collapse } from 'reactstrap';
+import { ListGroupItem, CardTitle, Col, Button, Row, Collapse, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
 import './css/images.css';
 import './css/box.css';
@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import updateService from '../actions/update_service'
 import putService from '../actions/put_service'
 import cookie from 'react-cookies';
+import ReviewForm from './ReviewForm'
 
 class ServiceListElement extends Component {
 
@@ -38,11 +39,28 @@ class ServiceListElement extends Component {
       contacted:false,
       pending: this.props.service.contacted === true && !this.props.service.professional_rejected  && !this.props.service.hired,
       shouldReRender:false,
-      contactAgain:false
+      contactAgain:false,
+      modal:false,
+      reviewed: false,
+      rating:null
     };
     this.handleCreateService = this.handleCreateService.bind(this)
+    this.toggle = this.toggle.bind(this);
+    this.ratingCallback = this.ratingCallback.bind(this)
   }
 
+  ratingCallback(new_rating){
+    this.setState({rating:new_rating, reviewed:true},()=>this.toggle())
+  }
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleStarChange(value){
+    this.setState({rating:value}, () => this.toggle())
+  }
 
   handleYes(){
     let today = new Date()
@@ -69,6 +87,7 @@ class ServiceListElement extends Component {
         creation_date: creation_date.toJSON(),
         contacted:true,
         contacted_date: creation_date.toJSON(),
+        reviewed:false
       }
       this.props.putService(data);
     }else{
@@ -94,14 +113,21 @@ class ServiceListElement extends Component {
     }
   }
 
+  handleStarChange(value){
+    this.setState({rating:value}, () => this.toggle())
+  }
+
   render() {
     let service = this.props.service
     let announcement = service.announcement
     let image_url = announcement.announcement_thumbnail;
+    let today = new Date()
+    let review = ((service.review ? service.review.length : -1) > 0) ? service.review[0] : {}
     if(!image_url){
       image_url = announcement.professional.profile_picture
     }
     let border_color = ''
+    let border_style = 'solid'
     if(this.state.pending){
       border_color = 'yellow'
     } else if (service.professional_rejected) {
@@ -109,11 +135,14 @@ class ServiceListElement extends Component {
     } else if (service.hired) {
       border_color = 'YellowGreen'
     }
-    console.log(service)
-    return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{border: "2px solid", borderColor:border_color}}>
+    if (!review.rating && service.hired) {
+      border_style = 'dashed'
+    }
+    console.log("" + (review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : ' fa fa-star-o fa-2x orange-star')
+    return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{border: "2px solid", borderColor:border_color, borderStyle:border_style}}>
                 <div class="card-block">
                   <div class="row">
-                  <div class="col-2">
+                  <div class="col-sm-2">
                     <Link to={'/profesionales/' + announcement.professional.id}>
                       {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture} /> : null}
                       <div>
@@ -121,40 +150,56 @@ class ServiceListElement extends Component {
                       </div>
                     </Link>
                   </div>
-                  <div class="col-6">
+                  <div class="col-sm-6">
                     <div>
                       <Link to ={'/avisos/' + announcement.id}>
                         <CardTitle><b>{announcement.title}</b></CardTitle>
                       </Link>
                     </div>
+                    {service.hired ?
                     <div>
                       <div class="row">
-                        <div class="col">
+                        <div class="col-sm">
                           <div >
                             <Rating className="text-center"
-                                empty="fa fa-star-o fa-2x orange-star medium"
-                                full="fa fa-star fa-2x orange-star medium"
-                                initialRate={service.review_average}
-                                readonly/>
-                          </div>
+                                empty={(review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : 'fa fa-star-o fa-2x orange-star'}
+                                full={(review.rating || this.state.reviewed) ? 'fa fa-star fa-2x silver-star' : 'fa fa-star fa-2x orange-star'}
+                                initialRate={review.rating}
+                                onClick={this.handleStarChange.bind(this)}
+                                readonly={review.rating || this.state.reviewed}
+                                />
+                            {review.rating || this.state.reviewed ? <p class="text-center" style={{color: "#b2b2b2", fontSize:"14px"}}>Evaluación completa</p>
+                            : <p class="text-center" style={{color: "#FF0000", fontSize:"14px"}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
+                            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                              <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>
+                              <ModalBody>
+                                <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
+                              </ModalBody>
+                            </Modal>
                         </div>
-                        <div class="col">
+                        <div class="col-sm">
                           <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
                         </div>
                       </div>
                     </div>
-                    {announcement.announcement_thumbnail ? <div>
-                      <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail} />
                     </div> : null}
+                    <div class="row">
+                      {announcement.announcement_thumbnail ? <div class="col-sm">
+                        <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail} />
+                      </div> : null}
+                      <div class="col-sm">
+                        {announcement.description}
+                      </div>
+                    </div>
                     <div class="text-right">
                       tags: {announcement.job_tags.map((tag,index) => {
                         return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
                       })}
                     </div>
                   </div>
-                  <div class="col-4" >
+                  <div class="col-sm-4" >
 
-                    <Button type="button" class="close danger" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
+                    <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
                       <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                     </Button>
 
