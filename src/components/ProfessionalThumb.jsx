@@ -59,8 +59,8 @@ class ProfessionalThumb extends Component {
           </h4>
           <div class="row small text-center" style={{paddingLeft:0}}>
             <Rating
-            empty="fa fa-star-o fa-2x orange-star small center"
-            full="fa fa-star fa-2x orange-star small center"
+            empty="fa fa-star-o fa-2x orange-star small text-center"
+            full="fa fa-star fa-2x orange-star small text-center"
             initialRate={this.state.average}
             readonly
             />

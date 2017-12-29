@@ -318,13 +318,13 @@ class AnnouncementForm extends Component{
               </AvInput>
               <AvFeedback>Debe ingresar una ubicación donde operar</AvFeedback>
             </AvGroup>
-            <AvGroup check>
+            <AvGroup hidden={true} check>
               <Label check>
                 <AvInput type="checkbox" name="visible" checked={this.state.visible} onChange={this.handleInputChange} />{' '}
                 Visible
               </Label>
             </AvGroup>
-            <Label for="job_tags">Elige la(s) categoría(s) de tu servicio, para que así los clientes te encuentren fácilmente</Label>
+            <Label for="job_tags">Elige la(s) categoría(s) de tu servicio, para que así los clientes te encuentren fácilmente. Si no encuentras la categoría de tu trabajo envíanos un mail a contacto@recomendado.cl para que la podamos agregar.</Label>
             <div>
               {this.state.job_tags.map((tag, idx) => (
                 <AvGroup key={idx}>
