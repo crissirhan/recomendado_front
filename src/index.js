@@ -27,6 +27,7 @@ axios.interceptors.response.use((response) => {
 
   return response
 }, (error) => {
+  console.log(error)
   if(error.response){
     for (var key in error.response.data) {
       if (error.response.data.hasOwnProperty(key)) {

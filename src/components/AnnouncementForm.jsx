@@ -273,7 +273,7 @@ class AnnouncementForm extends Component{
     }
 
     return (
-      <Container>
+      <div class="container">
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm onValidSubmit={this.handleSubmit}>
             <AvGroup>
@@ -385,7 +385,7 @@ class AnnouncementForm extends Component{
                 Domingo
               </Label>
             </AvGroup>
-            <div>
+            <div hidden={true}>
               {this.state.images.map((image, idx) => (
                 <AvGroup key={shortid.generate()}>
                   <Label for={"imagenes-" + idx }>Imagén {idx+1}</Label>
@@ -402,7 +402,7 @@ class AnnouncementForm extends Component{
             <Button disabled={this.state.loading} >Crear Aviso</Button>
           </AvForm>
         </div>
-      </Container>
+      </div>
     )
   }
 }

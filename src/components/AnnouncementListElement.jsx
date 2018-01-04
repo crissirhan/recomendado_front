@@ -85,7 +85,7 @@ class AnnouncementsListElement extends Component {
   }
 
   render() {
-    let image_url = this.props.announcement.announcement_thumbnail;
+    let image_url = this.props.announcement.announcement_thumbnail.full_size;
     if(!image_url){
       image_url = this.props.announcement.professional.profile_picture
     }

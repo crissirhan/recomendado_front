@@ -46,7 +46,7 @@ class ProfessionalThumb extends Component {
       return null;
     }
     let url = '/clientes/' + this.props.review.service.client.id + '/';
-    let image_url = this.props.professional.profile_picture ? this.props.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = this.props.professional.profile_picture ? this.props.professional.profile_picture.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     let comment = <div><div>"{this.props.review.client_comment}"</div><div style={{marginTop:5}}> <b>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</b></div></div>
     return (
       <div class="col-sm-4" key={this.props.professional.id} >

@@ -194,7 +194,7 @@ class ProfessionalPage extends Component {
       return <Container><div class="loader"></div></Container>
     }
     let owner= (cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)
-    let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container className="container">
         <Row>

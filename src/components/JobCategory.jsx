@@ -17,7 +17,8 @@ class JobCategory extends Component {
 
   render() {
     let url = this.props.url;
-    let image_url = this.props.image ? this.props.image : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
+    console.log(this.props)
+    let image_url = this.props.image ? this.props.image.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
     return (
       <div class="col-md-4 col-sm-6 portfolio-item" key={this.props.category.id}>
         <Link class="portfolio-link" to={url}>

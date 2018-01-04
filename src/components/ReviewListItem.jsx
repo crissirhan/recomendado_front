@@ -41,7 +41,7 @@ class ReviewListItem extends Component {
 
   render() {
     let review = this.props.review
-    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture : null;
+    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture.full_size : null;
     return (
       <div class="container" style={{display:'inline-block'}}>
         <div style={{border:'none'}} class="card">
@@ -56,7 +56,7 @@ class ReviewListItem extends Component {
         </div>
         {!this.state.shouldRespond && <div class="card bg-light text-right">
           <p>{this.state.professional_response}</p>
-          <small class="text-muted">Respuesta del profesional {review.service.announcement.professional.user.first_name} {review.service.announcement.professional.user.last_name} {review.service.announcement.professional.profile_picture && <img class="text-sized-image" src={review.service.announcement.professional.profile_picture}/>}</small>
+          <small class="text-muted">Respuesta del profesional {review.service.announcement.professional.user.first_name} {review.service.announcement.professional.user.last_name} {review.service.announcement.professional.profile_picture.full_size && <img class="text-sized-image" src={review.service.announcement.professional.profile_picture}/>}</small>
         </div>}
         {this.props.owner && this.state.shouldRespond &&
         <div class="float-right">

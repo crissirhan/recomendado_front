@@ -12,6 +12,7 @@ export default function(state=[], action) {
       loading = {'loading':false}
       let error = {'error': true}
       let error_type = {'error_type': "Se ha producido un error"}
+      console.log(action)
       return Object.assign({}, error, error_type, action.payload, loading);
     case UPDATE_PROFESSIONAL_LOADING:
       loading = {'loading':true}
