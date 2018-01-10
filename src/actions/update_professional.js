@@ -8,8 +8,11 @@ export default function updateProfessional(professional_id,datum) {
     dispatch(updateProfessionalLoadingAsync());
     const config = {headers: { 'content-type': 'multipart/form-data' }}
     let data = new FormData()
-    data.append('file', datum)
-
+    for (var key in datum) {
+      if (datum.hasOwnProperty(key)) {
+        data.append(key,datum[key])
+      }
+    }
     axios.patch(ENDPOINT_URI+'/professionals/'+professional_id+'/', data)
       .then(res => {
         dispatch(updateProfessionalSuccessAsync(res.data));

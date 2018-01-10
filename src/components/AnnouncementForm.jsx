@@ -166,15 +166,11 @@ class AnnouncementForm extends Component{
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({
-        thumbnail: reader.result
-      })
-    }
-    reader.readAsDataURL(file);
-
+    this.setState({
+      thumbnail:file
+    })
   }
+
   handleSubmit(){
     if(this.state.job_tags.length === 0){
       alert("Debe escoger al menos una categoría para el aviso")

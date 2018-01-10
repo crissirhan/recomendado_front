@@ -126,14 +126,9 @@ class SignUpClientForm extends Component{
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({
-        profile_picture: reader.result
-      })
-    }
-    reader.readAsDataURL(file);
-
+    this.setState({
+      profile_picture:file
+    })
   }
 
   handleSuccess(){

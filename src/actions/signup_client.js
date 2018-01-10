@@ -3,9 +3,15 @@ import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function signUpClient(data) {
+export default function signUpClient(datum) {
   return dispatch => {
     dispatch(signUpClientLoadingAsync());
+    let data = new FormData()
+    for (var key in datum) {
+      if (datum.hasOwnProperty(key)) {
+        data.append(key,datum[key])
+      }
+    }
     axios.post(ENDPOINT_URI+'/clients/',data,{
       headers:{
         'Accept-Language':'es-cl'

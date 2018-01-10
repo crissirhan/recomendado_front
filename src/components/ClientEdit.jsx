@@ -40,7 +40,7 @@ class ClientEdit extends Component {
       if(this.props.update_client.error !== nextProps.update_client.error){
         this.setState({
           error:nextProps.update_client.error,
-          error_types:nextProps.update_client.error_types
+          error_type:nextProps.update_client.error_type
         })
       }
       if(this.props.update_client.loading !== nextProps.update_client.loading){
@@ -98,13 +98,9 @@ class ClientEdit extends Component {
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({
-        profile_picture: reader.result
-      })
-    }
-    reader.readAsDataURL(file);
+    this.setState({
+      profile_picture: file
+    })
 
   }
 
@@ -120,7 +116,7 @@ class ClientEdit extends Component {
       return <Container><div className="message--info">Perfil editado con éxito!</div></Container>;
     }
     if(this.state.error){
-      return <Container><div className="message--error">{this.state.error_types.join(' ')}</div></Container>;
+      return <Container><div className="message--error">{this.state.error_type}</div></Container>;
     }
     return (
       <Container>

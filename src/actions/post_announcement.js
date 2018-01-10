@@ -3,9 +3,16 @@ import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
 var baseUri = 'http://api.recomendado-dev.samir.cl';
-export default function postAnnouncement(data) {
+export default function postAnnouncement(datum) {
   return dispatch => {
     dispatch(postAnnouncementLoadingAsync());
+    let data = new FormData()
+    for (var key in datum) {
+      if (datum.hasOwnProperty(key)) {
+        data.append(key,datum[key])
+      }
+    }
+    console.log(datum)
     axios.post(ENDPOINT_URI+'/post-announcements/', data)
       .then(res => {
         dispatch(postAnnouncementAsync(res.data));
