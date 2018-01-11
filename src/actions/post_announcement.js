@@ -10,9 +10,11 @@ export default function postAnnouncement(datum) {
     for (var key in datum) {
       if (datum.hasOwnProperty(key)) {
         data.append(key,datum[key])
+        console.log(key)
+        console.log(datum[key])
       }
     }
-    console.log(datum)
+    console.log(data)
     axios.post(ENDPOINT_URI+'/post-announcements/', data)
       .then(res => {
         dispatch(postAnnouncementAsync(res.data));

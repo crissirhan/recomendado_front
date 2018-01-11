@@ -187,11 +187,13 @@ class AnnouncementForm extends Component{
     let publish_date = new Date(); //time now
     let expire_date = new Date(publish_date);
     expire_date.setMonth(expire_date.getMonth() + 1);
+    console.log(cookie.load('user').id)
     let data = {
       publish_date:publish_date.toJSON(),
       expire_date:expire_date.toJSON(),
       //movility:this.state.movility,
       professional_id:cookie.load('user').id,
+      professional:cookie.load('user'),
       availability:days,
       location:this.state.location,
       title:this.state.title,
@@ -215,6 +217,8 @@ class AnnouncementForm extends Component{
         data.job_tags.push(tag)
       }
     })
+    console.log(cookie.load('user'))
+    console.log(data)
     this.props.postAnnouncement(data);
   }
 
@@ -394,7 +398,7 @@ class AnnouncementForm extends Component{
                 </AvGroup>))}
               <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
             </div>
-            {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
+            {this.state.error ? <div className="message--error">¡Error! {this.state.error_types}</div> : null}
             <Button disabled={this.state.loading} >Crear Aviso</Button>
           </AvForm>
         </div>

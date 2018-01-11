@@ -69,8 +69,8 @@ class App extends Component {
         <ErrorBoundary>
           <ProjectNavbar/>
         </ErrorBoundary>
-          <ErrorBoundary style={{paddingTop:'700px', paddingBottom:'700px'}}>
-            <div class="body">
+          <ErrorBoundary >
+            <div class="body" style={{paddingTop:'75px', paddingBottom:'75px'}}>
               <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route exact path="/categorias/:categoria/" render={({ match }) => (
