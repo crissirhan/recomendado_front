@@ -24,7 +24,7 @@ class JobCategories extends Component {
     super(props);
     this.state = {
       job_categories:[]
-    };z
+    };
   }
 
   render() {
