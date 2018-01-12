@@ -91,13 +91,6 @@ class SearchPage extends Component {
     if(this.props.announcements.error ){
       return <Container className="container"><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
     }
-    if(this.props.announcements.result.length === 0 && this.props.announcements.success){
-      return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
-      <Collapse isOpen={this.state.collapse}>
-        <AdvancedFilter/>
-      </Collapse></Container>;
-    }
-
     return (
       <div class="">
 
