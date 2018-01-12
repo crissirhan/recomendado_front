@@ -70,7 +70,7 @@ class App extends Component {
           <ProjectNavbar/>
         </ErrorBoundary>
           <ErrorBoundary>
-            <div class="body">
+            <div class="body" style={{paddingBottom:75}}>
               <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route exact path="/categorias/:categoria/" render={({ match }) => (
