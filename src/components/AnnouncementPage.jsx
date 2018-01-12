@@ -126,7 +126,9 @@ class AnnouncementPage extends Component {
     if(cookie.load('isClient') === "true"){
       this.toggleContactCollapse()
     } else {
-      this.props.history.push('/login?from=' + this.props.history.location.pathname)
+      if(cookie.load('isProfessional') === "false"){
+        this.props.history.push('/login?from=' + this.props.history.location.pathname)
+      }
     }
   }
   handleReviewPageChange(pageNumber){
@@ -195,14 +197,14 @@ class AnnouncementPage extends Component {
                 </span>
                 {Math.round( this.state.announcement.review_average * 10) / 10} estrellas
 
-                {cookie.load('isClient') == "true" ? <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
+                <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
                 <Collapse isOpen={this.state.contact_collapse}>
                   <div>
                     <div>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                     <div>{this.state.announcement.professional.phone_number}</div>
                     <div>{this.state.announcement.professional.user.email}</div>
                   </div>
-                </Collapse> </div>: null}
+                </Collapse> </div>
               </div>
             </div>
             <ReviewList
