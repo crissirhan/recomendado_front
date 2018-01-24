@@ -23,8 +23,16 @@ class Home extends Component {
   }
 
   render() {
+    let bgimg = require('../custom/img/hero-bg.jpg')
     return (
       <div>
+        <section style={{background: "url("+bgimg+")"}} class="hero d-flex align-items-center">
+          <div class="container">
+            <p class="small-text-hero"><i class="icon-localizer text-primary mr-1"></i>¿Buscas alguien que te pueda hacer un trabajo?</p>
+            <h1>Busca un <span class="text-primary">Recomendado</span></h1>
+            <SearchAnnouncements/>
+          </div>
+        </section>
         <header class="masthead">
           <div class="container">
             <div class="intro-text">

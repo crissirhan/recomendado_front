@@ -12,7 +12,8 @@ import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ProjectNavbar from './components/Navbar/ProjectNavbar';
+import TopBar from './components/Navbar/TopBar';
+import Navbar from './components/Navbar/Navbar';
 import SignUpForm from './components/Navbar/SignUpForm';
 import login from './actions/login_user';
 import LoginForm from './components/Navbar/LoginForm';
@@ -43,14 +44,26 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import Footer from './components/Footer'
-import './components/css/page.css';
+
 
 class App extends Component {
-  componentDidMount() {
+
+  componentWillMount(){
   }
+
+  loadCustomScript(scriptName, path){
+    this.state.scripts[scriptName] = document.createElement(scriptName)
+    this.state.scripts[scriptName].src = path
+    this.state.scripts[scriptName].async = true
+    document.body.appendChild(this.state.scripts[scriptName])
+    console.log(this.state.scripts[scriptName].src)
+    console.log(this.state.scripts)
+  }
+
   constructor(props) {
     super(props);
     this.state = {
+      scripts:{}
     };
   }
 
@@ -66,11 +79,14 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-        <ErrorBoundary>
-          <ProjectNavbar/>
-        </ErrorBoundary>
+          <ErrorBoundary>
+            <TopBar/>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Navbar/>
+          </ErrorBoundary>
           <ErrorBoundary >
-            <div class="body" style={{paddingTop:'75px', paddingBottom:'75px'}}>
+            <div class="body" >
               <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route exact path="/categorias/:categoria/" render={({ match }) => (

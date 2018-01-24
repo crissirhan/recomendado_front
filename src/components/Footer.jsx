@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './css/heroic-features.css'
 
 class Footer extends React.Component {
   constructor(props) {
@@ -8,6 +7,9 @@ class Footer extends React.Component {
   }
 
   render() {
+    if(true){
+      return null;
+    }
     return(
       <footer class="py-5 bg-dark footer" style={{paddingTop:150}}>
         <div class="container">

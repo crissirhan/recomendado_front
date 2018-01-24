@@ -1,0 +1,33 @@
+
+/*
+=========================================
+=========================================
+
+      P L A C E S  T E M P L A T E
+
+=========================================
+========================================= */
+
+// functions.scss - Bootstrap functions
+@import "modules/functions";
+// variables-custom.scss - to change colour variant, rounded corners, etc.
+@import "modules/variables-custom";
+// bootstrap mixins
+@import "modules/mixins";
+// custom mixins
+@import "modules/mixins-custom";
+// general styling
+@import "modules/general";
+// blog page styling
+@import "modules/blog-page";
+// listing page styling
+@import "modules/listing-single";
+// listing categories page styling
+@import "modules/listing-categories";
+// contact
+@import "modules/contact";
+// demo styling
+@import "modules/demo";
+
+// bootstrap base stylesheet overrides
+@import "theme";
