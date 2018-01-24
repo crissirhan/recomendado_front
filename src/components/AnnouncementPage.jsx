@@ -20,6 +20,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ReviewList from './ReviewList'
 import './css/loading.css'
+import './css/messages.css';
 
 class AnnouncementPage extends Component {
 
@@ -133,6 +134,24 @@ class AnnouncementPage extends Component {
     let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
     this.props.getReviews(new_query)
   }
+  getLoggedInUserUrl(){
+    if(cookie.load('user') != "undefined"){
+      if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
+        return '/profesionales/' + cookie.load('user').id;
+      }
+      if(cookie.load('isClient') === "true" && cookie.load('user').user){
+        return '/clientes/' + cookie.load('user').id;
+      }
+    } else{
+      if(this.state.isClient){
+        return '/clientes/'+this.state.user.id+'/';
+      }
+      if(this.state.isProfessional){
+        return '/profesionales/'+this.state.user.id+'/';
+      }
+    }
+    return '/';
+  }
   render(){
     if(this.state.loading || !this.state.announcement_reviews){
       return <div class="container"><div class="loader"></div></div>
@@ -201,6 +220,7 @@ class AnnouncementPage extends Component {
                     <div>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                     <div>{this.state.announcement.professional.phone_number}</div>
                     <div>{this.state.announcement.professional.user.email}</div>
+                    <div className="message--warning">Confirma el trabajo en tu<Link to={this.getLoggedInUserUrl()}><button type="button" class="btn btn-link">perfil</button></Link></div>
                   </div>
                 </Collapse> </div> : null}
               </div>
