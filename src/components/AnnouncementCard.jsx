@@ -13,16 +13,16 @@ class AnnouncementCard extends Component {
   }
 
   render() {
-    let image_url = this.props.announcement.announcement_thumbnail.full_size;
+    let image_url = this.props.announcement.announcement_thumbnail ;
     if(!image_url){
-      image_url = this.props.announcement.professional.profile_picture.full_size
+      image_url = this.props.announcement.professional.profile_picture 
     }
     let announcement = this.props.announcement
     return (<div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
                   <a href="#"></a>
                   <Link to ={'/avisos/' + announcement.id}>
-                    <img class="card-img-top" src={announcement.announcement_thumbnail.full_size} alt=""/>
+                    <img class="card-img-top" src={announcement.announcement_thumbnail } alt=""/>
                   </Link>
                   <div class="card-body">
                     <h4 class="card-title">
@@ -33,7 +33,7 @@ class AnnouncementCard extends Component {
                     <h5>{announcement.price? '$'+announcement.price : 'Precio no definido'}</h5>
                     <p class="card-text">{announcement.description}</p>
                     <Link class="card-text row" to={'/profesionales/' + announcement.professional.id}>
-                      {announcement.professional.user.first_name} {announcement.professional.user.last_name} {announcement.professional.profile_picture? <img className="center-cropped img-circle text-sized-image" src={announcement.professional.profile_picture.full_size}/> : null}
+                      {announcement.professional.user.first_name} {announcement.professional.user.last_name} {announcement.professional.profile_picture? <img className="center-cropped img-circle text-sized-image" src={announcement.professional.profile_picture }/> : null}
                     </Link>
                   </div>
                   <div class="card-footer">

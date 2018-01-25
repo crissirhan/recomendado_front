@@ -30,6 +30,7 @@ $(document).ready(function () {
     // Latest Listings Slider
     // ------------------------------------------------------ //
     $('.latest-listings-slider').owlCarousel({
+        owl2row: true,
         loop: true,
         margin: 20,
         dots: true,

@@ -120,11 +120,11 @@ class ServiceListElement extends Component {
   render() {
     let service = this.props.service
     let announcement = service.announcement
-    let image_url = announcement.announcement_thumbnail.full_size;
+    let image_url = announcement.announcement_thumbnail ;
     let today = new Date()
     let review = ((service.review ? service.review.length : -1) > 0) ? service.review[0] : {}
     if(!image_url){
-      image_url = announcement.professional.profile_picture.full_size
+      image_url = announcement.professional.profile_picture 
     }
     let border_color = ''
     let border_style = 'solid'
@@ -144,7 +144,7 @@ class ServiceListElement extends Component {
                   <div class="row">
                   <div class="col-sm-2">
                     <Link to={'/profesionales/' + announcement.professional.id}>
-                      {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture.full_size} /> : null}
+                      {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture } /> : null}
                       <div>
                         {announcement.professional.user.first_name} {announcement.professional.user.last_name}
                       </div>
@@ -185,7 +185,7 @@ class ServiceListElement extends Component {
                     </div> : null}
                     <div class="row">
                       {announcement.announcement_thumbnail ? <div class="col-sm">
-                        <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail.full_size} />
+                        <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail } />
                       </div> : null}
                       <div class="col-sm">
                         {announcement.description}

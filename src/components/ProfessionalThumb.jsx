@@ -46,27 +46,29 @@ class ProfessionalThumb extends Component {
       return null;
     }
     let url = '/clientes/' + this.props.review.service.client.id + '/';
-    let image_url = this.props.professional.profile_picture ? this.props.professional.profile_picture.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = this.props.professional.profile_picture
     let comment = <div><div>"{this.props.review.client_comment}"</div><div style={{marginTop:5}}> <b>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</b></div></div>
     return (
-      <div class="col-sm-4" key={this.props.professional.id} >
-        <div class="team-member">
-          <img class="mx-auto rounded-circle" src={image_url} alt=""/>
-          <h4>
-            <Link to={'/profesionales/'+this.props.professional.id+'/'}>
-              {this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}
-            </Link>
-          </h4>
-          <div class="row small text-center" style={{paddingLeft:0}}>
-            <Rating
-            empty="fa fa-star-o fa-2x orange-star small text-center"
-            full="fa fa-star fa-2x orange-star small text-center"
-            initialRate={this.state.average}
-            readonly
-            />
-            <small className="text-muted">{this.state.count} evaluaciones</small>
-          </div>
-          <p class="text-muted">{comment}</p>
+      <div class="col-lg-4" key={this.props.professional.id}>
+        <div class="post">
+          <div class="image"><img  src={image_url} alt="..."/></div>
+          <div class="info d-flex align-items-end">
+            <div class="content">
+              <div class="post-meta">{new Date(this.props.review.date).toLocaleDateString()}</div>
+                <Link to={'/profesionales/'+this.props.professional.id+'/'}>
+                  <h3>{this.props.review.service.announcement.professional.user ? this.props.review.service.announcement.professional.user.first_name + ' ' +this.props.review.service.announcement.professional.user.last_name : ''}</h3>
+                  <Rating
+                    empty="fa fa-star-o fa-2x orange-star small text-center"
+                    full="fa fa-star fa-2x orange-star small text-center"
+                    initialRate={this.state.average}
+                    readonly
+                  />
+                  <small className="text-muted">{this.state.count} evaluaciones</small>
+                </Link>
+              <p>{comment}</p>
+            </div>
+          </div><a href="#">
+            <div class="badge badge-rounded text-uppercase">Tips</div></a>
         </div>
       </div>
     );

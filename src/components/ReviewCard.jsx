@@ -15,7 +15,7 @@ class AnnouncementCard extends Component {
 
   render() {
     let review = this.props.review
-    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = review.service.client.profile_picture ? review.service.client.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (<Card style={{minHeight:320}} className="shadow-box round-border min-width">
                 <CardText className="text-center"><i>"{review.client_comment}"</i></CardText>
                 <Rating className="text-center"

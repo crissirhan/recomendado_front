@@ -24,6 +24,7 @@ class Home extends Component {
 
   render() {
     let bgimg = require('../custom/img/hero-bg.jpg')
+    let sbg = require('../custom/img/separator-bg.jpg')
     return (
       <div>
         <section style={{background: "url("+bgimg+")"}} class="hero d-flex align-items-center">
@@ -33,25 +34,22 @@ class Home extends Component {
             <SearchAnnouncements/>
           </div>
         </section>
-        <header class="masthead">
-          <div class="container">
-            <div class="intro-text">
-              <div class="intro-lead-in">¿Buscas alguien que te pueda hacer un trabajo?</div>
-              <div class="intro-heading text-uppercase">Busca un Recomendado</div>
-              <SearchAnnouncements/>
-            </div>
-          </div>
-        </header>
 
-        <section class="" id="portfolio">
+        <section class="latest-listings bg-gray">
           <div class="container">
-            <div class="row">
-              <div class="col-lg-12 text-center">
-                <h2 class="section-heading text-uppercase">Categorías</h2>
-                <h3 class="section-subheading text-muted">Explora las distintas categorías y servicios disponibles para tí</h3>
-              </div>
-            </div>
+            <header>
+              <h2 class="has-lines">CATEGORÍAS</h2>
+              <p class="lead">Explora las distintas categorías y servicios disponibles para tí</p>
+            </header>
             <JobCategories/>
+          </div>
+        </section>
+
+        <section style={{background: 'url('+sbg+')'}} class="divider">
+          <div class="container">
+            <h2 class="has-lines"><small class="text-primary">¿Quieres trabajar con nosotros? </small> Publica tu aviso</h2>
+            <p class="lead">Explora las distintas categorias y opciones para publicar tu aviso</p>
+            <Link to="/crear/anuncio/" class="btn btn-primary has-shadow has-wide-padding">Publica tu aviso</Link>
           </div>
         </section>
 

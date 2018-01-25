@@ -19,6 +19,7 @@ window.jQuery = window.$ = $;
 require('js-cookie')
 require('bootstrap/dist/js/bootstrap.bundle');
 require('owl.carousel')
+require('./custom/js/owl.rows.js')
 require('./custom/js/front.js')
 
 const store = createAppStore();

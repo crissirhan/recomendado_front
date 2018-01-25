@@ -76,9 +76,9 @@ class AnnouncementsListElement extends Component {
   }
 
   render() {
-    let image_url = this.props.service.announcement.announcement_thumbnail.full_size;
+    let image_url = this.props.service.announcement.announcement_thumbnail ;
     if(!image_url){
-      image_url = this.props.service.announcement.professional.profile_picture.full_size
+      image_url = this.props.service.announcement.professional.profile_picture 
     }
     let service = this.props.service
     let announcement = service.announcement
@@ -105,7 +105,7 @@ class AnnouncementsListElement extends Component {
                         {review.rating || this.state.reviewed ? <p class="text-center" style={{color: "#b2b2b2", fontSize:"14px"}}>Evaluación completa</p>
                         : <p class="text-center" style={{color: "#FF0000", fontSize:"14px"}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
                         <Link to={'/profesionales/' + announcement.professional.id}>
-                          <img className="center-cropped img-circle" style={{height:90,width:90}} src={announcement.professional.profile_picture.full_size} />
+                          <img className="center-cropped img-circle" style={{height:90,width:90}} src={announcement.professional.profile_picture } />
                           <p style={{}}>{announcement.professional.user.first_name} {announcement.professional.user.last_name}</p>
                         </Link>
                         <div>
@@ -134,7 +134,7 @@ class AnnouncementsListElement extends Component {
                         <div>
                           Contratado: {new Date(service.hired_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                         </div>
-                        {announcement.announcement_thumbnail? <img  style={{height:150,width:200}} src={announcement.announcement_thumbnail.full_size} /> : null}
+                        {announcement.announcement_thumbnail? <img  style={{height:150,width:200}} src={announcement.announcement_thumbnail } /> : null}
                       </div>
                     </div>
                   </div>

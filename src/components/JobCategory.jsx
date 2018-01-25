@@ -18,21 +18,19 @@ class JobCategory extends Component {
   render() {
     let url = this.props.url;
     console.log(this.props)
-    let image_url = this.props.image ? this.props.image.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
+    let image_url = this.props.image
     return (
-      <div class="col-md-4 col-sm-6 portfolio-item" key={this.props.category.id}>
+      <div class="item listing-item" key={this.props.category.id}>
         <Link class="portfolio-link" to={url}>
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              {/*<i class="fa fa-plus fa-3x"></i> */}
+          <div class="item-inner">
+            <div class="image"><img src={image_url} alt="..." class="img-fluid"/></div>
+            <div class="info d-flex align-items-end justify-content-between">
+              <div class="content">
+                  <h3>{this.props.name}</h3>
+                  <p class="address">{this.props.description}</p></div>
             </div>
           </div>
-          <img class="img-fluid" src={image_url} alt=""/>
         </Link>
-        <div class="portfolio-caption">
-          <h4>{this.props.name}</h4>
-          <p class="text-muted">{this.props.description}</p>
-        </div>
       </div>
     );
   }

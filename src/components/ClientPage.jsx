@@ -234,7 +234,7 @@ class ClientPage extends Component {
     if(!this.state.client || !this.state.client_reviews){
       return <Container><div class="loader"></div></Container>
     }
-    let image_url = this.state.client.profile_picture ? this.state.client.profile_picture.full_size : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
+    let image_url = this.state.client.profile_picture ? this.state.client.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <Container className="container">
         <Row>
