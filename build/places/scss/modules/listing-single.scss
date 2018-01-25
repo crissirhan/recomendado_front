@@ -1,0 +1,343 @@
+/*
+* ===================================================
+*     DETAIL
+* ===================================================
+*/
+
+.hero {
+    .badge-transparent {
+        font-size: 1em;
+        font-weight: 300;
+        margin-bottom: 20px;
+    }
+
+    h1.verified {
+        position: relative;
+        &::after {
+            content: '\6b';
+            @include square(35px, $brand-primary, $text-align: center);
+            border-radius: 50%;
+            font-size: 0.3em;
+            margin-left: 20px;
+            font-family: 'Places';
+            display: inline-block;
+            position: absolute;
+            bottom: 15px;
+            right: -50px;
+        }
+    }
+
+    .rate {
+        li {
+            padding: 0;
+            margin: 0;
+            color: $yellow;
+        }
+    }
+
+    span.reviewers {
+        font-weight: 300;
+        margin-left: 20px;
+    }
+}
+
+
+.block {
+    margin-bottom: 100px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    header {
+        margin-bottom: 40px;
+    }
+}
+
+/* About Listings */
+.about-listing {
+    p {
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.9em;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+/* Amenities */
+.amenities {
+    .amenities-list {
+        li {
+            margin-right: 30px;
+            margin-bottom: 15px;
+        }
+    }
+    .icon {
+        @include square(18px, $brand-primary, $text-align: center);
+        font-size: 0.6em;
+        color: #fff;
+        margin-right: 10px;
+    }
+    span {
+        padding-top: 4px;
+        color: #555;
+    }
+}
+
+
+/* Listing Gallery */
+.listing-gallery {
+    .mix {
+        margin-bottom: 30px;
+    }
+    .item {
+        overflow: hidden;
+        max-height: 130px;
+        @extend .has-shadow;
+    }
+}
+
+
+/* Listing Reviews */
+.listing-reviews {
+    h3 span {
+        font-family: $font-family-sans-serif;
+        margin-left: 5px;
+        color: #656565;
+        font-size: 0.65em;
+        font-weight: 300;
+    }
+}
+.comment {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+
+    &:last-of-type {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.comment-header {
+    margin: 10px auto;
+
+    .image {
+        max-width: 55px
+    }
+    .title {
+        margin-left: 15px;
+        line-height: 1.7em;
+    }
+    span {
+        display: block;
+        color: $gray-light;
+        font-size: 1rem;
+    }
+    strong {
+
+        font-size: 1.2rem;
+        color: $gray;
+    }
+    .rate {
+        font-size: 0.95em;
+        color: $yellow;
+        li {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
+
+.comment-body {
+    margin-left: 70px;
+    font-size: 1em;
+    color: $gray-light;
+
+    p {
+        line-height: 1.7em;
+    }
+}
+
+
+/* Add Review */
+.add-review {
+    .add-rate {
+        padding: 20px 0;
+        p {
+            margin-bottom: 5px;
+            color: #555;
+        }
+    }
+
+    .rate {
+        color: #ddd;
+
+        li {
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+    }
+
+    form {
+        .form-group {
+            margin-bottom: 20px;
+        }
+        textarea {
+            min-height: 150px;
+        }
+        label {
+            color: #555;
+        }
+        button {
+            margin-top: 20px;
+            cursor: pointer;
+            font-family: $font-family-sans-serif;
+            font-weight: 300;
+        }
+    }
+}
+
+
+/* Listing Location */
+.map-holder {
+    height: 400px;
+    #detail-map {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+/* Opening Hours Widget */
+.opening-hours {
+    .days {
+        margin-top: 30px;
+    }
+    .day {
+        padding: 3px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 10px;
+
+        strong {
+
+            text-decoration: none;
+            font-family: $font-family-serif;
+            font-weight: 500;
+            font-size: 1.05em;
+            color: #555;
+        }
+        span {
+            color: #656565;
+            font-weight: 300;
+            font-size: 0.9em;
+        }
+
+        &:last-of-type {
+            border-bottom: none;
+        }
+    }
+}
+
+
+/* Contact Details Widget */
+.contact {
+    .item {
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    a {
+        color: inherit;
+        font-size: 0.9em;
+        &:hover, &:focus {
+            color: $brand-primary;
+            text-decoration: none;
+        }
+        i {
+            margin-right: 10px;
+        }
+
+        &.facebook {
+            color: #3b5999;
+        }
+        &.twitter {
+            color: #55acee;
+        }
+        &.instagram {
+            color: #8a3ab9;
+        }
+        &.google-plus {
+            color: #dd4b39;
+        }
+
+        &.btn {
+            color: #fff;
+            margin-top: 20px;
+        }
+    }
+}
+
+
+/* Bookmark list */
+.bookmark-listing {
+    a.bookmark {
+        padding: 12px 30px;
+        color: #555;
+        border: 1px solid #ddd;
+        border-radius: 50px;
+        margin-bottom: 10px;
+
+        i {
+            margin-right: 5px;
+        }
+
+        &:hover, &:focus {
+            text-decoration: none;
+            background: #f24949;
+            color: #fff;
+            border-color:  #f24949;
+        }
+    }
+
+    span {
+        color: #656565;
+        font-weight: 300;
+        display: block;
+    }
+}
+
+
+@media (min-width: $screen-md) {
+    .listing-single-hero {
+        padding: 250px 0 50px;
+    }
+}
+
+
+@media (max-width: $screen-lg) {
+    section.hero {
+        .badge-transparent {
+            display: block;
+            max-width: 150px;
+            text-align: center;
+        }
+        h1.verified {
+            display: inline;
+            &::after {
+                bottom: 10px;
+                right: -40px;
+                @include square(30px, $brand-primary, $text-align: center);
+            }
+        }
+
+        .calltoactions {
+            margin-top: 20px;
+        }
+    }
+    aside {
+        padding-top: 0;
+    }
+}
