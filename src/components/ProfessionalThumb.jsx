@@ -65,10 +65,10 @@ class ProfessionalThumb extends Component {
                   />
                   <small className="text-muted">{this.state.count} evaluaciones</small>
                 </Link>
-              <p>{comment}</p>
+              <p>{this.props.review.client_comment}</p>
+              <p><b>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</b></p>
             </div>
-          </div><a href="#">
-            <div class="badge badge-rounded text-uppercase">Tips</div></a>
+          </div>
         </div>
       </div>
     );
