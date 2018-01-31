@@ -2090,10 +2090,7 @@ h4.comments-heading {
 
 /* Result Listings */
 .listing-item {
-  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px -1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px -1px 1px rgba(0, 0, 0, 0.05);
-  margin-bottom: 40px;
-  min-height: calc(100% - 40px);
+  padding: 40px;
 }
 
 .listing-item a {
@@ -2309,8 +2306,8 @@ STYLE SWITCHER FOR DEMO
   color: #343a40;
 }
 
-/* ========================================= 
-   THEMING OF BOOTSTRAP COMPONENTS           
+/* =========================================
+   THEMING OF BOOTSTRAP COMPONENTS
    ========================================= */
 /*
  * 1. NAVBAR
@@ -3015,7 +3012,7 @@ STYLE SWITCHER FOR DEMO
 }
 
 /*
- * 3. TYPE  
+ * 3. TYPE
  */
 body {
   font-family: "Poppins", sans-serif;

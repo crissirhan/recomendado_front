@@ -51,7 +51,7 @@ class ProfessionalThumb extends Component {
     return (
       <div class="col-lg-4" key={this.props.professional.id}>
         <div class="post">
-          <div class="image"><img  src={image_url} alt="..."/></div>
+          <div class="image"><img  src={image_url} alt="..." style={{height:400,width:350}}/></div>
           <div class="info d-flex align-items-end">
             <div class="content">
               <div class="post-meta">{new Date(this.props.review.date).toLocaleDateString()}</div>

@@ -29,7 +29,7 @@ class JobCategories extends Component {
 
   render() {
     return (
-      <div class="owl-carousel owl-theme latest-listings-slider">
+      <div class="latest-listings-slider row">
         {this.state.job_categories.map(category =>
           <JobCategory image_class="center-cropped job-category shadow-box round-border" name={category.job_type} description={category.description} category={category} key={category.id} category_id={category.id} url={'/categorias/' + category.job_type + '/'} image={category.image}/>
         )}

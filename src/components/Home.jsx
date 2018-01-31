@@ -53,25 +53,15 @@ class Home extends Component {
           </div>
         </section>
 
-        <section class="bg-light" id="recomendados">
+        <section class="blog">
           <div class="container">
-            <div class="row">
-              <div class="col-lg-12 text-center">
-                <h2 class="section-heading text-uppercase">Recomendados Recientes</h2>
-                <h3 class="section-subheading text-muted">Lo que dicen los clientes de sus trabajadores</h3>
-              </div>
-            </div>
+            <header>
+              <h2 class="has-lines"><small>Que dicen clientes</small> Sobre nuestros<span class="text-primary">Recomendados</span> recientes</h2>
+              <p class="lead">Últimos comentarios</p>
+            </header>
             <ProfessionalThumbs/>
-            <div class="row">
-              <div class="col-lg-8 mx-auto text-center">
-                <p class="large text-muted">¿Quieres unirte? <Link to={'/registro/'}>Registrate</Link> y publica tus trabajos con nosotros</p>
-              </div>
-            </div>
           </div>
         </section>
-
-
-
       </div>
     );
   }

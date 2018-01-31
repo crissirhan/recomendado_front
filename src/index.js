@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.css';
 import $ from 'jquery';
 import './components/css/font-awesome/css/font-awesome.css';
-import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'bootstrap-select'
 import 'fancybox'
 import 'popper.js'
@@ -20,6 +19,7 @@ require('js-cookie')
 require('bootstrap/dist/js/bootstrap.bundle');
 require('owl.carousel')
 require('./custom/js/owl.rows.js')
+require('owl.carousel/dist/assets/owl.carousel.css')
 require('./custom/js/front.js')
 
 const store = createAppStore();
