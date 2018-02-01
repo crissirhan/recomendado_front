@@ -56,7 +56,7 @@ class Home extends Component {
         <section class="blog">
           <div class="container">
             <header>
-              <h2 class="has-lines"><small>Que dicen clientes</small> Sobre nuestros<span class="text-primary">Recomendados</span> recientes</h2>
+              <h2 class="has-lines"><small>Que dicen clientes</small> Sobre nuestros <span class="text-primary">Recomendados</span> recientes</h2>
               <p class="lead">Últimos comentarios</p>
             </header>
             <ProfessionalThumbs/>

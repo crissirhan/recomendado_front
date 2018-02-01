@@ -236,87 +236,74 @@ class ClientPage extends Component {
     }
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
-      <div class="container">
-        <Row>
-          <Col sm="4">
-            <Card block className="text-center" >
-              <img className="img-circle center-cropped professional-profile" src={image_url} alt="" />
-            </Card>
-            {(cookie.load('isClient') === "true" && cookie.load('user').id ===this.state.client.id)? <Link to={'/editar/cliente/'+this.state.client.id+'/'}><Button>Editar perfil</Button></Link> : null}
-          </Col>
-          <Col sm="8">
-              <Card block className="text-left">
-                <CardTitle>{this.state.client.user.first_name} {this.state.client.user.last_name}</CardTitle>
-                <Row hidden={true}>
-                  <Col sm="6">
-                    <CardText className="text-left">
-                      Región: {this.state.client.region}
-                    </CardText>
-                  </Col>
-                  <Col sm="6">
-                    <CardText className="text-left">
-                      Ciudad: {this.state.client.city}
-                    </CardText>
-                  </Col>
-                </Row>
-                <CardText>
-                  Servicios contratados: {this.props.services.result ? this.props.services.result.length : null}
-                </CardText>
-              </Card>
-            </Col>
-        </Row>
-        <div>
-          <p></p>
-          <p></p>
-        </div>
-        <div>
-          <div class="row" style={{marginTop:100}}>
-            <p className="h4"><b>Servicios Contactados</b></p>
-            <button type="button" class="btn btn-link"  onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link">
-              <p className="h8" style={{top:0}}>Todos</p>
-            </button>
-            <p  style={{top:0}}> | </p>
-            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
-              <p className="h8" style={{top:0}}>Por contactar</p>
-            </button>
-            <p  style={{top:0}}> | </p>
-            <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.hiredParamsPendingReview})} color="link">
-              <p className="h8" style={{top:0}}>Por evaluar</p>
-            </Button>
-            <p  style={{top:0}}> | </p>
-            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
-              <p className="h8" style={{top:0}}>Contratados</p>
-            </button>
-            <p  style={{top:0}}> | </p>
-            <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
-              <p className="h8" style={{top:0}}>Rechazados</p>
-            </button>
-          </div>
-          <div>
-            {false && this.props.services.loading? null : <Select
-               name="contacted-order-by"
-               multi={false}
-               options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
-               onChange={this.handleChangeContactedOrder.bind(this)}
-               searchable={false}
-               autosize={true}
-               clearable={false}
-               closeOnSelect={true}
-               placeholder={'Ordenar por...'}
-
-             />}
-            <div>
-              {this.state.owner ? <ServiceListGroup
-                services={this.state.contacted_services}
-                pagination={this.state.contacted_pagination}
-                value={this.state.contactedSelectValue}
-                handlePageChange={this.handleContactedServicePageChange.bind(this)}
-                loading = {this.props.services.loading}
-                />
-              : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
+      <div>
+        <section style={{background: 'url('+require('../custom/img/blog-hero-bg.jpg')+')'}} class="hero">
+          <div class="container">
+            <h1>{this.state.client.user.first_name} {this.state.client.user.last_name}</h1>
+            <div class="row">
+              <img className="img-circle center-cropped professional-profile col-lg-4" src={image_url} alt="" />
+              <div class="col-lg">
+                <p class="text-hero">
+                  Cliente
+                </p>
+                <p class="text-hero">
+                  Servicios contratados: {this.props.services.result ? this.props.services.result.length : 0}
+                </p>
+                {(cookie.load('isClient') === "true" && cookie.load('user').id ===this.state.client.id)? <Link to={'/editar/cliente/'+this.state.client.id+'/'}><div class="btn btn-primary has-wide-padding">Editar perfil</div></Link> : null}
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+        <div class="container">
+          <div>
+            <div class="row" style={{marginTop:100}}>
+              <p className="h4"><b>Servicios Contactados</b></p>
+              <button type="button" class="btn btn-link"  onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link">
+                <p className="h8" style={{top:0}}>Todos</p>
+              </button>
+              <p  style={{top:0}}> | </p>
+              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
+                <p className="h8" style={{top:0}}>Por contactar</p>
+              </button>
+              <p  style={{top:0}}> | </p>
+              <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.hiredParamsPendingReview})} color="link">
+                <p className="h8" style={{top:0}}>Por evaluar</p>
+              </Button>
+              <p  style={{top:0}}> | </p>
+              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
+                <p className="h8" style={{top:0}}>Contratados</p>
+              </button>
+              <p  style={{top:0}}> | </p>
+              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
+                <p className="h8" style={{top:0}}>Rechazados</p>
+              </button>
+            </div>
+            <div>
+              {false && this.props.services.loading? null : <Select
+                 name="contacted-order-by"
+                 multi={false}
+                 options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
+                 onChange={this.handleChangeContactedOrder.bind(this)}
+                 searchable={false}
+                 autosize={true}
+                 clearable={false}
+                 closeOnSelect={true}
+                 placeholder={'Ordenar por...'}
+
+               />}
+              <div>
+                {this.state.owner ? <ServiceListGroup
+                  services={this.state.contacted_services}
+                  pagination={this.state.contacted_pagination}
+                  value={this.state.contactedSelectValue}
+                  handlePageChange={this.handleContactedServicePageChange.bind(this)}
+                  loading = {this.props.services.loading}
+                  />
+                : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
     );
   }

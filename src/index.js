@@ -14,7 +14,7 @@ import './components/css/font-awesome/css/font-awesome.css';
 import 'bootstrap-select'
 import 'fancybox'
 import 'popper.js'
-import './custom/css/style.default.css';
+import './custom/css/style.red.css';
 import './custom/css/custom.css';
 import './custom/css/custom-fonticons.css';
 import './custom/css/jquery.fancybox.css';
