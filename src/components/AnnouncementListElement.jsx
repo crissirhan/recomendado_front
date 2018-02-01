@@ -95,7 +95,7 @@ class AnnouncementsListElement extends Component {
               <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id}>
                 <div class="card-block">
                   <div class="row">
-                    <div class="col-3">
+                    <div class="col-lg-3">
                       <Rating className="text-center"
                           empty="fa fa-star-o fa-2x orange-star medium"
                           full="fa fa-star fa-2x orange-star medium"
@@ -132,7 +132,7 @@ class AnnouncementsListElement extends Component {
                         </Modal>
                       </div>
                     </div>
-                    <div class="col-8 text-left">
+                    <div class="col-lg-8 text-left">
                       <div>
                         <Link to ={'/avisos/' + announcement.id}>
                           <CardTitle><b>{announcement.title}</b></CardTitle>
@@ -149,7 +149,7 @@ class AnnouncementsListElement extends Component {
                         })}
                       </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-lg-1">
                       <div>
                         {this.props.visible_button ? <SwitchButton label={this.state.visible? 'Visible' : 'Oculto'} key={announcement.id} name={"switch-"+announcement.id} defaultChecked={announcement.visible} onChange={this.handleSwitchChange.bind(this)} />: null}
                       </div>

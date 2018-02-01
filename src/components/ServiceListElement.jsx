@@ -124,7 +124,7 @@ class ServiceListElement extends Component {
     let today = new Date()
     let review = ((service.review ? service.review.length : -1) > 0) ? service.review[0] : {}
     if(!image_url){
-      image_url = announcement.professional.profile_picture 
+      image_url = announcement.professional.profile_picture
     }
     let border_color = ''
     let border_style = 'solid'
@@ -140,9 +140,9 @@ class ServiceListElement extends Component {
     }
     console.log("" + (review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : ' fa fa-star-o fa-2x orange-star')
     return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{border: "2px solid", borderColor:border_color, borderStyle:border_style}}>
-                <div class="card-block">
+                <div class="text-center">
                   <div class="row">
-                  <div class="col-sm-2">
+                  <div class="col-lg--2" style={{padding:30}}>
                     <Link to={'/profesionales/' + announcement.professional.id}>
                       {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture } /> : null}
                       <div>
@@ -150,7 +150,7 @@ class ServiceListElement extends Component {
                       </div>
                     </Link>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-lg--6" style={{padding:30}}>
                     <div>
                       <Link to ={'/avisos/' + announcement.id}>
                         <CardTitle><b>{announcement.title}</b></CardTitle>
@@ -159,7 +159,7 @@ class ServiceListElement extends Component {
                     {service.hired ?
                     <div>
                       <div class="row">
-                        <div class="col-sm">
+                        <div class="col-lg-">
                           <div >
                             <Rating className="text-center"
                                 empty={(review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : 'fa fa-star-o fa-2x orange-star'}
@@ -177,17 +177,17 @@ class ServiceListElement extends Component {
                               </ModalBody>
                             </Modal>
                         </div>
-                        <div class="col-sm">
+                        <div class="col-lg-">
                           <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
                         </div>
                       </div>
                     </div>
                     </div> : null}
                     <div class="row">
-                      {announcement.announcement_thumbnail ? <div class="col-sm">
+                      {announcement.announcement_thumbnail ? <div class="col-lg-">
                         <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail } />
                       </div> : null}
-                      <div class="col-sm">
+                      <div class="col-lg-">
                         {announcement.description}
                       </div>
                     </div>
@@ -197,7 +197,7 @@ class ServiceListElement extends Component {
                       })}
                     </div>
                   </div>
-                  <div class="col-sm-4" >
+                  <div class="col-lg--4" style={{padding:10}}>
 
                     <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
                       <span aria-hidden="true"><i class="fa fa-trash"></i></span>
@@ -228,14 +228,14 @@ class ServiceListElement extends Component {
                       <div>
                         ¿Aceptó tu propuesta de trabajo?
                       </div>
-                        <Row>
-                          <Col sm="6">
+                        <div class="row">
+                          <div class="col-lg-6" sm="6">
                             <Button onClick={this.handleYes.bind(this)} disabled={this.props.update_service.loading} color="success">Si</Button>
-                          </Col>
-                          <Col sm="6">
+                          </div>
+                          <div class="col-lg-6" sm="6">
                             <Button onClick={this.handleNo.bind(this)} disabled={this.props.update_service.loading} color="danger">No</Button>
-                          </Col>
-                        </Row>
+                          </div>
+                        </div>
                       </div>}
                   </div>
               </div>

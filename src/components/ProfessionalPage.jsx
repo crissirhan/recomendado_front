@@ -196,81 +196,68 @@ class ProfessionalPage extends Component {
     let owner= (cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
-      <Container className="container">
-        <Row>
-          <Col sm="4">
-            <Card block className="text-center" >
-              <img className="img-circle center-cropped professional-profile" src={image_url} alt="foto perfil" />
+      <div>
+        <section style={{background: 'url('+require('../custom/img/blog-hero-bg.jpg')+')'}} class="hero">
+          <div class="container">
+            <h1>{this.state.professional.user.first_name} {this.state.professional.user.last_name}</h1>
+            <p class="text-hero">
               <Rating
                 empty="fa fa-star-o fa-2x orange-star"
                 full="fa fa-star fa-2x orange-star"
                 initialRate={this.state.professional.average}
                 readonly
               />
-              <CardText>
-                <small className="text-muted">({this.state.professional.count} evaluaciones)</small>
-              </CardText>
-            </Card>
-            {owner ? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><Button>Editar perfil</Button></Link> : null}
-          </Col>
-          <Col sm="8">
-              <Card block className="text-left">
-                <CardTitle>{this.state.professional.user.first_name} {this.state.professional.user.last_name}</CardTitle>
-                <Row>
-                  <Col sm="6">
-                    <CardText className="text-left">
-                      Región: {this.state.professional.region}
-                    </CardText>
-                  </Col>
-                  <Col sm="6">
-                    <CardText className="text-left">
-                      Ciudad: {this.state.professional.city}
-                    </CardText>
-                  </Col>
-                </Row>
-                <CardText>
-
-                </CardText>
-                <CardText>
-
-                </CardText>
-                {this.state.professional.experience? <CardText>
-                  <i>"{this.state.professional.experience}"</i>
-                </CardText> : null}
-              </Card>
-            </Col>
-        </Row>
-        <Container>
-          <p></p>
-          <p></p>
-        </Container>
-        <Container>
-          <Row style={{marginTop:100}}>
-            <p className="h4"><b>Avisos  </b></p>
-            {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link"><p className="h8" ><b>Crear Aviso</b></p></Button></Link> : null}
-          </Row>
-          <Jumbotron>
-            <AnnouncementListGroup
-            extend_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
-            visible_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
-            pagination={this.props.announcements.pagination}
-            announcements={this.props.announcements.result}
-            handlePageChange={this.handlePageChange.bind(this)}
-            />
-          </Jumbotron>
-        </Container>
-        <Container>
-          <p className="h4"><b>Reviews</b></p>
-          <Jumbotron>
-            <ReviewList
-            reviews={this.props.reviews.result}
-            pagination={this.props.reviews.pagination}
-            owner={owner}
-            handlePageChange={this.handleReviewPageChange.bind(this)}
-            />
-          </Jumbotron>
-        </Container>
-      </Container>
+              ({this.state.professional.count} evaluaciones)
+            </p>
+            <div class="row">
+              <img className="img-circle center-cropped professional-profile col-lg-4" src={image_url} alt="" />
+              <div class="col-lg">
+                <p class="text-hero">
+                  Profesional
+                </p>
+                <p class="text-hero">
+                  Región: {this.state.professional.region}
+                </p>
+                <p class="text-hero">
+                  Ciudad: {this.state.professional.city}
+                </p>
+                <p class="text-hero">
+                  Acerca: {this.state.professional.experience}
+                </p>
+                {owner ? <Link to={'/editar/profesional/'+this.state.professional.id+'/'}><div class="btn btn-primary has-wide-padding">Editar perfil</div></Link> : null}
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="container">
+          <div class="container">
+            <Row style={{marginTop:100}}>
+              <p className="h4"><b>Avisos  </b></p>
+              {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link"><p className="h8" ><b>Crear Aviso</b></p></Button></Link> : null}
+            </Row>
+            <Jumbotron>
+              <AnnouncementListGroup
+              extend_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
+              visible_button={(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)}
+              pagination={this.props.announcements.pagination}
+              announcements={this.props.announcements.result}
+              handlePageChange={this.handlePageChange.bind(this)}
+              />
+            </Jumbotron>
+          </div>
+          <div class="container">
+            <p className="h4"><b>Reviews</b></p>
+            <Jumbotron>
+              <ReviewList
+              reviews={this.props.reviews.result}
+              pagination={this.props.reviews.pagination}
+              owner={owner}
+              handlePageChange={this.handleReviewPageChange.bind(this)}
+              />
+            </Jumbotron>
+          </div>
+        </div>
+      </div>
     );
   }
 }
