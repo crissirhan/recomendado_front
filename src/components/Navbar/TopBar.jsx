@@ -183,7 +183,7 @@ class TopBar extends Component {
           <span class="d-none d-md-inline">Login</span>
         </Link>
         <Link to="/registro/" class="login">
-          <i class="fas fa-car"></i>
+          <i class="fa fa-user-plus"></i>
           <span class="d-none d-md-inline">Registro</span>
         </Link>
       </div>
