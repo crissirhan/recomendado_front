@@ -150,67 +150,77 @@ class AnnouncementPage extends Component {
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
     return (
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-3">
-            <Link to={'/profesionales/'+this.state.announcement.professional.id}>
-              <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture } alt="" />
-              <div>
-                {this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}
-              </div>
-            </Link>
-          </div>
-
-          <div class="col-lg-9">
-            <div class="card mt-4">
-              <img class="card-img-top img-fluid" src={this.state.announcement.announcement_thumbnail } alt=""/>
-              <div class="card-body">
-                <div>
-                  <small>{new Date(this.state.announcement.publish_date).toLocaleDateString()}</small>
-                </div>
-                <h3 class="card-title">{this.state.announcement.title}</h3>
-                <h4>{this.state.announcement.price ? '$'+this.state.announcement.price : 'Precio no definido'}</h4>
-                <p class="card-text">{this.state.announcement.description.substr(0,20)+'...'}</p>
-                <p class="card-text">{this.state.announcement.location}</p>
-                <p class="card-text">{this.state.announcement.availability_display}</p>
-                <p className="lead" style={{marginBottom:25}}>
-                  {this.state.announcement.job_tags.map(tag => {
-                    return <Button color="link" key={tag.id}>
-                      <Link to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+      <div>
+        <section style={{background: 'url('+this.state.announcement.announcement_thumbnail +')'}} class="hero listing-single-hero d-flex align-items-end">
+          <div class="container">
+            <div class="content d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
+              <div class="heading-info">
+                {this.state.announcement.job_tags.map(tag => {
+                  return <Link key={tag.id} to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                      <div class="badge-transparent">
                         {tag.job.job_sub_type}
-                      </Link>
-                    </Button>
-                  })}
-                </p>
-                <span >
+                      </div>
+                    </Link>
+                })}
+                <h1 >{this.state.announcement.title}</h1>
+                <p><i class="icon-localizer"></i> {this.state.announcement.location}</p>
+                <div class="listing-rate d-flex align-items-center">
                   <Rating
                     class="text-warning"
-                    empty="fa fa-star-o fa-2x orange-star"
-                    full="fa fa-star fa-2x orange-star"
+                    empty="fa fa-star-o fa-2x orange-star rate list-inline"
+                    full="fa fa-star fa-2x orange-star rate list-inline"
                     initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
                     readonly
-                  />
-                </span>
-                {Math.round( this.state.announcement.review_average * 10) / 10} estrellas
-
-                {cookie.load('isClient') == "true" ? <div><Button color="primary" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</Button>
-                <Collapse isOpen={this.state.contact_collapse}>
-                  <div>
-                    <div>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
-                    <div>{this.state.announcement.professional.phone_number}</div>
-                    <div>{this.state.announcement.professional.user.email}</div>
-                  </div>
-                </Collapse> </div>: null}
+                  /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
+                </div>
               </div>
             </div>
-            <ReviewList
-              reviews={this.props.reviews.result}
-              pagination={this.props.reviews.pagination}
-              handlePageChange={this.handleReviewPageChange.bind(this)}
-              owner={owner}
-              />
+          </div>
+        </section>
+        <div class="container">
+          <div class="row">
+            <main class="col-lg-8">
+              <div class="block about-listing">
+                <header>
+                  <h3 class="has-lines"><small>Aviso</small> Acerca del Aviso</h3>
+                </header>
+                  <p>{this.state.announcement.description.substr(0,20)+'...'}</p>
+                </div>
+                <ReviewList
+                  reviews={this.props.reviews.result}
+                  pagination={this.props.reviews.pagination}
+                  handlePageChange={this.handleReviewPageChange.bind(this)}
+                  owner={owner}
+                  />
+            </main>
+            <aside class="col-lg-4">
+              <div class="widget opening-hours">
+                <header>
+                  <h3 class="has-lines"><small>Atención</small> Días de atención </h3>
+                </header>
+                <div class="days">
+                  {this.state.announcement.availability_display.replace(/ /g,'').split(",").map( day => <div class="day d-flex justify-content-between"><strong>{day}</strong></div> )}
+                </div>
+              </div>
+              <div class="widget contact">
+                <header>
+                  <h3 class="has-lines"><small>Contacto</small> Acerca del profesional</h3>
+                </header>
+                <div class="info">
+                  <Link to={'/profesionales/'+this.state.announcement.professional.id}>
+                    <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture } alt="" />
+                    <div class="item"><i class="fa fa-user"></i>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
+                  </Link>
+                  {cookie.load('isClient') == "true" ? <div class="item"><div class="btn btn-primary has-shadow" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</div>
+                  <Collapse isOpen={this.state.contact_collapse}>
+                    <div>
+                      <div class="item"><i class="fa fa-phone"></i> {this.state.announcement.professional.phone_number}</div>
+                      <div class="item"><i class="fa fa-envelope-o"></i>{this.state.announcement.professional.user.email}</div>
+                    </div>
+                  </Collapse> </div>: null}
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       </div>

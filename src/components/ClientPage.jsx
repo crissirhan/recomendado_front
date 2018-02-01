@@ -236,7 +236,7 @@ class ClientPage extends Component {
     }
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
-      <Container className="container">
+      <div class="container">
         <Row>
           <Col sm="4">
             <Card block className="text-center" >
@@ -317,7 +317,7 @@ class ClientPage extends Component {
             </div>
           </div>
         </div>
-    </Container>
+    </div>
     );
   }
 }

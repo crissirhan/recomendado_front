@@ -44,6 +44,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import Footer from './components/Footer'
+import NotFound from './components/NotFound'
 
 
 class App extends Component {
@@ -129,6 +130,7 @@ class App extends Component {
                 <Route path="/editar/cliente/:id/" render={({ match }) => (
                   <ClientEdit client_id={match.params.id}/>
                 )} />
+                <Route path="*" component={NotFound} />
               </Switch>
             </div>
           </ErrorBoundary>

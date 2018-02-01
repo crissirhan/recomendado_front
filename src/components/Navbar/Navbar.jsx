@@ -12,6 +12,9 @@ class TopBar extends Component {
     };
   }
 
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
   render() {
 
     return (
@@ -23,8 +26,6 @@ class TopBar extends Component {
               <li class="nav-item"><Link to="/" class="nav-link active">Inicio</Link>
               </li>
               <li class="nav-item"><Link to ="/buscar/avisos/" class="nav-link">Buscar avisos</Link>
-              </li>
-              <li class="nav-item"><Link to="/contacto/" class="nav-link">Contacto</Link>
               </li>
             </ul><Link to="/crear/anuncio/" class="btn navbar-btn btn-outline-primary mt-3 mt-lg-0 ml-lg-3">Publica un aviso</Link>
           </div>
