@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SubJobCategories from './SubJobCategories';
@@ -124,6 +125,7 @@ class AnnouncementPage extends Component {
 
   handleToggleContactCollapse(){
     if(cookie.load('isClient') === "true"){
+      this.handleScrollToElement()
       this.toggleContactCollapse()
     } else {
       this.props.history.push('/login?from=' + this.props.history.location.pathname)
@@ -133,6 +135,12 @@ class AnnouncementPage extends Component {
     let new_query = Object.assign({}, this.props.reviews.params, {page:pageNumber})
     this.props.getReviews(new_query)
   }
+
+  handleScrollToElement() {
+    const infoNode = ReactDOM.findDOMNode(this.refs.contactInfo)
+    window.scrollTo(0, infoNode.offsetTop);
+  }
+
   render(){
     if(this.state.loading || !this.state.announcement_reviews){
       return <div class="container"><div class="loader"></div></div>
@@ -174,6 +182,8 @@ class AnnouncementPage extends Component {
                   /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
                 </div>
               </div>
+              {cookie.load('isClient') == "true" ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</div>
+               </div>: null}
             </div>
           </div>
         </section>
@@ -206,18 +216,19 @@ class AnnouncementPage extends Component {
                 <header>
                   <h3 class="has-lines"><small>Contacto</small> Acerca del profesional</h3>
                 </header>
-                <div class="info">
+                <div class="info" >
                   <Link to={'/profesionales/'+this.state.announcement.professional.id}>
                     <img className="img-circle center-cropped" style={{maxWidth:'100%'}} src={this.state.announcement.professional.profile_picture } alt="" />
-                    <div class="item"><i class="fa fa-user"></i>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
                   </Link>
                   {cookie.load('isClient') == "true" ? <div class="item"><div class="btn btn-primary has-shadow" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</div>
-                  <Collapse isOpen={this.state.contact_collapse}>
+                  </div>: null}
+                  <div class="item"><i class="fa fa-user" ref="contactInfo"></i>{this.state.announcement.professional.user.first_name} {this.state.announcement.professional.user.last_name}</div>
+                  <Collapse isOpen={this.state.contact_collapse} >
                     <div>
                       <div class="item"><i class="fa fa-phone"></i> {this.state.announcement.professional.phone_number}</div>
                       <div class="item"><i class="fa fa-envelope-o"></i>{this.state.announcement.professional.user.email}</div>
                     </div>
-                  </Collapse> </div>: null}
+                  </Collapse>
                 </div>
               </div>
             </aside>
