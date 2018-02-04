@@ -24,7 +24,8 @@ class AnnouncementsListElement extends Component {
       if(nextProps.update_announcement !== this.props.update_announcement ){
         if(nextProps.update_announcement.success){
           if (! toast.isActive(this.toastId) && this.announcement_toast) {
-            this.toastId = toast.success('Aviso editado con éxito')
+            this.toastId = toast.success('Aviso editado con éxito', {
+              position: toast.POSITION.BOTTOM_RIGHT})
             this.announcement_toast = false
           }
 
@@ -78,7 +79,7 @@ class AnnouncementsListElement extends Component {
   render() {
     let image_url = this.props.service.announcement.announcement_thumbnail ;
     if(!image_url){
-      image_url = this.props.service.announcement.professional.profile_picture 
+      image_url = this.props.service.announcement.professional.profile_picture
     }
     let service = this.props.service
     let announcement = service.announcement

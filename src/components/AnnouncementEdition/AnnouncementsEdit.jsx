@@ -101,7 +101,8 @@ class AnnouncementsEdit extends Component {
   }
 
   handleSuccess(){
-    toast.success("Aviso editado con éxito")
+    toast.success("Aviso editado con éxito", {
+      position: toast.POSITION.BOTTOM_RIGHT})
     this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
   }
 

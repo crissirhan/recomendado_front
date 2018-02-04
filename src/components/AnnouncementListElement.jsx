@@ -27,7 +27,7 @@ class AnnouncementsListElement extends Component {
         if(nextProps.update_announcement.success){
           if (! toast.isActive(this.toastId) && this.announcement_toast) {
             this.toastId = toast.success('Aviso extendido con éxito', {
-              position: toast.POSITION.BOTTOM_LEFT
+              position: toast.POSITION.BOTTOM_RIGHT
             });
             this.announcement_toast = false
           }
@@ -68,7 +68,7 @@ class AnnouncementsListElement extends Component {
   handleExpireButton(event){
     if(this.state.value !== '12345678'){
       toast.error('Código inválido', {
-        position: toast.POSITION.BOTTOM_LEFT
+        position: toast.POSITION.BOTTOM_RIGHT
       });
       this.setState({displayError:true})
       return;

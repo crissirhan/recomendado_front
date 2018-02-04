@@ -245,12 +245,14 @@ class AnnouncementForm extends Component{
   }
 
   handleSuccess(){
-    toast.success("Aviso creado con éxito")
+    toast.success("Aviso creado con éxito", {
+      position: toast.POSITION.BOTTOM_RIGHT})
     this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
   }
 
   handleError(){
-    toast.error("Error al procesar la solicitud")
+    toast.error("Error al procesar la solicitud", {
+      position: toast.POSITION.BOTTOM_RIGHT})
   }
 
   validateTags(value, ctx, input, cb){

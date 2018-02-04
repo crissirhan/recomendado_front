@@ -90,11 +90,13 @@ class AnnouncementPage extends Component {
   }
 
   handleSuccessPutService(){
-    toast.success("Contactado")
+    toast.success("Contactado", {
+      position: toast.POSITION.BOTTOM_RIGHT})
   }
 
   handleErrorPutService(){
-    toast.error("Ha ocurrido un error")
+    toast.error("Ha ocurrido un error", {
+      position: toast.POSITION.BOTTOM_RIGHT})
   }
 
   handleCreateService(){

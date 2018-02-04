@@ -94,12 +94,14 @@ class ProfessionalEdit extends Component {
   }
 
   handleSuccess(){
-    toast.success("Perfil editado con éxito")
+    toast.success("Perfil editado con éxito", {
+      position: toast.POSITION.BOTTOM_RIGHT})
     this.props.history.push('/profesionales/' + this.state.professional_id + '/' );
   }
 
   handleError(){
-    toast.error("Error al procesar la solicitud")
+    toast.error("Error al procesar la solicitud", {
+      position: toast.POSITION.BOTTOM_RIGHT})
   }
 
   handleSubmit(){

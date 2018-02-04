@@ -68,7 +68,8 @@ class LoginForm extends Component{
   }
 
   handleLogin(){
-    toast.success("¡Logeado con éxito!");
+    toast.success("¡Logeado con éxito!", {
+      position: toast.POSITION.BOTTOM_RIGHT});
   }
 
   handleInputChange(event) {
@@ -93,7 +94,8 @@ class LoginForm extends Component{
 
   render(){
     if(this.state.error){
-      toast.error("Error al intentar logear. Vuelva a intentar más tarde por favor.")
+      toast.error("Error al intentar logear. Vuelva a intentar más tarde por favor.", {
+        position: toast.POSITION.BOTTOM_RIGHT})
     }
     return (
       <div style={{ opacity: this.props.login_state.loading ? 0.5 : 1 }}>

@@ -68,12 +68,14 @@ class signUpProfessionalForm extends Component{
   }
 
   handleSuccess(){
-    toast.success("¡Usuario creado con éxito!")
+    toast.success("¡Usuario creado con éxito!", {
+      position: toast.POSITION.BOTTOM_RIGHT})
     this.props.history.push('/login');
   }
 
   handleError(){
-    toast.error("Error al procesar la solicitud")
+    toast.error("Error al procesar la solicitud", {
+      position: toast.POSITION.BOTTOM_RIGHT})
   }
 
   handleInputChange(event) {
