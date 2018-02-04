@@ -87,13 +87,35 @@ class AnnouncementPage extends Component {
     this.handleCreateService = this.handleCreateService.bind(this);
     this.handleSuccessPutService = this.handleSuccessPutService.bind(this)
     this.handleErrorPutService = this.handleErrorPutService.bind(this)
+    this.getLoggedInUserUrl = this.getLoggedInUserUrl.bind(this)
   }
 
   handleSuccessPutService(){
     toast.success("Contactado", {
       position: toast.POSITION.BOTTOM_RIGHT})
+      toast.success(<div>¡Revisa tu <Link class="btn-link" to={this.getLoggedInUserUrl()}>perfil</Link> para confirmar el trabajo!</div>, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
+      })
   }
-
+  getLoggedInUserUrl(){
+    if(cookie.load('user') != "undefined"){
+      if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
+        return '/profesionales/' + cookie.load('user').id;
+      }
+      if(cookie.load('isClient') === "true" && cookie.load('user').user){
+        return '/clientes/' + cookie.load('user').id;
+      }
+    } else{
+      if(this.state.isClient){
+        return '/clientes/'+this.state.user.id+'/';
+      }
+      if(this.state.isProfessional){
+        return '/profesionales/'+this.state.user.id+'/';
+      }
+    }
+    return '/';
+  }
   handleErrorPutService(){
     toast.error("Ha ocurrido un error", {
       position: toast.POSITION.BOTTOM_RIGHT})
