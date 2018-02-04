@@ -139,108 +139,109 @@ class ServiceListElement extends Component {
       border_style = 'dashed'
     }
     console.log("" + (review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : ' fa fa-star-o fa-2x orange-star')
-    return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{border: "2px solid", borderColor:border_color, borderStyle:border_style}}>
+    return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{maxWidth:"100%", border: "2px solid", borderColor:border_color, borderStyle:border_style}}>
                 <div class="text-center">
                   <div class="row">
-                  <div class="col-lg--2" style={{padding:30}}>
-                    <Link to={'/profesionales/' + announcement.professional.id}>
-                      {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture } /> : null}
-                      <div>
-                        {announcement.professional.user.first_name} {announcement.professional.user.last_name}
-                      </div>
-                    </Link>
-                  </div>
-                  <div class="col-lg--6" style={{padding:30}}>
-                    <div>
-                      <Link to ={'/avisos/' + announcement.id}>
-                        <CardTitle><b>{announcement.title}</b></CardTitle>
+                    <div class="col-xs-2" >
+                      <Link to={'/profesionales/' + announcement.professional.id}>
+                        {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture } /> : null}
+                        <div>
+                          {announcement.professional.user.first_name} {announcement.professional.user.last_name}
+                        </div>
                       </Link>
                     </div>
-                    {service.hired ?
-                    <div>
-                      <div class="row">
-                        <div class="col-lg-">
-                          <div >
-                            <Rating className="text-center"
-                                empty={(review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : 'fa fa-star-o fa-2x orange-star'}
-                                full={(review.rating || this.state.reviewed) ? 'fa fa-star fa-2x silver-star' : 'fa fa-star fa-2x orange-star'}
-                                initialRate={review.rating}
-                                onClick={this.handleStarChange.bind(this)}
-                                readonly={review.rating || this.state.reviewed}
-                                />
-                            {review.rating || this.state.reviewed ? <p class="text-center" style={{color: "#b2b2b2", fontSize:"14px"}}>Evaluación completa</p>
-                            : <p class="text-center" style={{color: "#FF0000", fontSize:"14px"}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
-                            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                              <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>
-                              <ModalBody>
-                                <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
-                              </ModalBody>
-                            </Modal>
-                        </div>
-                        <div class="col-lg-">
-                          <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
-                        </div>
-                      </div>
-                    </div>
-                    </div> : null}
-                    <div class="row">
-                      {announcement.announcement_thumbnail ? <div class="col-lg-">
-                        <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail } />
-                      </div> : null}
-                      <div class="col-lg-">
-                        {announcement.description}
-                      </div>
-                    </div>
-                    <div class="text-right">
-                      tags: {announcement.job_tags.map((tag,index) => {
-                        return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
-                      })}
-                    </div>
-                  </div>
-                  <div class="col-lg--4" style={{padding:10}}>
-
-                    <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
-                      <span aria-hidden="true"><i class="fa fa-trash"></i></span>
-                    </Button>
-
-                    {this.state.pending ? <div>
+                    <div class="col-xs-6" >
                       <div>
-                        <b>Teléfono: {announcement.professional.phone_number}</b>
+                        <Link to ={'/avisos/' + announcement.id}>
+                          <CardTitle><b>{announcement.title}</b></CardTitle>
+                        </Link>
                       </div>
+                      {service.hired ?
                       <div>
-                        <b>Email: {announcement.professional.user.email}</b>
-                      </div>
-                    </div> : null}
-                    <div>
-                      Contactado:  {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
-                    </div>
-                    { !this.state.pending ? <div style={{marginTop:30}}>
-                        <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
-                        <Collapse isOpen={this.state.contactAgain && false}>
-                          <div>
-                            <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
-                            <div>Número de teléfono: {announcement.professional.phone_number}</div>
-                            <div>Correo electrónico: {announcement.professional.user.email}</div>
-                          </div>
-                        </Collapse>
-                        </div> :
-                      <div style={{marginTop:30}}>
-                      <div>
-                        ¿Aceptó tu propuesta de trabajo?
-                      </div>
                         <div class="row">
-                          <div class="col-lg-6" sm="6">
-                            <Button onClick={this.handleYes.bind(this)} disabled={this.props.update_service.loading} color="success">Si</Button>
+                          <div class="col-xs-8">
+                            <div >
+                              <Rating className="text-center"
+                                  empty={(review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : 'fa fa-star-o fa-2x orange-star'}
+                                  full={(review.rating || this.state.reviewed) ? 'fa fa-star fa-2x silver-star' : 'fa fa-star fa-2x orange-star'}
+                                  initialRate={review.rating}
+                                  onClick={this.handleStarChange.bind(this)}
+                                  readonly={review.rating || this.state.reviewed}
+                                  />
+                              {review.rating || this.state.reviewed ? <p class="text-center" style={{color: "#b2b2b2", fontSize:"14px"}}>Evaluación completa</p>
+                              : <p class="text-center" style={{color: "#FF0000", fontSize:"14px"}}>EVALÚA A {announcement.professional.user.first_name.toUpperCase()}</p>}
+                              <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                                <ModalHeader toggle={this.toggle}>Evaluación del servicio</ModalHeader>
+                                <ModalBody>
+                                  <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
+                                </ModalBody>
+                              </Modal>
                           </div>
-                          <div class="col-lg-6" sm="6">
-                            <Button onClick={this.handleNo.bind(this)} disabled={this.props.update_service.loading} color="danger">No</Button>
+                          <div class="col-xs-4">
+                            <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
                           </div>
                         </div>
-                      </div>}
+                      </div>
+                      </div> : null}
+                      <div class="row">
+                        {announcement.announcement_thumbnail ? <div class="col-xs-3">
+                          <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail } />
+                        </div> : null}
+                        <div class="col-xs-9">
+                          {announcement.description}
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        tags: {announcement.job_tags.map((tag,index) => {
+                          return <Link to={'/categorias/'+tag.job.job_category.job_type+'/'+tag.job.job_sub_type}>{tag.job.job_sub_type}{index + 1 < announcement.job_tags.length? ' | ': null }</Link>
+                        })}
+                      </div>
+                    </div>
+                    <div class="col-xs-4" >
+
+
+
+                      {this.state.pending ? <div>
+                        <div>
+                          <b>Teléfono: {announcement.professional.phone_number}</b>
+                        </div>
+                        <div>
+                          <b>Email: {announcement.professional.user.email}</b>
+                        </div>
+                      </div> : null}
+                      <div>
+                        Contactado:  {new Date(service.contacted_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
+                      </div>
+                      { !this.state.pending ? <div style={{marginTop:30}}>
+                          <Button onClick={this.handleContactAgain.bind(this)} disabled={this.props.put_service.loading} color="primary">Volver a contactar</Button>
+                          <Collapse isOpen={this.state.contactAgain && false}>
+                            <div>
+                              <div>Nombre: {announcement.professional.user.first_name} {announcement.professional.user.last_name}</div>
+                              <div>Número de teléfono: {announcement.professional.phone_number}</div>
+                              <div>Correo electrónico: {announcement.professional.user.email}</div>
+                            </div>
+                          </Collapse>
+                          </div> :
+                        <div style={{marginTop:30}}>
+                        <div>
+                          ¿Aceptó tu propuesta de trabajo?
+                        </div>
+                          <div class="row">
+                            <div class="col-xs-6" >
+                              <Button onClick={this.handleYes.bind(this)} disabled={this.props.update_service.loading} color="success">Si</Button>
+                            </div>
+                            <div class="col-xs-6" >
+                              <Button onClick={this.handleNo.bind(this)} disabled={this.props.update_service.loading} color="danger">No</Button>
+                            </div>
+                          </div>
+                        </div>}
+                    </div>
                   </div>
+                  <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
+                    <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
     );
   }
 }
