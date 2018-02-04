@@ -14,7 +14,7 @@ class MustLogIn extends React.Component {
         <div class="container">
           <h1 class="mb-5">{cookie.load('user') ? 'Está página es para otro tipo de usuario' : <div>Tienes que estar <Link class="btn-link" to='/login'>logeado</Link> para estar acá</div>}</h1>
           <p class="text-hero mb-5">
-            {cookie.load('user') ? 'Tienes que iniciar como ' + cookie.load('isClient') ? 'Profesional' : 'Cliente' + ' para estar aca' :
+            {cookie.load('user') ? <div>Tienes que iniciar sesión como {cookie.load('isClient') ? 'Profesional' : 'Cliente'} para estar aca</div> :
           <div>Tienes que hacer <Link class="btn-link" to='/login'>login</Link> para estar acá</div>}
           </p>
           <p><Link to={'/'} class="btn btn-outline-white"> <i class="fa fa-home mr-2"></i>Volver al inicio</Link></p>
