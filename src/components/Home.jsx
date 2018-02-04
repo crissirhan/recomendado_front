@@ -49,7 +49,7 @@ class Home extends Component {
           <div class="container">
             <h2 class="has-lines"><small class="text-primary">¿Quieres trabajar con nosotros? </small> Publica tu aviso</h2>
             <p class="lead">Explora las distintas categorias y opciones para publicar tu aviso</p>
-            <Link to="/crear/anuncio/" class="btn btn-primary has-shadow has-wide-padding">Publica tu aviso</Link>
+            <Link to="/crear/aviso/" class="btn btn-primary has-shadow has-wide-padding">Publica tu aviso</Link>
           </div>
         </section>
 

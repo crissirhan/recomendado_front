@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.css';
 import $ from 'jquery';
 import './components/css/font-awesome/css/font-awesome.css';
+import ScrollToTop from './components/ScrollToTop'
 import 'bootstrap-select'
 import 'fancybox'
 import 'popper.js'
@@ -52,7 +53,9 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <ToastContainer/> {/* Toast notifications app-wide */}
-        <App />
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
       </div>
     </BrowserRouter>
   </Provider>,

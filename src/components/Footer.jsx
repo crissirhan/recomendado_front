@@ -25,7 +25,7 @@ class Footer extends React.Component {
                 <ul class="list-unstyled">
                   <li> <Link to={'/'}>inicio</Link></li>
                   <li> <Link to={'/buscar/avisos'}>Buscar aviso</Link></li>
-                  <li> <Link to={'/crear/anuncio'}>Crear aviso</Link></li>
+                  <li> <Link to={'/crear/aviso'}>Crear aviso</Link></li>
                 </ul>
                 <ul class="list-unstyled">
                   <li> <Link to={'/contactar'}>Contactar</Link></li>

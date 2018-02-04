@@ -118,10 +118,10 @@ class App extends Component {
                 <Route exact path="/buscar/avisos/" render={({ match }) => (
                   <SearchPage/>
                 )} />
-                <Route path="/crear/anuncio/" render={({ match }) => (
+                <Route path="/crear/aviso/" render={({ match }) => (
                   <AnnouncementForm/>
                 )} />
-                <Route path="/editar/anuncio/:id/" render={({ match }) => (
+                <Route path="/editar/aviso/:id/" render={({ match }) => (
                   <AnnouncementsEdit announcement_id={match.params.id}/>
                 )} />
                 <Route path="/editar/profesional/:id/" render={({ match }) => (

@@ -233,7 +233,7 @@ class ProfessionalPage extends Component {
           <div class="container">
             <Row style={{marginTop:100}}>
               <p className="h4"><b>Avisos  </b></p>
-              {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/anuncio/'}><Button color="link"><p className="h8" ><b>Crear Aviso</b></p></Button></Link> : null}
+              {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/aviso/'}><Button color="link"><p className="h8" ><b>Crear Aviso</b></p></Button></Link> : null}
             </Row>
             <Jumbotron>
               <AnnouncementListGroup

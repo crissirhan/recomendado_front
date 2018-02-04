@@ -27,7 +27,7 @@ class TopBar extends Component {
               </li>
               <li class="nav-item"><Link to ="/buscar/avisos/" class="nav-link">Buscar avisos</Link>
               </li>
-            </ul><Link to="/crear/anuncio/" class="btn navbar-btn btn-outline-primary mt-3 mt-lg-0 ml-lg-3">Publica un aviso</Link>
+            </ul><Link to="/crear/aviso/" class="btn navbar-btn btn-outline-primary mt-3 mt-lg-0 ml-lg-3">Publica un aviso</Link>
           </div>
         </div>
       </nav>
