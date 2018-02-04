@@ -16,6 +16,7 @@ import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstr
 import { ToastContainer, toast } from 'react-toastify';
 import { RegionesYcomunas } from '../Globals'
 import shortid from 'shortid'
+import MustLogIn from './MustLogIn'
 
 class AnnouncementForm extends Component{
 
@@ -268,7 +269,7 @@ class AnnouncementForm extends Component{
       return null;
     }
     if(!cookie.load('user') || !cookie.load('user').id || cookie.load('isProfessional') !== "true"){
-      return <Container><div>Debes estar logeado/a como profesional para realizar esta acción</div></Container>;
+      return <MustLogIn/>;
     }
     if(this.state.success){
       this.handleSuccess()
