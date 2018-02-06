@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroupItem, CardTitle, Col, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
-import './css/images.css';
-import './css/box.css';
 import Rating from 'react-rating';
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
@@ -95,7 +93,7 @@ class AnnouncementsListElement extends Component {
                             <ReviewForm ratingCallback={this.ratingCallback} rating={this.state.rating} service_id={service.id}/>
                           </ModalBody>
                         </Modal>
-                      <div class="col-3">
+                      <div class="col-sm-3">
                         <Rating className="text-center"
                             empty="fa fa-star-o fa-2x orange-star"
                             full="fa fa-star fa-2x orange-star"
@@ -113,7 +111,7 @@ class AnnouncementsListElement extends Component {
                           {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.handleExpireButton.bind(this)}>Extender</Button> : null}
                         </div>
                       </div>
-                      <div class="col" >
+                      <div class="col-sm" >
                         <div>
                           <Link to ={'/avisos/' + announcement.id}>
                             <div class="card-title"><b>{announcement.title}</b></div>
@@ -128,7 +126,7 @@ class AnnouncementsListElement extends Component {
                           })}
                         </div>
                       </div>
-                      <div class="col-3" >
+                      <div class="col-sm-3" >
                         <div>
                           Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                         </div>
