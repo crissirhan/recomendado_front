@@ -15,7 +15,7 @@ import ScrollToTop from './components/ScrollToTop'
 import 'bootstrap-select'
 import 'fancybox'
 import 'popper.js'
-import './custom/css/style.red.css';
+import './custom/css/style.blue.css';
 import './custom/css/custom.css';
 import './custom/css/custom-fonticons.css';
 import './custom/css/jquery.fancybox.css';
