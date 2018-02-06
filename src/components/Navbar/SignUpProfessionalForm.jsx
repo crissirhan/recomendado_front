@@ -239,7 +239,7 @@ class signUpProfessionalForm extends Component{
     )
   }
   checkRut(rutCompleto) {
-  		var tmp 	= rutCompleto.replace('.'/g,'').replace('-','');
+  		var tmp 	= rutCompleto.split('.').join('').replace('-','');
   		var digv	= tmp.slice(-1);
   		var rut 	= tmp.slice(0,-1);
       var tst= rut + '-' + digv
