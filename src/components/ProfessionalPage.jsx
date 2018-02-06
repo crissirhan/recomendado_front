@@ -197,12 +197,12 @@ class ProfessionalPage extends Component {
     let image_url = this.state.professional.profile_picture ? this.state.professional.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <div>
-        <div class="">
+        <div class="container-fluid">
           <div class="row">
             <div class="col-lg-8">
-              <div class="container">
+              <div class="">
                 <div >
-                  <p className="h4"><b>Avisos  </b></p>
+                  <div className="h4"><b>Avisos  </b></div>
                   <div class="row">
                     {(cookie.load('isProfessional') === "true" && cookie.load('user').id ===this.state.professional.id)? <Link to={'/crear/aviso/'}><div color="btn btn-primary">Crear Aviso</div></Link> : null}
                   </div>
@@ -218,7 +218,7 @@ class ProfessionalPage extends Component {
                 </Jumbotron>
               </div>
               <div class="">
-                <p className="h4"><b>Reviews</b></p>
+                <div className="h4"><b>Reviews</b></div>
                 <Jumbotron>
                   <ReviewList
                   reviews={this.props.reviews.result}
@@ -246,9 +246,6 @@ class ProfessionalPage extends Component {
                 </p>
                 <div class="row">
                   <div class="col-lg">
-                    <p class="text-hero">
-                      Profesional
-                    </p>
                     <p class="text-hero">
                       Región: {this.state.professional.region}
                     </p>
