@@ -118,15 +118,15 @@ class ClientPage extends Component {
       contacted_pagination:{},
       hired_services:[],
       hired_pagination:{},
-      contactedAllParams : {client_id:this.props.client_id, contacted:true, page_size:5},
-      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:5},
-      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:5},
-      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:5},
-      hiredAllParams: {client_id:this.props.client_id, hired:true, page_size:5},
-      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true, page_size:5},
-      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false, page_size:5},
-      contactedQuery: {client_id:this.props.client_id, contacted:true, page_size:5},
-      hiredQuery:{client_id:this.props.client_id, hired:true, page_size:5},
+      contactedAllParams : {client_id:this.props.client_id, contacted:true, page_size:4},
+      pendingParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:false, page_size:4},
+      acceptedParams : {client_id:this.props.client_id, contacted:true,hired:true, professional_rejected:false, page_size:4},
+      rejectedParams : {client_id:this.props.client_id, contacted:true,hired:false, professional_rejected:true, page_size:4},
+      hiredAllParams: {client_id:this.props.client_id, hired:true, page_size:4},
+      hiredParamsReviewed : {client_id:this.props.client_id, hired:true, reviewed:true, page_size:4},
+      hiredParamsPendingReview : {client_id:this.props.client_id, hired:true, reviewed:false, page_size:4},
+      contactedQuery: {client_id:this.props.client_id, contacted:true, page_size:4},
+      hiredQuery:{client_id:this.props.client_id, hired:true, page_size:4},
       contactedSelectValue:null,
       hiredSelectValue:null,
       contactLoading:true,
@@ -237,15 +237,54 @@ class ClientPage extends Component {
     let image_url = this.state.client.profile_picture ? this.state.client.profile_picture  : "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=318&h=180";
     return (
       <div>
-        <section style={{background: 'url('+require('../custom/img/blog-hero-bg.jpg')+')'}} class="hero">
-          <div class="container">
-            <h1>{this.state.client.user.first_name} {this.state.client.user.last_name}</h1>
-            <div class="row">
-              <img className="img-circle center-cropped professional-profile col-lg-4" src={image_url} alt="" />
-              <div class="col-lg">
-                <p class="text-hero">
-                  Cliente
-                </p>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="container">
+                <div>
+                  <div class="row" style={{marginRight:0}}>
+                    <p className="h4"><b>Servicios Contactados</b></p>
+                    <button type="button" class="btn btn-link"  onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link">
+                      <p className="h8" style={{top:0}}>Todos</p>
+                    </button>
+                    <p  style={{top:0}}> | </p>
+                    <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
+                      <p className="h8" style={{top:0}}>Por contactar</p>
+                    </button>
+                    <p  style={{top:0}}> | </p>
+                    <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.hiredParamsPendingReview})} color="link">
+                      <p className="h8" style={{top:0}}>Por evaluar</p>
+                    </Button>
+                    <p  style={{top:0}}> | </p>
+                    <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
+                      <p className="h8" style={{top:0}}>Contratados</p>
+                    </button>
+                    <p  style={{top:0}}> | </p>
+                    <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
+                      <p className="h8" style={{top:0}}>Rechazados</p>
+                    </button>
+                  </div>
+                  <div>
+                    <div>
+                      {this.state.owner ? <ServiceListGroup
+                        services={this.state.contacted_services}
+                        pagination={this.state.contacted_pagination}
+                        value={this.state.contactedSelectValue}
+                        handlePageChange={this.handleContactedServicePageChange.bind(this)}
+                        loading = {this.props.services.loading}
+                        />
+                      : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="container">
+                <div>
+                  <img className="img-circle center-cropped professional-profile" src={image_url} alt="" />
+                </div>
+                <h1>{this.state.client.user.first_name} {this.state.client.user.last_name}</h1>
                 <p class="text-hero">
                   Servicios contratados: {this.props.services.result ? this.props.services.result.length : 0}
                 </p>
@@ -253,58 +292,8 @@ class ClientPage extends Component {
               </div>
             </div>
           </div>
-        </section>
-        <div class="container">
-          <div>
-            <div class="row" style={{marginTop:100}}>
-              <p className="h4"><b>Servicios Contactados</b></p>
-              <button type="button" class="btn btn-link"  onClick={() => this.handleSwitchQuery({contactedQuery:this.state.contactedAllParams})} color="link">
-                <p className="h8" style={{top:0}}>Todos</p>
-              </button>
-              <p  style={{top:0}}> | </p>
-              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.pendingParams})} color="link">
-                <p className="h8" style={{top:0}}>Por contactar</p>
-              </button>
-              <p  style={{top:0}}> | </p>
-              <Button onClick={() => this.handleSwitchQuery({contactedQuery:this.state.hiredParamsPendingReview})} color="link">
-                <p className="h8" style={{top:0}}>Por evaluar</p>
-              </Button>
-              <p  style={{top:0}}> | </p>
-              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.acceptedParams})} color="link">
-                <p className="h8" style={{top:0}}>Contratados</p>
-              </button>
-              <p  style={{top:0}}> | </p>
-              <button type="button" class="btn btn-link " onClick={() => this.handleSwitchQuery({contactedQuery:this.state.rejectedParams})} color="link">
-                <p className="h8" style={{top:0}}>Rechazados</p>
-              </button>
-            </div>
-            <div>
-              {false && this.props.services.loading? null : <Select
-                 name="contacted-order-by"
-                 multi={false}
-                 options={[{ value: 'creation_date', label: 'Fecha contactado ascendiente' },{ value: '-creation_date', label: 'Fecha contactado descendiente' }]}
-                 onChange={this.handleChangeContactedOrder.bind(this)}
-                 searchable={false}
-                 autosize={true}
-                 clearable={false}
-                 closeOnSelect={true}
-                 placeholder={'Ordenar por...'}
-
-               />}
-              <div>
-                {this.state.owner ? <ServiceListGroup
-                  services={this.state.contacted_services}
-                  pagination={this.state.contacted_pagination}
-                  value={this.state.contactedSelectValue}
-                  handlePageChange={this.handleContactedServicePageChange.bind(this)}
-                  loading = {this.props.services.loading}
-                  />
-                : <div>Tienes que estar logeado como {this.state.client.user.first_name} {this.state.client.user.last_name} para ver los servicios contratados</div>}
-              </div>
-            </div>
-          </div>
+        </div>
       </div>
-    </div>
     );
   }
 }

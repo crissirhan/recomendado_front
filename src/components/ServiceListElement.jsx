@@ -142,7 +142,7 @@ class ServiceListElement extends Component {
     return (  <div class="card mb-3 shadow-box round-border" key={announcement.id} style={{maxWidth:"100%", border: "2px solid", borderColor:border_color, borderStyle:border_style}}>
                 <div class="text-center">
                   <div class="row">
-                    <div class="col-xs-2" >
+                    <div class="col-sm-2" >
                       <Link to={'/profesionales/' + announcement.professional.id}>
                         {announcement.professional.profile_picture? <img className="center-cropped img-circle" style={{height:100,width:100}} src={announcement.professional.profile_picture } /> : null}
                         <div>
@@ -150,7 +150,7 @@ class ServiceListElement extends Component {
                         </div>
                       </Link>
                     </div>
-                    <div class="col-xs-6" >
+                    <div class="col-sm-6" >
                       <div>
                         <Link to ={'/avisos/' + announcement.id}>
                           <CardTitle><b>{announcement.title}</b></CardTitle>
@@ -159,7 +159,7 @@ class ServiceListElement extends Component {
                       {service.hired ?
                       <div>
                         <div class="row">
-                          <div class="col-xs-8">
+                          <div class="col-sm-8">
                             <div >
                               <Rating className="text-center"
                                   empty={(review.rating || this.state.reviewed) ? 'fa fa-star-o fa-2x silver-star' : 'fa fa-star-o fa-2x orange-star'}
@@ -177,17 +177,17 @@ class ServiceListElement extends Component {
                                 </ModalBody>
                               </Modal>
                           </div>
-                          <div class="col-xs-4">
+                          <div class="col-sm-4">
                             <small className="text-muted text-left">{service.review_count? service.review_count : 0} evaluaciones</small>
                           </div>
                         </div>
                       </div>
                       </div> : null}
                       <div class="row">
-                        {announcement.announcement_thumbnail ? <div class="col-xs-3">
+                        {announcement.announcement_thumbnail ? <div class="col-sm-3">
                           <img  style={{height:120,width:150}} src={announcement.announcement_thumbnail } />
                         </div> : null}
-                        <div class="col-xs-9">
+                        <div class="col-sm-9">
                           {announcement.description}
                         </div>
                       </div>
@@ -197,7 +197,7 @@ class ServiceListElement extends Component {
                         })}
                       </div>
                     </div>
-                    <div class="col-xs-4" >
+                    <div class="col-sm-4" >
 
 
 
@@ -227,17 +227,17 @@ class ServiceListElement extends Component {
                           ¿Aceptó tu propuesta de trabajo?
                         </div>
                           <div class="row">
-                            <div class="col-xs-6" >
+                            <div class="col-sm-6" >
                               <Button onClick={this.handleYes.bind(this)} disabled={this.props.update_service.loading} color="success">Si</Button>
                             </div>
-                            <div class="col-xs-6" >
+                            <div class="col-sm-6" >
                               <Button onClick={this.handleNo.bind(this)} disabled={this.props.update_service.loading} color="danger">No</Button>
                             </div>
                           </div>
                         </div>}
                     </div>
                   </div>
-                  <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", top:0, right:0, border:0, allign:"right", background:'red'}}>
+                  <Button type="button" class="close danger pull-right" aria-label="Close" onClick={this.handleDelete.bind(this)} style={{position:"absolute", paddingLeft:10, paddingRight:10, top:0, right:0, border:0, allign:"right", background:'red'}}>
                     <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                   </Button>
                 </div>
