@@ -17,10 +17,9 @@ class JobCategory extends Component {
 
   render() {
     let url = this.props.url;
-    console.log(this.props)
     let image_url = this.props.image
     return (
-      <div class="item listing-item col-lg-4" key={this.props.category.id} >
+      <div class="item listing-item col-sm-4" key={this.props.category.id} >
         <Link class="portfolio-link" to={url} >
           <div class="item-inner">
             <div class="image"><img src={image_url} alt="..." class="img-fluid" /></div>

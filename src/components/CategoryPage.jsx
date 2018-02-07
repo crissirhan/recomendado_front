@@ -6,7 +6,6 @@ import ReactTable from 'react-table';
 import {
   Link,
 } from 'react-router-dom';
-import { Container, Col } from 'reactstrap';
 
 
 class CategoryPage extends Component {
@@ -20,9 +19,9 @@ class CategoryPage extends Component {
 
   render(){
     return (
-      <Container>
+      <div class="container-fluid">
         <SubJobCategories job={this.props.category}/>
-      </Container>
+      </div>
      )
   }
 }

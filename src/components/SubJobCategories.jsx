@@ -35,28 +35,21 @@ class SubJobCategories extends Component {
     let sub_categories = this.state.job_sub_categories.filter((sub_category)=>sub_category.job_category.job_type === this.props.job);
     return (
 
-      <Container>
+      <div class="container-fluid">
         <div style={{textAlign:"center"}}>
           <h5><b>{this.props.job}</b></h5>
           <p>{sub_categories[0] ? sub_categories[0].job_category.description : ""}</p>
         </div>
-        <Row>
-          {/*<Col xs="3">
-            <ul>{sub_categories.map(category =>
-              <li key={category.id}><Link to={this.props.location.pathname+category.job_sub_type}>{category.job_sub_type}</Link></li>)}
-            </ul>
-          </Col>*/}
-          <Col >
+          <div >
             <CardGroup>
-              <Row>
+              <div class="row">
                 {sub_categories.map(category =>
                   <JobCategory image_class="center-cropped job-category shadow-box round-border" category={category.job_sub_type} name={category.job_sub_type} description={category.description} key={category.id} category_id={category.id} url={this.props.location.pathname+category.job_sub_type} image={category.image}/>
                 )}
-              </Row>
+              </div>
             </CardGroup>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+      </div>
 
     );
   }
