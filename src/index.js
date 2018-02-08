@@ -40,7 +40,8 @@ axios.interceptors.response.use((response) => {
   if(error.response){
     for (var key in error.response.data) {
       if (error.response.data.hasOwnProperty(key)) {
-        error.response.data[key].forEach(e => toast.error(key + ': ' + e))
+        error.response.data[key].forEach(e => toast.error(key + ': ' + e, {
+          position: toast.POSITION.BOTTOM_RIGHT}))
       }
     }
   }
