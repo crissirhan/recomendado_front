@@ -32,6 +32,7 @@ import ReviewsReducer from './reducer_reviews'
 import ServicesReducer from './reducer_services'
 import UpdateService from './reducer_update_service'
 import UpdateReview from './reducer_update_review'
+import ReducerUser from './reducer_user'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -67,5 +68,6 @@ const rootReducer = combineReducers({
   job_by_name:JobByNameReducer,
   announcement_reviews:AnnouncementReviewsReducer,
   search: SearchReducer,
+  user:ReducerUser
 });
 export default rootReducer;

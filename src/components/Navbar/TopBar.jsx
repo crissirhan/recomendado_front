@@ -11,10 +11,14 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import cookie from 'react-cookies';
 import getClientByUsername from '../../actions/get_client_by_username';
+import { setUserData, userLogout, getUserUrl } from '../../actions/user_actions';
 import getProfessionalByUsername from '../../actions/get_professional_by_username';
 import ReactDOM from 'react-dom'
 
 class TopBar extends Component {
+
+  componentWillMount(){
+  }
 
   componentDidUpdate(){
     var rect = ReactDOM.findDOMNode(this).offsetTop;
@@ -42,6 +46,14 @@ class TopBar extends Component {
         cookie.save('user', nextProps.logged_in_professional[0], { path: '/' });
         cookie.save('isProfessional', true, { path: '/' });
         cookie.save('isClient', false, { path: '/' });
+        if(nextProps.logged_in_professional[0].id !== this.props.user.id){
+          this.props.setUserData({
+            name:nextProps.logged_in_professional[0].user.first_name,
+            lastname:nextProps.logged_in_professional[0].user.last_name,
+            id:nextProps.logged_in_professional[0].id,
+            type:'professional'
+          })
+        }
         this.setState({
           cookie_setted:true
         });
@@ -55,6 +67,15 @@ class TopBar extends Component {
         cookie.save('user', nextProps.logged_in_client[0], { path: '/' });
         cookie.save('isProfessional', false, { path: '/' });
         cookie.save('isClient', true, { path: '/' });
+        if(nextProps.logged_in_client[0].id !== this.props.user.id){
+          this.props.setUserData({
+            name:nextProps.logged_in_client[0].user.first_name,
+            lastname:nextProps.logged_in_client[0].user.last_name,
+            id:nextProps.logged_in_client[0].id,
+            type:'client'
+          })
+        }
+
         this.setState({
           cookie_setted:true
         });
@@ -118,11 +139,8 @@ class TopBar extends Component {
   }
 
   onLogout(){
-    cookie.remove('token', { path: '/' });
-    cookie.remove('user', { path: '/' });
-    cookie.remove('isProfessional', { path: '/' });
-    cookie.remove('isClient', { path: '/' });
-    window.location.assign('/')
+    this.props.userLogout()
+    //window.location.assign('/')
   }
 
   getLoggedInUserUrl(){
@@ -162,18 +180,18 @@ class TopBar extends Component {
 
     }
 
-    let aux_exists = cookie.load('user') ? cookie.load('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
-    if(aux_exists && (cookie.load('token') != undefined )){
+    //let aux_exists = cookie.load('user') ? cookie.lo7ad('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
+    if(this.props.user.id && this.props.user.id !== ''){
       buttons =
       <div class="CTAs">
-        <Link to={this.getLoggedInUserUrl()} class="login">
+        <Link to={this.props.user.url} class="login">
           <i class="fa fa-user"></i>
-          <span class="d-none d-md-inline">{this.getLoggedInUserName()}</span>
+          <span class="d-none d-md-inline">{this.props.user.name} {this.props.user.lastname}</span>
         </Link>
-        <Link to={this.props.location.pathname} onClick={() => this.onLogout()}>
+        <a to={this.props.location.pathname} onClick={() => this.onLogout()} style={{cursor: "pointer"}}>
           <i class="fa fa-sign-out"></i>
           <span class="d-none d-md-inline">Cerrar sesión</span>
-        </Link>
+        </a>
       </div>
     } else{
       buttons =
@@ -209,14 +227,18 @@ function mapStateToProps(state){
   return {
     login_state:state.login,
     logged_in_professional:state.logged_in_professional,
-    logged_in_client:state.logged_in_client
+    logged_in_client:state.logged_in_client,
+    user:state.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getClientByUsername:getClientByUsername,
-    getProfessionalByUsername:getProfessionalByUsername
+    getProfessionalByUsername:getProfessionalByUsername,
+    setUserData:setUserData,
+    userLogout:userLogout,
+    getUserUrl:getUserUrl
   }, dispatch);
 }
 

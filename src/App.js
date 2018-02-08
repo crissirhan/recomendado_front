@@ -45,11 +45,16 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
-
+import MustLogIn from './components/MustLogIn'
+import { loadUserFromCookies } from './actions/user_actions'
 
 class App extends Component {
 
   componentWillMount(){
+    if(!this.state.cookieLoaded){
+      this.props.loadUserFromCookies()
+    }
+    this.setState({cookieLoaded:true})
   }
 
   loadCustomScript(scriptName, path){
@@ -64,7 +69,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scripts:{}
+      scripts:{},
+      cookieLoaded:false
     };
   }
 
@@ -130,6 +136,7 @@ class App extends Component {
                 <Route path="/editar/cliente/:id/" render={({ match }) => (
                   <ClientEdit client_id={match.params.id}/>
                 )} />
+                <Route path='/denegado' component={MustLogIn}/>
                 <Route path="*" component={NotFound} />
               </Switch>
             </div>
@@ -145,13 +152,15 @@ class App extends Component {
 
 function mapStateToProps(state){
   return {
-    token:state.token
+    token:state.token,
+    user:state.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    login:login
+    login:login,
+    loadUserFromCookies:loadUserFromCookies
   }, dispatch);
 }
 
