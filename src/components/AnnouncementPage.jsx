@@ -256,14 +256,14 @@ class AnnouncementPage extends Component {
                   <h1>{this.state.announcement.title}</h1>
                   <div class="item"><i class="icon-localizer"></i> {this.state.announcement.location}</div>
                   {this.props.user.type === 'client' ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar a profesional</div>
-                  {this.state.announcement.job_tags.map(tag => {
-                    return <Link key={tag.id} to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
-                    <div class="badge-transparent">
-                    {tag.job.job_sub_type}
-                    </div>
-                    </Link>
-                  })}
                    </div>: null}
+                   {this.state.announcement.job_tags.map(tag => {
+                     return <Link key={tag.id} to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                     <div class="badge-transparent">
+                     {tag.job.job_sub_type}
+                     </div>
+                     </Link>
+                   })}
                  </div>
               </div>
               <div class="widget opening-hours">
