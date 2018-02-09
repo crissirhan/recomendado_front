@@ -40,7 +40,7 @@ class ClientEdit extends Component {
       if(this.props.update_client.error !== nextProps.update_client.error){
         this.setState({
           error:nextProps.update_client.error,
-          error_type:nextProps.update_client.error_type
+          error_types:nextProps.update_client.error_types
         })
       }
       if(this.props.update_client.loading !== nextProps.update_client.loading){
@@ -98,25 +98,20 @@ class ClientEdit extends Component {
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    this.setState({
-      profile_picture: file
-    })
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        profile_picture: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
 
   }
 
   render(){
-    let owner = false;
-    if( cookie.load('user') && cookie.load('user').id === this.state.client_id && cookie.load('isClient') === "true"){
-      owner = true;
-    }
+    let owner = this.props.user.type === 'client' && this.props.user.id === this.state.client_id;
     if(!owner){
       return <div>No deberías estar acá</div>
-    }
-    if(this.state.success){
-      return <Container><div className="message--info">Perfil editado con éxito!</div></Container>;
-    }
-    if(this.state.error){
-      return <Container><div className="message--error">{this.state.error_type}</div></Container>;
     }
     return (
       <Container>
@@ -127,7 +122,6 @@ class ClientEdit extends Component {
             <AvInput type="file" accept="image/*" name="profile_picture" id="profile_picture"
              onChange={this.handleImageChange.bind(this)} />
           </AvGroup>
-          {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
           <FormGroup>
             <Button>Guardar</Button>
           </FormGroup>
@@ -142,7 +136,8 @@ class ClientEdit extends Component {
 function mapStateToProps(state){
   return {
     update_client: state.update_client,
-    client: state.client
+    client: state.client,
+    user:state.user
   }
 }
 

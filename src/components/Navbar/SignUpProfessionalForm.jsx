@@ -88,9 +88,14 @@ class signUpProfessionalForm extends Component{
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    this.setState({
-      profile_picture:file
-    })
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        profile_picture: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+
   }
 
   handleSwitchChange(){
@@ -239,26 +244,26 @@ class signUpProfessionalForm extends Component{
     )
   }
   checkRut(rutCompleto) {
-  		var tmp 	= rutCompleto.split('.').join('').replace('-','');
-  		var digv	= tmp.slice(-1);
-  		var rut 	= tmp.slice(0,-1);
+       var tmp         = rutCompleto.split('.').join('').replace('-','');
+       var digv        = tmp.slice(-1);
+       var rut         = tmp.slice(0,-1);
       var tst= rut + '-' + digv
       console.log(tst)
       if (!/^0*(\d{1,3}(\.?\d{3})*)-?([\dkK])$/.test( tst ))
       return false;
-  		if ( digv == 'K' ) digv = 'k' ;
-  		return (this.dv(rut) == digv );
-  	}
-  	dv(T){
-  		var M=0,S=1;
-  		for(;T;T=Math.floor(T/10))
-  			S=(S+T%10*(9-M++%6))%11;
-  		return S?S-1:'k';
-  	}
+               if ( digv == 'K' ) digv = 'k' ;
+               return (this.dv(rut) == digv );
+       }
+       dv(T){
+               var M=0,S=1;
+               for(;T;T=Math.floor(T/10))
+                       S=(S+T%10*(9-M++%6))%11;
+               return S?S-1:'k';
+       }
     checkPhoneNumber(number){
       return /^\+?(\d+)\)?[-. ]?(\d+)$/.test(number)
     }
-  }
+}
 
 
 

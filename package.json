@@ -23,6 +23,7 @@
     "react-dom": "^16.1.0",
     "react-dropzone": "^4.2.3",
     "react-facebook-login-component": "^0.9.1",
+    "react-image-lightbox": "^4.5.0",
     "react-js-pagination": "^3.0.0",
     "react-rating": "^0.8.1",
     "react-redux": "^5.0.6",

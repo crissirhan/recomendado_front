@@ -12,7 +12,7 @@ export default function signUpProfessional(datum) {
         data.append(key,datum[key])
       }
     }
-    axios.post(ENDPOINT_URI+'/professionals/',data,{
+    axios.post(ENDPOINT_URI+'/professionals/',datum,{
       headers:{
         'Accept-Language':'es-cl'
       }

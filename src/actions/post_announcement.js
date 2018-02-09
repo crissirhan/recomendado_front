@@ -15,7 +15,7 @@ export default function postAnnouncement(datum) {
       }
     }
     console.log(data)
-    axios.post(ENDPOINT_URI+'/post-announcements/', data)
+    axios.post(ENDPOINT_URI+'/post-announcements/', datum)
       .then(res => {
         dispatch(postAnnouncementAsync(res.data));
       }).catch(function (error) {

@@ -21,6 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ReviewList from './ReviewList'
 import './css/loading.css'
+import Lightbox from 'react-image-lightbox';
 
 class AnnouncementPage extends Component {
 
@@ -79,7 +80,9 @@ class AnnouncementPage extends Component {
       error:false,
       loading:false,
       images:[],
-      contact_collapse: false
+      contact_collapse: false,
+      photoIndex: 0,
+      isOpen: false,
     };
     this.handleCreateService = this.handleCreateService.bind(this);
     this.toggleContactCollapse = this.toggleContactCollapse.bind(this);
@@ -166,6 +169,7 @@ class AnnouncementPage extends Component {
   }
 
   render(){
+    const { photoIndex, isOpen, images } = this.state;
     if(this.state.loading || !this.state.announcement_reviews){
       return <div class="container"><div class="loader"></div></div>
     }
@@ -181,36 +185,9 @@ class AnnouncementPage extends Component {
     }
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
+    console.log(this.state.images)
     return (
       <div>
-        <section style={{background: 'url('+this.state.announcement.announcement_thumbnail +')'}} class="hero listing-single-hero d-flex align-items-end">
-          <div class="container">
-            <div class="content d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
-              <div class="heading-info">
-                {this.state.announcement.job_tags.map(tag => {
-                  return <Link key={tag.id} to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
-                      <div class="badge-transparent">
-                        {tag.job.job_sub_type}
-                      </div>
-                    </Link>
-                })}
-                <h1 >{this.state.announcement.title}</h1>
-                <p><i class="icon-localizer"></i> {this.state.announcement.location}</p>
-                <div class="listing-rate d-flex align-items-center">
-                  <Rating
-                    class="text-warning"
-                    empty="fa fa-star-o fa-2x orange-star rate list-inline"
-                    full="fa fa-star fa-2x orange-star rate list-inline"
-                    initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
-                    readonly
-                  /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
-                </div>
-              </div>
-              {cookie.load('isClient') == "true" ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar</div>
-               </div>: null}
-            </div>
-          </div>
-        </section>
         <div class="container">
           <div class="row">
             <main class="col-lg-8">
@@ -226,8 +203,69 @@ class AnnouncementPage extends Component {
                   handlePageChange={this.handleReviewPageChange.bind(this)}
                   owner={owner}
                   />
+                {this.state.images && this.state.images.length > 0 && <div class="block listing-gallery">
+                  <header>
+                    <h3 class="has-lines"><small>Imágenes</small> Imagénes del Aviso </h3>
+                  </header>
+                  <div class="gallery row">
+                    {this.state.images.map((imageObject, idx) =>
+                      <div class="mix col-lg-4 col-md-6">
+                        <div class="item">
+                          <div onClick={() => this.setState({ isOpen: true, photoIndex:idx  })}>
+                            <img src={imageObject.image} alt="..." class="img-fluid"/>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {isOpen && (
+                      <Lightbox
+                        mainSrc={images[photoIndex].image}
+                        nextSrc={images[(photoIndex + 1) % images.length].image}
+                        prevSrc={images[(photoIndex + images.length - 1) % images.length].image}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                        onMovePrevRequest={() =>
+                          this.setState({
+                            photoIndex: (photoIndex + images.length - 1) % images.length,
+                          })
+                        }
+                        onMoveNextRequest={() =>
+                          this.setState({
+                            photoIndex: (photoIndex + 1) % images.length,
+                          })
+                        }
+                      />
+                    )}
+                  </div>
+              </div>}
             </main>
             <aside class="col-lg-4">
+              <div class="widget contact">
+                <header>
+                  <h3 class="has-lines"><small>Aviso</small> Acerca del Aviso </h3>
+                </header>
+                <div class="info">
+                  <div class="listing-rate d-flex align-items-center">
+                    <Rating
+                      class="text-warning"
+                      empty="fa fa-star-o fa-2x orange-star rate list-inline"
+                      full="fa fa-star fa-2x orange-star rate list-inline"
+                      initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
+                      readonly
+                    /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
+                  </div>
+                  <h1>{this.state.announcement.title}</h1>
+                  <div class="item"><i class="icon-localizer"></i> {this.state.announcement.location}</div>
+                  {this.props.user.type === 'client' ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar a profesional</div>
+                  {this.state.announcement.job_tags.map(tag => {
+                    return <Link key={tag.id} to={'/categorias/'+tag.job.job_category.job_type + '/' + tag.job.job_sub_type + '/'}>
+                    <div class="badge-transparent">
+                    {tag.job.job_sub_type}
+                    </div>
+                    </Link>
+                  })}
+                   </div>: null}
+                 </div>
+              </div>
               <div class="widget opening-hours">
                 <header>
                   <h3 class="has-lines"><small>Atención</small> Días de atención </h3>
@@ -268,7 +306,8 @@ function mapStateToProps(state){
   return {
     announcements: state.announcements,
     put_service: state.put_service,
-    reviews:state.reviews
+    reviews:state.reviews,
+    user:state.user
   }
 }
 

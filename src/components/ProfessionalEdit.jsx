@@ -19,7 +19,6 @@ import cookie from 'react-cookies';
 import { RegionesYcomunas } from '../Globals';
 import { ToastContainer, toast } from 'react-toastify';
 import { withRouter } from 'react-router';
-import Dropzone from 'react-dropzone'
 
 class ProfessionalEdit extends Component {
 
@@ -52,7 +51,7 @@ class ProfessionalEdit extends Component {
       if(this.props.update_professional.error !== nextProps.update_professional.error){
         this.setState({
           error:nextProps.update_professional.error,
-          error_types:nextProps.update_professional.error_type
+          error_types:nextProps.update_professional.error_types
         })
       }
       if(this.props.update_professional.loading !== nextProps.update_professional.loading){
@@ -96,12 +95,14 @@ class ProfessionalEdit extends Component {
   handleSuccess(){
     toast.success("Perfil editado con éxito", {
       position: toast.POSITION.BOTTOM_RIGHT})
+
     this.props.history.push('/profesionales/' + this.state.professional_id + '/' );
   }
 
   handleError(){
     toast.error("Error al procesar la solicitud", {
       position: toast.POSITION.BOTTOM_RIGHT})
+
   }
 
   handleSubmit(){
@@ -134,11 +135,15 @@ class ProfessionalEdit extends Component {
     });
   }
   handleImageChange(event){
-    var file = event.target.files[0]
-    console.log(file)
-    this.setState({
-      profile_picture:file
-    })
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        profile_picture: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+
   }
 
   render(){
@@ -197,7 +202,6 @@ class ProfessionalEdit extends Component {
             <AvInput  name="phone_number" id="phone_number" placeholder="Número de teléfono"
             value={this.state.phone_number} onChange={this.handleInputChange} />
           </AvGroup>
-          {this.state.error ? <div className="message--error">¡Error! {this.state.error_types}</div> : null}
           <FormGroup>
             <Button>Guardar</Button>
           </FormGroup>

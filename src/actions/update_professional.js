@@ -13,7 +13,7 @@ export default function updateProfessional(professional_id,datum) {
         data.append(key,datum[key])
       }
     }
-    axios.patch(ENDPOINT_URI+'/professionals/'+professional_id+'/', data)
+    axios.patch(ENDPOINT_URI+'/professionals/'+professional_id+'/', datum)
       .then(res => {
         dispatch(updateProfessionalSuccessAsync(res.data));
       })

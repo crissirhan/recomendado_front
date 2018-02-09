@@ -12,7 +12,7 @@ export default function signUpClient(datum) {
         data.append(key,datum[key])
       }
     }
-    axios.post(ENDPOINT_URI+'/clients/',data,{
+    axios.post(ENDPOINT_URI+'/clients/',datum,{
       headers:{
         'Accept-Language':'es-cl'
       }

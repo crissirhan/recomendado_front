@@ -197,7 +197,7 @@ class AnnouncementsEdit extends Component {
       <Container>
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm disabled={this.state.loading}>
-            <AvGroup>
+            <AvGroup hidden={true}>
               <Label for="thumbnail">Imagén del aviso</Label>
               <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
                onChange={this.handleImageChange.bind(this)} />

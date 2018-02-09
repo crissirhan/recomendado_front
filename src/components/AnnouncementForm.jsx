@@ -16,7 +16,6 @@ import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstr
 import { ToastContainer, toast } from 'react-toastify';
 import { RegionesYcomunas } from '../Globals'
 import shortid from 'shortid'
-import MustLogIn from './MustLogIn'
 
 class AnnouncementForm extends Component{
 
@@ -167,11 +166,15 @@ class AnnouncementForm extends Component{
   }
   handleImageChange(event){
     var file = event.target.files[0];
-    this.setState({
-      thumbnail:file
-    })
-  }
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        thumbnail: reader.result
+      })
+    }
+    reader.readAsDataURL(file);
 
+  }
   handleSubmit(){
     if(this.state.job_tags.length === 0){
       alert("Debe escoger al menos una categoría para el aviso")
@@ -188,13 +191,11 @@ class AnnouncementForm extends Component{
     let publish_date = new Date(); //time now
     let expire_date = new Date(publish_date);
     expire_date.setMonth(expire_date.getMonth() + 1);
-    console.log(cookie.load('user').id)
     let data = {
       publish_date:publish_date.toJSON(),
       expire_date:expire_date.toJSON(),
       //movility:this.state.movility,
       professional_id:cookie.load('user').id,
-      professional:cookie.load('user'),
       availability:days,
       location:this.state.location,
       title:this.state.title,
@@ -218,8 +219,6 @@ class AnnouncementForm extends Component{
         data.job_tags.push(tag)
       }
     })
-    console.log(cookie.load('user'))
-    console.log(data)
     this.props.postAnnouncement(data);
   }
 
@@ -246,14 +245,12 @@ class AnnouncementForm extends Component{
   }
 
   handleSuccess(){
-    toast.success("Aviso creado con éxito", {
-      position: toast.POSITION.BOTTOM_RIGHT})
+    toast.success("Aviso creado con éxito")
     this.props.history.push('/profesionales/' + cookie.load('user').id + '/' );
   }
 
   handleError(){
-    toast.error("Error al procesar la solicitud", {
-      position: toast.POSITION.BOTTOM_RIGHT})
+    toast.error("Error al procesar la solicitud")
   }
 
   validateTags(value, ctx, input, cb){
@@ -269,17 +266,17 @@ class AnnouncementForm extends Component{
       return null;
     }
     if(!cookie.load('user') || !cookie.load('user').id || cookie.load('isProfessional') !== "true"){
-      return <MustLogIn/>;
+      return <Container><div>Debes estar logeado/a como profesional para realizar esta acción</div></Container>;
     }
     if(this.state.success){
       this.handleSuccess()
     }
 
     return (
-      <div class="container">
+      <Container>
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm onValidSubmit={this.handleSubmit}>
-            <AvGroup>
+            <AvGroup hidden={true}>
               <Label for="thumbnail">Imagén del aviso</Label>
               <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
                onChange={this.handleImageChange.bind(this)} />
@@ -388,7 +385,8 @@ class AnnouncementForm extends Component{
                 Domingo
               </Label>
             </AvGroup>
-            <div hidden={true}>
+            <div>
+              <p for="thumbnail">Imágenes del aviso</p>
               {this.state.images.map((image, idx) => (
                 <AvGroup key={shortid.generate()}>
                   <Label for={"imagenes-" + idx }>Imagén {idx+1}</Label>
@@ -397,15 +395,15 @@ class AnnouncementForm extends Component{
                     onChange={this.handleImagesChange(idx)}
                     required
                   />
-                  <Button type="button" onClick={this.handleRemoveImage(idx)} className="small">Remover</Button>
+                  {idx + 1 === this.state.images.length? <Button type="button" onClick={this.handleRemoveImage(idx)} className="small">Remover</Button> : null}
                 </AvGroup>))}
-              <Button type="button" onClick={this.handleAddImage} className="small">Añadir imagen</Button>
+              <Button type="button" onClick={this.handleAddImage} disabled={this.state.images.length >=6 ? true : false }className="small">Añadir imagen</Button>
             </div>
-            {this.state.error ? <div className="message--error">¡Error! {this.state.error_types}</div> : null}
+            {this.state.error ? <div className="message--error">¡Error! {this.state.error_types.join(' ')}</div> : null}
             <Button disabled={this.state.loading} >Crear Aviso</Button>
           </AvForm>
         </div>
-      </div>
+      </Container>
     )
   }
 }
