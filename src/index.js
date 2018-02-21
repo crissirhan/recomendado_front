@@ -13,6 +13,7 @@ import $ from 'jquery';
 import './components/css/font-awesome/css/font-awesome.css';
 import ScrollToTop from './components/ScrollToTop'
 import 'bootstrap-select'
+import 'bootstrap-select/dist/css/bootstrap-select.css'
 import 'fancybox'
 import 'popper.js'
 import './custom/css/style.blue.css';

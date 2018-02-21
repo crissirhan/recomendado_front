@@ -7,8 +7,11 @@ $(document).ready(function () {
     // ------------------------------------------------------- //
     // Bootstrap Select initialization
     // ------------------------------------------------------ //
-    $('.listing-categories').selectpicker();
-
+    //$('.listing-categories').selectpicker();
+    $( ".dropdown-menu > ul > li" ).click(function() {
+    $( '.bootstrap-select').attr('style', '');
+    $( this ).parent( '.bootstrap-select').attr('style', '');
+    });
 
     // ------------------------------------------------------- //
     // Fixing Navbar
