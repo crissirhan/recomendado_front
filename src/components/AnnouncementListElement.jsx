@@ -127,7 +127,7 @@ class AnnouncementsListElement extends Component {
                           </ModalBody>
                           <ModalFooter>
                             <Button color="primary" onClick={this.handleExpireButton.bind(this)}>Extender</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
                           </ModalFooter>
                         </Modal>
                       </div>
