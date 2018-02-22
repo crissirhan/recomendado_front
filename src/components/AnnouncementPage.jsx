@@ -209,7 +209,7 @@ class AnnouncementPage extends Component {
                   </header>
                   <div class="gallery row">
                     {this.state.images.map((imageObject, idx) =>
-                      <div class="mix col-lg-4 col-md-6">
+                      <div class="mix col-lg-4 col-md-6" style={{cursor:'pointer'}}>
                         <div class="item">
                           <div onClick={() => this.setState({ isOpen: true, photoIndex:idx  })}>
                             <img src={imageObject.image} alt="..." class="img-fluid"/>
