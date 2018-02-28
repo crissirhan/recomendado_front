@@ -93,13 +93,13 @@ class SearchAnnouncements extends Component {
 
   searchUpdated (term) {
     this.setState({searchTerm: term.target.value},
-    () => this.props.updateSearchParams({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6}))
+    () => this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {search:this.state.searchTerm})))
 
   }
 
   tagChange(tag){
     this.setState({job_tag:tag.target.value},
-    () => this.props.updateSearchParams({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6}))
+    () => this.props.updateSearchParams(Object.assign(this.props.search.searchParams,{job:this.state.job_tag})))
   }
   requestSearch(){
     this.props.getAnnouncements(this.props.search.searchParams)
