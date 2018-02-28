@@ -280,12 +280,6 @@ class AnnouncementForm extends Component{
       <Container>
         <div style={{ opacity: this.state.loading ? 0.5 : 1 }}>
           <AvForm onValidSubmit={this.handleSubmit}>
-            <AvGroup hidden={true}>
-              <Label for="thumbnail">Imagén del aviso</Label>
-              <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
-               onChange={this.handleImageChange.bind(this)} />
-               <AvFeedback>Debe subir una imagen para su aviso</AvFeedback>
-            </AvGroup>
             <AvGroup>
               <Label for="title">Título</Label>
               <AvInput  name="title" id="title"
@@ -389,8 +383,14 @@ class AnnouncementForm extends Component{
                 Domingo
               </Label>
             </AvGroup>
+            <AvGroup hidden={false}>
+              <Label for="thumbnail">Imagén del aviso. Esta imagen aparecerá cuando busquen su aviso.</Label>
+              <AvInput type="file" accept="image/*" name="thumbnail" id="thumbnail"
+               onChange={this.handleImageChange.bind(this)} />
+               <AvFeedback>Debe subir una imagen para su aviso</AvFeedback>
+            </AvGroup>
             <div>
-              <p for="thumbnail">Imágenes del aviso</p>
+              <p for="thumbnail">Imágenes del aviso. Estás imagenes aparecen dentro de la página de su aviso.</p>
               {this.state.images.map((image, idx) => (
                 <AvGroup key={shortid.generate()}>
                   <Label for={"imagenes-" + idx }>Imagén {idx+1}</Label>

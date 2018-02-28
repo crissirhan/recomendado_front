@@ -10,6 +10,9 @@ import Rating from 'react-rating';
 import './css/font-awesome/css/font-awesome.min.css';
 import './css/rating/rating.css';
 import getAnnouncements from '../actions/get_announcements';
+import {updateSearchParams} from '../actions/search';
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
 
 class AdvancedFilter extends Component {
 
@@ -27,8 +30,8 @@ class AdvancedFilter extends Component {
       description:'',
       first_name:'',
       last_name:'',
-      min_price:'',
-      max_price:'',
+      min_price:0,
+      max_price:100000,
       min_rating:0,
       visible:true,
       search:'',
@@ -62,13 +65,21 @@ class AdvancedFilter extends Component {
   handleMinDateChange(date) {
     this.setState({
       min_publish_date: date
-    });
+    },
+  ()=>{
+    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {min_publish_date:this.state.min_publish_date.toISOString()}))
+    this.props.getAnnouncements(this.props.search.searchParams)
+  });
   }
 
   handleMaxDateChange(date) {
     this.setState({
       max_publish_date: date
-    });
+    },
+  ()=>{
+    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {max_publish_date:this.state.max_publish_date.toISOString()}))
+    this.props.getAnnouncements(this.props.search.searchParams)
+  });
   }
 
   handleInputChange(event) {
@@ -95,46 +106,35 @@ class AdvancedFilter extends Component {
   handleStarChange(value){
     this.setState({
       min_rating:value
-    });
+    },
+  ()=>{
+    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {min_rating:this.state.min_rating}))
+    this.props.getAnnouncements(this.props.search.searchParams)
+  });
+  }
+
+  handlePriceChange(value){
+    this.setState({min_price:value.min, max_price:value.max},
+    ()=> {
+      this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {min_price:this.state.min_price, max_price:this.state.max_price}))
+      this.props.getAnnouncements(this.props.search.searchParams)
+  })
   }
 
   render() {
+    console.log(this.state)
     return (
       <Form>
-        <FormGroup>
-          <Label for="search">Búsqueda general</Label>
-          <Input type="text" name="search" id="search"
-          value={this.state.search} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-        </FormGroup>
          <FormGroup>
-           <Label for="title">Título del aviso</Label>
-           <Input type="text" name="title" id="title"
-           value={this.state.title} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-         </FormGroup>
-         <FormGroup>
-           <Label for="description">Descripción del aviso</Label>
-           <Input type="text" name="description" id="description"
-           value={this.state.description} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-         </FormGroup>
-         <FormGroup>
-           <Label for="first_name">Nombre del profesional</Label>
-           <Input type="text" name="first_name" id="first_name"
-           value={this.state.first_name} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-         </FormGroup>
-         <FormGroup>
-           <Label for="first_name">Apellido del profesional</Label>
-           <Input type="text" name="last_name" id="last_name"
-           value={this.state.last_name} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-         </FormGroup>
-         <FormGroup>
-           <Label for="min_price">Precio mínimo</Label>
-           <Input type="number" name="min_price" id="min_price"
-           value={this.state.min_price} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
-         </FormGroup>
-         <FormGroup>
-           <Label for="max_price">Precio máximo</Label>
-           <Input type="number" name="max_price" id="max_price"
-           value={this.state.max_price} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress}/>
+           <Label for="min_price">Precio mínimo/máximo</Label>
+           <InputRange
+              formatLabel={value => `$ ${value}`}
+              step={1000}
+              maxValue={100000}
+              minValue={0}
+              value={{min: this.state.min_price, max: this.state.max_price}}
+              onChange={this.handlePriceChange.bind(this)}
+            />
          </FormGroup>
          <FormGroup>
            <Label for="min_publish_date">Publicado después del</Label>
@@ -168,21 +168,22 @@ class AdvancedFilter extends Component {
              onClick={this.handleStarChange.bind(this)}
            />
          </FormGroup>
-         <Button onClick={() => this.handleSubmit() } >Buscar</Button>
        </Form>
     );
   }
 }
 function mapStateToProps(state){
   return {
-    job_sub_categories: state.job_sub_categories
+    job_sub_categories: state.job_sub_categories,
+    search:state.search
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getSubJobCategories: getSubJobCategories,
-    getAnnouncements:getAnnouncements
+    getAnnouncements:getAnnouncements,
+    updateSearchParams:updateSearchParams
   }, dispatch);
 }
 

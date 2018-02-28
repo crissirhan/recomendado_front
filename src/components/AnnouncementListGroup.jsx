@@ -6,7 +6,7 @@ import './css/images.css';
 import './css/box.css';
 import './css/pagination.css';
 
-class AnnouncementCardGroup extends Component {
+class AnnouncementListGroup extends Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class AnnouncementCardGroup extends Component {
       <div>
         <div>
           {this.props.announcements.map(announcement =>
-            <AnnouncementListElement announcement={announcement} extend_button={this.props.extend_button} visible_button={this.props.visible_button} />)}
+            <AnnouncementListElement showExpireDate={this.props.showExpireDate} announcement={announcement} extend_button={this.props.extend_button} visible_button={this.props.visible_button} />)}
         </div>
         <Pagination
           activePage={this.props.pagination.current}
@@ -36,4 +36,4 @@ class AnnouncementCardGroup extends Component {
 }
 
 
-export default AnnouncementCardGroup;
+export default AnnouncementListGroup;

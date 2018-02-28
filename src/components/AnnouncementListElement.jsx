@@ -86,9 +86,6 @@ class AnnouncementsListElement extends Component {
 
   render() {
     let image_url = this.props.announcement.announcement_thumbnail ;
-    if(!image_url){
-      image_url = this.props.announcement.professional.profile_picture
-    }
     let announcement = this.props.announcement
     let today = new Date()
     return (
@@ -108,12 +105,12 @@ class AnnouncementsListElement extends Component {
                       <div>
                         Publicado: {new Date(announcement.publish_date).toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                       </div>
-                      <div>
+                      {this.props.showExpireDate && <div><div>
                         Expira: {this.state.expire_date.toLocaleDateString().replace(new RegExp("-", 'g'),"/")}
                       </div>
                       <div>
                         {today > this.state.expire_date ? <font size="3" color="red">EXPIRADO</font> : <font size="3" color="gray">Vigente</font>}
-                      </div>
+                      </div></div>}
                       <div>
                         {this.props.extend_button ? <Button disabled={this.props.update_announcement.loading} onClick={this.toggle}>Extender</Button> : null}
                         <Modal isOpen={this.state.expire_modal} toggle={this.toggle}>
@@ -132,7 +129,7 @@ class AnnouncementsListElement extends Component {
                         </Modal>
                       </div>
                     </div>
-                    <div class="col-sm-8 text-left">
+                    <div class="col-sm-6 text-left">
                       <div>
                         <Link to ={'/avisos/' + announcement.id}>
                           <CardTitle><b>{announcement.title}</b></CardTitle>
@@ -149,6 +146,10 @@ class AnnouncementsListElement extends Component {
                         })}
                       </div>
                     </div>
+                    {image_url &&
+                    <div class="col-sm-2">
+                      <img src={image_url} style={{width:"100%",height:"100%"}}/>
+                    </div>}
                     <div class="col-sm-1">
                       <div>
                         {this.props.visible_button ? <SwitchButton label={this.state.visible? 'Visible' : 'Oculto'} key={announcement.id} name={"switch-"+announcement.id} defaultChecked={announcement.visible} onChange={this.handleSwitchChange.bind(this)} />: null}

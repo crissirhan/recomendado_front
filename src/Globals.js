@@ -1,4 +1,4 @@
-export const ENDPOINT_URI = 'http://api.recomendado.cl'//'http://api.recomendado-dev.samir.cl/';
+export const ENDPOINT_URI = 'http://dev.api.recomendado.cl'//'http://api.recomendado-dev.samir.cl/';
 export const RegionesYcomunas = {
 
 	"regiones": [{

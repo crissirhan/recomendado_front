@@ -63,21 +63,9 @@ class SearchAnnouncements extends Component {
     this.requestSearch = this.requestSearch.bind(this);
   }
 
-  toAnnouncements(){
-    if(this.props.announcements[0]){
-      return this.props.announcements[0].id;
-    } else{
-      return null;
-    }
-  }
 
-  dayRenderer(props){
-    if(!props.value){
-      return '';
-    }
-    var days=props.value.split(',');
-    return (days.map(day => <span key={day.toString()}>{day} </span>));
-  }
+
+
 
   render(){
     return (
@@ -85,7 +73,7 @@ class SearchAnnouncements extends Component {
             <form onSubmit={this.requestSearch}>
               <div class="row">
                 <div class="form-group col-lg-7">
-                  <input type="search" name="search" placeholder="¿Qué estás buscando?" onChange={this.searchUpdated}/>
+                  <input type="search" name="search" value={this.props.search.searchParams.search} placeholder="¿Qué estás buscando?" onChange={this.searchUpdated}/>
                 </div>
                 <div class="form-group col-lg-3">
                   <SelectCategories
@@ -95,7 +83,7 @@ class SearchAnnouncements extends Component {
                   />
                 </div>
                 <div class="form-group col-lg-2">
-                  <input type="submit" value="Buscar" class="submit"/>
+                  <input onClick={this.requestSearch.bind(this)} value="&#xf002;" style={{fontFamily:"FontAwesome", textAlign:"center"}} class="submit"/>
                 </div>
               </div>
             </form>
@@ -104,17 +92,20 @@ class SearchAnnouncements extends Component {
   }
 
   searchUpdated (term) {
-    this.setState({searchTerm: term})
+    this.setState({searchTerm: term.target.value},
+    () => this.props.updateSearchParams({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6}))
+
   }
 
   tagChange(tag){
-    this.setState({job_tag:tag.target.value})
+    this.setState({job_tag:tag.target.value},
+    () => this.props.updateSearchParams({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6}))
   }
   requestSearch(){
-    console.log(this.state.job_tag)
-    this.props.updateSearchParams({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6})
-    this.props.getAnnouncements({search:this.state.searchTerm, job:this.state.job_tag, visible:true, page_size:6})
-    this.props.history.push('/buscar/avisos/')
+    this.props.getAnnouncements(this.props.search.searchParams)
+    if(this.props.location.pathname !== '/buscar/avisos/'){
+      this.props.history.push('/buscar/avisos/')
+    }
     //return <Redirect push to={'/buscar/avisos/'+this.state.searchTerm}/>
   }
 

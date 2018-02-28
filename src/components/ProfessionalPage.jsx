@@ -214,6 +214,7 @@ class ProfessionalPage extends Component {
                   pagination={this.props.announcements.pagination}
                   announcements={this.props.announcements.result}
                   handlePageChange={this.handlePageChange.bind(this)}
+                  showExpireDate={true}
                   />
                 </Jumbotron>
               </div>

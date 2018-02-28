@@ -24,7 +24,6 @@ import SubCategoryPage from './components/SubCategoryPage';
 import ProfessionalPage from './components/ProfessionalPage';
 import ClientPage from './components/ClientPage';
 import AnnouncementForm from './components/AnnouncementForm';
-import ListAnnouncements from './components/ListAnnouncements';
 import SearchPage from './components/SearchPage';
 import AnnouncementPage from './components/AnnouncementPage';
 import ServicePage from './components/ServicePage'

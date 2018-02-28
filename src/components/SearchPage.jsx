@@ -9,7 +9,6 @@ import {
   withRouter
 } from 'react-router-dom';
 import SearchAnnouncements from './SearchAnnouncements';
-import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import './css/images.css';
 import './css/col.css';
 import './css/box.css';
@@ -18,6 +17,7 @@ import { updateSearchParams } from '../actions/search'
 import Pagination from "react-js-pagination";
 import AdvancedFilter from './AdvancedFilter'
 import AnnouncementCardGroup from './AnnouncementCardGroup'
+import AnnouncementListGroup from './AnnouncementListGroup'
 import './css/loading.css'
 
 class SearchPage extends Component {
@@ -88,16 +88,6 @@ class SearchPage extends Component {
   }
 
   render() {
-    if(this.props.announcements.error ){
-      return <Container className="container"><div style={{textAlign:"center"}}> <div>¡Error! {this.state.error_types.join(' ')}</div><SearchAnnouncements/></div></Container>;
-    }
-    if(this.props.announcements.result.length === 0 && this.props.announcements.success){
-      return <Container><div style={{textAlign:"center"}}> <div>No se encontraron resultados </div><SearchAnnouncements/></div><Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>
-      <Collapse isOpen={this.state.collapse}>
-        <AdvancedFilter/>
-      </Collapse></Container>;
-    }
-
     return (
       <div class="">
 
@@ -111,13 +101,14 @@ class SearchPage extends Component {
 
           <div class="col-lg-9">
 
-            {this.props.announcements.success && this.props.announcements.result.length > 0 ?
-                <AnnouncementCardGroup
+            {this.props.announcements.loading ?  <div class="container-fluid"><div class="loader"></div></div> : this.props.announcements.success && this.props.announcements.result.length > 0 ?
+                <AnnouncementListGroup
                   announcements={this.props.announcements.result}
                   pagination={this.props.announcements.pagination}
                   handlePageChange={this.handlePageChange.bind(this)}
+                  showExpireDate={false}
                 /> :
-              <div>No se encontraron resultados</div>}
+              <div>Nada que mostrar. Prueba buscando con otros parámetros.</div>}
 
           </div>
 

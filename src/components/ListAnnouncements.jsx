@@ -113,7 +113,7 @@ class ListAnnouncements extends Component {
     }
     return (
       <Container className="container">
-        <h1>Búsqueda de avisos</h1>
+        <h1>Búsqueda de aviso</h1>
         <p>Busca avisos por nombre, categorias y profesionales.</p>
         <SearchAnnouncements/>
         <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Búsqueda avanzada</Button>

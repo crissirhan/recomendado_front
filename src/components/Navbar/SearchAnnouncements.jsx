@@ -66,7 +66,7 @@ class SearchAnnouncements extends Component {
   }
 
   render(){
-
+    alert("no deberias estar aca")
     return (
         <SearchBar
           onChange={this.searchUpdated}
