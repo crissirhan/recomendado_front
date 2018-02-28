@@ -46,9 +46,17 @@ import Footer from './components/Footer'
 import NotFound from './components/NotFound'
 import MustLogIn from './components/MustLogIn'
 import { loadUserFromCookies } from './actions/user_actions'
+import { resetSearchParams } from './actions/search'
 
 class App extends Component {
 
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.location.pathname)
+    if (this.props.location.pathname === '/buscar/avisos/' && nextProps.location !== this.props.location) {
+      this.props.resetSearchParams()
+      console.log('hola')
+    }
+  }
   componentWillMount(){
     if(!this.state.cookieLoaded){
       this.props.loadUserFromCookies()
@@ -159,7 +167,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     login:login,
-    loadUserFromCookies:loadUserFromCookies
+    loadUserFromCookies:loadUserFromCookies,
+    resetSearchParams:resetSearchParams
   }, dispatch);
 }
 

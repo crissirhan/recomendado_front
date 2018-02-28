@@ -122,7 +122,6 @@ class AdvancedFilter extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <Form>
          <FormGroup>

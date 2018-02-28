@@ -16,7 +16,7 @@ class SelectCategories extends Component {
                <option value={''}>{'Todas las categorías'}</option>
               {(this.props.job_categories && this.props.job_categories.job_categories && this.props.job_sub_categories) ? this.props.job_categories.job_categories.map((category, index) => {
                 let options = this.props.job_sub_categories.filter(sub_job => sub_job.job_category.job_type === category.job_type).map((sub_job, sub_index) => {
-                  return <option key={sub_job.id} value={sub_job.job_sub_type}>{sub_job.job_sub_type}</option>
+                  return <option key={sub_job.id} value={sub_job.job_sub_type} selected={this.props.currentSelectedJob === sub_job.job_sub_type}>{sub_job.job_sub_type}</option>
                 })
                 return <optgroup label={category.job_type} key={index}>{options}</optgroup>
               }) : <option value={''}>{'Cargando...'}</option>}

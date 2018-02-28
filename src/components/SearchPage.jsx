@@ -23,9 +23,15 @@ import './css/loading.css'
 class SearchPage extends Component {
 
   componentDidMount(){
+    if(!this.props.announcements.loading && this.props.announcements.result.length === 0){
+      this.props.getAnnouncements(this.props.search.searchParams)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      console.log('hola')
+    }
     if(this.props != nextProps) {
       if(nextProps.announcements != this.props.announcements && false){
         if(this.props.announcements.success !== nextProps.announcements.success){

@@ -80,6 +80,7 @@ class SearchAnnouncements extends Component {
                     job_categories={this.state.job_categories}
                     job_sub_categories={this.state.job_sub_categories}
                     tagChange={this.tagChange.bind(this)}
+                    currentSelectedJob={this.props.search.searchParams.job}
                   />
                 </div>
                 <div class="form-group col-lg-2">
