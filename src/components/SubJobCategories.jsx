@@ -36,9 +36,11 @@ class SubJobCategories extends Component {
     return (
 
       <div class="container-fluid">
-        <div style={{textAlign:"center"}}>
-          <h1>{this.props.job}</h1>
-          <p class="small-text-hero">{sub_categories[0] ? sub_categories[0].job_category.description : ""}</p>
+        <div>
+          <header>
+            <h2 class="has-lines">{this.props.job}</h2>
+            <p class="lead">{sub_categories[0] ? sub_categories[0].job_category.description : ""}</p>
+          </header>
         </div>
           <div >
             <CardGroup>

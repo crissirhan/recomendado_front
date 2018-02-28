@@ -11,7 +11,7 @@ import getJobByName from '../actions/get_job_sub_category_by_name';
 import ListAnnouncementsDummy from './ListAnnouncementsDummy';
 import getAnnouncementsByJob from '../actions/get_announcements_by_job';
 import getAnnouncements from '../actions/get_announcements';
-import AnnouncementCardGroup from './AnnouncementCardGroup'
+import AnnouncementListGroup from './AnnouncementListGroup'
 import './css/loading.css'
 
 class SubCategoryPage extends Component {
@@ -81,18 +81,18 @@ class SubCategoryPage extends Component {
     }
 
     return (
-      <Container className="container">
-        <div style={{textAlign:"center"}}>
-          <h5><b>{this.state.job.job_sub_type}</b></h5>
-          <p>{this.state.job ? this.state.job.description : ""}</p>
-        </div>
-        <AnnouncementCardGroup
+      <div class="container-fluid">
+        <header>
+          <h2 class="has-lines">{this.state.job.job_sub_type}</h2>
+          <p class="lead">{this.state.job ? this.state.job.description : ""}</p>
+        </header>
+        <AnnouncementListGroup
           announcements={this.props.announcements.result}
           pagination={this.props.announcements.pagination}
           handlePageChange={this.handlePageChange.bind(this)}
         />
 
-      </Container>
+      </div>
      )
   }
 }
