@@ -13,6 +13,7 @@ import getAnnouncements from '../actions/get_announcements';
 import {updateSearchParams} from '../actions/search';
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
+import './css/date.css'
 
 class AdvancedFilter extends Component {
 
@@ -138,21 +139,27 @@ class AdvancedFilter extends Component {
          <FormGroup>
            <Label for="min_publish_date">Publicado después del</Label>
            <DatePicker
-              locale={'es-es'}
+              locale={'es-Es'}
               dateFormat="DD/MM/YYYY"
               todayButton={"Hoy"}
               selected={this.state.min_publish_date}
               onChange={this.handleMinDateChange.bind(this)}
+              placeholderText="Selecciona fecha"
+              isClearable={true}
+              className="short-input"
            />
          </FormGroup>
          <FormGroup>
            <Label for="max_publish_date">Publicado antes de</Label>
            <DatePicker
-              locale={'es-es'}
+              locale={'es-Es'}
               todayButton={"Hoy"}
               dateFormat="DD/MM/YYYY"
               selected={this.state.max_publish_date}
               onChange={this.handleMaxDateChange.bind(this)}
+              placeholderText="Selecciona fecha"
+              isClearable={true}
+              className="short-input"
            />
          </FormGroup>
 

@@ -95,17 +95,17 @@ class SearchPage extends Component {
 
   render() {
     return (
-      <div class="">
+      <div class="" style={{padding:30}}>
 
         <div class="row">
 
-          <div class="col-lg-3">
-            <div class="container">
+          <div class="col-lg-2">
+            <div class="container-fluid">
               <AdvancedFilter/>
             </div>
           </div>
 
-          <div class="col-lg-9">
+          <div class="col-lg-10">
 
             {this.props.announcements.loading ?  <div class="container-fluid"><div class="loader"></div></div> : this.props.announcements.success && this.props.announcements.result.length > 0 ?
                 <AnnouncementListGroup

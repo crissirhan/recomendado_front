@@ -187,10 +187,10 @@ class AnnouncementPage extends Component {
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
     console.log(this.state.images)
     return (
-      <div>
-        <div class="container-fluid">
+      <div style={{padding:30}}>
+        <div class="container">
           <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-7">
               <header>
                 <h3 class="has-lines"><small>Aviso</small> Aviso </h3>
               </header>
@@ -204,7 +204,14 @@ class AnnouncementPage extends Component {
                     readonly
                   /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
                 </div>
-                <h1>{this.state.announcement.title}</h1>
+                <div class="row">
+                  <div class="col-lg-9">
+                    <h1>{this.state.announcement.title}</h1>
+                  </div>
+                  <div class="col-lg-3">
+                    {this.state.announcement.announcement_thumbnail && <img src={this.state.announcement.announcement_thumbnail} style={{width:"100%",height:"100%"}}/>}
+                  </div>
+                </div>
                 <div class="item"><i class="icon-localizer"></i> {this.state.announcement.location}</div>
                 {this.props.user.type !== 'professional' ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar profesional</div>
                  </div>: null}
@@ -217,9 +224,15 @@ class AnnouncementPage extends Component {
                  })}
                </div>
             </div>
-            <div class="col-lg-3">
-              {this.state.announcement.announcement_thumbnail && <img src={this.state.announcement.announcement_thumbnail} style={{width:"100%",height:"100%"}}/>}
+            <div class="block about-listing col-lg-5">
+              <header>
+                <h3 class="has-lines"><small>Aviso</small> Descripción del Aviso</h3>
+              </header>
+                <p>{this.state.announcement.description}</p>
             </div>
+            {false && <div class="col-lg-3">
+              {this.state.announcement.announcement_thumbnail && <img src={this.state.announcement.announcement_thumbnail} style={{width:"100%",height:"100%"}}/>}
+            </div>}
           </div>
           <div class="row">
             <aside class="col-lg-4">
@@ -253,12 +266,6 @@ class AnnouncementPage extends Component {
               </div>
             </aside>
             <main class="col-lg-8">
-              <div class="block about-listing">
-                <header>
-                  <h3 class="has-lines"><small>Aviso</small> Descripción del Aviso</h3>
-                </header>
-                  <p>{this.state.announcement.description}</p>
-                </div>
                 <ReviewList
                   reviews={this.props.reviews.result}
                   pagination={this.props.reviews.pagination}
