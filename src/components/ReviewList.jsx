@@ -18,7 +18,7 @@ class ReviewList extends Component {
   render() {
     return (
       <div>
-        <div class="card card-outline-secondary my-4">
+        <div class="card card-outline-secondary">
           <div class="card-header">
             Evaluaciones
           </div>

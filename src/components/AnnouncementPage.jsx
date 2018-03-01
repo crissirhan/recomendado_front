@@ -195,24 +195,25 @@ class AnnouncementPage extends Component {
                 <h3 class="has-lines"><small>Aviso</small> Aviso </h3>
               </header>
               <div class="info">
-                <div class="listing-rate d-flex align-items-center">
-                  <Rating
-                    class="text-warning"
-                    empty="fa fa-star-o fa-2x orange-star rate list-inline"
-                    full="fa fa-star fa-2x orange-star rate list-inline"
-                    initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
-                    readonly
-                  /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
-                </div>
                 <div class="row">
-                  <div class="col-lg-9">
+                  <div class="col-lg-12">
                     <h1>{this.state.announcement.title}</h1>
                   </div>
-                  <div class="col-lg-3">
-                    {this.state.announcement.announcement_thumbnail && <img src={this.state.announcement.announcement_thumbnail} style={{width:"100%",height:"100%"}}/>}
+                </div>
+                <div class="listing-rate d-flex align-items-center">
+                <Rating
+                class="text-warning"
+                empty="fa fa-star-o fa-2x orange-star rate list-inline"
+                full="fa fa-star fa-2x orange-star rate list-inline"
+                initialRate={this.state.announcement.review_average? this.state.announcement.review_average : 0}
+                readonly
+                /><span class="reviewers">{Math.round( this.state.announcement.review_average * 10) / 10} estrellas</span>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="item"><i class="icon-localizer"></i> {this.state.announcement.location}</div>
                   </div>
                 </div>
-                <div class="item"><i class="icon-localizer"></i> {this.state.announcement.location}</div>
                 {this.props.user.type !== 'professional' ? <div class="calltoactions"><div class="btn btn-primary has-wide-padding link-scroll" onClick={this.handleToggleContactCollapse} style={{ marginBottom: '1rem' }}>Contactar profesional</div>
                  </div>: null}
                  {this.state.announcement.job_tags.map(tag => {
@@ -235,7 +236,7 @@ class AnnouncementPage extends Component {
             </div>}
           </div>
           <div class="row">
-            <aside class="col-lg-4">
+            <div class="col-lg-4">
 
               <div class="widget opening-hours">
                 <header>
@@ -264,8 +265,8 @@ class AnnouncementPage extends Component {
                   </Collapse>
                 </div>
               </div>
-            </aside>
-            <main class="col-lg-8">
+            </div>
+            <div class="col-lg-8">
                 <ReviewList
                   reviews={this.props.reviews.result}
                   pagination={this.props.reviews.pagination}
@@ -306,7 +307,7 @@ class AnnouncementPage extends Component {
                     )}
                   </div>
               </div>}
-            </main>
+            </div>
           </div>
         </div>
       </div>
