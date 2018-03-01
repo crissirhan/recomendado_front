@@ -68,7 +68,7 @@ class AdvancedFilter extends Component {
       min_publish_date: date
     },
   ()=>{
-    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {min_publish_date:this.state.min_publish_date.toISOString()}))
+    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {min_publish_date:this.state.min_publish_date ? this.state.min_publish_date.toISOString() : null}))
     this.props.getAnnouncements(this.props.search.searchParams)
   });
   }
@@ -78,7 +78,7 @@ class AdvancedFilter extends Component {
       max_publish_date: date
     },
   ()=>{
-    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {max_publish_date:this.state.max_publish_date.toISOString()}))
+    this.props.updateSearchParams(Object.assign(this.props.search.searchParams, {max_publish_date:this.state.max_publish_date ? this.state.max_publish_date.toISOString() : null}))
     this.props.getAnnouncements(this.props.search.searchParams)
   });
   }
