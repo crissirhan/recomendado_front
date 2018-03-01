@@ -192,7 +192,7 @@ class AnnouncementPage extends Component {
           <div class="row">
             <div class="col-lg-7">
               <header>
-                <h3 class="has-lines"><small>Aviso</small> Aviso </h3>
+                <h3 class="has-lines"><small>Aviso</small> Información del Aviso </h3>
               </header>
               <div class="info">
                 <div class="row">
@@ -227,7 +227,7 @@ class AnnouncementPage extends Component {
             </div>
             <div class="block about-listing col-lg-5">
               <header>
-                <h3 class="has-lines"><small>Aviso</small> Descripción del Aviso</h3>
+                <h3 class="has-lines"><small>Descripción</small> Descripción del Aviso</h3>
               </header>
                 <p>{this.state.announcement.description}</p>
             </div>
