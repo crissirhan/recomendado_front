@@ -124,30 +124,17 @@ class AdvancedFilter extends Component {
 
   render() {
     return (
-      <Form>
+      <Form >
          <FormGroup>
            <Label for="min_price">Precio mínimo/máximo</Label>
            <InputRange
-              formatLabel={value => `$ ${value}`}
+              formatLabel={value => <div >${value}</div>}
               step={1000}
               maxValue={100000}
               minValue={0}
               value={{min: this.state.min_price, max: this.state.max_price}}
               onChange={this.handlePriceChange.bind(this)}
             />
-         </FormGroup>
-         <FormGroup>
-           <Label for="min_publish_date">Publicado después del</Label>
-           <DatePicker
-              locale={'es-Es'}
-              dateFormat="DD/MM/YYYY"
-              todayButton={"Hoy"}
-              selected={this.state.min_publish_date}
-              onChange={this.handleMinDateChange.bind(this)}
-              placeholderText="Selecciona fecha"
-              isClearable={true}
-              className="short-input"
-           />
          </FormGroup>
          <FormGroup>
            <Label for="max_publish_date">Publicado antes de</Label>
@@ -162,7 +149,19 @@ class AdvancedFilter extends Component {
               className="short-input"
            />
          </FormGroup>
-
+         <FormGroup>
+           <Label for="min_publish_date">Publicado después del</Label>
+           <DatePicker
+              locale={'es-Es'}
+              dateFormat="DD/MM/YYYY"
+              todayButton={"Hoy"}
+              selected={this.state.min_publish_date}
+              onChange={this.handleMinDateChange.bind(this)}
+              placeholderText="Selecciona fecha"
+              isClearable={true}
+              className="short-input"
+           />
+         </FormGroup>
          <FormGroup>
            <Label for="rating">Rating mínimo</Label>
            <Rating

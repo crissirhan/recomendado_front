@@ -679,8 +679,6 @@ h6 small {
 * ==========================================================
 */
 nav.navbar {
-  padding-top: 25px;
-  padding-bottom: 25px;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   background: #fff;
@@ -760,7 +758,6 @@ section.hero {
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   padding: 5px;
-  margin-top: 30px;
   padding-left: 30px;
 }
 

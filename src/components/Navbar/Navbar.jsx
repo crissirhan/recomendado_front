@@ -28,7 +28,7 @@ class NavBar extends Component {
   render() {
     return (
       <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid"><Link to="/" class="navbar-brand"><img src={require('../../custom/img/7.jpeg')} alt="..."/></Link>
+        <div class="container-fluid"><Link to="/" class="navbar-brand"><img src={require('../../custom/img/Logo R.png')} alt="..."/></Link>
           <div class="show-large half-size">
             {this.props.location.pathname !== '/' && <SearchAnnouncements/>}
           </div>
