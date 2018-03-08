@@ -208,7 +208,7 @@ class TopBar extends Component {
     }
     return (
       <div class="top-bar">
-        <div class="container">
+        <div class="container-fluid">
           <div class="content-holder d-flex justify-content-between">
             <div class="info d-flex">
               <div class="contact d-flex">
