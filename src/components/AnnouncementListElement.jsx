@@ -89,7 +89,7 @@ class AnnouncementsListElement extends Component {
     let announcement = this.props.announcement
     let today = new Date()
     return (
-              <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id}>
+              <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id} style={{paddingTop:"5px", paddingBottom:"5px"}}>
                 <div class="card-block">
                   <div class="row">
                     <div class="col-sm-3">
@@ -136,9 +136,7 @@ class AnnouncementsListElement extends Component {
                         </Link>
                       </div>
                       <div>
-                        <Truncate lines={3} ellipsis={<span>... <a href='/link/to/article'>Read more</a></span>}>
-                          <i>{announcement.description}</i>
-                        </Truncate>
+                        <i>{announcement.description}</i>
                       </div>
                       <div >
                         tags: {announcement.job_tags.map((tag,index) => {

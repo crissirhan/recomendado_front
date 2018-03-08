@@ -55,9 +55,11 @@ class AnnouncementPage extends Component {
           })
         }
         if(nextProps.announcements.result !== this.props.announcements.result && nextProps.announcements.result ){
+          let images = nextProps.announcements.result[0].announcement_images
+          images = nextProps.announcements.result[0].announcement_thumbnail ? images.concat({image:nextProps.announcements.result[0].announcement_thumbnail}) : images
           this.setState({
             announcement: nextProps.announcements.result[0],
-            images: nextProps.announcements.result[0].announcement_images
+            images: images
           })
         }
       }
@@ -190,7 +192,7 @@ class AnnouncementPage extends Component {
       <div style={{padding:30}}>
         <div class="container">
           <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-7" style={{padding:10}}>
               <header>
                 <h3 class="has-lines"><small>Aviso</small> Información del Aviso </h3>
               </header>
@@ -225,7 +227,7 @@ class AnnouncementPage extends Component {
                  })}
                </div>
             </div>
-            <div class="block about-listing col-lg-5">
+            <div class="block about-listing col-lg-5" style={{padding:30}}>
               <header>
                 <h3 class="has-lines"><small>Descripción</small> Descripción del Aviso</h3>
               </header>
@@ -238,14 +240,7 @@ class AnnouncementPage extends Component {
           <div class="row">
             <div class="col-lg-4">
 
-              <div class="widget opening-hours">
-                <header>
-                  <h3 class="has-lines"><small>Atención</small> Días de atención </h3>
-                </header>
-                <div class="days">
-                  {this.state.announcement.availability_display.replace(/ /g,'').split(",").map( day => <div class="day d-flex justify-content-between"><strong>{day}</strong></div> )}
-                </div>
-              </div>
+
               <div class="widget contact">
                 <header>
                   <h3 class="has-lines"><small>Contacto</small> Acerca del profesional</h3>
@@ -265,14 +260,25 @@ class AnnouncementPage extends Component {
                   </Collapse>
                 </div>
               </div>
+              <div class="widget price">
+                <header>
+                  <h3 class="has-lines"><small>Precio</small> Precio listado del trabajo </h3>
+                </header>
+                <div >
+                  <h4>${this.state.announcement.price} pesos</h4>
+                </div>
+              </div>
+              <div class="widget opening-hours">
+                <header>
+                  <h3 class="has-lines"><small>Atención</small> Días de atención </h3>
+                </header>
+                <div class="days">
+                  {this.state.announcement.availability_display.replace(/ /g,'').split(",").map( day => <div class="day d-flex justify-content-between"><strong>{day}</strong></div> )}
+                </div>
+              </div>
             </div>
             <div class="col-lg-8">
-                <ReviewList
-                  reviews={this.props.reviews.result}
-                  pagination={this.props.reviews.pagination}
-                  handlePageChange={this.handleReviewPageChange.bind(this)}
-                  owner={owner}
-                  />
+
                 {this.state.images && this.state.images.length > 0 && <div class="block listing-gallery">
                   <header>
                     <h3 class="has-lines"><small>Imágenes</small> Imagénes del Aviso </h3>
@@ -305,8 +311,15 @@ class AnnouncementPage extends Component {
                         }
                       />
                     )}
+
                   </div>
               </div>}
+              <ReviewList
+              reviews={this.props.reviews.result}
+              pagination={this.props.reviews.pagination}
+              handlePageChange={this.handleReviewPageChange.bind(this)}
+              owner={owner}
+              />
             </div>
           </div>
         </div>
