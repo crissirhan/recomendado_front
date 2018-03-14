@@ -89,10 +89,13 @@ class AnnouncementsListElement extends Component {
     let announcement = this.props.announcement
     let today = new Date()
     return (
-              <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id} style={{paddingTop:"5px", paddingBottom:"5px"}}>
+              <div class="card card-outline-primary mb-3 text-center shadow-box round-border" key={announcement.id} style={{paddingTop:"5px", paddingBottom:"5px", height:"245px"}}>
                 <div class="card-block">
                   <div class="row">
                     <div class="col-sm-3">
+                      <div>
+                        {<img src={image_url} style={{width:"50%",height:"100px", objectFit:"contain", overflow:"hidden", display:"block", marginLeft:"auto", marginRight:"auto", opacity: image_url ? 1 : 0}}/>}
+                      </div>
                       <Rating className="text-center"
                           empty="fa fa-star-o fa-2x orange-star medium"
                           full="fa fa-star fa-2x orange-star medium"
@@ -136,7 +139,12 @@ class AnnouncementsListElement extends Component {
                         </Link>
                       </div>
                       <div>
-                        <i>{announcement.description}</i>
+                        <Truncate lines={2} ellipsis={<span>{' '}
+                          <Link to ={'/avisos/' + announcement.id}>
+                             ... Leer más
+                          </Link></span>}>
+                          <i>{announcement.description}</i>
+                        </Truncate>
                       </div>
                       <div >
                         tags: {announcement.job_tags.map((tag,index) => {
@@ -144,10 +152,6 @@ class AnnouncementsListElement extends Component {
                         })}
                       </div>
                     </div>
-                    {image_url &&
-                    <div class="col-sm-2">
-                      <img src={image_url} style={{width:"100%",height:"100%"}}/>
-                    </div>}
                     <div class="col-sm-1">
                       <div>
                         {this.props.visible_button ? <SwitchButton label={this.state.visible? 'Visible' : 'Oculto'} key={announcement.id} name={"switch-"+announcement.id} defaultChecked={announcement.visible} onChange={this.handleSwitchChange.bind(this)} />: null}

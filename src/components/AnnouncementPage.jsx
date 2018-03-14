@@ -187,7 +187,7 @@ class AnnouncementPage extends Component {
     }
     //let serviceButton = <Link to={'/contratar/aviso/' + this.state.announcement.id}><Button>Contactar</Button></Link>;
     let serviceButton = <Button onClick={this.toggleContactModal}>Contactar</Button>
-    console.log(this.state.images)
+    console.log(this.state)
     return (
       <div style={{padding:30}}>
         <div class="container">

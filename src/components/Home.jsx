@@ -29,7 +29,7 @@ class Home extends Component {
       <div>
         <section style={{background: "url("+bgimg+")"}} class="hero d-flex align-items-center">
           <div class="container">
-            <p class="small-text-hero"><i class="icon-localizer text-primary mr-1"></i>¿Buscas alguien que te pueda hacer un trabajo?</p>
+            <p class="small-text-hero"><i class="icon-localizer text-primary mr-1"></i>¿Buscas a alguien con buenas recomendaciones para que te haga un trabajo?</p>
             <h1>Busca un <span class="text-primary">Recomendado</span></h1>
             <SearchAnnouncements/>
           </div>

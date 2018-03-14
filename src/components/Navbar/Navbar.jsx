@@ -38,8 +38,6 @@ class NavBar extends Component {
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><Link to="/" class="nav-link ">Inicio</Link>
                 </li>
-                <li class="nav-item"><Link to ="/buscar/avisos/" class="nav-link">Buscar avisos</Link>
-                </li>
                 <li class="nav-item"><Link to={this.props.user.url} class="nav-link">Perfil</Link>
                 </li>
               </ul><Link to="/crear/aviso/" class="btn navbar-btn btn-outline-primary mt-3 mt-lg-0 ml-lg-3">Publica un aviso</Link>

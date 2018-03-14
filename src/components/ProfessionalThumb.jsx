@@ -49,9 +49,9 @@ class ProfessionalThumb extends Component {
     let image_url = this.props.professional.profile_picture
     let comment = <div><div>"{this.props.review.client_comment}"</div><div style={{marginTop:5}}> <b>{this.props.review.service.client.user.first_name} {this.props.review.service.client.user.last_name}</b></div></div>
     return (
-      <div class="col-lg-4" key={this.props.professional.id}>
+      <div class="col-lg-3" key={this.props.professional.id}>
         <div class="post">
-          <div class="image"><img  src={image_url} alt="..." style={{height:400,width:350}}/></div>
+          <div class="image"><img  src={image_url} alt="..." style={{height:"100%",width:"100%"}}/></div>
           <div class="info d-flex align-items-end">
             <div class="content">
               <div class="post-meta">{new Date(this.props.review.date).toLocaleDateString()}</div>

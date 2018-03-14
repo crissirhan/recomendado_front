@@ -12,7 +12,7 @@ import './css/box.css';
 class ProfessionalThumbs extends Component {
 
   componentDidMount() {
-    this.props.getReviews({ordering:'-date', min_rating:4, page_size:3});
+    this.props.getReviews({ordering:'-date', min_rating:4, page_size:4});
   }
 
   componentWillReceiveProps(nextProps) {
