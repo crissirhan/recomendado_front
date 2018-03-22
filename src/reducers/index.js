@@ -13,8 +13,6 @@ import LoginReducer from './reducer_login';
 import UpdateProfessionalReducer from './reducer_update_professional';
 import UpdateClientReducer from './reducer_update_client';
 import UpdateAnnouncementReducer from './reducer_update_announcement';
-import SignUpProfessionalReducer from './reducer_sign_up_professional';
-import SignUpClientReducer from './reducer_sign_up_client';
 import ProfessionalByUsernameReducer from './reducer_professional_by_username';
 import ClientByUsernameReducer from './reducer_client_by_username';
 import PutServiceReducer from './reducer_put_service';
@@ -33,6 +31,7 @@ import ServicesReducer from './reducer_services'
 import UpdateService from './reducer_update_service'
 import UpdateReview from './reducer_update_review'
 import ReducerUser from './reducer_user'
+import ProfileByUsernameReducer from './reducer_profile_by_username'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -53,8 +52,6 @@ const rootReducer = combineReducers({
   update_professional: UpdateProfessionalReducer,
   update_announcement: UpdateAnnouncementReducer,
   update_client: UpdateClientReducer,
-  sign_up_client:SignUpClientReducer,
-  sign_up_professional:SignUpProfessionalReducer,
   logged_in_professional:ProfessionalByUsernameReducer,
   logged_in_client:ClientByUsernameReducer,
   put_service:PutServiceReducer,
@@ -68,6 +65,7 @@ const rootReducer = combineReducers({
   job_by_name:JobByNameReducer,
   announcement_reviews:AnnouncementReviewsReducer,
   search: SearchReducer,
-  user:ReducerUser
+  user:ReducerUser,
+  logged_in_user:ProfileByUsernameReducer
 });
 export default rootReducer;

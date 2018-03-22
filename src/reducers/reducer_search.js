@@ -25,7 +25,6 @@ export default function(state={
       let newState = Object.assign({...state}, {searchParams: action.newParams})
       return newState
     case RESET_SEARCH_PARAMS:
-      console.log("chaos")
       state.searchParams = initialParams
       return state
     case STOP_SEARCH_REQUEST:

@@ -4,6 +4,7 @@ import { ENDPOINT_URI } from '../Globals'
 
 export default function login(username,password){
   return dispatch => {
+      console.log(username,password)
       dispatch(requestingLogin());
       axios.post(ENDPOINT_URI+'/rest-auth/login/', {
       username: username,

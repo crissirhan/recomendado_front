@@ -2,7 +2,6 @@ import { UPDATE_PROFESSIONAL_SUCCESS, UPDATE_PROFESSIONAL_ERROR, UPDATE_PROFESSI
 import axios from 'axios';
 import { ENDPOINT_URI } from '../Globals'
 
-
 export default function updateProfessional(professional_id,datum) {
   return dispatch => {
     dispatch(updateProfessionalLoadingAsync());

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavbarBrand, Nav, NavItem, Navbar } from 'reactstrap';
 import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm';
 import AnnouncementForm from '../AnnouncementForm';
 import SearchAnnouncements from '../SearchAnnouncements';
 import {
@@ -10,10 +9,10 @@ import {
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import cookie from 'react-cookies';
-import getClientByUsername from '../../actions/get_client_by_username';
 import { setUserData, userLogout, getUserUrl } from '../../actions/user_actions';
-import getProfessionalByUsername from '../../actions/get_professional_by_username';
+import getProfileByUsername from '../../actions/get_profile_by_username';
 import ReactDOM from 'react-dom'
+import FacebookLoginButton from './FacebookLoginButton';
 
 class TopBar extends Component {
 
@@ -35,47 +34,25 @@ class TopBar extends Component {
     this.setState({ offset: window.pageYOffset });
   }
   componentWillReceiveProps(nextProps) {
-
+    console.log(nextProps.logged_in_user)
     if(this.props != nextProps){
-      if(nextProps.logged_in_professional[0]){
+      if(nextProps.logged_in_user[0]){
         this.setState({
-          user:nextProps.logged_in_professional[0],
+          user:nextProps.logged_in_user[0],
           isProfessional:true
         });
         cookie.save('token', this.props.login_state.token, { path: '/' });
-        cookie.save('user', nextProps.logged_in_professional[0], { path: '/' });
-        cookie.save('isProfessional', true, { path: '/' });
-        cookie.save('isClient', false, { path: '/' });
-        if(nextProps.logged_in_professional[0].id !== this.props.user.id){
+        cookie.save('user', nextProps.logged_in_user[0], { path: '/' });
+        cookie.save('isProfessional', nextProps.logged_in_user[0].is_professional, { path: '/' });
+        cookie.save('isClient', nextProps.logged_in_user[0].isClient, { path: '/' });
+        if(nextProps.logged_in_user[0].id !== this.props.user.id){
           this.props.setUserData({
-            name:nextProps.logged_in_professional[0].user.first_name,
-            lastname:nextProps.logged_in_professional[0].user.last_name,
-            id:nextProps.logged_in_professional[0].id,
-            type:'professional'
+            name:nextProps.logged_in_user[0].first_name,
+            lastname:nextProps.logged_in_user[0].last_name,
+            id:nextProps.logged_in_user[0].id,
+            type:nextProps.logged_in_user[0].is_professional ? 'professional' : 'client'
           })
         }
-        this.setState({
-          cookie_setted:true
-        });
-      }
-      if(nextProps.logged_in_client[0]){
-        this.setState({
-          user:nextProps.logged_in_client[0],
-          isClient:true
-        });
-        cookie.save('token', this.props.login_state.token, { path: '/' });
-        cookie.save('user', nextProps.logged_in_client[0], { path: '/' });
-        cookie.save('isProfessional', false, { path: '/' });
-        cookie.save('isClient', true, { path: '/' });
-        if(nextProps.logged_in_client[0].id !== this.props.user.id){
-          this.props.setUserData({
-            name:nextProps.logged_in_client[0].user.first_name,
-            lastname:nextProps.logged_in_client[0].user.last_name,
-            id:nextProps.logged_in_client[0].id,
-            type:'client'
-          })
-        }
-
         this.setState({
           cookie_setted:true
         });
@@ -85,8 +62,7 @@ class TopBar extends Component {
         return;
       }
       if(nextProps.login_state.loggedIn){
-        this.props.getClientByUsername(nextProps.login_state.username);
-        this.props.getProfessionalByUsername(nextProps.login_state.username);
+        this.props.getProfileByUsername(nextProps.login_state.username);
         this.setState({
           fetched_user: true
         });
@@ -114,7 +90,6 @@ class TopBar extends Component {
     };
     this.loginToggle = this.loginToggle.bind(this);
     this.signUpToggle = this.signUpToggle.bind(this);
-    this.getLoggedInUserUrl = this.getLoggedInUserUrl.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.announcementToggle = this.announcementToggle.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -143,36 +118,6 @@ class TopBar extends Component {
     //window.location.assign('/')
   }
 
-  getLoggedInUserUrl(){
-    if(cookie.load('user') != "undefined"){
-      if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
-        return '/profesionales/' + cookie.load('user').id;
-      }
-      if(cookie.load('isClient') === "true" && cookie.load('user').user){
-        return '/clientes/' + cookie.load('user').id;
-      }
-    } else{
-      if(this.state.isClient){
-        return '/clientes/'+this.state.user.id+'/';
-      }
-      if(this.state.isProfessional){
-        return '/profesionales/'+this.state.user.id+'/';
-      }
-    }
-    return '/';
-  }
-
-  getLoggedInUserName(){
-    if(cookie.load('user') != "undefined"){
-      if(cookie.load('user').user){
-        return cookie.load('user').user.first_name + ' ' + cookie.load('user').user.last_name ;
-      } else {
-        return 'Perfil'
-      }
-    } else{
-      return this.state.user.first_name + ' ' + this.state.user.last_name
-    }
-  }
 
   render() {
     let buttons = null;
@@ -218,6 +163,7 @@ class TopBar extends Component {
             </div>
             {buttons}
           </div>
+          <FacebookLoginButton/>
         </div>
       </div>
     );
@@ -226,16 +172,14 @@ class TopBar extends Component {
 function mapStateToProps(state){
   return {
     login_state:state.login,
-    logged_in_professional:state.logged_in_professional,
-    logged_in_client:state.logged_in_client,
+    logged_in_user:state.logged_in_user,
     user:state.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getClientByUsername:getClientByUsername,
-    getProfessionalByUsername:getProfessionalByUsername,
+    getProfileByUsername:getProfileByUsername,
     setUserData:setUserData,
     userLogout:userLogout,
     getUserUrl:getUserUrl

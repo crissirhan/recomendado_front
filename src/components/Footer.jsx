@@ -16,7 +16,7 @@ class Footer extends React.Component {
         <div class="container">
           <div class="row">
             <div class="about col-md-4">
-              <div class="logo"><img src={require('../custom/img/logo-footer.png')} alt="..."/></div>
+              <div class="logo"><img src={require('../custom/img/Logo R.png')} alt="..."/></div>
               <p>Recomendado 2018</p>
             </div>
             <div class="site-links col-md-4">

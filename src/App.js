@@ -8,13 +8,12 @@ import {
   ModalHeader,
   ModalBody,
 } from 'reactstrap';
-import { signUp } from './services/UserServices';
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import TopBar from './components/Navbar/TopBar';
 import Navbar from './components/Navbar/Navbar';
-import SignUpForm from './components/Navbar/SignUpForm';
+import SignUp from './components/Navbar/SignUp';
 import login from './actions/login_user';
 import LoginForm from './components/Navbar/LoginForm';
 import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsList';
@@ -51,10 +50,8 @@ import { resetSearchParams } from './actions/search'
 class App extends Component {
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.location.pathname)
     if (this.props.location.pathname === '/buscar/avisos/' && nextProps.location !== this.props.location) {
       this.props.resetSearchParams()
-      console.log('hola')
     }
   }
   componentWillMount(){
@@ -62,15 +59,6 @@ class App extends Component {
       this.props.loadUserFromCookies()
     }
     this.setState({cookieLoaded:true})
-  }
-
-  loadCustomScript(scriptName, path){
-    this.state.scripts[scriptName] = document.createElement(scriptName)
-    this.state.scripts[scriptName].src = path
-    this.state.scripts[scriptName].async = true
-    document.body.appendChild(this.state.scripts[scriptName])
-    console.log(this.state.scripts[scriptName].src)
-    console.log(this.state.scripts)
   }
 
   constructor(props) {
@@ -123,7 +111,7 @@ class App extends Component {
                   <ClientPage client_id={match.params.id}/>
                 )} />
                 <Route path="/registro/" render={({ match }) => (
-                  <Container><SignUpForm /></Container>
+                  <Container><SignUp /></Container>
                 )} />
                 <Route path="/login/" render={({ match }) => (
                   <Container><LoginForm /></Container>
@@ -144,6 +132,7 @@ class App extends Component {
                   <ClientEdit client_id={match.params.id}/>
                 )} />
                 <Route path='/denegado' component={MustLogIn}/>
+                <Route path="/404/" component={NotFound} />
                 <Route path="*" component={NotFound} />
               </Switch>
             </div>

@@ -8,6 +8,7 @@ class FacebookLoginButton extends React.Component{
   }
 
   responseFacebook (response) {
+    console.log(response)
   }
 
   render () {

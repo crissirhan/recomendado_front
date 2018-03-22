@@ -6,7 +6,8 @@ export default function(state={
   lastname:'',
   id:'',
   type:'',
-  url:'/denegado/'
+  url:'/denegado/',
+  loggedIn:false
 }, action) {
   let user = null
   let tipo = null
@@ -38,6 +39,7 @@ export default function(state={
       newUser.type = user.type
       tipo = newUser.type === 'professional' ? 'profesionales' : 'clientes'
       newUser.url = '/' + tipo + '/' + newUser.id
+      newUser.loggedIn = true
       console.log(newUser)
       return Object.assign({...state}, newUser)
     case LOAD_USER_FROM_COOKIES:
@@ -48,6 +50,7 @@ export default function(state={
         newData.name = user.user.first_name
         newData.lastname = user.user.last_name
         newData.id = user.id
+        newData.loggedIn = true
         if(cookie.load('isProfessional') === "true" && cookie.load('user').user){
           newData.type = 'professional'
         }
@@ -74,7 +77,8 @@ export default function(state={
         lastname:'',
         id:'',
         type:'',
-        url:'/denegado/'
+        url:'/denegado/',
+        loggedIn:false
       })
     default:
       return state;
