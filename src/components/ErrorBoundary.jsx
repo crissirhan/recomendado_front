@@ -7,12 +7,14 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
+    console.log(error)
+    console.log(info)
     this.setState({ hasError: true });
   }
 
   render() {
     if (this.state.hasError) {
-      window.location.assign('/404/')
+      //window.location.assign('/404/')
     }
     return this.props.children;
   }

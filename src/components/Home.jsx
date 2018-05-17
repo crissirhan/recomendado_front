@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import SearchAnnouncements from './SearchAnnouncements';
 import JobCategories from './JobCategories';
 import ProfessionalThumbs from './ProfessionalThumbs';
+import ProfileNameEdit from './ProfileNameEdit'
 import {
   Container,
   Jumbotron

@@ -32,6 +32,8 @@ import UpdateService from './reducer_update_service'
 import UpdateReview from './reducer_update_review'
 import ReducerUser from './reducer_user'
 import ProfileByUsernameReducer from './reducer_profile_by_username'
+import UpdateProfile from './reducer_update_profile'
+import ProfileReducer from './reducer_profile'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -66,6 +68,8 @@ const rootReducer = combineReducers({
   announcement_reviews:AnnouncementReviewsReducer,
   search: SearchReducer,
   user:ReducerUser,
-  logged_in_user:ProfileByUsernameReducer
+  logged_in_user:ProfileByUsernameReducer,
+  update_profile: UpdateProfile,
+  profile: ProfileReducer
 });
 export default rootReducer;

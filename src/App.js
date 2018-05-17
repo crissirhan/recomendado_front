@@ -20,8 +20,7 @@ import AnnouncementsList from './components/AnnouncementEdition/AnnouncementsLis
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
 import SubCategoryPage from './components/SubCategoryPage';
-import ProfessionalPage from './components/ProfessionalPage';
-import ClientPage from './components/ClientPage';
+import ProfilePage from './components/ProfilePage';
 import AnnouncementForm from './components/AnnouncementForm';
 import SearchPage from './components/SearchPage';
 import AnnouncementPage from './components/AnnouncementPage';
@@ -46,6 +45,7 @@ import NotFound from './components/NotFound'
 import MustLogIn from './components/MustLogIn'
 import { loadUserFromCookies } from './actions/user_actions'
 import { resetSearchParams } from './actions/search'
+import ProfileEdit from './components/ProfileEdit'
 
 class App extends Component {
 
@@ -55,22 +55,18 @@ class App extends Component {
     }
   }
   componentWillMount(){
-    if(!this.state.cookieLoaded){
-      this.props.loadUserFromCookies()
-    }
-    this.setState({cookieLoaded:true})
+    this.props.loadUserFromCookies()
   }
 
   constructor(props) {
     super(props);
     this.state = {
       scripts:{},
-      cookieLoaded:false
     };
   }
 
   requireClient(nextState, replace) {
-      if(cookie.load('isClient') !== "true") {
+      if(cookie.load('isClient') !== "true" && false) {
         replace({
           pathname: '/login'
         })
@@ -97,8 +93,8 @@ class App extends Component {
                 <Route path="/categorias/:categoria/:sub_categoria" render={({ match }) => (
                   <SubCategoryPage sub_category={match.params.sub_categoria}/>
                 )} />
-                <Route path="/profesionales/:id/" render={({ match }) => (
-                  <ProfessionalPage professional_id={match.params.id}/>
+                <Route path="/perfiles/:id/" render={({ match }) => (
+                  <ProfilePage profile_id={match.params.id}/>
                 )} />
                 <Route path="/avisos/:id/" render={({ match }) => (
                   <AnnouncementPage announcement_id={match.params.id}/>
@@ -107,9 +103,6 @@ class App extends Component {
                   cookie.load('isClient') === "true" ? <ServicePage announcement_id={match.params.id}/> :
                   <Redirect to="/login/"/>
                 )}/>
-                <Route path="/clientes/:id/" render={({ match }) => (
-                  <ClientPage client_id={match.params.id}/>
-                )} />
                 <Route path="/registro/" render={({ match }) => (
                   <Container><SignUp /></Container>
                 )} />
@@ -125,12 +118,12 @@ class App extends Component {
                 <Route path="/editar/aviso/:id/" render={({ match }) => (
                   <AnnouncementsEdit announcement_id={match.params.id}/>
                 )} />
-                <Route path="/editar/profesional/:id/" render={({ match }) => (
-                  <ProfessionalEdit professional_id={match.params.id}/>
+                <Route path="/editarperfil" render={({ match }) => (
+                  this.props.user.profile ?
+                  <ProfileEdit/> :
+                  <MustLogIn/>
                 )} />
-                <Route path="/editar/cliente/:id/" render={({ match }) => (
-                  <ClientEdit client_id={match.params.id}/>
-                )} />
+                <Route path='/editarperfil' component={ProfileEdit}/>
                 <Route path='/denegado' component={MustLogIn}/>
                 <Route path="/404/" component={NotFound} />
                 <Route path="*" component={NotFound} />

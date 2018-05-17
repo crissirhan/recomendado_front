@@ -26,6 +26,9 @@ class TopBar extends Component {
   componentDidMount(){
     this.updateWindowDimensions();
     window.addEventListener('onscroll', this.updateWindowDimensions);
+    if(this.props.user.id){
+      this.props.getProfileByUsername(this.props.user.profile.username);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('onscroll', this.updateWindowDimensions);
@@ -34,24 +37,26 @@ class TopBar extends Component {
     this.setState({ offset: window.pageYOffset });
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.logged_in_user)
-    if(this.props != nextProps){
-      if(nextProps.logged_in_user[0]){
+    if(this.props !== nextProps){
+      if(nextProps.update_profile !== this.props.update_profile){
+        if(nextProps.update_profile.success){
+          this.props.getProfileByUsername(this.props.user.profile.username);
+        }
+      }
+      if(nextProps.logged_in_user[0] !== this.props.logged_in_user[0]){
         this.setState({
-          user:nextProps.logged_in_user[0],
-          isProfessional:true
+          user:nextProps.logged_in_user[0]
         });
-        cookie.save('token', this.props.login_state.token, { path: '/' });
-        cookie.save('user', nextProps.logged_in_user[0], { path: '/' });
-        cookie.save('isProfessional', nextProps.logged_in_user[0].is_professional, { path: '/' });
-        cookie.save('isClient', nextProps.logged_in_user[0].isClient, { path: '/' });
+        let user_data = {
+          name:nextProps.logged_in_user[0].name,
+          id:nextProps.logged_in_user[0].id,
+          type:nextProps.logged_in_user[0].is_professional ? 'professional' : 'client',
+          profile: nextProps.logged_in_user[0],
+          token: this.props.login_state.token
+        }
+        cookie.save('user', user_data, { path: '/' });
         if(nextProps.logged_in_user[0].id !== this.props.user.id){
-          this.props.setUserData({
-            name:nextProps.logged_in_user[0].first_name,
-            lastname:nextProps.logged_in_user[0].last_name,
-            id:nextProps.logged_in_user[0].id,
-            type:nextProps.logged_in_user[0].is_professional ? 'professional' : 'client'
-          })
+          this.props.setUserData(user_data)
         }
         this.setState({
           cookie_setted:true
@@ -62,14 +67,13 @@ class TopBar extends Component {
         return;
       }
       if(nextProps.login_state.loggedIn){
-        this.props.getProfileByUsername(nextProps.login_state.username);
-        this.setState({
-          fetched_user: true
-        });
+        if(!this.props.user.id){
+          this.props.getProfileByUsername(nextProps.login_state.username);
+          this.setState({
+            fetched_user: true
+          });
+        }
       }
-    }
-    if(this.props != nextProps) {
-
     }
   }
 
@@ -121,17 +125,13 @@ class TopBar extends Component {
 
   render() {
     let buttons = null;
-    if(this.state.element){
-
-    }
-
-    //let aux_exists = cookie.load('user') ? cookie.lo7ad('user').user : false; //TODO: quitar esto y hacer los checkeos mejor
-    if(this.props.user.id && this.props.user.id !== ''){
+    let url = '/perfiles/' + this.props.user.id + '/'
+    if( this.props.user.id !== null){
       buttons =
       <div class="CTAs">
-        <Link to={this.props.user.url} class="login">
+        <Link to={url} class="login">
           <i class="fa fa-user"></i>
-          <span class="d-none d-md-inline">{this.props.user.name} {this.props.user.lastname}</span>
+          <span class="d-none d-md-inline">{this.props.user.name}</span>
         </Link>
         <a to={this.props.location.pathname} onClick={() => this.onLogout()} style={{cursor: "pointer"}}>
           <i class="fa fa-sign-out"></i>
@@ -173,7 +173,8 @@ function mapStateToProps(state){
   return {
     login_state:state.login,
     logged_in_user:state.logged_in_user,
-    user:state.user
+    user:state.user,
+    update_profile:state.update_profile
   }
 }
 

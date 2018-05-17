@@ -1,4 +1,4 @@
-export const ENDPOINT_URI = 'http://127.0.0.1:8000'//'http://dev.api.recomendado.cl'//'http://api.recomendado-dev.samir.cl/';
+export const ENDPOINT_URI = 'http://127.0.0.1:8000'//'http://api.recomendado-dev.samir.cl/';
 export const RegionesYcomunas = {
 
 	"regiones": [{
