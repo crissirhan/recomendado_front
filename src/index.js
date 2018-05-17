@@ -37,10 +37,7 @@ axios.interceptors.response.use((response) => {
 
   return response
 }, (error) => {
-  console.log(error)
-  console.log(error.response.status)
-  console.log(error.response)
-  if(error.response.status === 404){
+  if(error.response && error.response.status === 404){
     window.location.assign('/404/')
     return;
   }
